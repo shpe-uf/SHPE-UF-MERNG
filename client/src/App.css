@@ -1,0 +1,21 @@
+:root {
+  --primary: RGB(13, 61, 84);
+  --accent-1: RGB(241, 108, 33);
+  --accent-2: RGB(19, 149, 185);
+  --white: rgb(255, 255, 255);
+}
+
+@font-face {
+  font-family: "heading-font";
+  src: url(fonts/ProximaNova.ttf);
+}
+
+@font-face {
+  font-family: "body-font";
+  src: url(fonts/SanFrancisco.otf);
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "heading-font" !important;
+  text-transform: uppercase !important;
+}
