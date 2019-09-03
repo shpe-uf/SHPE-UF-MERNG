@@ -14,10 +14,42 @@ module.exports = gql`
 
   type User {
     id: ID!
-    email: String!
-    token: String!
+    firstName: String!
+    lastName: String!
+    major: String!
+    year: String!
+    graduating: String!
+    country: String!
+    ethnicity: String!
+    sex: String!
     username: String!
+    email: String!
     createdAt: String!
+    points: Int!
+    fallPoints: Int!
+    springPoints: Int!
+    summerPoints: Int!
+    permission: String!
+    listServ: Boolean!
+    events: [Event]!
+    bookmarks: [Company]!
+    token: String!
+  }
+
+  type Event {
+    id: ID!
+    name: String!
+    code: String!
+    category: String!
+    points: String!
+    attendance: Int!
+    expiration: String!
+    semester: String!
+  }
+
+  type Company {
+    id: ID!
+    name: String!
   }
 
   type Comment {
@@ -34,10 +66,19 @@ module.exports = gql`
   }
 
   input RegisterInput {
+    firstName: String!
+    lastName: String!
+    major: String!
+    year: String!
+    graduating: String!
+    country: String!
+    ethnicity: String!
+    sex: String!
     username: String!
+    email: String!
     password: String!
     confirmPassword: String!
-    email: String!
+    listServ: Boolean!
   }
 
   type Query {

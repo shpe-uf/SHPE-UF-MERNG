@@ -59,10 +59,32 @@ module.exports = {
     async register(
       _,
       {
-        registerInput: { username, email, password, confirmPassword }
+        registerInput: {
+          firstName,
+          lastName,
+          major,
+          year,
+          graduating,
+          country,
+          ethnicity,
+          sex,
+          username,
+          email,
+          password,
+          confirmPassword,
+          listServ
+        }
       }
     ) {
       const { valid, errors } = validateRegisterInput(
+        firstName,
+        lastName,
+        major,
+        year,
+        graduating,
+        country,
+        ethnicity,
+        sex,
         username,
         email,
         password,
@@ -76,11 +98,14 @@ module.exports = {
       isUsernameDuplicate = await User.findOne({ username });
 
       if (isUsernameDuplicate) {
-        throw new UserInputError("An account with that username already exists", {
-          errors: {
-            username: "An account with that username already exists"
+        throw new UserInputError(
+          "An account with that username already exists",
+          {
+            errors: {
+              username: "An account with that username already exists"
+            }
           }
-        });
+        );
       }
 
       isEmailDuplicate = await User.findOne({ email });
@@ -96,10 +121,26 @@ module.exports = {
       password = await bcrypt.hash(password, 12);
 
       const newUser = new User({
-        email,
+        firstName,
+        lastName,
+        major,
+        year,
+        graduating,
+        country,
+        ethnicity,
+        sex,
         username,
+        email,
         password,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        points: 0,
+        fallPoints: 0,
+        springPoints: 0,
+        summerPoints: 0,
+        permission: "user",
+        listServ: (listServ ? true : false),
+        events: [],
+        bookmarks: []
       });
 
       const res = await newUser.save();
