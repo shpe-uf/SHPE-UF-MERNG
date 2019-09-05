@@ -1,31 +1,18 @@
 import React, { useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
 import {
   Grid,
-  Header,
-  Transition,
   Container,
   Image,
   Divider
 } from "semantic-ui-react";
 import { AuthContext } from "../context/auth";
 
-import PostCard from "../components/PostCard";
-import PostForm from "../components/PostForm";
-
 import homePhoto1 from "../images/home-1.jpg";
 import homePhoto2 from "../images/home-2.jpg";
 import homePhoto3 from "../images/home-3.jpg";
 
-import { FETCH_POSTS_QUERY } from "../util/graphql";
-
 function Home() {
   const { user } = useContext(AuthContext);
-
-  const {
-    loading,
-    data: { getPosts: posts }
-  } = useQuery(FETCH_POSTS_QUERY);
 
   return (
     <div>
@@ -33,7 +20,7 @@ function Home() {
         <Grid.Row className="no-padding">
           <Grid.Column>
             <div className="masthead masthead-home">
-              <div className="overlay-blue">
+              <div className="overlay-home">
                 <Container>
                   <h1 className="masthead-title text-white">
                     Society of Hispanic Professional Engineers
@@ -105,10 +92,10 @@ function Home() {
               leading innovators, scientists, mathematicians and engineers.
               Statement of Values: We are brought together by heritage, social
               responsibility and desire to improve the equality of all people
-              through the use of science and technology.We value excellence in
+              through the use of science and technology. We value excellence in
               education, professional pursuits and leadership. We obtain
               excellence through integrity, empowerment, achievement, diversity
-              and continuous improvement.Strategic Focus Areas: We will fulfill
+              and continuous improvement. Strategic Focus Areas: We will fulfill
               our mission by increasing educational opportunities, promoting
               professional and personal growth, carrying out our social
               responsibility to be involved in education, business, and

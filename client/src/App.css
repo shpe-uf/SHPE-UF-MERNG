@@ -27,6 +27,10 @@
   font-size: 1.05rem !important;
 }
 
+body {
+  background-color: var(--white);
+}
+
 h1, h2, h3, h4, h5 {
   font-family: "heading-font" !important;
   text-transform: uppercase !important;
@@ -106,10 +110,17 @@ h5 {
   background-color: var(--accent-1) !important;
 }
 
-.overlay-blue {
+.overlay-home {
   background-color: rgba(0, 77, 115, 0.75);
   width: 100%;
   padding: 10rem 0rem;
+}
+
+.overlay-blue {
+  background-color: rgba(0, 77, 115, 0.75);
+  width: 100%;
+  padding: 7rem 0rem;
+  margin-bottom: 24px;
 }
 
 .masthead {
@@ -120,10 +131,20 @@ h5 {
 
 .masthead-home {
   background: url(images/home-bg.jpg) !important;
-  background-position: 50% 50% !important;
-  background-repeat: no-repeat;
-  background-size: cover;
   border-radius: 0px;
+  background-position: 50% 155% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.masthead-team {
+  background: url(images/team.jpg) !important;
+  border-radius: 0px;
+  background-position: 50% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
 }
 
 .masthead-quote {
@@ -185,4 +206,8 @@ h5 {
 
 .heart {
   color: rgb(255, 0, 0);
+}
+
+.card-team {
+  padding: 8px !important;
 }
