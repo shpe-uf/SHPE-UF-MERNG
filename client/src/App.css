@@ -1,13 +1,20 @@
 :root {
-  --primary: RGB(13, 61, 84);
-  --accent-1: RGB(241, 108, 33);
-  --accent-2: RGB(19, 149, 185);
+  --primary: rgb(0, 77, 115);
+  --accent-1: rgb(255, 84, 0);
+  --accent-1-light-1: rgb(255, 101, 25);
+  --accent-1-light-2: rgb(255, 118, 51);
+  --accent-1-light-3: rgb(255, 135, 77);
+  --accent-2: rgb(19, 149, 185);
+  --accent-2-light-1: rgb(43, 160, 193);
+  --accent-2-light-2: rgb(66, 170, 199);
+  --accent-2-light-3: rgb(90, 181, 207);
   --white: rgb(255, 255, 255);
+  --grey: rgb(240, 240, 240);
 }
 
 @font-face {
   font-family: "heading-font";
-  src: url(fonts/ProximaNova.ttf);
+  src: url(fonts/HeadingPro.ttf);
 }
 
 @font-face {
@@ -15,7 +22,167 @@
   src: url(fonts/SanFrancisco.otf);
 }
 
+* {
+  font-family: "body-font";
+  font-size: 1.05rem !important;
+}
+
 h1, h2, h3, h4, h5 {
   font-family: "heading-font" !important;
   text-transform: uppercase !important;
+  color: var(--accent-1);
+  margin: 0px 0px 8px 0px !important;
+}
+
+h1 {
+  font-size: 3rem !important;
+}
+
+h2 {
+  font-size: 2.5rem !important;
+}
+
+h3 {
+  font-size: 2rem !important;
+}
+
+h4 {
+  font-size: 1.75rem !important;
+}
+
+h5 {
+  font-size: 1.5rem !important;
+}
+
+.ui.grid {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.column {
+  padding: 0px 0px !important;
+}
+
+.accent-1-text {
+  color: var(--accent-1);
+}
+
+.accent-2-text {
+  color: var(--accent-2);
+}
+
+.text-white {
+  color: var(--white);
+}
+
+.ui.menu {
+  border-radius: 0px !important;
+}
+
+.ui.inverted.menu .accent-1.active.item, .ui.inverted.accent-1.menu {
+  background-color: var(--accent-1);
+}
+
+.ui.inverted.menu .accent-2.active.item, .ui.inverted.accent-2.menu {
+  background-color: var(--accent-2);
+}
+
+.ui.inverted.menu {
+  border: 0 solid transparent;
+  background: var(--primary);
+  box-shadow: none;
+  margin-bottom: 0px;
+}
+
+.brand {
+  font-size: 2rem !important;
+  font-family: "heading-font";
+  width: 150px !important;
+  padding: 16px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: var(--accent-1) !important;
+}
+
+.overlay-blue {
+  background-color: rgba(0, 77, 115, 0.75);
+  width: 100%;
+  padding: 10rem 0rem;
+}
+
+.masthead {
+  background-color: var(--grey);
+  width: 100%;
+  text-align: center;
+}
+
+.masthead-home {
+  background: url(images/home-bg.jpg) !important;
+  background-position: 50% 50% !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0px;
+}
+
+.masthead-quote {
+  padding: 60px 0px;
+  background-color: var(--accent-2);
+}
+
+.masthead-title {
+  margin: 0px;
+  font-size: 3.25rem !important;
+}
+
+.background-grey {
+  background-color: var(--grey);
+  padding: 8px !important;
+  margin-bottom: 16px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+}
+
+.fa-quote {
+  color: var(--white);
+  font-size: 3rem !important;
+  padding: 16px 16px;
+}
+
+.text-home {
+  padding: 4rem 4rem !important;
+  color: var(--white) !important;
+}
+
+.image-home {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.who {
+  background-color: var(--accent-1-light-3);
+}
+
+.mission {
+  background-color: var(--accent-1-light-2);
+}
+
+.vision {
+  background-color: var(--accent-1-light-1);
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.footer {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.heart {
+  color: rgb(255, 0, 0);
 }
