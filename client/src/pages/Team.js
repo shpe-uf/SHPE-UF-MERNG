@@ -12,7 +12,7 @@ import juan from "../images/team/2019-2020/juan.jpg";
 import scott from "../images/team/2019-2020/scott.jpg";
 import sofia from "../images/team/2019-2020/sofia.jpg";
 import valentina from "../images/team/2019-2020/valentina.jpg";
-import placeholder from "../images/team/placeholder.png"
+import placeholder from "../images/team/placeholder.png";
 
 function Team() {
   return (
@@ -40,14 +40,6 @@ function Team() {
                 image={eduardo}
                 header="Eduardo Graziano"
                 meta="Project Manager"
-              />
-            </Grid.Column>
-            <Grid.Column className="card-team">
-              <Card
-                fluid
-                image={cesar}
-                header="César González Peláez"
-                meta="Scrum Master"
               />
             </Grid.Column>
             <Grid.Column className="card-team">
@@ -88,6 +80,14 @@ function Team() {
                 image={david}
                 header="David Espantoso"
                 meta="Software Engineer"
+              />
+            </Grid.Column>
+            <Grid.Column className="card-team">
+              <Card
+                fluid
+                image={cesar}
+                header="César González Peláez"
+                meta="Software Developer"
               />
             </Grid.Column>
             <Grid.Column className="card-team">
