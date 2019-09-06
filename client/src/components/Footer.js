@@ -7,7 +7,7 @@ function Footer() {
     <div className="footer">
       <Container>
         <Grid columns={2}>
-          <Grid.Row>
+          <Grid.Row className="footer-padding">
             <Grid.Column width={8}>
               <Link to="/team" className="text-white">
                 Meet the team

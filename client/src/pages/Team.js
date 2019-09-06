@@ -87,7 +87,7 @@ function Team() {
                 fluid
                 image={cesar}
                 header="César González Peláez"
-                meta="Software Developer"
+                meta="Software Engineer"
               />
             </Grid.Column>
             <Grid.Column className="card-team">

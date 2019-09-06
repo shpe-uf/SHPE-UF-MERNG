@@ -34,6 +34,30 @@ function MenuBar() {
           to="/"
           color="accent-1"
         />
+        <Menu.Item
+          name="about us"
+          active={activeItem === "about us"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/about"
+          color="accent-2"
+        />
+        <Menu.Item
+          name="E-Board"
+          active={activeItem === "E-Board"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/eboard"
+          color="accent-2"
+        />
+        <Menu.Item
+          name="sponsors"
+          active={activeItem === "sponsors"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/sponsors"
+          color="accent-2"
+        />
         <Menu.Menu position="right">
           <Menu.Item
             name="register"

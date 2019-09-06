@@ -15,19 +15,25 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SinglePost from "./pages/SinglePost";
 import Team from "./pages/Team";
+import About from "./pages/About";
+import EBoard from "./pages/EBoard";
+import Sponsors from "./pages/Sponsors";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <MenuBar />
-        <body>
+        <main>
           <Route exact path="/" component={Home} />
           <AuthRoute exact path="/login" component={Login} />
           <AuthRoute exact path="/register" component={Register} />
           <Route exact path="/posts/:postId" component={SinglePost} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/eboard" component={EBoard} />
+          <Route exact path="/sponsors" component={Sponsors} />
           <Route exact path="/team" component={Team} />
-        </body>
+        </main>
         <Footer />
       </Router>
     </AuthProvider>

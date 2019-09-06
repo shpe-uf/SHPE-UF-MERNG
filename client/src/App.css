@@ -9,7 +9,7 @@
   --accent-2-light-2: rgb(66, 170, 199);
   --accent-2-light-3: rgb(90, 181, 207);
   --white: rgb(255, 255, 255);
-  --grey: rgb(240, 240, 240);
+  --grey: rgb(200, 200, 200);
 }
 
 @font-face {
@@ -27,8 +27,9 @@
   font-size: 1.05rem !important;
 }
 
-body {
+main {
   background-color: var(--white);
+  min-height: calc(100vh - 65px - 41px);
 }
 
 h1, h2, h3, h4, h5 {
@@ -79,6 +80,7 @@ h5 {
 
 .text-white {
   color: var(--white);
+  margin-bottom: 0px !important;
 }
 
 .ui.menu {
@@ -123,6 +125,12 @@ h5 {
   margin-bottom: 24px;
 }
 
+.overlay-register, .overlay-login {
+  background-color: rgba(0, 77, 115, 0.75);
+  width: 100%;
+  min-height: calc(100vh - 65px - 41px);
+}
+
 .masthead {
   background-color: var(--grey);
   width: 100%;
@@ -140,6 +148,33 @@ h5 {
 
 .masthead-team {
   background: url(images/team.jpg) !important;
+  border-radius: 0px;
+  background-position: 50% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.masthead-eboard {
+  background: url(images/eboard.jpg) !important;
+  border-radius: 0px;
+  background-position: 50% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.masthead-about {
+  background: url(images/about.jpg) !important;
+  border-radius: 0px;
+  background-position: 50% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.masthead-sponsors {
+  background: url(images/sponsors.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -202,6 +237,12 @@ h5 {
 .footer {
   background-color: var(--primary);
   color: var(--white);
+  max-height: 41px;
+  min-height: 41px;
+}
+
+.footer-padding {
+  padding: 8px 0px !important;
 }
 
 .heart {
@@ -210,4 +251,44 @@ h5 {
 
 .card-team {
   padding: 8px !important;
+}
+
+.register {
+  background: url(images/register.jpg) !important;
+  border-radius: 0px;
+  background-position: 50% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  min-height: calc(100vh - 65px - 41px);
+}
+
+.login {
+  background: url(images/login.jpg) !important;
+  border-radius: 0px;
+  background-position: 50% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  min-height: calc(100vh - 65px - 41px);
+}
+
+.jumbotron-register, .jumbotron-login {
+  background-color: var(--white) !important;
+  padding: 16px !important;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.title-bg-accent-1 {
+  background-color: var(--accent-1) !important;
+  padding: 16px 16px 0px 16px !important;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.sponsor {
+  border-style: solid !important;
+  border-width: 3px !important;
+  border-color: var(--grey) !important;
 }
