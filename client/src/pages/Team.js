@@ -45,6 +45,14 @@ function Team() {
             <Grid.Column className="card-team">
               <Card
                 fluid
+                image={cesar}
+                header="César González Peláez"
+                meta="Scrum Master"
+              />
+            </Grid.Column>
+            <Grid.Column className="card-team">
+              <Card
+                fluid
                 image={alejandro}
                 header="Alejandro Alonso"
                 meta="Software Engineer"
@@ -79,14 +87,6 @@ function Team() {
                 fluid
                 image={david}
                 header="David Espantoso"
-                meta="Software Engineer"
-              />
-            </Grid.Column>
-            <Grid.Column className="card-team">
-              <Card
-                fluid
-                image={cesar}
-                header="César González Peláez"
                 meta="Software Engineer"
               />
             </Grid.Column>

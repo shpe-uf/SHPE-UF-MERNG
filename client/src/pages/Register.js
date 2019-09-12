@@ -5,13 +5,19 @@ import {
   Button,
   Container,
   Checkbox,
-  Dropdown
+  Select
 } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
+
+const sexOptions = [
+  { key: "m", text: "Male", value: "male" },
+  { key: "f", text: "Female", value: "female" },
+  { key: "o", text: "Other", value: "other" }
+];
 
 function Register(props) {
   const context = useContext(AuthContext);
@@ -57,70 +63,6 @@ function Register(props) {
     addUser();
   }
 
-  const majorOptions = [
-    {
-      key: "AE",
-      value: "Aerospace Engineering",
-      text: "Aerospace Engineering"
-    },
-    {
-      key: "ABE",
-      value: "Agricultural & Biological Engineering",
-      text: "Agricultural & Biological Engineering"
-    },
-    {
-      key: "BE",
-      value: "Biomedical Engineering",
-      text: "Biomedical Engineering"
-    },
-    { key: "ChE", value: "Chemical Engineering", text: "Chemical Engineering" },
-    { key: "CivE", value: "Civil Engineering", text: "Civil Engineering" },
-    {
-      key: "COE",
-      value: "Coastal & Oceanographic Engineering",
-      text: "Coastal & Oceanographic Engineering"
-    },
-    { key: "CE", value: "Computer Engineering", text: "Computer Engineering" },
-    { key: "CS", value: "Computer Science", text: "Computer Science" },
-    {
-      key: "DAS",
-      value: "Digital Arts & Sciences",
-      text: "Digital Arts & Sciences"
-    },
-    {
-      key: "EE",
-      value: "Electrical Engineering",
-      text: "Electrical Engineering"
-    },
-    {
-      key: "EES",
-      value: "Environmental Engineering Sciences",
-      text: "Environmental Engineering Sciences"
-    },
-    {
-      key: "HCC",
-      value: "Human-Centered Computing",
-      text: "Human-Centered Computing"
-    },
-    {
-      key: "ISE",
-      value: "Industrial & Systems Engineering",
-      text: "Industrial & Systems Engineering"
-    },
-    {
-      key: "MSE",
-      value: "Materials Science & Engineering",
-      text: "Materials Science & Engineering"
-    },
-    {
-      key: "ME",
-      value: "Mechanical Engineering",
-      text: "Mechanical Engineering"
-    },
-    { key: "NE", value: "Nuclear Engineering", text: "Nuclear Engineering" },
-    { key: "O", value: "Other", text: "Other" }
-  ];
-
   return (
     <div className="register">
       <div className="overlay-register">
@@ -156,52 +98,14 @@ function Register(props) {
                       />
                     </Form.Group>
                     <Form.Group widths="equal">
-                      <Form.Select
-                        fluid
-                        options={majorOptions}
-                        label="Year"
-                        name="year"
-                        value={values.year}
-                        error={errors.year ? true : false}
-                        onChange={onChange}
-                      />
-                      <Form.Select
-                        fluid
-                        options={majorOptions}
-                        label="Graduating"
-                        name="graduating"
-                        value={values.graduating}
-                        error={errors.graduating ? true : false}
-                        onChange={onChange}
-                      />
-                    </Form.Group>
-                    <Form.Group widths="equal">
-                      <Form.Select
-                        fluid
-                        options={majorOptions}
-                        label="Country of Origin"
-                        name="country"
-                        value={values.country}
-                        error={errors.country ? true : false}
-                        onChange={onChange}
-                      />
-                      <Form.Select
-                        fluid
-                        options={majorOptions}
-                        label="Ethnicity"
-                        name="ethnicity"
-                        value={values.ethnicity}
-                        error={errors.ethnicity ? true : false}
-                        onChange={onChange}
-                      />
-                      <Form.Select
-                        fluid
-                        options={majorOptions}
+                      <Form.Input
+                        as={Select}
                         label="Sex"
                         name="sex"
                         value={values.sex}
-                        error={errors.sex ? true : false}
+                        error={errors.lastname ? true : false}
                         onChange={onChange}
+                        options={sexOptions}
                       />
                     </Form.Group>
                     <Form.Group widths="equal">

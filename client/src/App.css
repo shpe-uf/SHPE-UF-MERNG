@@ -258,7 +258,7 @@ h5 {
 }
 
 .heart {
-  color: rgb(255, 0, 0);
+  color: rgb(200, 50, 50);
 }
 
 .card-team {
@@ -312,6 +312,6 @@ h5 {
 }
 
 .link-email:hover, .link-team:hover {
-  color: var(--accent-1) !important;
+  color: var(--accent-2) !important;
   text-decoration: none;
 }
