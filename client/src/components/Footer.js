@@ -9,7 +9,7 @@ function Footer() {
         <Grid columns={2}>
           <Grid.Row className="footer-padding">
             <Grid.Column width={8}>
-              <Link to="/team" className="text-white">
+              <Link to="/team" className="text-white link-team">
                 Meet the team
               </Link>
             </Grid.Column>

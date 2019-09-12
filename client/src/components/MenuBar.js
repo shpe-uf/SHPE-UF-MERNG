@@ -32,7 +32,6 @@ function MenuBar() {
           onClick={handleItemClick}
           as={Link}
           to="/"
-          color="accent-1"
         />
         <Menu.Item
           name="about us"
@@ -40,7 +39,6 @@ function MenuBar() {
           onClick={handleItemClick}
           as={Link}
           to="/about"
-          color="accent-2"
         />
         <Menu.Item
           name="E-Board"
@@ -48,7 +46,6 @@ function MenuBar() {
           onClick={handleItemClick}
           as={Link}
           to="/eboard"
-          color="accent-2"
         />
         <Menu.Item
           name="sponsors"
@@ -56,7 +53,6 @@ function MenuBar() {
           onClick={handleItemClick}
           as={Link}
           to="/sponsors"
-          color="accent-2"
         />
         <Menu.Menu position="right">
           <Menu.Item
@@ -65,7 +61,6 @@ function MenuBar() {
             onClick={handleItemClick}
             as={Link}
             to="/register"
-            color="accent-2"
           />
           <Menu.Item
             name="login"
@@ -73,7 +68,6 @@ function MenuBar() {
             onClick={handleItemClick}
             as={Link}
             to="/login"
-            color="accent-2"
           />
         </Menu.Menu>
       </Container>

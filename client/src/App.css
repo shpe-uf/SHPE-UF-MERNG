@@ -24,7 +24,7 @@
 
 * {
   font-family: "body-font";
-  font-size: 1.05rem !important;
+  font-size: 1.025rem !important;
 }
 
 main {
@@ -32,7 +32,11 @@ main {
   min-height: calc(100vh - 65px - 41px);
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: "heading-font" !important;
   text-transform: uppercase !important;
   color: var(--accent-1);
@@ -87,12 +91,19 @@ h5 {
   border-radius: 0px !important;
 }
 
-.ui.inverted.menu .accent-1.active.item, .ui.inverted.accent-1.menu {
+.ui.inverted.menu .accent-1.active.item,
+.ui.inverted.accent-1.menu {
   background-color: var(--accent-1);
 }
 
-.ui.inverted.menu .accent-2.active.item, .ui.inverted.accent-2.menu {
+.ui.inverted.menu .accent-2.active.item,
+.ui.inverted.accent-2.menu {
   background-color: var(--accent-2);
+}
+
+.ui.inverted.menu .active.item {
+  background: var(--accent-2);
+  color: #fff !important;
 }
 
 .ui.inverted.menu {
@@ -125,7 +136,8 @@ h5 {
   margin-bottom: 24px;
 }
 
-.overlay-register, .overlay-login {
+.overlay-register,
+.overlay-login {
   background-color: rgba(0, 77, 115, 0.75);
   width: 100%;
   min-height: calc(100vh - 65px - 41px);
@@ -167,7 +179,7 @@ h5 {
 .masthead-about {
   background: url(images/about.jpg) !important;
   border-radius: 0px;
-  background-position: 50% 50% !important;
+  background-position: 75% 75% !important;
   background-attachment: fixed !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
@@ -183,13 +195,13 @@ h5 {
 }
 
 .masthead-quote {
-  padding: 60px 0px;
+  padding: 64px 0px;
   background-color: var(--accent-2);
 }
 
 .masthead-title {
   margin: 0px;
-  font-size: 3.25rem !important;
+  font-size: 4rem !important;
 }
 
 .background-grey {
@@ -253,6 +265,10 @@ h5 {
   padding: 8px !important;
 }
 
+.header {
+  font-size: 1.5rem !important;
+}
+
 .register {
   background: url(images/register.jpg) !important;
   border-radius: 0px;
@@ -273,7 +289,8 @@ h5 {
   min-height: calc(100vh - 65px - 41px);
 }
 
-.jumbotron-register, .jumbotron-login {
+.jumbotron-register,
+.jumbotron-login {
   background-color: var(--white) !important;
   padding: 16px !important;
   border-bottom-left-radius: 8px;
@@ -291,4 +308,10 @@ h5 {
   border-style: solid !important;
   border-width: 3px !important;
   border-color: var(--grey) !important;
+  border-radius: 8px;
+}
+
+.link-email:hover, .link-team:hover {
+  color: var(--accent-1) !important;
+  text-decoration: none;
 }
