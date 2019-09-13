@@ -1,13 +1,24 @@
 :root {
+  /* PRIMARY COLOR */
   --primary: rgb(0, 77, 115);
-  --accent-1: rgb(255, 84, 0);
-  --accent-1-light-1: rgb(255, 101, 25);
-  --accent-1-light-2: rgb(255, 118, 51);
+  --primary-overlay: rgba(0, 77, 115, 0.75);
+  /* ACCENT 1 COLOR */
   --accent-1-light-3: rgb(255, 135, 77);
-  --accent-2: rgb(19, 149, 185);
-  --accent-2-light-1: rgb(43, 160, 193);
-  --accent-2-light-2: rgb(66, 170, 199);
+  --accent-1-light-2: rgb(255, 118, 51);
+  --accent-1-light-1: rgb(255, 101, 25);
+  --accent-1: rgb(255, 84, 0);
+  --accent-1-dark-1: rgb(230, 76, 0);
+  --accent-1-dark-2: rgb(204, 67, 0);
+  --accent-1-dark-3: rgb(179, 59, 0);
+  /* ACCENT 2 COLOR */
   --accent-2-light-3: rgb(90, 181, 207);
+  --accent-2-light-2: rgb(66, 170, 199);
+  --accent-2-light-1: rgb(43, 160, 193);
+  --accent-2: rgb(19, 149, 185);
+  --accent-2-dark-1: rgb(17, 134, 167);
+  --accent-2-dark-2: rgb(15, 119, 148);
+  --accent-2-dark-3: rgb(13, 104, 130);
+  /* MISCELLANEOUS COLORS */
   --white: rgb(255, 255, 255);
   --grey: rgb(200, 200, 200);
 }
@@ -24,7 +35,7 @@
 
 * {
   font-family: "body-font";
-  font-size: 1.025rem !important;
+  font-size: 1.00rem !important;
 }
 
 main {
@@ -32,11 +43,7 @@ main {
   min-height: calc(100vh - 65px - 41px);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1, h2, h3, h4, h5 {
   font-family: "heading-font" !important;
   text-transform: uppercase !important;
   color: var(--accent-1);
@@ -103,7 +110,7 @@ h5 {
 
 .ui.inverted.menu .active.item {
   background: var(--accent-2);
-  color: #fff !important;
+  color: var(--white) !important;
 }
 
 .ui.inverted.menu {
@@ -124,13 +131,13 @@ h5 {
 }
 
 .overlay-home {
-  background-color: rgba(0, 77, 115, 0.75);
+  background-color: var(--primary-overlay);
   width: 100%;
   padding: 10rem 0rem;
 }
 
 .overlay-blue {
-  background-color: rgba(0, 77, 115, 0.75);
+  background-color: var(--primary-overlay);
   width: 100%;
   padding: 7rem 0rem;
   margin-bottom: 24px;
@@ -138,7 +145,7 @@ h5 {
 
 .overlay-register,
 .overlay-login {
-  background-color: rgba(0, 77, 115, 0.75);
+  background-color: var(--primary-overlay);
   width: 100%;
   min-height: calc(100vh - 65px - 41px);
 }
@@ -311,7 +318,26 @@ h5 {
   border-radius: 8px;
 }
 
+.link-email, .link-team {
+  overflow-wrap: break-word;
+}
+
 .link-email:hover, .link-team:hover {
   color: var(--accent-2) !important;
   text-decoration: none;
+}
+
+.ui.button {
+  background: var(--accent-2);
+  color: var(--white);
+}
+
+.ui.button:hover {
+  background: var(--accent-2-dark-1);
+  color: var(--white);
+}
+
+.ui.button:active {
+  background: var(--accent-2-dark-2);
+  color: var(--white);
 }

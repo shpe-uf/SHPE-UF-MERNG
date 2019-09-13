@@ -48,6 +48,15 @@ function Login(props) {
                   <h1 className="text-white">Login</h1>
                 </div>
                 <div className="jumbotron-login">
+                  {Object.keys(errors).length > 0 && (
+                    <div className="ui error message">
+                      <ul className="list">
+                        {Object.values(errors).map(value => (
+                          <li key={value}>{value}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <Form
                     onSubmit={onSubmit}
                     noValidate
@@ -71,20 +80,9 @@ function Login(props) {
                       error={errors.password ? true : false}
                       onChange={onChange}
                     />
-                    <Button type="submit" color="teal">
-                      Login
-                    </Button>
+                    <Button type="submit">Login</Button>
                   </Form>
                 </div>
-                {Object.keys(errors).length > 0 && (
-                  <div className="ui error message">
-                    <ul className="list">
-                      {Object.values(errors).map(value => (
-                        <li key={value}>{value}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </Grid.Column>
             </Grid.Row>
           </Grid>

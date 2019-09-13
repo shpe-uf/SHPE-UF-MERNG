@@ -15,7 +15,7 @@ function email(email) {
   return (
     <a href={"mailto:" + email} className="link-email">
       <Icon name="mail" />
-      {email}
+      Contact me via email
     </a>
   );
 }

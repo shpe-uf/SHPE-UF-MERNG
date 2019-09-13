@@ -36,27 +36,27 @@ module.exports.validateRegisterInput = (
   }
 
   if (major.trim() === "") {
-    errors.major = "Username is required.";
+    errors.major = "Major is required.";
   }
 
   if (year.trim() === "") {
-    errors.year = "Username is required.";
+    errors.year = "Year is required.";
   }
 
   if (graduating.trim() === "") {
-    errors.graduating = "Username is required.";
+    errors.graduating = "Graduating is required.";
   }
 
   if (country.trim() === "") {
-    errors.country = "Username is required.";
+    errors.country = "Country of Origin  is required.";
   }
 
   if (ethnicity.trim() === "") {
-    errors.ethnicity = "Username is required.";
+    errors.ethnicity = "Ethnicity is required.";
   }
 
   if (sex.trim() === "") {
-    errors.sex = "Username is required.";
+    errors.sex = "Sex is required.";
   }
 
   if (username.trim() === "") {

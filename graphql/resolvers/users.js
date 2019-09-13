@@ -18,7 +18,7 @@ function generateToken(user) {
       username: user.username
     },
     process.env.SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "24h" }
   );
 }
 

@@ -16,8 +16,37 @@ function MenuBar() {
   const menuBar = user ? (
     <Menu inverted>
       <Container>
-        <Menu.Item name={user.username} active as={Link} to="/" />
+        <Menu.Item
+          className="brand"
+          name="SHPE UF"
+          active={activeItem === "SHPE UF"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/"
+        />
+        <Menu.Item
+          name="about us"
+          active={activeItem === "about us"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/about"
+        />
+        <Menu.Item
+          name="E-Board"
+          active={activeItem === "E-Board"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/eboard"
+        />
+        <Menu.Item
+          name="sponsors"
+          active={activeItem === "sponsors"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/sponsors"
+        />
         <Menu.Menu position="right">
+          <Menu.Item name={user.username} onClick={handleItemClick} />
           <Menu.Item name="logout" onClick={logout} />
         </Menu.Menu>
       </Container>
