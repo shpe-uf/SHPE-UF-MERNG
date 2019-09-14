@@ -21,7 +21,7 @@ function About() {
         <Grid>
           <Grid.Row>
             <Grid.Column>
-              <h1>History</h1>
+              <h2>History</h2>
               <p>
                 The Society of Hispanic Professional Engineers (SHPE) was
                 founded in Los Angeles, California, in 1974 by a group of
@@ -43,7 +43,7 @@ function About() {
         <Grid>
           <Grid.Row>
             <Grid.Column>
-              <h1>UF Chapter</h1>
+              <h2>UF Chapter</h2>
               <p>
                 The Society of Hispanic Professional Engineers Chapter at the
                 University of Florida (SHPE UF) was formerly known as the

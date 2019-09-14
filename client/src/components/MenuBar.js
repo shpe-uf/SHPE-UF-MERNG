@@ -8,18 +8,20 @@ function MenuBar() {
   const { user, logout } = useContext(AuthContext);
   const pathname = window.location.pathname;
 
-  const path = pathname === "/" ? "SHPE UF" : pathname.substr(1);
+  const path = pathname === "/" ? "shpe uf" : pathname.substr(1);
   const [activeItem, setActiveItem] = useState(path);
 
-  const handleItemClick = (e, { name }) => setActiveItem(name);
+  const handleItemClick = (e, { name }) => {
+    setActiveItem(name);
+  };
 
   const menuBar = user ? (
     <Menu inverted>
       <Container>
         <Menu.Item
           className="brand"
-          name="SHPE UF"
-          active={activeItem === "SHPE UF"}
+          name="shpe uf"
+          active={activeItem === "shpe uf"}
           onClick={handleItemClick}
           as={Link}
           to="/"
@@ -32,11 +34,18 @@ function MenuBar() {
           to="/about"
         />
         <Menu.Item
-          name="E-Board"
-          active={activeItem === "E-Board"}
+          name="e-board"
+          active={activeItem === "e-board"}
           onClick={handleItemClick}
           as={Link}
           to="/eboard"
+        />
+        <Menu.Item
+          name="dev team"
+          active={activeItem === "dev team"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/devteam"
         />
         <Menu.Item
           name="sponsors"
@@ -46,8 +55,12 @@ function MenuBar() {
           to="/sponsors"
         />
         <Menu.Menu position="right">
-          <Menu.Item name={user.username} onClick={handleItemClick} />
           <Menu.Item name="logout" onClick={logout} />
+          <Menu.Item
+            name={user.username}
+            onClick={handleItemClick}
+            className="username"
+          />
         </Menu.Menu>
       </Container>
     </Menu>
@@ -56,8 +69,8 @@ function MenuBar() {
       <Container>
         <Menu.Item
           className="brand"
-          name="SHPE UF"
-          active={activeItem === "SHPE UF"}
+          name="shpe uf"
+          active={activeItem === "shpe uf"}
           onClick={handleItemClick}
           as={Link}
           to="/"
@@ -70,11 +83,18 @@ function MenuBar() {
           to="/about"
         />
         <Menu.Item
-          name="E-Board"
-          active={activeItem === "E-Board"}
+          name="e-board"
+          active={activeItem === "e-board"}
           onClick={handleItemClick}
           as={Link}
           to="/eboard"
+        />
+        <Menu.Item
+          name="dev team"
+          active={activeItem === "dev team"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/devteam"
         />
         <Menu.Item
           name="sponsors"

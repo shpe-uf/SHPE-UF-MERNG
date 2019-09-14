@@ -14,7 +14,7 @@ import sofia from "../images/team/2019-2020/sofia.jpg";
 import valentina from "../images/team/2019-2020/valentina.jpg";
 import placeholder from "../images/team/placeholder.png";
 
-function Team() {
+function DevTeam() {
   return (
     <div>
       <Grid>
@@ -23,7 +23,7 @@ function Team() {
             <div className="masthead masthead-team">
               <div className="overlay-blue">
                 <Container>
-                  <h1 className="masthead-title text-white">Meet the team</h1>
+                  <h1 className="masthead-title text-white">Development Team</h1>
                 </Container>
               </div>
             </div>
@@ -31,7 +31,7 @@ function Team() {
         </Grid.Row>
       </Grid>
       <Container>
-        <h1>Fall 2019 - Spring 2020</h1>
+        <h2>Fall 2019 - Spring 2020</h2>
         <Grid stackable columns={3}>
           <Grid.Row>
             <Grid.Column className="card-team">
@@ -153,4 +153,4 @@ function Team() {
   );
 }
 
-export default Team;
+export default DevTeam;

@@ -23,7 +23,7 @@ function Login(props) {
       }
     ) {
       context.login(userData);
-      props.history.push("/");
+      props.history.push("/points");
     },
 
     onError(err) {

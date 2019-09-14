@@ -14,12 +14,16 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SinglePost from "./pages/SinglePost";
-import Team from "./pages/Team";
+import DevTeam from "./pages/DevTeam";
 import About from "./pages/About";
 import EBoard from "./pages/EBoard";
 import Sponsors from "./pages/Sponsors";
+import Points from "./pages/Points";
 
 function App() {
+
+  console.log("Hello World!");
+  
   return (
     <AuthProvider>
       <Router>
@@ -32,7 +36,8 @@ function App() {
           <Route exact path="/about" component={About} />
           <Route exact path="/eboard" component={EBoard} />
           <Route exact path="/sponsors" component={Sponsors} />
-          <Route exact path="/team" component={Team} />
+          <Route exact path="/devteam" component={DevTeam} />
+          <Route exact path="/points" component={Points} />
         </main>
         <Footer />
       </Router>
