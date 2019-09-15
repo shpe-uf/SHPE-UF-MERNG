@@ -1,9 +1,9 @@
 const { UserInputError } = require("apollo-server");
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
 const User = require("../../models/User.js");
+
+require("dotenv").config();
 
 const {
   validateRegisterInput,
@@ -22,9 +22,24 @@ function generateToken(user) {
   );
 }
 
-require("dotenv").config();
-
 module.exports = {
+  Query: {
+    async getUser(_, { userId }) {
+      console.log("Get User Info");
+      try {
+        const user = await User.findById(userId);
+
+        if (user) {
+          return user;
+        } else {
+          throw new Error("User not found");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    }
+  },
+
   Mutation: {
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);

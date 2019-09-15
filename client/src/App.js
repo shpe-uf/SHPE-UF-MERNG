@@ -21,9 +21,6 @@ import Sponsors from "./pages/Sponsors";
 import Points from "./pages/Points";
 
 function App() {
-
-  console.log("Hello World!");
-  
   return (
     <AuthProvider>
       <Router>

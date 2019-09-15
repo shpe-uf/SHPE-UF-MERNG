@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Grid, Container, Card, Table } from "semantic-ui-react";
-
-import {AuthContext} from "../context/auth";
 
 function Points() {
 
@@ -19,23 +17,14 @@ function Points() {
         </Grid.Row>
       </Grid>
       <Container>
-        <Grid stackable columns={4}>
+        <Grid stackable columns={3}>
           <Grid.Row>
-            <Grid.Column className="card-points">
-              <Card fluid className="redeem">
-                <Card.Content>
-                  <p className="points-header">Summer Points</p>
-                  <p className="points-number">164</p>
-                  <p className="points-header">90 Percentile</p>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
             <Grid.Column className="card-points">
               <Card fluid className="fall">
                 <Card.Content>
                   <p className="points-header">Fall Points</p>
-                  <p className="points-number">37</p>
-                  <p className="points-header">90 Percentile</p>
+                  <p className="points-number">0</p>
+                  <p className="points-header">0 Percentile</p>
                 </Card.Content>
               </Card>
             </Grid.Column>
@@ -43,8 +32,8 @@ function Points() {
               <Card fluid className="spring">
                 <Card.Content>
                   <p className="points-header">Spring Points</p>
-                  <p className="points-number">11</p>
-                  <p className="points-header">90 Percentile</p>
+                  <p className="points-number">0</p>
+                  <p className="points-header">0 Percentile</p>
                 </Card.Content>
               </Card>
             </Grid.Column>
@@ -52,8 +41,8 @@ function Points() {
               <Card fluid className="summer">
                 <Card.Content>
                   <p className="points-header">Summer Points</p>
-                  <p className="points-number">52</p>
-                  <p className="points-header">90 Percentile</p>
+                  <p className="points-number">0</p>
+                  <p className="points-header">0 Percentile</p>
                 </Card.Content>
               </Card>
             </Grid.Column>

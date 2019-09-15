@@ -1,18 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Grid,
   Container,
   Image,
   Divider
 } from "semantic-ui-react";
-import { AuthContext } from "../context/auth";
 
 import homePhoto1 from "../images/home-1.jpg";
 import homePhoto2 from "../images/home-2.jpg";
 import homePhoto3 from "../images/home-3.jpg";
 
 function Home() {
-  const { user } = useContext(AuthContext);
 
   return (
     <div>

@@ -9,7 +9,8 @@ module.exports = {
   },
 
   Query: {
-    ...postsResolvers.Query
+    ...postsResolvers.Query,
+    ...usersResolvers.Query
   },
 
   Mutation: {

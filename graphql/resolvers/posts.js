@@ -1,8 +1,6 @@
 const { AuthenticationError, UserInputError } = require("apollo-server");
-
-const Post = require("../../models/Post.js");
-
 const checkAuth = require("../../util/check-auth.js");
+const Post = require("../../models/Post.js");
 
 module.exports = {
   Query: {
@@ -16,6 +14,7 @@ module.exports = {
     },
 
     async getPost(_, { postId }) {
+      console.log("GET POST!");
       try {
         const post = await Post.findById(postId);
 
