@@ -21,28 +21,3 @@ export const FETCH_POSTS_QUERY = gql`
     }
   }
 `;
-
-export const FETCH_USER_QUERY = gql`
-  query getUserInfo ($userId: ID!) {
-    getUser(userId: $userId) {
-      id
-      firstName
-      lastName
-      major
-      year
-      graduating
-      country
-      ethnicity
-      sex
-      username
-      email
-      createdAt
-      points
-      fallPoints
-      springPoints
-      summerPoints
-      permission
-      listServ
-    }
-  }
-`;

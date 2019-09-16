@@ -6,6 +6,7 @@ import "./App.css";
 
 import { AuthProvider } from "./context/auth";
 import AuthRoute from "./util/AuthRoute";
+import UserRoute from "./util/UserRoute";
 
 import MenuBar from "./components/MenuBar";
 import Footer from "./components/Footer";
@@ -34,7 +35,7 @@ function App() {
           <Route exact path="/eboard" component={EBoard} />
           <Route exact path="/sponsors" component={Sponsors} />
           <Route exact path="/devteam" component={DevTeam} />
-          <Route exact path="/points" component={Points} />
+          <UserRoute exact path="/points" component={Points} />
         </main>
         <Footer />
       </Router>

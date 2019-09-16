@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
+import gql from "graphql-tag";
 import { Grid, Container, Card, Table } from "semantic-ui-react";
+import { useQuery } from "@apollo/react-hooks";
+import { AuthContext } from "../context/auth";
 
 function Points() {
+  var {
+    user: { id }
+  } = useContext(AuthContext);
+
+  const {
+    data: { getUser }
+  } = useQuery(FETCH_USER_QUERY, {
+    variables: {
+      userId: id
+    }
+  });
 
   return (
     <div className="body">
@@ -23,7 +37,9 @@ function Points() {
               <Card fluid className="fall">
                 <Card.Content>
                   <p className="points-header">Fall Points</p>
-                  <p className="points-number">0</p>
+                  <p className="points-number">
+                    {getUser ? getUser.fallPoints : "00"}
+                  </p>
                   <p className="points-header">0 Percentile</p>
                 </Card.Content>
               </Card>
@@ -32,7 +48,9 @@ function Points() {
               <Card fluid className="spring">
                 <Card.Content>
                   <p className="points-header">Spring Points</p>
-                  <p className="points-number">0</p>
+                  <p className="points-number">
+                    {getUser ? getUser.springPoints : "00"}
+                  </p>
                   <p className="points-header">0 Percentile</p>
                 </Card.Content>
               </Card>
@@ -41,7 +59,9 @@ function Points() {
               <Card fluid className="summer">
                 <Card.Content>
                   <p className="points-header">Summer Points</p>
-                  <p className="points-number">0</p>
+                  <p className="points-number">
+                    {getUser ? getUser.summerPoints : "00"}
+                  </p>
                   <p className="points-header">0 Percentile</p>
                 </Card.Content>
               </Card>
@@ -114,5 +134,16 @@ function Points() {
     </div>
   );
 }
+
+const FETCH_USER_QUERY = gql`
+  query getUserInfo($userId: ID!) {
+    getUser(userId: $userId) {
+      points
+      fallPoints
+      springPoints
+      summerPoints
+    }
+  }
+`;
 
 export default Points;
