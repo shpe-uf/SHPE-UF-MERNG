@@ -1,18 +1,18 @@
 import React from "react";
 import { Grid, Container, Card } from "semantic-ui-react";
 
-import cesar from "../images/team/2019-2020/cesar.jpg";
-import eduardo from "../images/team/2019-2020/eduardo.jpg";
-import alejandro from "../images/team/2019-2020/alejandro.jpg";
-import david from "../images/team/2019-2020/david.jpg";
-import diego from "../images/team/2019-2020/diego.jpg";
-import isabel from "../images/team/2019-2020/isabel.jpg";
-import joseph from "../images/team/2019-2020/joseph.jpg";
-import juan from "../images/team/2019-2020/juan.jpg";
-import scott from "../images/team/2019-2020/scott.jpg";
-import sofia from "../images/team/2019-2020/sofia.jpg";
-import valentina from "../images/team/2019-2020/valentina.jpg";
-import placeholder from "../images/team/placeholder.png";
+import cesar from "../assets/images/team/2019-2020/cesar.jpg";
+import eduardo from "../assets/images/team/2019-2020/eduardo.jpg";
+import alejandro from "../assets/images/team/2019-2020/alejandro.jpg";
+import david from "../assets/images/team/2019-2020/david.jpg";
+import diego from "../assets/images/team/2019-2020/diego.jpg";
+import isabel from "../assets/images/team/2019-2020/isabel.jpg";
+import joseph from "../assets/images/team/2019-2020/joseph.jpg";
+import juan from "../assets/images/team/2019-2020/juan.jpg";
+import scott from "../assets/images/team/2019-2020/scott.jpg";
+import sofia from "../assets/images/team/2019-2020/sofia.jpg";
+import valentina from "../assets/images/team/2019-2020/valentina.jpg";
+import placeholder from "../assets/images/team/placeholder.png";
 
 function DevTeam() {
   return (

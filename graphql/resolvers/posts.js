@@ -14,7 +14,6 @@ module.exports = {
     },
 
     async getPost(_, { postId }) {
-      console.log("GET POST!");
       try {
         const post = await Post.findById(postId);
 

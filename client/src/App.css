@@ -25,17 +25,17 @@
 
 @font-face {
   font-family: "heading-font";
-  src: url(fonts/HeadingPro.ttf);
+  src: url(assets/fonts/HeadingPro.ttf);
 }
 
 @font-face {
   font-family: "body-font";
-  src: url(fonts/SanFrancisco.otf);
+  src: url(assets/fonts/SanFrancisco.otf);
 }
 
 @font-face {
   font-family: "digital-font";
-  src: url(fonts/Gameplay.ttf);
+  src: url(assets/fonts/Gameplay.ttf);
 }
 
 * {
@@ -168,7 +168,7 @@ h5 {
 }
 
 .masthead-home {
-  background: url(images/home-bg.jpg) !important;
+  background: url(assets/images/home-bg.jpg) !important;
   border-radius: 0px;
   background-position: 50% 155% !important;
   background-attachment: fixed !important;
@@ -177,7 +177,7 @@ h5 {
 }
 
 .masthead-team {
-  background: url(images/team.jpg) !important;
+  background: url(assets/images/team.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -186,7 +186,7 @@ h5 {
 }
 
 .masthead-eboard {
-  background: url(images/eboard.jpg) !important;
+  background: url(assets/images/eboard.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -195,7 +195,7 @@ h5 {
 }
 
 .masthead-about {
-  background: url(images/about.jpg) !important;
+  background: url(assets/images/about.jpg) !important;
   border-radius: 0px;
   background-position: 75% 75% !important;
   background-attachment: fixed !important;
@@ -204,7 +204,7 @@ h5 {
 }
 
 .masthead-sponsors {
-  background: url(images/sponsors.jpg) !important;
+  background: url(assets/images/sponsors.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -303,7 +303,7 @@ h5 {
 }
 
 .register {
-  background: url(images/register.jpg) !important;
+  background: url(assets/images/register.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -313,7 +313,7 @@ h5 {
 }
 
 .login {
-  background: url(images/login.jpg) !important;
+  background: url(assets/images/login.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -355,7 +355,7 @@ h5 {
 }
 
 .platinum {
-  background: url(images/sponsors/platinum.png);
+  background: url(assets/images/sponsors/platinum.png);
 }
 
 .chevron {

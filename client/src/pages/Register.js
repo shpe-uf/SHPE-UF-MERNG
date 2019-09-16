@@ -6,12 +6,12 @@ import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
 
-import majorOptions from "../options/major.json";
-import yearOptions from "../options/year.json";
-import graduatingOptions from "../options/graduating.json";
-import countryOptions from "../options/country.json";
-import ethnicityOptions from "../options/ethnicity.json";
-import sexOptions from "../options/sex.json";
+import majorOptions from "../assets/options/major.json";
+import yearOptions from "../assets/options/year.json";
+import graduatingOptions from "../assets/options/graduating.json";
+import countryOptions from "../assets/options/country.json";
+import ethnicityOptions from "../assets/options/ethnicity.json";
+import sexOptions from "../assets/options/sex.json";
 
 function Register(props) {
   const context = useContext(AuthContext);
