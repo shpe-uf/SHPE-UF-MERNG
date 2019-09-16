@@ -20,6 +20,7 @@ import About from "./pages/About";
 import EBoard from "./pages/EBoard";
 import Sponsors from "./pages/Sponsors";
 import Points from "./pages/Points";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route exact path="/sponsors" component={Sponsors} />
           <Route exact path="/devteam" component={DevTeam} />
           <UserRoute exact path="/points" component={Points} />
+          <UserRoute exact path="/admin" component={Admin} />
         </main>
         <Footer />
       </Router>

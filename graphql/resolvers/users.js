@@ -24,6 +24,15 @@ function generateToken(user) {
 
 module.exports = {
   Query: {
+    async getUsers() {
+        try {
+          const users = await User.find().sort({ lastName: -1 });
+          return users;
+        } catch (err) {
+          throw new Error(err);
+        }
+    },
+
     async getUser(_, { userId }) {
       try {
         const user = await User.findById(userId);
