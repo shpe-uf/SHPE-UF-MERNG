@@ -24,16 +24,16 @@ module.exports.validateRegisterInput = (
   } else {
     if (!firstName.match(nameValidator)) {
       errors.firstName =
-        "Your first name has certain characters that aren't allowed.";
+        "First Name must be at least 3 character, max 20. No special characters or numbers.";
     }
   }
 
   if (lastName.trim() === "") {
-    errors.lastName = "Last name is required.";
+    errors.lastName = "Last Name is required.";
   } else {
     if (!lastName.match(nameValidator)) {
       errors.lastName =
-        "Your last name has certain characters that aren't allowed.";
+        "Last name must be at least 3 character, max 20. No special characters or numbers.";
     }
   }
 
@@ -66,7 +66,7 @@ module.exports.validateRegisterInput = (
   } else {
     if (!username.match(usernameValidator)) {
       errors.username =
-        "Your username has certain characters that aren't allowed.";
+        "Username must be at least 6 characters, max 20. No special characters, except for periods (.) and underscores (_).";
     }
   }
 
@@ -79,12 +79,12 @@ module.exports.validateRegisterInput = (
   }
 
   if (password === "") {
-    errors.password = "Password is required";
+    errors.password = "Password is required.";
   } else if (!password.match(passwordValidator)) {
     errors.password =
       "Passwords must be at least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.";
   } else if (password !== confirmPassword) {
-    errors.confirmPassword = "Password and confirm password must match.";
+    errors.confirmPassword = "Password and Confirm Password must match.";
   }
 
   return {
@@ -97,11 +97,11 @@ module.exports.validateLoginInput = (username, password) => {
   const errors = {};
 
   if (username.trim() === "") {
-    errors.username = "Username is required";
+    errors.username = "Username is required.";
   }
 
   if (password.trim() === "") {
-    errors.password = "Password is required";
+    errors.password = "Password is required.";
   }
 
   return {

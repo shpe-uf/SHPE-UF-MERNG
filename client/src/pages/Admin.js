@@ -40,6 +40,10 @@ function Admin() {
 
   const closeModal = name => {
     if (name === "createEvent") {
+      values.name = "";
+      values.code = "";
+      values.category = "";
+      setErrors(false);
       setCreateEventModal(false);
     }
   };
@@ -50,17 +54,22 @@ function Admin() {
     category: ""
   });
 
-  const [createEvent, { error }] = useMutation(CREATE_EVENT_MUTATION, {
+  const [createEvent, { loading }] = useMutation(CREATE_EVENT_MUTATION, {
     update(
       _,
       {
         data: { createEvent: eventData }
       }
-    ) {},
+    ) {
+      getEvents.unshift(eventData);
+      values.name = "";
+      values.code = "";
+      values.category = "";
+      setCreateEventModal(false);
+    },
 
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      console.log(errors);
     },
 
     variables: values
@@ -203,13 +212,17 @@ function Admin() {
                   </ul>
                 </div>
               )}
-              <Form onSubmit={onSubmit}>
+              <Form
+                onSubmit={onSubmit}
+                noValidate
+                className={loading ? "loading" : ""}
+              >
                 <Form.Input
                   type="text"
                   label="Name"
                   name="name"
                   value={values.name}
-                  error={error ? true : false}
+                  error={errors.name ? true : false}
                   onChange={onChange}
                 />
                 <Form.Input
@@ -217,7 +230,7 @@ function Admin() {
                   label="Code"
                   name="code"
                   value={values.code}
-                  error={error ? true : false}
+                  error={errors.code ? true : false}
                   onChange={onChange}
                 />
                 <Form.Field
@@ -225,7 +238,7 @@ function Admin() {
                   control="select"
                   name="category"
                   value={values.category}
-                  error={error ? true : false}
+                  error={errors.category ? true : false}
                   onChange={onChange}
                 >
                   {categoryOptions.map(category => (
@@ -257,6 +270,9 @@ const CREATE_EVENT_MUTATION = gql`
       name
       code
       category
+      expiration
+      semester
+      points
     }
   }
 `;
