@@ -25,12 +25,12 @@ function generateToken(user) {
 module.exports = {
   Query: {
     async getUsers() {
-        try {
-          const users = await User.find().sort({ lastName: -1 });
-          return users;
-        } catch (err) {
-          throw new Error(err);
-        }
+      try {
+        const users = await User.find().sort({ lastName: 1 });
+        return users;
+      } catch (err) {
+        throw new Error(err);
+      }
     },
 
     async getUser(_, { userId }) {
@@ -161,7 +161,7 @@ module.exports = {
         springPoints: 0,
         summerPoints: 0,
         permission: "user",
-        listServ: (listServ ? true : false),
+        listServ: listServ ? true : false,
         events: [],
         bookmarks: []
       });

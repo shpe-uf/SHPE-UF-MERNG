@@ -49,10 +49,11 @@ main {
 }
 
 h1, h2, h3, h4, h5 {
+  line-height: 1.1 !important;
   font-family: "heading-font" !important;
   text-transform: uppercase !important;
   color: var(--accent-1);
-  margin: 0px 0px 8px 0px !important;
+  margin: 0px !important;
 }
 
 h1 {
@@ -241,7 +242,7 @@ h5 {
 .fa-quote {
   color: var(--white);
   font-size: 3rem !important;
-  padding: 16px 16px;
+  padding: 0px 16px;
 }
 
 .text-home {
@@ -418,11 +419,20 @@ h5 {
 }
 
 .spring {
-  background: rgb(0,131,116) !important;
-  background: linear-gradient(135deg, rgba(0,131,116,1) 25%, rgba(137,186,22,1) 75%) !important;
+  background: rgb(0, 131, 116) !important;
+  background: linear-gradient(135deg, rgba(0, 131, 116, 1) 25%, rgba(137, 186, 22, 1) 75%) !important;
 }
 
 .summer {
   background: rgb(255, 92, 0) !important;
   background: linear-gradient(135deg, rgba(255, 92, 0, 1) 25%, rgba(255, 222, 0, 1) 75%) !important;
+}
+
+.ui.tabular.menu .active.item {
+  color: var(--accent-1);
+}
+
+th {
+  text-transform: uppercase !important;
+  color: var(--accent-2) !important;
 }

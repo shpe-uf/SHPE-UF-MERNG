@@ -23,7 +23,8 @@ module.exports.validateRegisterInput = (
     errors.firstName = "First name is required.";
   } else {
     if (!firstName.match(nameValidator)) {
-      errors.firstName = "Your first name has certain characters that aren't allowed.";
+      errors.firstName =
+        "Your first name has certain characters that aren't allowed.";
     }
   }
 
@@ -31,7 +32,8 @@ module.exports.validateRegisterInput = (
     errors.lastName = "Last name is required.";
   } else {
     if (!lastName.match(nameValidator)) {
-      errors.lastName = "Your last name has certain characters that aren't allowed.";
+      errors.lastName =
+        "Your last name has certain characters that aren't allowed.";
     }
   }
 
@@ -63,7 +65,8 @@ module.exports.validateRegisterInput = (
     errors.username = "Username is required.";
   } else {
     if (!username.match(usernameValidator)) {
-      errors.username = "Your username has certain characters that aren't allowed.";
+      errors.username =
+        "Your username has certain characters that aren't allowed.";
     }
   }
 
@@ -77,8 +80,9 @@ module.exports.validateRegisterInput = (
 
   if (password === "") {
     errors.password = "Password is required";
-  } else if(!password.match(passwordValidator)) {
-    errors.password = "Passwords must be at least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character."
+  } else if (!password.match(passwordValidator)) {
+    errors.password =
+      "Passwords must be at least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.";
   } else if (password !== confirmPassword) {
     errors.confirmPassword = "Password and confirm password must match.";
   }
@@ -98,6 +102,45 @@ module.exports.validateLoginInput = (username, password) => {
 
   if (password.trim() === "") {
     errors.password = "Password is required";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
+module.exports.validateCreateEventInput = (
+  name,
+  code,
+  category
+) => {
+  console.log("# VALIDATE CREATE EVENT INPUT");
+  const errors = {};
+
+  const nameValidator = /^[a-zA-Z0-9-/ ]{6,50}$/i;
+  const codeValidator = /^[a-zA-Z0-9]{6,50}$/i;
+
+  if (name.trim() === "") {
+    errors.name = "Name is required.";
+  } else {
+    if (!name.match(nameValidator)) {
+      errors.name =
+        "Event name must be at least 6 characters, max 50. No special characters, except for hyphens (-) and dashes (/).";
+    }
+  }
+
+  if (code.trim() === "") {
+    errors.code = "Code is required.";
+  } else {
+    if (!code.match(codeValidator)) {
+      errors.code =
+        "Event code must be at least 6 characters, max 50. No special characters.";
+    }
+  }
+
+  if (category.trim() === "") {
+    errors.category = "Category is required.";
   }
 
   return {

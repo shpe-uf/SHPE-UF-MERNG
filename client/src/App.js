@@ -14,7 +14,6 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import SinglePost from "./pages/SinglePost";
 import DevTeam from "./pages/DevTeam";
 import About from "./pages/About";
 import EBoard from "./pages/EBoard";
@@ -31,7 +30,6 @@ function App() {
           <Route exact path="/" component={Home} />
           <AuthRoute exact path="/login" component={Login} />
           <AuthRoute exact path="/register" component={Register} />
-          <Route exact path="/posts/:postId" component={SinglePost} />
           <Route exact path="/about" component={About} />
           <Route exact path="/eboard" component={EBoard} />
           <Route exact path="/sponsors" component={Sponsors} />

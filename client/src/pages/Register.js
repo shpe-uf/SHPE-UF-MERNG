@@ -33,8 +33,6 @@ function Register(props) {
     listServ: false
   });
 
-  console.log(values);
-
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(
       _,
@@ -47,7 +45,6 @@ function Register(props) {
     },
 
     onError(err) {
-      console.log(err);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
 
