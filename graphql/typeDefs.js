@@ -1,17 +1,6 @@
 const gql = require("graphql-tag");
 
 module.exports = gql`
-  type Post {
-    id: ID!
-    body: String!
-    createdAt: String!
-    username: String!
-    comments: [Comment]!
-    likes: [Like]!
-    likeCount: Int!
-    commentCount: Int!
-  }
-
   type User {
     id: ID!
     firstName: String!
@@ -41,28 +30,17 @@ module.exports = gql`
     name: String!
     code: String!
     category: String!
-    points: String!
+    points: Int!
     attendance: Int!
     expiration: String!
     semester: String!
+    attendees: [User]!
+    createdAt: String!
   }
 
   type Company {
     id: ID!
     name: String!
-  }
-
-  type Comment {
-    id: ID!
-    createdAt: String!
-    username: String!
-    body: String!
-  }
-
-  type Like {
-    id: ID!
-    createdAt: String!
-    username: String!
   }
 
   input RegisterInput {
@@ -78,25 +56,24 @@ module.exports = gql`
     email: String!
     password: String!
     confirmPassword: String!
-    listServ: Boolean!
+    listServ: String!
+  }
+
+  input CreateEventInput {
+    name: String!
+    code: String!
+    category: String!
   }
 
   type Query {
-    getPosts: [Post]
-    getPost(postId: ID!): Post
+    getUsers: [User]
+    getUser(userId: ID!): User
+    getEvents: [Event]
   }
 
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
-    createPost(body: String!): Post!
-    deletePost(postId: ID!): String!
-    createComment(postId: ID!, body: String!): Post!
-    deleteComment(postId: ID!, commentId: ID!): Post!
-    likePost(postId: ID!): Post!
-  }
-
-  type Subscription {
-    newPost: Post!
+    createEvent(createEventInput: CreateEventInput): Event!
   }
 `;

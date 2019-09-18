@@ -1,23 +1,17 @@
 import React, { useContext, useState } from "react";
-import {
-  Grid,
-  Form,
-  Button,
-  Container,
-  Checkbox,
-  Select
-} from "semantic-ui-react";
+import { Grid, Form, Button, Container } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
 
-const sexOptions = [
-  { key: "m", text: "Male", value: "male" },
-  { key: "f", text: "Female", value: "female" },
-  { key: "o", text: "Other", value: "other" }
-];
+import majorOptions from "../assets/options/major.json";
+import yearOptions from "../assets/options/year.json";
+import graduatingOptions from "../assets/options/graduating.json";
+import countryOptions from "../assets/options/country.json";
+import ethnicityOptions from "../assets/options/ethnicity.json";
+import sexOptions from "../assets/options/sex.json";
 
 function Register(props) {
   const context = useContext(AuthContext);
@@ -36,10 +30,8 @@ function Register(props) {
     email: "",
     password: "",
     confirmPassword: "",
-    listServ: ""
+    listServ: "false"
   });
-
-  console.log(values);
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(
@@ -74,6 +66,15 @@ function Register(props) {
                   <h1 className="text-white">Register</h1>
                 </div>
                 <div className="jumbotron-register">
+                  {Object.keys(errors).length > 0 && (
+                    <div className="ui error message">
+                      <ul className="list">
+                        {Object.values(errors).map(value => (
+                          <li key={value}>{value}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <Form
                     onSubmit={onSubmit}
                     noValidate
@@ -98,15 +99,92 @@ function Register(props) {
                       />
                     </Form.Group>
                     <Form.Group widths="equal">
-                      <Form.Input
-                        as={Select}
+                      <Form.Field
+                        label="Major"
+                        control="select"
+                        name="major"
+                        value={values.major}
+                        error={errors.major ? true : false}
+                        onChange={onChange}
+                      >
+                        {majorOptions.map(major => (
+                          <option value={major.value} key={major.key}>
+                            {major.value}
+                          </option>
+                        ))}
+                      </Form.Field>
+                      <Form.Field
+                        label="Year"
+                        control="select"
+                        name="year"
+                        value={values.year}
+                        error={errors.year ? true : false}
+                        onChange={onChange}
+                      >
+                        {yearOptions.map(year => (
+                          <option value={year.value} key={year.key}>
+                            {year.value}
+                          </option>
+                        ))}
+                      </Form.Field>
+                      <Form.Field
+                        label="Graduating?"
+                        control="select"
+                        name="graduating"
+                        value={values.graduating}
+                        error={errors.graduating ? true : false}
+                        onChange={onChange}
+                      >
+                        {graduatingOptions.map(graduating => (
+                          <option value={graduating.value} key={graduating.key}>
+                            {graduating.value}
+                          </option>
+                        ))}
+                      </Form.Field>
+                    </Form.Group>
+                    <Form.Group widths="equal">
+                      <Form.Field
+                        label="Country of Origin"
+                        control="select"
+                        name="country"
+                        value={values.country}
+                        error={errors.country ? true : false}
+                        onChange={onChange}
+                      >
+                        {countryOptions.map(country => (
+                          <option value={country.value} key={country.key}>
+                            {country.value}
+                          </option>
+                        ))}
+                      </Form.Field>
+                      <Form.Field
+                        label="Ethnicity"
+                        control="select"
+                        name="ethnicity"
+                        value={values.ethnicity}
+                        error={errors.ethnicity ? true : false}
+                        onChange={onChange}
+                      >
+                        {ethnicityOptions.map(ethnicity => (
+                          <option value={ethnicity.value} key={ethnicity.key}>
+                            {ethnicity.value}
+                          </option>
+                        ))}
+                      </Form.Field>
+                      <Form.Field
                         label="Sex"
+                        control="select"
                         name="sex"
                         value={values.sex}
-                        error={errors.lastname ? true : false}
+                        error={errors.sex ? true : false}
                         onChange={onChange}
-                        options={sexOptions}
-                      />
+                      >
+                        {sexOptions.map(sex => (
+                          <option value={sex.value} key={sex.key}>
+                            {sex.value}
+                          </option>
+                        ))}
+                      </Form.Field>
                     </Form.Group>
                     <Form.Group widths="equal">
                       <Form.Input
@@ -145,27 +223,22 @@ function Register(props) {
                       />
                     </Form.Group>
                     <Form.Field>
-                      <Checkbox
-                        toggle
-                        label="Would you like to be added to the listserv to receive weekly emails?"
-                        value={values.listServ}
-                        onChange={onChange}
-                      />
+                      <div className="ui toggle checkbox">
+                        <input
+                          type="checkbox"
+                          name="listServ"
+                          value={values.listServ === "true" ? false : true}
+                          onChange={onChange}
+                        />
+                        <label>
+                          Would you like to be added to the ListServ to receive
+                          weekly emails?
+                        </label>
+                      </div>
                     </Form.Field>
-                    <Button type="submit" color="teal">
-                      Register
-                    </Button>
+                    <Button type="submit">Register</Button>
                   </Form>
                 </div>
-                {Object.keys(errors).length > 0 && (
-                  <div className="ui error message">
-                    <ul className="list">
-                      {Object.values(errors).map(value => (
-                        <li key={value}>{value}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -189,7 +262,7 @@ const REGISTER_USER = gql`
     $email: String!
     $password: String!
     $confirmPassword: String!
-    $listServ: Boolean!
+    $listServ: String!
   ) {
     register(
       registerInput: {

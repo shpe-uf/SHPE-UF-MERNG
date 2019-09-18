@@ -1,10 +1,10 @@
 const { model, Schema } = require("mongoose");
 
-const userSchema = new Schema({
+const eventSchema = new Schema({
   name: String,
   code: String,
   category: String,
-  points: String,
+  points: Number,
   attendance: Number,
   expiration: String,
   semester: String,

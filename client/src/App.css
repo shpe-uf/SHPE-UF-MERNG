@@ -1,30 +1,46 @@
 :root {
+  /* PRIMARY COLOR */
   --primary: rgb(0, 77, 115);
-  --accent-1: rgb(255, 84, 0);
-  --accent-1-light-1: rgb(255, 101, 25);
-  --accent-1-light-2: rgb(255, 118, 51);
+  --primary-overlay: rgba(0, 77, 115, 0.75);
+  /* ACCENT 1 COLOR */
   --accent-1-light-3: rgb(255, 135, 77);
-  --accent-2: rgb(19, 149, 185);
-  --accent-2-light-1: rgb(43, 160, 193);
-  --accent-2-light-2: rgb(66, 170, 199);
+  --accent-1-light-2: rgb(255, 118, 51);
+  --accent-1-light-1: rgb(255, 101, 25);
+  --accent-1: rgb(255, 84, 0);
+  --accent-1-dark-1: rgb(230, 76, 0);
+  --accent-1-dark-2: rgb(204, 67, 0);
+  --accent-1-dark-3: rgb(179, 59, 0);
+  /* ACCENT 2 COLOR */
   --accent-2-light-3: rgb(90, 181, 207);
+  --accent-2-light-2: rgb(66, 170, 199);
+  --accent-2-light-1: rgb(43, 160, 193);
+  --accent-2: rgb(19, 149, 185);
+  --accent-2-dark-1: rgb(17, 134, 167);
+  --accent-2-dark-2: rgb(15, 119, 148);
+  --accent-2-dark-3: rgb(13, 104, 130);
+  /* MISCELLANEOUS COLORS */
   --white: rgb(255, 255, 255);
   --grey: rgb(200, 200, 200);
 }
 
 @font-face {
   font-family: "heading-font";
-  src: url(fonts/HeadingPro.ttf);
+  src: url(assets/fonts/HeadingPro.ttf);
 }
 
 @font-face {
   font-family: "body-font";
-  src: url(fonts/SanFrancisco.otf);
+  src: url(assets/fonts/SanFrancisco.otf);
+}
+
+@font-face {
+  font-family: "digital-font";
+  src: url(assets/fonts/Gameplay.ttf);
 }
 
 * {
   font-family: "body-font";
-  font-size: 1.025rem !important;
+  font-size: 1.00rem !important;
 }
 
 main {
@@ -32,15 +48,12 @@ main {
   min-height: calc(100vh - 65px - 41px);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1, h2, h3, h4, h5 {
+  line-height: 1.1 !important;
   font-family: "heading-font" !important;
   text-transform: uppercase !important;
   color: var(--accent-1);
-  margin: 0px 0px 8px 0px !important;
+  margin: 0px !important;
 }
 
 h1 {
@@ -61,6 +74,10 @@ h4 {
 
 h5 {
   font-size: 1.5rem !important;
+}
+
+.body {
+  margin-bottom: 32px;
 }
 
 .ui.grid {
@@ -91,19 +108,17 @@ h5 {
   border-radius: 0px !important;
 }
 
-.ui.inverted.menu .accent-1.active.item,
-.ui.inverted.accent-1.menu {
+.ui.inverted.menu .accent-1.active.item, .ui.inverted.accent-1.menu {
   background-color: var(--accent-1);
 }
 
-.ui.inverted.menu .accent-2.active.item,
-.ui.inverted.accent-2.menu {
+.ui.inverted.menu .accent-2.active.item, .ui.inverted.accent-2.menu {
   background-color: var(--accent-2);
 }
 
 .ui.inverted.menu .active.item {
   background: var(--accent-2);
-  color: #fff !important;
+  color: var(--white) !important;
 }
 
 .ui.inverted.menu {
@@ -111,6 +126,10 @@ h5 {
   background: var(--primary);
   box-shadow: none;
   margin-bottom: 0px;
+}
+
+.username {
+  text-transform: lowercase !important;
 }
 
 .brand {
@@ -121,24 +140,24 @@ h5 {
   align-items: center !important;
   justify-content: center !important;
   background-color: var(--accent-1) !important;
+  text-transform: uppercase !important;
 }
 
 .overlay-home {
-  background-color: rgba(0, 77, 115, 0.75);
+  background-color: var(--primary-overlay);
   width: 100%;
   padding: 10rem 0rem;
 }
 
 .overlay-blue {
-  background-color: rgba(0, 77, 115, 0.75);
+  background-color: var(--primary-overlay);
   width: 100%;
   padding: 7rem 0rem;
   margin-bottom: 24px;
 }
 
-.overlay-register,
-.overlay-login {
-  background-color: rgba(0, 77, 115, 0.75);
+.overlay-register, .overlay-login {
+  background-color: var(--primary-overlay);
   width: 100%;
   min-height: calc(100vh - 65px - 41px);
 }
@@ -150,7 +169,7 @@ h5 {
 }
 
 .masthead-home {
-  background: url(images/home-bg.jpg) !important;
+  background: url(assets/images/home-bg.jpg) !important;
   border-radius: 0px;
   background-position: 50% 155% !important;
   background-attachment: fixed !important;
@@ -159,7 +178,7 @@ h5 {
 }
 
 .masthead-team {
-  background: url(images/team.jpg) !important;
+  background: url(assets/images/team.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -168,7 +187,7 @@ h5 {
 }
 
 .masthead-eboard {
-  background: url(images/eboard.jpg) !important;
+  background: url(assets/images/eboard.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -177,7 +196,7 @@ h5 {
 }
 
 .masthead-about {
-  background: url(images/about.jpg) !important;
+  background: url(assets/images/about.jpg) !important;
   border-radius: 0px;
   background-position: 75% 75% !important;
   background-attachment: fixed !important;
@@ -186,12 +205,19 @@ h5 {
 }
 
 .masthead-sponsors {
-  background: url(images/sponsors.jpg) !important;
+  background: url(assets/images/sponsors.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
+}
+
+.masthead-application {
+  padding: 32px 0px;
+  margin-bottom: 16px;
+  text-align: left;
+  background-color: var(--accent-2);
 }
 
 .masthead-quote {
@@ -216,7 +242,7 @@ h5 {
 .fa-quote {
   color: var(--white);
   font-size: 3rem !important;
-  padding: 16px 16px;
+  padding: 0px 16px;
 }
 
 .text-home {
@@ -246,6 +272,14 @@ h5 {
   padding: 0px !important;
 }
 
+.sponsor-padding {
+  padding: 0px 0px 24px 0px !important;
+}
+
+.no-margin {
+  margin: 0px !important;
+}
+
 .footer {
   background-color: var(--primary);
   color: var(--white);
@@ -258,10 +292,10 @@ h5 {
 }
 
 .heart {
-  color: rgb(200, 50, 50);
+  color: rgb(255, 0, 0);
 }
 
-.card-team {
+.card-team, .card-points {
   padding: 8px !important;
 }
 
@@ -270,7 +304,7 @@ h5 {
 }
 
 .register {
-  background: url(images/register.jpg) !important;
+  background: url(assets/images/register.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -280,7 +314,7 @@ h5 {
 }
 
 .login {
-  background: url(images/login.jpg) !important;
+  background: url(assets/images/login.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -289,8 +323,7 @@ h5 {
   min-height: calc(100vh - 65px - 41px);
 }
 
-.jumbotron-register,
-.jumbotron-login {
+.jumbotron-register, .jumbotron-login {
   background-color: var(--white) !important;
   padding: 16px !important;
   border-bottom-left-radius: 8px;
@@ -307,11 +340,99 @@ h5 {
 .sponsor {
   border-style: solid !important;
   border-width: 3px !important;
-  border-color: var(--grey) !important;
-  border-radius: 8px;
+  border-radius: 0px;
+}
+
+.bronze {
+  border-color: rgb(163, 105, 47) !important;
+}
+
+.silver {
+  border-color: rgb(215, 215, 215) !important;
+}
+
+.gold {
+  border-color: rgb(255, 215, 0) !important;
+}
+
+.platinum {
+  background: url(assets/images/sponsors/platinum.png);
+}
+
+.chevron {
+  border-image-source: linear-gradient(0deg, rgb(227, 13, 25), rgb(25, 143, 204)) !important;
+  border-image-slice: 1 !important;
+}
+
+.link-email, .link-team {
+  overflow-wrap: break-word;
 }
 
 .link-email:hover, .link-team:hover {
   color: var(--accent-2) !important;
   text-decoration: none;
+}
+
+.ui.button {
+  background: var(--accent-2);
+  color: var(--white);
+}
+
+.ui.button:hover {
+  background: var(--accent-2-dark-1);
+  color: var(--white);
+}
+
+.ui.button:active {
+  background: var(--accent-2-dark-2);
+  color: var(--white);
+}
+
+.points-number {
+  font-family: "digital-font" !important;
+  font-size: 5rem !important;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  text-align: center;
+  margin: 0px !important;
+  color: var(--white);
+}
+
+.points-header {
+  font-family: "digital-font" !important;
+  font-size: 1rem !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  margin: 0px !important;
+  color: var(--white);
+}
+
+.redeem {
+  background: rgb(63, 38, 99) !important;
+  background: linear-gradient(135deg, rgba(63, 38, 99, 1) 25%, rgba(42, 145, 195, 1) 75%) !important;
+}
+
+.fall {
+  background: rgb(124, 24, 47) !important;
+  background: linear-gradient(135deg, rgba(124, 24, 47, 1) 25%, rgba(230, 55, 0, 1) 75%) !important;
+}
+
+.spring {
+  background: rgb(0, 131, 116) !important;
+  background: linear-gradient(135deg, rgba(0, 131, 116, 1) 25%, rgba(137, 186, 22, 1) 75%) !important;
+}
+
+.summer {
+  background: rgb(255, 92, 0) !important;
+  background: linear-gradient(135deg, rgba(255, 92, 0, 1) 25%, rgba(255, 222, 0, 1) 75%) !important;
+}
+
+.ui.tabular.menu .active.item {
+  color: var(--accent-1);
+}
+
+th {
+  text-transform: uppercase !important;
+  color: var(--accent-2) !important;
 }

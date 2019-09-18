@@ -1,20 +1,20 @@
 import React from "react";
 import { Grid, Container, Card } from "semantic-ui-react";
 
-import cesar from "../images/team/2019-2020/cesar.jpg";
-import eduardo from "../images/team/2019-2020/eduardo.jpg";
-import alejandro from "../images/team/2019-2020/alejandro.jpg";
-import david from "../images/team/2019-2020/david.jpg";
-import diego from "../images/team/2019-2020/diego.jpg";
-import isabel from "../images/team/2019-2020/isabel.jpg";
-import joseph from "../images/team/2019-2020/joseph.jpg";
-import juan from "../images/team/2019-2020/juan.jpg";
-import scott from "../images/team/2019-2020/scott.jpg";
-import sofia from "../images/team/2019-2020/sofia.jpg";
-import valentina from "../images/team/2019-2020/valentina.jpg";
-import placeholder from "../images/team/placeholder.png";
+import cesar from "../assets/images/team/2019-2020/cesar.jpg";
+import eduardo from "../assets/images/team/2019-2020/eduardo.jpg";
+import alejandro from "../assets/images/team/2019-2020/alejandro.jpg";
+import david from "../assets/images/team/2019-2020/david.jpg";
+import diego from "../assets/images/team/2019-2020/diego.jpg";
+import isabel from "../assets/images/team/2019-2020/isabel.jpg";
+import joseph from "../assets/images/team/2019-2020/joseph.jpg";
+import juan from "../assets/images/team/2019-2020/juan.jpg";
+import scott from "../assets/images/team/2019-2020/scott.jpg";
+import sofia from "../assets/images/team/2019-2020/sofia.jpg";
+import valentina from "../assets/images/team/2019-2020/valentina.jpg";
+import placeholder from "../assets/images/team/placeholder.png";
 
-function Team() {
+function DevTeam() {
   return (
     <div>
       <Grid>
@@ -23,7 +23,7 @@ function Team() {
             <div className="masthead masthead-team">
               <div className="overlay-blue">
                 <Container>
-                  <h1 className="masthead-title text-white">Meet the team</h1>
+                  <h1 className="masthead-title text-white">Development Team</h1>
                 </Container>
               </div>
             </div>
@@ -31,7 +31,7 @@ function Team() {
         </Grid.Row>
       </Grid>
       <Container>
-        <h1>Fall 2019 - Spring 2020</h1>
+        <h2>Fall 2019 - Spring 2020</h2>
         <Grid stackable columns={3}>
           <Grid.Row>
             <Grid.Column className="card-team">
@@ -153,4 +153,4 @@ function Team() {
   );
 }
 
-export default Team;
+export default DevTeam;

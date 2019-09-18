@@ -1,23 +1,39 @@
 import gql from "graphql-tag";
 
-export const FETCH_POSTS_QUERY = gql`
+export const FETCH_USERS_QUERY = gql`
   {
-    getPosts {
-      id
-      body
-      createdAt
+    getUsers {
+      firstName
+      lastName
+      major
+      year
+      graduating
+      country
+      ethnicity
+      sex
       username
-      likeCount
-      likes {
-        username
-      }
-      commentCount
-      comments {
-        id
-        username
-        createdAt
-        body
-      }
+      email
+      createdAt
+      points
+      fallPoints
+      springPoints
+      summerPoints
+      permission
+      listServ
+    }
+  }
+`;
+
+export const FETCH_EVENTS_QUERY = gql`
+  {
+    getEvents {
+      name
+      code
+      category
+      points
+      attendance
+      expiration
+      semester
     }
   }
 `;

@@ -1,9 +1,9 @@
 const { UserInputError } = require("apollo-server");
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
 const User = require("../../models/User.js");
+
+require("dotenv").config();
 
 const {
   validateRegisterInput,
@@ -18,13 +18,36 @@ function generateToken(user) {
       username: user.username
     },
     process.env.SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "24h" }
   );
 }
 
-require("dotenv").config();
-
 module.exports = {
+  Query: {
+    async getUsers() {
+      try {
+        const users = await User.find().sort({ lastName: 1 });
+        return users;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getUser(_, { userId }) {
+      try {
+        const user = await User.findById(userId);
+
+        if (user) {
+          return user;
+        } else {
+          throw new Error("User not found");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    }
+  },
+
   Mutation: {
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);
@@ -119,6 +142,7 @@ module.exports = {
       }
 
       password = await bcrypt.hash(password, 12);
+      listServ = ((listServ === "true" || listServ === true) ? true : false);
 
       const newUser = new User({
         firstName,
@@ -138,7 +162,7 @@ module.exports = {
         springPoints: 0,
         summerPoints: 0,
         permission: "user",
-        listServ: (listServ ? true : false),
+        listServ,
         events: [],
         bookmarks: []
       });
