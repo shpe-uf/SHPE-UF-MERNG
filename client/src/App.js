@@ -18,8 +18,8 @@ import DevTeam from "./pages/DevTeam";
 import About from "./pages/About";
 import EBoard from "./pages/EBoard";
 import Sponsors from "./pages/Sponsors";
-import Points from "./pages/Points";
 import Admin from "./pages/Admin";
+import Points from "./pages/Points";
 
 function App() {
   return (
@@ -32,10 +32,10 @@ function App() {
           <AuthRoute exact path="/register" component={Register} />
           <Route exact path="/about" component={About} />
           <Route exact path="/eboard" component={EBoard} />
-          <Route exact path="/sponsors" component={Sponsors} />
           <Route exact path="/devteam" component={DevTeam} />
-          <UserRoute exact path="/points" component={Points} />
+          <Route exact path="/sponsors" component={Sponsors} />
           <UserRoute exact path="/admin" component={Admin} />
+          <UserRoute exact path="/points" component={Points} />
         </main>
         <Footer />
       </Router>

@@ -45,7 +45,7 @@
 
 main {
   background-color: var(--white);
-  min-height: calc(100vh - 65px - 41px);
+  min-height: calc(100vh - 65px - 40px);
 }
 
 h1, h2, h3, h4, h5 {
@@ -134,7 +134,7 @@ h5 {
 
 .brand {
   font-size: 2rem !important;
-  font-family: "heading-font";
+  font-family: "heading-font" !important;
   width: 150px !important;
   padding: 16px !important;
   align-items: center !important;
@@ -388,6 +388,31 @@ h5 {
   color: var(--white);
 }
 
+.ui.button:focus {
+  background: var(--accent-2);
+  color: var(--white);
+}
+
+.ui.button.secondary {
+  background: var(--accent-1);
+  color: var(--white);
+}
+
+.ui.button.secondary:hover {
+  background: var(--accent-1-dark-1);
+  color: var(--white);
+}
+
+.ui.button.secondary:active {
+  background: var(--accent-1-dark-2);
+  color: var(--white);
+}
+
+.ui.button.secondary:focus {
+  background: var(--accent-1);
+  color: var(--white);
+}
+
 .points-number {
   font-family: "digital-font" !important;
   font-size: 5rem !important;
@@ -435,4 +460,9 @@ h5 {
 th {
   text-transform: uppercase !important;
   color: var(--accent-2) !important;
+}
+
+.table-responsive {
+  display: block;
+  overflow-x: scroll;
 }

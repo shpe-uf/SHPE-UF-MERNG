@@ -92,47 +92,54 @@ function Admin() {
       render: () => (
         <Tab.Pane>
           <Grid>
-            <Grid.Column>
-              <Button floated="right" onClick={() => openModal("createEvent")}>
-                Create Event
-              </Button>
-            </Grid.Column>
+            <Grid.Row>
+              <Grid.Column>
+                <Button
+                  floated="right"
+                  onClick={() => openModal("createEvent")}
+                >
+                  Create Event
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
           </Grid>
-          <Table striped selectable unstackable>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Code</Table.HeaderCell>
-                <Table.HeaderCell>Category</Table.HeaderCell>
-                <Table.HeaderCell>Expiration</Table.HeaderCell>
-                <Table.HeaderCell>Semester</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">
-                  Attendance
-                </Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {getEvents &&
-                getEvents.map(event => (
-                  <Table.Row key={event.name}>
-                    <Table.Cell>{event.name}</Table.Cell>
-                    <Table.Cell>{event.code}</Table.Cell>
-                    <Table.Cell>{event.category}</Table.Cell>
-                    <Table.Cell>
-                      {moment(event.expiration)
-                        .local()
-                        .format("MM/DD/YYYY @ hh:mm A")}
-                    </Table.Cell>
-                    <Table.Cell>{event.semester}</Table.Cell>
-                    <Table.Cell textAlign="center">
-                      {event.attendance}
-                    </Table.Cell>
-                    <Table.Cell textAlign="center">{event.points}</Table.Cell>
-                  </Table.Row>
-                ))}
-            </Table.Body>
-          </Table>
+          <div className="table-responsive">
+            <Table striped selectable unstackable singleLine>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Code</Table.HeaderCell>
+                  <Table.HeaderCell>Category</Table.HeaderCell>
+                  <Table.HeaderCell>Expiration</Table.HeaderCell>
+                  <Table.HeaderCell>Semester</Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">
+                    Attendance
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {getEvents &&
+                  getEvents.map(event => (
+                    <Table.Row key={event.name}>
+                      <Table.Cell>{event.name}</Table.Cell>
+                      <Table.Cell>{event.code}</Table.Cell>
+                      <Table.Cell>{event.category}</Table.Cell>
+                      <Table.Cell>
+                        {moment(event.expiration)
+                          .local()
+                          .format("MM/DD/YYYY @ hh:mm A")}
+                      </Table.Cell>
+                      <Table.Cell>{event.semester}</Table.Cell>
+                      <Table.Cell textAlign="center">
+                        {event.attendance}
+                      </Table.Cell>
+                      <Table.Cell textAlign="center">{event.points}</Table.Cell>
+                    </Table.Row>
+                  ))}
+              </Table.Body>
+            </Table>
+          </div>
         </Tab.Pane>
       )
     },
@@ -140,59 +147,53 @@ function Admin() {
       menuItem: { key: "members", icon: "users", content: "Members" },
       render: () => (
         <Tab.Pane>
-          <Table striped selectable unstackable>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Username</Table.HeaderCell>
-                <Table.HeaderCell>E-mail</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">
-                  Fall Points
-                </Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">
-                  Spring Points
-                </Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">
-                  Summer Points
-                </Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">
-                  Total Points
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {getUsers &&
-                getUsers.map(user => (
-                  <Table.Row key={user.username}>
-                    <Table.Cell>
-                      {user.lastName}, {user.firstName}
-                    </Table.Cell>
-                    <Table.Cell>{user.username}</Table.Cell>
-                    <Table.Cell>{user.email}</Table.Cell>
-                    <Table.Cell textAlign="center">
-                      {user.fallPoints}
-                    </Table.Cell>
-                    <Table.Cell textAlign="center">
-                      {user.springPoints}
-                    </Table.Cell>
-                    <Table.Cell textAlign="center">
-                      {user.summerPoints}
-                    </Table.Cell>
-                    <Table.Cell textAlign="center">{user.points}</Table.Cell>
-                  </Table.Row>
-                ))}
-            </Table.Body>
-          </Table>
+          <div className="table-responsive">
+            <Table striped selectable unstackable singleLine>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Username</Table.HeaderCell>
+                  <Table.HeaderCell>E-mail</Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">
+                    Fall Points
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">
+                    Spring Points
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">
+                    Summer Points
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">
+                    Total Points
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {getUsers &&
+                  getUsers.map(user => (
+                    <Table.Row key={user.username}>
+                      <Table.Cell>
+                        {user.lastName}, {user.firstName}
+                      </Table.Cell>
+                      <Table.Cell>{user.username}</Table.Cell>
+                      <Table.Cell>{user.email}</Table.Cell>
+                      <Table.Cell textAlign="center">
+                        {user.fallPoints}
+                      </Table.Cell>
+                      <Table.Cell textAlign="center">
+                        {user.springPoints}
+                      </Table.Cell>
+                      <Table.Cell textAlign="center">
+                        {user.summerPoints}
+                      </Table.Cell>
+                      <Table.Cell textAlign="center">{user.points}</Table.Cell>
+                    </Table.Row>
+                  ))}
+              </Table.Body>
+            </Table>
+          </div>
         </Tab.Pane>
       )
-    },
-    {
-      menuItem: {
-        key: "requests",
-        icon: "clipboard list",
-        content: "Requests"
-      },
-      render: () => <Tab.Pane>Requests go here</Tab.Pane>
     }
   ];
 
@@ -313,6 +314,7 @@ const CREATE_EVENT_MUTATION = gql`
       semester
       points
       createdAt
+      attendance
     }
   }
 `;
