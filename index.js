@@ -20,5 +20,5 @@ mongoose
     return server.listen({ port: (process.env.PORT || 5000) });
   })
   .then(res => {
-    console.log(`\nSERVER RUNNING AT ${res.url}`);
+    console.log(`SERVER RUNNING AT ${res.url}`);
   });

@@ -65,7 +65,6 @@ function Login(props) {
                     <Form.Input
                       type="text"
                       label="Username"
-                      placeholder="Username..."
                       name="username"
                       value={values.username}
                       error={errors.username ? true : false}
@@ -74,7 +73,6 @@ function Login(props) {
                     <Form.Input
                       type="password"
                       label="Password"
-                      placeholder="Password..."
                       name="password"
                       value={values.password}
                       error={errors.password ? true : false}

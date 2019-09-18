@@ -142,6 +142,7 @@ module.exports = {
       }
 
       password = await bcrypt.hash(password, 12);
+      listServ = ((listServ === "true" || listServ === true) ? true : false);
 
       const newUser = new User({
         firstName,
@@ -161,7 +162,7 @@ module.exports = {
         springPoints: 0,
         summerPoints: 0,
         permission: "user",
-        listServ: listServ ? true : false,
+        listServ,
         events: [],
         bookmarks: []
       });

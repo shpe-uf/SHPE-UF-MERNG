@@ -30,7 +30,7 @@ function Register(props) {
     email: "",
     password: "",
     confirmPassword: "",
-    listServ: false
+    listServ: "false"
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
@@ -45,7 +45,6 @@ function Register(props) {
     },
 
     onError(err) {
-      console.log(err);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
 
@@ -228,7 +227,7 @@ function Register(props) {
                         <input
                           type="checkbox"
                           name="listServ"
-                          value={!values.listServ}
+                          value={values.listServ === "true" ? false : true}
                           onChange={onChange}
                         />
                         <label>
@@ -263,7 +262,7 @@ const REGISTER_USER = gql`
     $email: String!
     $password: String!
     $confirmPassword: String!
-    $listServ: Boolean!
+    $listServ: String!
   ) {
     register(
       registerInput: {

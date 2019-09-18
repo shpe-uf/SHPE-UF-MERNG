@@ -56,7 +56,7 @@ module.exports = gql`
     email: String!
     password: String!
     confirmPassword: String!
-    listServ: Boolean!
+    listServ: String!
   }
 
   input CreateEventInput {
