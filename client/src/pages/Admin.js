@@ -43,6 +43,7 @@ function Admin() {
       values.name = "";
       values.code = "";
       values.category = "";
+      values.expiration = "";
       setErrors(false);
       setCreateEventModal(false);
     }
@@ -51,7 +52,8 @@ function Admin() {
   const { values, onChange, onSubmit } = useForm(createEventCallback, {
     name: "",
     code: "",
-    category: ""
+    category: "",
+    expiration: ""
   });
 
   const [createEvent, { loading }] = useMutation(CREATE_EVENT_MUTATION, {
@@ -65,6 +67,7 @@ function Admin() {
       values.name = "";
       values.code = "";
       values.category = "";
+      values.expiration = "";
       setCreateEventModal(false);
     },
 
@@ -88,7 +91,13 @@ function Admin() {
       },
       render: () => (
         <Tab.Pane>
-          <Button onClick={() => openModal("createEvent")}>Create Event</Button>
+          <Grid>
+            <Grid.Column>
+              <Button floated="right" onClick={() => openModal("createEvent")}>
+                Create Event
+              </Button>
+            </Grid.Column>
+          </Grid>
           <Table striped selectable unstackable>
             <Table.Header>
               <Table.Row>
@@ -97,6 +106,9 @@ function Admin() {
                 <Table.HeaderCell>Category</Table.HeaderCell>
                 <Table.HeaderCell>Expiration</Table.HeaderCell>
                 <Table.HeaderCell>Semester</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">
+                  Attendance
+                </Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -113,6 +125,9 @@ function Admin() {
                         .format("MM/DD/YYYY @ hh:mm A")}
                     </Table.Cell>
                     <Table.Cell>{event.semester}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {event.attendance}
+                    </Table.Cell>
                     <Table.Cell textAlign="center">{event.points}</Table.Cell>
                   </Table.Row>
                 ))}
@@ -197,7 +212,7 @@ function Admin() {
       <Container>
         <Tab panes={panes} />
 
-        <Modal open={createEventModal} dimmer="blurring" size="tiny">
+        <Modal open={createEventModal} size="tiny">
           <Modal.Header>
             <h2>Create Event</h2>
           </Modal.Header>
@@ -247,6 +262,20 @@ function Admin() {
                     </option>
                   ))}
                 </Form.Field>
+                <Form.Field
+                  label="Expires in"
+                  control="select"
+                  name="expiration"
+                  value={values.expiration}
+                  error={errors.expiration ? true : false}
+                  onChange={onChange}
+                >
+                  {expirationOptions.map(expiration => (
+                    <option value={expiration.value} key={expiration.key}>
+                      {expiration.key}
+                    </option>
+                  ))}
+                </Form.Field>
                 <Button color="grey" onClick={() => closeModal("createEvent")}>
                   Cancel
                 </Button>
@@ -263,9 +292,19 @@ function Admin() {
 }
 
 const CREATE_EVENT_MUTATION = gql`
-  mutation createEvent($name: String!, $code: String!, $category: String!) {
+  mutation createEvent(
+    $name: String!
+    $code: String!
+    $category: String!
+    $expiration: String!
+  ) {
     createEvent(
-      createEventInput: { name: $name, code: $code, category: $category }
+      createEventInput: {
+        name: $name
+        code: $code
+        category: $category
+        expiration: $expiration
+      }
     ) {
       name
       code
@@ -273,6 +312,7 @@ const CREATE_EVENT_MUTATION = gql`
       expiration
       semester
       points
+      createdAt
     }
   }
 `;

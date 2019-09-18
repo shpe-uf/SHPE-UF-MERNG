@@ -34,6 +34,7 @@ export const FETCH_EVENTS_QUERY = gql`
       attendance
       expiration
       semester
+      createdAt
     }
   }
 `;

@@ -13,7 +13,8 @@ const eventSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "users"
     }
-  ]
+  ],
+  createdAt: String
 });
 
 module.exports = model("Event", eventSchema);

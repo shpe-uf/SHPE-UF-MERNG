@@ -56,6 +56,8 @@ module.exports = {
         throw new UserInputError("Errors", { errors });
       }
 
+      username = username.toLowerCase();
+      
       const user = await User.findOne({ username });
 
       if (!user) {
@@ -141,6 +143,7 @@ module.exports = {
         });
       }
 
+      username = username.toLowerCase();
       password = await bcrypt.hash(password, 12);
       listServ = ((listServ === "true" || listServ === true) ? true : false);
 

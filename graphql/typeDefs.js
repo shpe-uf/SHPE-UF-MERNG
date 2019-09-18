@@ -63,6 +63,7 @@ module.exports = gql`
     name: String!
     code: String!
     category: String!
+    expiration: String!
   }
 
   type Query {
