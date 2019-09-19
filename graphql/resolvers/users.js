@@ -241,8 +241,6 @@ module.exports = {
         { new: true }
       );
 
-      console.log(updatedUser);
-
       return updatedUser;
     }
   }

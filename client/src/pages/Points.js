@@ -59,6 +59,7 @@ function Points() {
     ) {
       values.code = "";
       setRedeemPointsModal(false);
+      updateGetUser(userData);
     },
 
     onError(err) {
@@ -70,6 +71,12 @@ function Points() {
 
   function redeemPointsCallback() {
     redeemPoints();
+  }
+
+  function updateGetUser(userData) {
+    getUser.fallPoints = userData.fallPoints;
+    getUser.springPoints = userData.springPoints;
+    getUser.summerPoints = userData.summerPoints;
   }
 
   return (
@@ -179,7 +186,6 @@ function Points() {
               <Form
                 onSubmit={onSubmit}
                 noValidate
-                className={loading ? "loading" : ""}
               >
                 <Form.Input
                   type="text"
