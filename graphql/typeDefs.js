@@ -66,6 +66,11 @@ module.exports = gql`
     expiration: String!
   }
 
+  input RedeemPointsInput {
+    code: String!
+    username: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
@@ -76,5 +81,6 @@ module.exports = gql`
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
     createEvent(createEventInput: CreateEventInput): Event!
+    redeemPoints(redeemPointsInput: RedeemPointsInput): User!
   }
 `;

@@ -1,17 +1,27 @@
 import React, { useContext, useState } from "react";
 import gql from "graphql-tag";
-import { Grid, Container, Card, Table, Button, Modal } from "semantic-ui-react";
-import { useQuery } from "@apollo/react-hooks";
+import {
+  Grid,
+  Container,
+  Card,
+  Table,
+  Button,
+  Modal,
+  Form
+} from "semantic-ui-react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useForm } from "../util/hooks";
+
 import { AuthContext } from "../context/auth";
 
 function Points() {
   const [errors, setErrors] = useState({});
 
   var {
-    user: { id }
+    user: { id, username }
   } = useContext(AuthContext);
 
-  const {
+  var {
     data: { getUser }
   } = useQuery(FETCH_USER_QUERY, {
     variables: {
@@ -29,10 +39,38 @@ function Points() {
 
   const closeModal = name => {
     if (name === "redeemPoints") {
+      values.code = "";
       setErrors(false);
       setRedeemPointsModal(false);
     }
   };
+
+  const { values, onChange, onSubmit } = useForm(redeemPointsCallback, {
+    code: "",
+    username: username
+  });
+
+  const [redeemPoints, { loading }] = useMutation(REDEEM_POINTS_MUTATION, {
+    update(
+      _,
+      {
+        data: { redeemPoints: userData }
+      }
+    ) {
+      values.code = "";
+      setRedeemPointsModal(false);
+    },
+
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+    },
+
+    variables: values
+  });
+
+  function redeemPointsCallback() {
+    redeemPoints();
+  }
 
   return (
     <div className="body">
@@ -111,49 +149,13 @@ function Points() {
                 <Table.Cell>September 4, 2019</Table.Cell>
                 <Table.Cell textAlign="center">1</Table.Cell>
               </Table.Row>
-              <Table.Row>
-                <Table.Cell>Fall General Body Meeting 1</Table.Cell>
-                <Table.Cell>General Body Meeting</Table.Cell>
-                <Table.Cell>September 4, 2019</Table.Cell>
-                <Table.Cell textAlign="center">1</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Fall General Body Meeting 1</Table.Cell>
-                <Table.Cell>General Body Meeting</Table.Cell>
-                <Table.Cell>September 4, 2019</Table.Cell>
-                <Table.Cell textAlign="center">1</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Fall General Body Meeting 1</Table.Cell>
-                <Table.Cell>General Body Meeting</Table.Cell>
-                <Table.Cell>September 4, 2019</Table.Cell>
-                <Table.Cell textAlign="center">1</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Fall General Body Meeting 1</Table.Cell>
-                <Table.Cell>General Body Meeting</Table.Cell>
-                <Table.Cell>September 4, 2019</Table.Cell>
-                <Table.Cell textAlign="center">1</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Fall General Body Meeting 1</Table.Cell>
-                <Table.Cell>General Body Meeting</Table.Cell>
-                <Table.Cell>September 4, 2019</Table.Cell>
-                <Table.Cell textAlign="center">1</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Fall General Body Meeting 1</Table.Cell>
-                <Table.Cell>General Body Meeting</Table.Cell>
-                <Table.Cell>September 4, 2019</Table.Cell>
-                <Table.Cell textAlign="center">1</Table.Cell>
-              </Table.Row>
             </Table.Body>
             <Table.Footer>
               <Table.Row>
                 <Table.HeaderCell>Total Points</Table.HeaderCell>
                 <Table.HeaderCell />
                 <Table.HeaderCell />
-                <Table.HeaderCell textAlign="center">7</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">1</Table.HeaderCell>
               </Table.Row>
             </Table.Footer>
           </Table>
@@ -165,9 +167,39 @@ function Points() {
           </Modal.Header>
           <Modal.Content scrolling>
             <Modal.Description>
-              <Button color="grey" onClick={() => closeModal("redeemPoints")}>
-                Cancel
-              </Button>
+              {Object.keys(errors).length > 0 && (
+                <div className="ui error message">
+                  <ul className="list">
+                    {Object.values(errors).map(value => (
+                      <li key={value}>{value}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <Form
+                onSubmit={onSubmit}
+                noValidate
+                className={loading ? "loading" : ""}
+              >
+                <Form.Input
+                  type="text"
+                  label="Event Code"
+                  name="code"
+                  value={values.code}
+                  error={errors.code ? true : false}
+                  onChange={onChange}
+                />
+                <Button
+                  type="reset"
+                  color="grey"
+                  onClick={() => closeModal("redeemPoints")}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" floated="right">
+                  Submit
+                </Button>
+              </Form>
             </Modal.Description>
           </Modal.Content>
         </Modal>
@@ -179,6 +211,17 @@ function Points() {
 const FETCH_USER_QUERY = gql`
   query getUserInfo($userId: ID!) {
     getUser(userId: $userId) {
+      points
+      fallPoints
+      springPoints
+      summerPoints
+    }
+  }
+`;
+
+const REDEEM_POINTS_MUTATION = gql`
+  mutation redeemPoints($code: String!, $username: String!) {
+    redeemPoints(redeemPointsInput: { code: $code, username: $username }) {
       points
       fallPoints
       springPoints

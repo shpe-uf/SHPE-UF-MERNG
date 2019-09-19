@@ -26,6 +26,34 @@ function MenuBar() {
           as={Link}
           to="/"
         />
+        <Menu.Item
+          name="about us"
+          active={activeItem === "about us"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/about"
+        />
+        <Menu.Item
+          name="e-board"
+          active={activeItem === "e-board"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/eboard"
+        />
+        <Menu.Item
+          name="dev team"
+          active={activeItem === "dev team"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/devteam"
+        />
+        <Menu.Item
+          name="sponsors"
+          active={activeItem === "sponsors"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/sponsors"
+        />
         <Menu.Menu position="right">
           {user ? (
             <>

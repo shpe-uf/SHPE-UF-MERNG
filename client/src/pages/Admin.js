@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import gql from "graphql-tag";
 import {
   Grid,
   Container,
@@ -9,12 +10,10 @@ import {
   Form
 } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import { useForm } from "../util/hooks";
 
 import { FETCH_USERS_QUERY, FETCH_EVENTS_QUERY } from "../util/graphql";
 import moment from "moment";
-
-import { useForm } from "../util/hooks";
 
 import categoryOptions from "../assets/options/category.json";
 import expirationOptions from "../assets/options/expiration.json";
@@ -63,7 +62,7 @@ function Admin() {
         data: { createEvent: eventData }
       }
     ) {
-      getEvents.unshift(eventData);
+      getEvents.push(eventData);
       values.name = "";
       values.code = "";
       values.category = "";
@@ -213,7 +212,12 @@ function Admin() {
       <Container>
         <Tab panes={panes} />
 
-        <Modal open={createEventModal} size="tiny">
+        <Modal
+          open={createEventModal}
+          size="tiny"
+          closeOnEscape={true}
+          closeOnDimmerClick={false}
+        >
           <Modal.Header>
             <h2>Create Event</h2>
           </Modal.Header>
@@ -250,8 +254,8 @@ function Admin() {
                   onChange={onChange}
                 />
                 <Form.Field
-                  label="Category"
                   control="select"
+                  label="Category"
                   name="category"
                   value={values.category}
                   error={errors.category ? true : false}
@@ -264,8 +268,8 @@ function Admin() {
                   ))}
                 </Form.Field>
                 <Form.Field
-                  label="Expires in"
                   control="select"
+                  label="Expires in"
                   name="expiration"
                   value={values.expiration}
                   error={errors.expiration ? true : false}
@@ -277,7 +281,7 @@ function Admin() {
                     </option>
                   ))}
                 </Form.Field>
-                <Button color="grey" onClick={() => closeModal("createEvent")}>
+                <Button type="reset" color="grey" onClick={() => closeModal("createEvent")}>
                   Cancel
                 </Button>
                 <Button type="submit" floated="right">

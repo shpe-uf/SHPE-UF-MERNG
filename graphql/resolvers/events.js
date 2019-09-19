@@ -10,7 +10,7 @@ module.exports = {
   Query: {
     async getEvents() {
       try {
-        const events = await Event.find().sort({ createdAt: -1 });
+        const events = await Event.find().sort({ createdAt: 1 });
         return events;
       } catch (err) {
         throw new Error(err);

@@ -2,6 +2,7 @@ const { UserInputError } = require("apollo-server");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User.js");
+const Event = require("../../models/Event.js");
 
 require("dotenv").config();
 
@@ -57,7 +58,7 @@ module.exports = {
       }
 
       username = username.toLowerCase();
-      
+
       const user = await User.findOne({ username });
 
       if (!user) {
@@ -145,7 +146,7 @@ module.exports = {
 
       username = username.toLowerCase();
       password = await bcrypt.hash(password, 12);
-      listServ = ((listServ === "true" || listServ === true) ? true : false);
+      listServ = listServ === "true" || listServ === true ? true : false;
 
       const newUser = new User({
         firstName,
@@ -179,6 +180,70 @@ module.exports = {
         id: res._id,
         token
       };
+    },
+
+    async redeemPoints(
+      _,
+      {
+        redeemPointsInput: { code, username }
+      }
+    ) {
+      code = code.toLowerCase();
+
+      const event = await Event.findOne({ code });
+      const user = await User.findOne({ username });
+
+      if (!event) {
+        throw new UserInputError("Event not found", {
+          errors: "Event not found"
+        });
+      }
+
+      if (!user) {
+        throw new UserInputError("User not found", {
+          errors: "User not found"
+        });
+      }
+
+      // NOT WORKING?
+      if (event.expiration < Date.now()) {
+        throw new UserInputError("Event code expired", {
+          errors: "Event code expired"
+        });
+      }
+
+      var pointsIncrease = {};
+
+      if (event.semester === "Fall Semester") {
+        pointsIncrease = {
+          points: event.points,
+          fallPoints: event.points
+        }
+      } else if (event.semester === "Spring Semester") {
+        pointsIncrease = {
+          points: event.points,
+          springPoints: event.points
+        }
+      } else if (event.semester === "Summer Semester") {
+        pointsIncrease = {
+          points: event.points,
+          summerPoints: event.points
+        }
+      } else {
+        throw new UserInputError("Invalid event", {
+          errors: "Invalid event"
+        });
+      }
+
+      const updatedUser = await User.findOneAndUpdate(
+        { username },
+        { $push: { events: { _id: event._id } }, $inc: pointsIncrease },
+        { new: true }
+      );
+
+      console.log(updatedUser);
+
+      return updatedUser;
     }
   }
 };

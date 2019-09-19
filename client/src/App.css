@@ -159,7 +159,7 @@ h5 {
 .overlay-register, .overlay-login {
   background-color: var(--primary-overlay);
   width: 100%;
-  min-height: calc(100vh - 65px - 41px);
+  min-height: calc(100vh - 65px - 40px);
 }
 
 .masthead {
