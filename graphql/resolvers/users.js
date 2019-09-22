@@ -167,8 +167,7 @@ module.exports = {
         summerPoints: 0,
         permission: "user",
         listServ,
-        events: [],
-        bookmarks: []
+        events: []
       });
 
       const res = await newUser.save();
@@ -205,8 +204,7 @@ module.exports = {
         });
       }
 
-      // NOT WORKING?
-      if (event.expiration < Date.now()) {
+      if (Date.parse(event.expiration) < Date.now()) {
         throw new UserInputError("Event code expired", {
           errors: "Event code expired"
         });

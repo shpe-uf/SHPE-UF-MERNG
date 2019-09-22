@@ -72,7 +72,7 @@ module.exports = {
         attendance: 0,
         expiration,
         semester,
-        attendees: [],
+        users: [],
         createdAt: new Date().toISOString()
       });
 

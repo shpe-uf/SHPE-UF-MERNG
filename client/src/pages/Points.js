@@ -79,6 +79,8 @@ function Points() {
     getUser.summerPoints = userData.summerPoints;
   }
 
+  console.log(getUser);
+
   return (
     <div className="body">
       <div className="masthead masthead-application">
@@ -183,10 +185,7 @@ function Points() {
                   </ul>
                 </div>
               )}
-              <Form
-                onSubmit={onSubmit}
-                noValidate
-              >
+              <Form onSubmit={onSubmit} noValidate>
                 <Form.Input
                   type="text"
                   label="Event Code"
@@ -215,8 +214,10 @@ function Points() {
 }
 
 const FETCH_USER_QUERY = gql`
-  query getUserInfo($userId: ID!) {
+  query getUser($userId: ID!) {
     getUser(userId: $userId) {
+      firstName
+      lastName
       points
       fallPoints
       springPoints

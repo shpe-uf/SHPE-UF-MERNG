@@ -13,6 +13,7 @@ module.exports = gql`
     sex: String!
     username: String!
     email: String!
+    password: String!
     createdAt: String!
     points: Int!
     fallPoints: Int!
@@ -21,7 +22,6 @@ module.exports = gql`
     permission: String!
     listServ: Boolean!
     events: [Event]!
-    bookmarks: [Company]!
     token: String!
   }
 
@@ -34,13 +34,8 @@ module.exports = gql`
     attendance: Int!
     expiration: String!
     semester: String!
-    attendees: [User]!
     createdAt: String!
-  }
-
-  type Company {
-    id: ID!
-    name: String!
+    users: [User]!
   }
 
   input RegisterInput {
