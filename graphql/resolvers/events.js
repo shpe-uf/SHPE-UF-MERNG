@@ -41,8 +41,14 @@ module.exports = {
 
       points = findPoints.points;
       semester = monthOptions[month].value;
-      expiration = new Date(new Date().getTime() + (parseInt(expiration, 10)*60*60*1000));
-      code = code.toLowerCase();
+      expiration = new Date(
+        new Date().getTime() + parseInt(expiration, 10) * 60 * 60 * 1000
+      );
+      code = code
+        .toLowerCase()
+        .trim()
+        .replace(/ /g, "");
+      ð;
 
       isEventNameDuplicate = await Event.findOne({ name });
 

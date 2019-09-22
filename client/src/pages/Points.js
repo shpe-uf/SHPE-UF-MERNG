@@ -77,9 +77,8 @@ function Points() {
     getUser.fallPoints = userData.fallPoints;
     getUser.springPoints = userData.springPoints;
     getUser.summerPoints = userData.summerPoints;
+    getUser.events = userData.events;
   }
-
-  console.log(getUser);
 
   return (
     <div className="body">
@@ -152,21 +151,16 @@ function Points() {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              <Table.Row>
-                <Table.Cell>Fall General Body Meeting 1</Table.Cell>
-                <Table.Cell>General Body Meeting</Table.Cell>
-                <Table.Cell>September 4, 2019</Table.Cell>
-                <Table.Cell textAlign="center">1</Table.Cell>
-              </Table.Row>
+              {getUser &&
+                getUser.events.map(event => (
+                  <Table.Row key={event.id}>
+                    <Table.Cell>{event.id}</Table.Cell>
+                    <Table.Cell>???</Table.Cell>
+                    <Table.Cell>???</Table.Cell>
+                    <Table.Cell textAlign="center">???</Table.Cell>
+                  </Table.Row>
+                ))}
             </Table.Body>
-            <Table.Footer>
-              <Table.Row>
-                <Table.HeaderCell>Total Points</Table.HeaderCell>
-                <Table.HeaderCell />
-                <Table.HeaderCell />
-                <Table.HeaderCell textAlign="center">1</Table.HeaderCell>
-              </Table.Row>
-            </Table.Footer>
           </Table>
         </div>
 
@@ -185,7 +179,11 @@ function Points() {
                   </ul>
                 </div>
               )}
-              <Form onSubmit={onSubmit} noValidate>
+              <Form
+                onSubmit={onSubmit}
+                noValidate
+                className={loading ? "loading" : ""}
+              >
                 <Form.Input
                   type="text"
                   label="Event Code"
@@ -222,6 +220,9 @@ const FETCH_USER_QUERY = gql`
       fallPoints
       springPoints
       summerPoints
+      events {
+        id
+      }
     }
   }
 `;
@@ -233,6 +234,9 @@ const REDEEM_POINTS_MUTATION = gql`
       fallPoints
       springPoints
       summerPoints
+      events {
+        id
+      }
     }
   }
 `;
