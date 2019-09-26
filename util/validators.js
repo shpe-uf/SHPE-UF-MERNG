@@ -113,12 +113,12 @@ module.exports.validateLoginInput = (username, password) => {
 module.exports.validateCreateEventInput = (
   name,
   code,
-  category
+  category,
+  expiration
 ) => {
-  console.log("# VALIDATE CREATE EVENT INPUT");
   const errors = {};
 
-  const nameValidator = /^[a-zA-Z0-9-/ ]{6,50}$/i;
+  const nameValidator = /^[a-zA-Z0-9- ]{6,50}$/i;
   const codeValidator = /^[a-zA-Z0-9]{6,50}$/i;
 
   if (name.trim() === "") {
@@ -141,6 +141,10 @@ module.exports.validateCreateEventInput = (
 
   if (category.trim() === "") {
     errors.category = "Category is required.";
+  }
+
+  if (expiration.trim() === "") {
+    errors.expiration = "Expires in is required.";
   }
 
   return {

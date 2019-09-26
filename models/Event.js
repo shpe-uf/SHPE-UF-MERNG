@@ -1,19 +1,48 @@
 const { model, Schema } = require("mongoose");
+const User = require("./User").schema;
 
 const eventSchema = new Schema({
-  name: String,
-  code: String,
-  category: String,
-  points: Number,
-  attendance: Number,
-  expiration: String,
-  semester: String,
-  attendees: [
-    {
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  code: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  points: {
+    type: Number,
+    required: true
+  },
+  attendance: {
+    type: Number,
+    required: true
+  },
+  expiration: {
+    type: String,
+    required: true
+  },
+  semester: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: String,
+    required: true
+  },
+  users: [{
+    user: {
       type: Schema.Types.ObjectId,
-      ref: "users"
+      ref: "User"
     }
-  ]
+  }]
 });
 
 module.exports = model("Event", eventSchema);

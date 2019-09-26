@@ -2,6 +2,7 @@ const { UserInputError } = require("apollo-server");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User.js");
+const Event = require("../../models/Event.js");
 
 require("dotenv").config();
 
@@ -18,7 +19,9 @@ function generateToken(user) {
       username: user.username
     },
     process.env.SECRET,
-    { expiresIn: "24h" }
+    {
+      expiresIn: "24h"
+    }
   );
 }
 
@@ -26,7 +29,9 @@ module.exports = {
   Query: {
     async getUsers() {
       try {
-        const users = await User.find().sort({ lastName: 1 });
+        const users = await User.find().sort({
+          lastName: 1
+        });
         return users;
       } catch (err) {
         throw new Error(err);
@@ -53,21 +58,31 @@ module.exports = {
       const { errors, valid } = validateLoginInput(username, password);
 
       if (!valid) {
-        throw new UserInputError("Errors", { errors });
+        throw new UserInputError("Errors", {
+          errors
+        });
       }
 
-      const user = await User.findOne({ username });
+      username = username.toLowerCase();
+
+      const user = await User.findOne({
+        username
+      });
 
       if (!user) {
         errors.general = "User not found";
-        throw new UserInputError("User not found", { errors });
+        throw new UserInputError("User not found", {
+          errors
+        });
       }
 
       const match = await bcrypt.compare(password, user.password);
 
       if (!match) {
         errors.general = "Wrong credentials";
-        throw new UserInputError("Wrong credentials", { errors });
+        throw new UserInputError("Wrong credentials", {
+          errors
+        });
       }
 
       const token = generateToken(user);
@@ -115,10 +130,14 @@ module.exports = {
       );
 
       if (!valid) {
-        throw new UserInputError("Errors", { errors });
+        throw new UserInputError("Errors", {
+          errors
+        });
       }
 
-      isUsernameDuplicate = await User.findOne({ username });
+      isUsernameDuplicate = await User.findOne({
+        username
+      });
 
       if (isUsernameDuplicate) {
         throw new UserInputError(
@@ -131,7 +150,9 @@ module.exports = {
         );
       }
 
-      isEmailDuplicate = await User.findOne({ email });
+      isEmailDuplicate = await User.findOne({
+        email
+      });
 
       if (isEmailDuplicate) {
         throw new UserInputError("An account with that e-mail already exists", {
@@ -141,8 +162,9 @@ module.exports = {
         });
       }
 
+      username = username.toLowerCase();
       password = await bcrypt.hash(password, 12);
-      listServ = ((listServ === "true" || listServ === true) ? true : false);
+      listServ = listServ === "true" || listServ === true ? true : false;
 
       const newUser = new User({
         firstName,
@@ -163,8 +185,7 @@ module.exports = {
         summerPoints: 0,
         permission: "user",
         listServ,
-        events: [],
-        bookmarks: []
+        events: []
       });
 
       const res = await newUser.save();
@@ -176,6 +197,132 @@ module.exports = {
         id: res._id,
         token
       };
+    },
+
+    async redeemPoints(
+      _,
+      {
+        redeemPointsInput: { code, username }
+      }
+    ) {
+      const errors = {};
+
+      if (code.trim() === "") {
+        errors.general = "No code was provided";
+        throw new UserInputError("No code was provided", {
+          errors
+        });
+      }
+
+      code = code
+        .toLowerCase()
+        .trim()
+        .replace(/ /g, "");
+
+      const event = await Event.findOne({
+        code
+      });
+
+      const user = await User.findOne({
+        username
+      });
+
+      if (!event) {
+        errors.general = "Event not found";
+        throw new UserInputError("Event not found", {
+          errors
+        });
+      }
+
+      if (!user) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", {
+          errors
+        });
+      }
+
+      if (Date.parse(event.expiration) < Date.now()) {
+        errors.general = "Event code expired";
+        throw new UserInputError("Event code expired", {
+          errors
+        });
+      }
+
+      user.events.map(userEvent => {
+        console.log(userEvent.id);
+        if (String(userEvent.id) == String(event._id)) {
+          errors.general = "Event code already redeemed";
+          throw new UserInputError("Event code already redeemed", {
+            errors
+          });
+        }
+      });
+
+      var pointsIncrease = {};
+
+      if (event.semester === "Fall Semester") {
+        pointsIncrease = {
+          points: event.points,
+          fallPoints: event.points
+        };
+      } else if (event.semester === "Spring Semester") {
+        pointsIncrease = {
+          points: event.points,
+          springPoints: event.points
+        };
+      } else if (event.semester === "Summer Semester") {
+        pointsIncrease = {
+          points: event.points,
+          summerPoints: event.points
+        };
+      } else {
+        errors.general = "Invalid event";
+        throw new UserInputError("Invalid event", {
+          errors
+        });
+      }
+
+      const updatedUser = await User.findOneAndUpdate(
+        {
+          username
+        },
+        {
+          $push: {
+            events: {
+              id: event._id,
+              name: event.name,
+              category: event.category,
+              createdAt: event.createdAt,
+              points: event.points
+            }
+          },
+          $inc: pointsIncrease
+        },
+        {
+          new: true
+        }
+      );
+
+      await Event.findOneAndUpdate(
+        {
+          code
+        },
+        {
+          $push: {
+            users: {
+              _id: user._id
+            }
+          },
+          $inc: {
+            attendance: 1
+          }
+        },
+        {
+          new: true
+        }
+      );
+
+      return updatedUser;
     }
   }
 };

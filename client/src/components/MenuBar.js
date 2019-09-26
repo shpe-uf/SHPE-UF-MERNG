@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Menu, Container } from "semantic-ui-react";
+import { Menu, Container, Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/auth";
@@ -15,7 +15,7 @@ function MenuBar() {
     setActiveItem(name);
   };
 
-  const menuBar = user ? (
+  const menuBar = (
     <Menu inverted>
       <Container>
         <Menu.Item
@@ -55,13 +55,68 @@ function MenuBar() {
           to="/sponsors"
         />
         <Menu.Menu position="right">
-          <Menu.Item name="logout" onClick={logout} />
-          <Menu.Item
-            name={user.username}
-            onClick={handleItemClick}
-            className="username"
-          />
+          {user ? (
+            <>
+              <Menu.Item name="logout" onClick={logout} />
+              <Dropdown item className="username" text={user.username}>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/admin">
+                    Admin Tools
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/points">
+                    Points System
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </>
+          ) : (
+            <>
+              <Menu.Item
+                name="register"
+                active={activeItem === "register"}
+                onClick={handleItemClick}
+                as={Link}
+                to="/register"
+              />
+              <Menu.Item
+                name="login"
+                active={activeItem === "login"}
+                onClick={handleItemClick}
+                as={Link}
+                to="/login"
+              />
+            </>
+          )}
         </Menu.Menu>
+        {/*
+        <Menu.Item
+          name="about us"
+          active={activeItem === "about us"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/about"
+        />
+        <Menu.Item
+          name="e-board"
+          active={activeItem === "e-board"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/eboard"
+        />
+        <Menu.Item
+          name="dev team"
+          active={activeItem === "dev team"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/devteam"
+        />
+        <Menu.Item
+          name="sponsors"
+          active={activeItem === "sponsors"}
+          onClick={handleItemClick}
+          as={Link}
+          to="/sponsors"
+        />
       </Container>
     </Menu>
   ) : (
@@ -103,22 +158,7 @@ function MenuBar() {
           as={Link}
           to="/sponsors"
         />
-        <Menu.Menu position="right">
-          <Menu.Item
-            name="register"
-            active={activeItem === "register"}
-            onClick={handleItemClick}
-            as={Link}
-            to="/register"
-          />
-          <Menu.Item
-            name="login"
-            active={activeItem === "login"}
-            onClick={handleItemClick}
-            as={Link}
-            to="/login"
-          />
-        </Menu.Menu>
+        */}
       </Container>
     </Menu>
   );
