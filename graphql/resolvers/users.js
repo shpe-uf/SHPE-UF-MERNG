@@ -227,15 +227,6 @@ module.exports = {
         username
       });
 
-      user.events.map(userEvent => {
-        if (String(userEvent._id) == String(event._id)) {
-          errors.general = "Event code already redeemed";
-          throw new UserInputError("Event code already redeemed", {
-            errors
-          });
-        }
-      });
-
       if (!event) {
         errors.general = "Event not found";
         throw new UserInputError("Event not found", {
@@ -256,6 +247,16 @@ module.exports = {
           errors
         });
       }
+
+      user.events.map(userEvent => {
+        console.log(userEvent.id);
+        if (String(userEvent.id) == String(event._id)) {
+          errors.general = "Event code already redeemed";
+          throw new UserInputError("Event code already redeemed", {
+            errors
+          });
+        }
+      });
 
       var pointsIncrease = {};
 
@@ -288,7 +289,11 @@ module.exports = {
         {
           $push: {
             events: {
-              _id: event._id
+              id: event._id,
+              name: event.name,
+              category: event.category,
+              createdAt: event.createdAt,
+              points: event.points
             }
           },
           $inc: pointsIncrease

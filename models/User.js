@@ -74,10 +74,11 @@ const userSchema = new Schema({
   permission: String,
   listServ: Boolean,
   events: [{
-    event: {
-      type: Schema.Types.ObjectId,
-      ref: "Event"
-    }
+    id: String,
+    name: String,
+    category: String,
+    createdAt: String,
+    points: Number
   }]
 });
 

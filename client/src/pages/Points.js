@@ -7,7 +7,8 @@ import {
   Table,
   Button,
   Modal,
-  Form
+  Form,
+  Icon
 } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { useForm } from "../util/hooks";
@@ -92,10 +93,11 @@ function Points() {
               <Grid.Column>
                 <Button
                   secondary
+                  icon
                   floated="right"
                   onClick={() => openModal("redeemPoints")}
                 >
-                  Redeem Points
+                  <Icon name="plus" />
                 </Button>
               </Grid.Column>
             </Grid.Row>
@@ -154,10 +156,10 @@ function Points() {
               {getUser &&
                 getUser.events.map(event => (
                   <Table.Row key={event.id}>
-                    <Table.Cell>{event.id}</Table.Cell>
-                    <Table.Cell>???</Table.Cell>
-                    <Table.Cell>???</Table.Cell>
-                    <Table.Cell textAlign="center">???</Table.Cell>
+                    <Table.Cell>{event.name}</Table.Cell>
+                    <Table.Cell>{event.category}</Table.Cell>
+                    <Table.Cell>{event.createdAt}</Table.Cell>
+                    <Table.Cell textAlign="center">{event.points}</Table.Cell>
                   </Table.Row>
                 ))}
             </Table.Body>
@@ -222,6 +224,10 @@ const FETCH_USER_QUERY = gql`
       summerPoints
       events {
         id
+        name
+        category
+        createdAt
+        points
       }
     }
   }
@@ -236,6 +242,10 @@ const REDEEM_POINTS_MUTATION = gql`
       summerPoints
       events {
         id
+        name
+        category
+        createdAt
+        points
       }
     }
   }

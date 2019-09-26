@@ -48,7 +48,6 @@ module.exports = {
         .toLowerCase()
         .trim()
         .replace(/ /g, "");
-      ð;
 
       isEventNameDuplicate = await Event.findOne({ name });
 

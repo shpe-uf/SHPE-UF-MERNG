@@ -128,7 +128,7 @@ function Register(props) {
                         ))}
                       </Form.Field>
                       <Form.Field
-                        label="Graduating?"
+                        label="Graduating this year?"
                         control="select"
                         name="graduating"
                         value={values.graduating}
