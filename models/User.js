@@ -48,8 +48,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
-    lowercase: true
+    required: true
   },
   createdAt: {
     type: String,

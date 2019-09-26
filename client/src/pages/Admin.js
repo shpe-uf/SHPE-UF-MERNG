@@ -263,7 +263,7 @@ function Admin() {
                 >
                   {categoryOptions.map(category => (
                     <option value={category.value} key={category.key}>
-                      {category.value}
+                      {category.value} ({category.points})
                     </option>
                   ))}
                 </Form.Field>
