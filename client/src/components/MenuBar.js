@@ -63,6 +63,9 @@ function MenuBar() {
                   <Dropdown.Item as={Link} to="/admin">
                     Admin Tools
                   </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/profile">
+                    My Profile
+                  </Dropdown.Item>
                   <Dropdown.Item as={Link} to="/points">
                     Points System
                   </Dropdown.Item>

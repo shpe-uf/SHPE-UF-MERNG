@@ -1,59 +1,41 @@
 import React from "react";
-import {
-  Grid,
-  Container,
-  Image,
-  Divider
-} from "semantic-ui-react";
+import { Grid, Container, Image, Divider } from "semantic-ui-react";
 
 import homePhoto1 from "../assets/images/home-1.jpg";
 import homePhoto2 from "../assets/images/home-2.jpg";
 import homePhoto3 from "../assets/images/home-3.jpg";
 
 function Home() {
-
   return (
     <div>
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-home">
-              <div className="overlay-home">
-                <Container>
-                  <h1 className="masthead-title text-white">
-                    Society of Hispanic Professional Engineers
-                  </h1>
-                  <h1 className="masthead-title">University of Florida</h1>
-                </Container>
-              </div>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div className="masthead masthead-home">
+        <div className="overlay-home">
+          <Container>
+            <h1 className="masthead-title text-white">
+              Society of Hispanic Professional Engineers
+            </h1>
+            <h1 className="masthead-title">University of Florida</h1>
+          </Container>
+        </div>
+      </div>
 
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-quote">
-              <Container>
-                <h2 className="text-white">
-                  Empowering the Hispanic community to realize its fullest
-                  potential and to impact the world through STEM awareness,
-                  access, support and development.
-                </h2>
-                <Divider />
-                <i className="fas fa-quote fa-cogs"></i>
-                <i className="fas fa-quote fa-drafting-compass"></i>
-                <i className="fas fa-quote fa-code"></i>
-              </Container>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div className="masthead masthead-quote">
+        <Container>
+          <h2 className="text-white">
+            Empowering the Hispanic community to realize its fullest potential
+            and to impact the world through STEM awareness, access, support and
+            development.
+          </h2>
+          <Divider />
+          <i className="fas fa-quote fa-cogs"></i>
+          <i className="fas fa-quote fa-drafting-compass"></i>
+          <i className="fas fa-quote fa-code"></i>
+        </Container>
+      </div>
 
-      <Grid columns={2} stackable>
-        <Grid.Row className="no-padding who">
-          <Grid.Column width={6}>
+      <Grid columns={2} stackable className="no-padding">
+        <Grid.Row className="who no-padding">
+          <Grid.Column width={6} className="no-padding">
             <Image src={homePhoto1} className="image-home"></Image>
           </Grid.Column>
           <Grid.Column width={10} className="text-home">
@@ -76,8 +58,8 @@ function Home() {
             </p>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row className="no-padding mission">
-          <Grid.Column width={6}>
+        <Grid.Row className="mission no-padding">
+          <Grid.Column width={6} className="no-padding">
             <Image src={homePhoto2} className="image-home"></Image>
           </Grid.Column>
           <Grid.Column width={10} className="text-home">
@@ -102,8 +84,8 @@ function Home() {
             </p>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row className="no-padding vision">
-          <Grid.Column width={6}>
+        <Grid.Row className="vision no-padding">
+          <Grid.Column width={6} className="no-padding">
             <Image src={homePhoto3} className="image-home"></Image>
           </Grid.Column>
           <Grid.Column width={10} className="text-home">
@@ -119,26 +101,20 @@ function Home() {
         </Grid.Row>
       </Grid>
 
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-quote">
-              <Container>
-                <h2 className="text-white">
-                  "What I really hope for young people is that they find a
-                  career they’re passionate about, something that’s challenging
-                  and worthwhile."
-                </h2>
-                <Divider />
-                <h2 className="text-white">Ellen Ochoa</h2>
-                <h4 className="text-white">
-                  Electrical Engineer & First Latina Astronaut
-                </h4>
-              </Container>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div className="masthead masthead-quote">
+        <Container>
+          <h2 className="text-white">
+            "What I really hope for young people is that they find a career
+            they’re passionate about, something that’s challenging and
+            worthwhile."
+          </h2>
+          <Divider />
+          <h2 className="text-white">Ellen Ochoa</h2>
+          <h4 className="text-white">
+            Electrical Engineer & First Latina Astronaut
+          </h4>
+        </Container>
+      </div>
     </div>
   );
 }

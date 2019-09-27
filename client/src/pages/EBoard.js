@@ -23,19 +23,14 @@ function email(email) {
 function EBoard() {
   return (
     <div>
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-eboard">
-              <div className="overlay-blue">
-                <Container>
-                  <h1 className="masthead-title text-white">Executive Board</h1>
-                </Container>
-              </div>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div className="masthead masthead-eboard">
+        <div className="overlay-blue">
+          <Container>
+            <h1 className="masthead-title text-white">Executive Board</h1>
+          </Container>
+        </div>
+      </div>
+
       <Container>
         <Grid stackable columns={3}>
           <Grid.Row>

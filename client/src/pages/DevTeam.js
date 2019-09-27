@@ -17,19 +17,14 @@ import placeholder from "../assets/images/team/placeholder.png";
 function DevTeam() {
   return (
     <div>
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-team">
-              <div className="overlay-blue">
-                <Container>
-                  <h1 className="masthead-title text-white">Development Team</h1>
-                </Container>
-              </div>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div className="masthead masthead-team">
+        <div className="overlay-blue">
+          <Container>
+            <h1 className="masthead-title text-white">Development Team</h1>
+          </Container>
+        </div>
+      </div>
+
       <Container>
         <h2>Fall 2019 - Spring 2020</h2>
         <Grid stackable columns={3}>

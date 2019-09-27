@@ -88,7 +88,7 @@ h5 {
 }
 
 .column {
-  padding: 0px 0px !important;
+  padding: 0px 8px !important;
 }
 
 .accent-1-text {
@@ -254,6 +254,12 @@ h5 {
   min-width: 100%;
   min-height: 100%;
   object-fit: cover;
+}
+
+.image-profile {
+  border: 1px;
+  border-style: solid;
+  border-color: var(--grey);
 }
 
 .who {

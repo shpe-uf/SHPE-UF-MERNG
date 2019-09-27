@@ -35,19 +35,14 @@ import visa from "../assets/images/sponsors/visa.png";
 function Sponsors() {
   return (
     <div>
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-sponsors">
-              <div className="overlay-blue">
-                <Container>
-                  <h1 className="masthead-title text-white">Sponsors</h1>
-                </Container>
-              </div>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div className="masthead masthead-sponsors">
+        <div className="overlay-blue">
+          <Container>
+            <h1 className="masthead-title text-white">Sponsors</h1>
+          </Container>
+        </div>
+      </div>
+
       <Container>
         {/* PLATINUM SPONSORS */}
         <Grid stackable columns={3}>

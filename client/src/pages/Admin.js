@@ -198,17 +198,17 @@ function Admin() {
 
   return (
     <div className="body">
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-application">
-              <Container>
+      <div className="masthead masthead-application">
+        <Container>
+          <Grid stackable>
+            <Grid.Row className="no-padding">
+              <Grid.Column>
                 <h1 className="text-white">Admin Tools</h1>
-              </Container>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+      </div>
       <Container>
         <Tab panes={panes} />
 
@@ -261,11 +261,17 @@ function Admin() {
                   error={errors.category ? true : false}
                   onChange={onChange}
                 >
-                  {categoryOptions.map(category => (
-                    <option value={category.value} key={category.key}>
-                      {category.value} ({category.points})
-                    </option>
-                  ))}
+                  {categoryOptions.map(category =>
+                    category.points === 0 ? (
+                      <option value={category.value} key={category.key}>
+                        {category.value}
+                      </option>
+                    ) : (
+                      <option value={category.value} key={category.key}>
+                        {category.value} ({category.points})
+                      </option>
+                    )
+                  )}
                 </Form.Field>
                 <Form.Field
                   control="select"
@@ -281,7 +287,11 @@ function Admin() {
                     </option>
                   ))}
                 </Form.Field>
-                <Button type="reset" color="grey" onClick={() => closeModal("createEvent")}>
+                <Button
+                  type="reset"
+                  color="grey"
+                  onClick={() => closeModal("createEvent")}
+                >
                   Cancel
                 </Button>
                 <Button type="submit" floated="right">

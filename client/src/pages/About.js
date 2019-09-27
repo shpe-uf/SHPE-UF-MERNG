@@ -4,19 +4,14 @@ import { Container, Grid } from "semantic-ui-react";
 function About() {
   return (
     <div>
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-about">
-              <div className="overlay-blue">
-                <Container>
-                  <h1 className="masthead-title text-white">About Us</h1>
-                </Container>
-              </div>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div className="masthead masthead-about">
+        <div className="overlay-blue">
+          <Container>
+            <h1 className="masthead-title text-white">About Us</h1>
+          </Container>
+        </div>
+      </div>
+
       <Container>
         <Grid>
           <Grid.Row>
