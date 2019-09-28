@@ -31,10 +31,25 @@ export const FETCH_EVENTS_QUERY = gql`
       code
       category
       points
+      request
       attendance
       expiration
       semester
       createdAt
     }
   }
+`;
+
+export const FETCH_REQUESTS_QUERY = gql`
+{
+  getRequests {
+    eventName
+    category
+    points
+    firstName
+    lastName
+    username
+    createdAt
+  }
+}
 `;

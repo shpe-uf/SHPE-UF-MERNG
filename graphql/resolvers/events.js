@@ -22,7 +22,7 @@ module.exports = {
     async createEvent(
       _,
       {
-        createEventInput: { name, code, category, expiration }
+        createEventInput: { name, code, category, expiration, request }
       }
     ) {
       const { valid, errors } = validateCreateEventInput(
@@ -39,15 +39,16 @@ module.exports = {
       const findPoints = categoryOptions.find(({ key }) => key === category);
       const month = new Date().getMonth();
 
+      code = code
+        .toLowerCase()
+        .trim()
+        .replace(/ /g, "");
       points = findPoints.points;
       semester = monthOptions[month].value;
       expiration = new Date(
         new Date().getTime() + parseInt(expiration, 10) * 60 * 60 * 1000
       );
-      code = code
-        .toLowerCase()
-        .trim()
-        .replace(/ /g, "");
+      request = request === "true" || request === true ? true : false;
 
       isEventNameDuplicate = await Event.findOne({ name });
 
@@ -77,6 +78,7 @@ module.exports = {
         attendance: 0,
         expiration,
         semester,
+        request,
         users: [],
         createdAt: new Date().toISOString()
       });

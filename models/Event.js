@@ -37,6 +37,10 @@ const eventSchema = new Schema({
     type: String,
     required: true
   },
+  request: {
+    type: Boolean,
+    required: true
+  },
   users: [{
     user: {
       type: Schema.Types.ObjectId,

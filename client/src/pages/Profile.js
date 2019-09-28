@@ -21,8 +21,6 @@ function Profile() {
     }
   });
 
-  console.log(getUser);
-
   return (
     <div className="body">
       <div className="masthead masthead-application">

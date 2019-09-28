@@ -472,3 +472,11 @@ th {
   display: block;
   overflow-x: scroll;
 }
+
+.check {
+  color: rgb(0, 159, 77);
+}
+
+.x {
+  color: rgb(228, 0, 43);
+}

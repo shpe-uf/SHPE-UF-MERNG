@@ -11,8 +11,9 @@ import {
   Icon
 } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { useForm } from "../util/hooks";
+import moment from "moment";
 
+import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
 
 function Points() {
@@ -58,6 +59,7 @@ function Points() {
         data: { redeemPoints: userData }
       }
     ) {
+      console.log(userData);
       values.code = "";
       setRedeemPointsModal(false);
       updateGetUser(userData);
@@ -158,7 +160,11 @@ function Points() {
                   <Table.Row key={event.id}>
                     <Table.Cell>{event.name}</Table.Cell>
                     <Table.Cell>{event.category}</Table.Cell>
-                    <Table.Cell>{event.createdAt}</Table.Cell>
+                    <Table.Cell>
+                      {moment(event.createdAt)
+                        .local()
+                        .format("MM/DD/YYYY")}
+                    </Table.Cell>
                     <Table.Cell textAlign="center">{event.points}</Table.Cell>
                   </Table.Row>
                 ))}
@@ -240,6 +246,7 @@ const REDEEM_POINTS_MUTATION = gql`
       fallPoints
       springPoints
       summerPoints
+      message
       events {
         id
         name

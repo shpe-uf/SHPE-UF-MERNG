@@ -7,12 +7,17 @@ import {
   Tab,
   Modal,
   Button,
-  Form
+  Form,
+  Icon
 } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { useForm } from "../util/hooks";
 
-import { FETCH_USERS_QUERY, FETCH_EVENTS_QUERY } from "../util/graphql";
+import {
+  FETCH_USERS_QUERY,
+  FETCH_EVENTS_QUERY,
+  FETCH_REQUESTS_QUERY
+} from "../util/graphql";
 import moment from "moment";
 
 import categoryOptions from "../assets/options/category.json";
@@ -28,6 +33,10 @@ function Admin() {
   const {
     data: { getEvents }
   } = useQuery(FETCH_EVENTS_QUERY);
+
+  const {
+    data: { getRequests }
+  } = useQuery(FETCH_REQUESTS_QUERY);
 
   const [createEventModal, setCreateEventModal] = useState(false);
 
@@ -52,7 +61,8 @@ function Admin() {
     name: "",
     code: "",
     category: "",
-    expiration: ""
+    expiration: "",
+    request: "false"
   });
 
   const [createEvent, { loading }] = useMutation(CREATE_EVENT_MUTATION, {
@@ -80,6 +90,8 @@ function Admin() {
   function createEventCallback() {
     createEvent();
   }
+
+  console.log(getRequests);
 
   const panes = [
     {
@@ -112,6 +124,9 @@ function Admin() {
                   <Table.HeaderCell>Expiration</Table.HeaderCell>
                   <Table.HeaderCell>Semester</Table.HeaderCell>
                   <Table.HeaderCell textAlign="center">
+                    Request
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">
                     Attendance
                   </Table.HeaderCell>
                   <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
@@ -119,8 +134,8 @@ function Admin() {
               </Table.Header>
               <Table.Body>
                 {getEvents &&
-                  getEvents.map(event => (
-                    <Table.Row key={event.name}>
+                  getEvents.map((event, index) => (
+                    <Table.Row key={index}>
                       <Table.Cell>{event.name}</Table.Cell>
                       <Table.Cell>{event.code}</Table.Cell>
                       <Table.Cell>{event.category}</Table.Cell>
@@ -130,6 +145,13 @@ function Admin() {
                           .format("MM/DD/YYYY @ hh:mm A")}
                       </Table.Cell>
                       <Table.Cell>{event.semester}</Table.Cell>
+                      <Table.Cell textAlign="center">
+                        {event.request === true ? (
+                          <Icon name="check" />
+                        ) : (
+                          <Icon name="x" />
+                        )}
+                      </Table.Cell>
                       <Table.Cell textAlign="center">
                         {event.attendance}
                       </Table.Cell>
@@ -169,8 +191,8 @@ function Admin() {
               </Table.Header>
               <Table.Body>
                 {getUsers &&
-                  getUsers.map(user => (
-                    <Table.Row key={user.username}>
+                  getUsers.map((user, index) => (
+                    <Table.Row key={index}>
                       <Table.Cell>
                         {user.lastName}, {user.firstName}
                       </Table.Cell>
@@ -186,6 +208,48 @@ function Admin() {
                         {user.summerPoints}
                       </Table.Cell>
                       <Table.Cell textAlign="center">{user.points}</Table.Cell>
+                    </Table.Row>
+                  ))}
+              </Table.Body>
+            </Table>
+          </div>
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: { key: "requests", icon: "exclamation", content: "Requests" },
+      render: () => (
+        <Tab.Pane>
+          <div className="table-responsive">
+            <Table striped selectable unstackable singleLine>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Username</Table.HeaderCell>
+                  <Table.HeaderCell>Event</Table.HeaderCell>
+                  <Table.HeaderCell>Category</Table.HeaderCell>
+                  <Table.HeaderCell>Date</Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {getRequests &&
+                  getRequests.map((request, index) => (
+                    <Table.Row key={index}>
+                      <Table.Cell>
+                        {request.lastName}, {request.firstName}
+                      </Table.Cell>
+                      <Table.Cell>{request.username}</Table.Cell>
+                      <Table.Cell>{request.eventName}</Table.Cell>
+                      <Table.Cell>{request.category}</Table.Cell>
+                      <Table.Cell>
+                        {moment(request.createdAt)
+                          .local()
+                          .format("MM/DD/YYYY @ hh:mm A")}
+                      </Table.Cell>
+                      <Table.Cell textAlign="center">
+                        {request.points}
+                      </Table.Cell>
                     </Table.Row>
                   ))}
               </Table.Body>
@@ -287,6 +351,17 @@ function Admin() {
                     </option>
                   ))}
                 </Form.Field>
+                <Form.Field>
+                  <div className="ui toggle checkbox">
+                    <input
+                      type="checkbox"
+                      name="request"
+                      value={values.request === "true" ? false : true}
+                      onChange={onChange}
+                    />
+                    <label>Request?</label>
+                  </div>
+                </Form.Field>
                 <Button
                   type="reset"
                   color="grey"
@@ -312,6 +387,7 @@ const CREATE_EVENT_MUTATION = gql`
     $code: String!
     $category: String!
     $expiration: String!
+    $request: String!
   ) {
     createEvent(
       createEventInput: {
@@ -319,12 +395,14 @@ const CREATE_EVENT_MUTATION = gql`
         code: $code
         category: $category
         expiration: $expiration
+        request: $request
       }
     ) {
       name
       code
       category
       expiration
+      request
       semester
       points
       createdAt
