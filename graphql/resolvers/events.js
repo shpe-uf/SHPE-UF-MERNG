@@ -22,13 +22,14 @@ module.exports = {
     async createEvent(
       _,
       {
-        createEventInput: { name, code, category, expiration, request }
+        createEventInput: { name, code, category, expiration, request, points }
       }
     ) {
       const { valid, errors } = validateCreateEventInput(
         name,
         code,
         category,
+        points,
         expiration
       );
 
@@ -43,7 +44,8 @@ module.exports = {
         .toLowerCase()
         .trim()
         .replace(/ /g, "");
-      points = findPoints.points;
+      points = (category === "Miscellaneous" ? points : findPoints.points);
+
       semester = monthOptions[month].value;
       expiration = new Date(
         new Date().getTime() + parseInt(expiration, 10) * 60 * 60 * 1000

@@ -51,6 +51,7 @@ function Admin() {
       values.name = "";
       values.code = "";
       values.category = "";
+      values.points = "";
       values.expiration = "";
       setErrors(false);
       setCreateEventModal(false);
@@ -62,6 +63,7 @@ function Admin() {
     code: "",
     category: "",
     expiration: "",
+    points: "",
     request: "false"
   });
 
@@ -72,12 +74,14 @@ function Admin() {
         data: { createEvent: eventData }
       }
     ) {
-      getEvents.push(eventData);
       values.name = "";
       values.code = "";
       values.category = "";
+      values.points = "";
       values.expiration = "";
+      setErrors(false);
       setCreateEventModal(false);
+      getEvents.push(eventData);
     },
 
     onError(err) {
@@ -91,7 +95,7 @@ function Admin() {
     createEvent();
   }
 
-  console.log(getRequests);
+  console.log(errors);
 
   const panes = [
     {
@@ -337,6 +341,18 @@ function Admin() {
                     )
                   )}
                 </Form.Field>
+                {values.category === "Miscellaneous" ? (
+                  <Form.Input
+                    type="text"
+                    label="Points"
+                    name="points"
+                    value={values.category === "Miscellaneous" ? values.points : "0"}
+                    error={errors.points ? true : false}
+                    onChange={onChange}
+                  />
+                ) : (
+                  <></>
+                )}
                 <Form.Field
                   control="select"
                   label="Expires in"
@@ -386,6 +402,7 @@ const CREATE_EVENT_MUTATION = gql`
     $name: String!
     $code: String!
     $category: String!
+    $points: String!
     $expiration: String!
     $request: String!
   ) {
@@ -394,6 +411,7 @@ const CREATE_EVENT_MUTATION = gql`
         name: $name
         code: $code
         category: $category
+        points: $points
         expiration: $expiration
         request: $request
       }

@@ -71,6 +71,7 @@ module.exports = gql`
     name: String!
     code: String!
     category: String!
+    points: String!
     expiration: String!
     request: String!
   }

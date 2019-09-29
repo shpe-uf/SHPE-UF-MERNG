@@ -59,8 +59,8 @@ function Points() {
         data: { redeemPoints: userData }
       }
     ) {
-      console.log(userData);
       values.code = "";
+      setErrors(false);
       setRedeemPointsModal(false);
       updateGetUser(userData);
     },
