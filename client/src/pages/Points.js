@@ -81,6 +81,7 @@ function Points() {
     getUser.springPoints = userData.springPoints;
     getUser.summerPoints = userData.summerPoints;
     getUser.events = userData.events;
+    getUser.message = userData.message;
   }
 
   return (
@@ -107,9 +108,19 @@ function Points() {
         </Container>
       </div>
       <Container>
-        <Grid stackable columns={3}>
-          <Grid.Row>
-            <Grid.Column className="card-points">
+        <Grid stackable>
+          {getUser && getUser.message !== undefined && (
+            <Grid.Row>
+              <Grid.Column>
+                <div className="ui warning message">
+                  <p>{getUser.message}</p>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          )}
+
+          <Grid.Row columns={3}>
+            <Grid.Column>
               <Card fluid className="fall">
                 <Card.Content>
                   <p className="points-header">Fall Points</p>
@@ -120,7 +131,7 @@ function Points() {
                 </Card.Content>
               </Card>
             </Grid.Column>
-            <Grid.Column className="card-points">
+            <Grid.Column>
               <Card fluid className="spring">
                 <Card.Content>
                   <p className="points-header">Spring Points</p>
@@ -131,7 +142,7 @@ function Points() {
                 </Card.Content>
               </Card>
             </Grid.Column>
-            <Grid.Column className="card-points">
+            <Grid.Column>
               <Card fluid className="summer">
                 <Card.Content>
                   <p className="points-header">Summer Points</p>
@@ -143,34 +154,43 @@ function Points() {
               </Card>
             </Grid.Column>
           </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column>
+              <div className="table-responsive">
+                <Table striped selectable unstackable singleLine>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>Event</Table.HeaderCell>
+                      <Table.HeaderCell>Category</Table.HeaderCell>
+                      <Table.HeaderCell>Date</Table.HeaderCell>
+                      <Table.HeaderCell textAlign="center">
+                        Points
+                      </Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {getUser &&
+                      getUser.events.map(event => (
+                        <Table.Row key={event.id}>
+                          <Table.Cell>{event.name}</Table.Cell>
+                          <Table.Cell>{event.category}</Table.Cell>
+                          <Table.Cell>
+                            {moment(event.createdAt)
+                              .local()
+                              .format("MM/DD/YYYY")}
+                          </Table.Cell>
+                          <Table.Cell textAlign="center">
+                            {event.points}
+                          </Table.Cell>
+                        </Table.Row>
+                      ))}
+                  </Table.Body>
+                </Table>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
-        <div className="table-responsive">
-          <Table striped selectable unstackable singleLine>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Event</Table.HeaderCell>
-                <Table.HeaderCell>Category</Table.HeaderCell>
-                <Table.HeaderCell>Date</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {getUser &&
-                getUser.events.map(event => (
-                  <Table.Row key={event.id}>
-                    <Table.Cell>{event.name}</Table.Cell>
-                    <Table.Cell>{event.category}</Table.Cell>
-                    <Table.Cell>
-                      {moment(event.createdAt)
-                        .local()
-                        .format("MM/DD/YYYY")}
-                    </Table.Cell>
-                    <Table.Cell textAlign="center">{event.points}</Table.Cell>
-                  </Table.Row>
-                ))}
-            </Table.Body>
-          </Table>
-        </div>
 
         <Modal open={redeemPointsModal} size="tiny">
           <Modal.Header>

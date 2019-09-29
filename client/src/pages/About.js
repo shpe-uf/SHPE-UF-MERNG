@@ -3,7 +3,7 @@ import { Container, Grid } from "semantic-ui-react";
 
 function About() {
   return (
-    <div>
+    <div className="body">
       <div className="masthead masthead-about">
         <div className="overlay-blue">
           <Container>

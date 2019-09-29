@@ -45,7 +45,26 @@
 
 main {
   background-color: var(--white);
-  min-height: calc(100vh - 65px - 40px);
+  min-height: calc(100vh - 64px - 38px) !important;
+}
+
+.body {
+  margin-bottom: 32px !important;
+}
+
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+footer p {
+  color: var(--white);
 }
 
 h1, h2, h3, h4, h5 {
@@ -74,21 +93,6 @@ h4 {
 
 h5 {
   font-size: 1.5rem !important;
-}
-
-.body {
-  margin-bottom: 32px;
-}
-
-.ui.grid {
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
-  margin-left: 0px !important;
-  margin-right: 0px !important;
-}
-
-.column {
-  padding: 0px 8px !important;
 }
 
 .accent-1-text {
@@ -214,7 +218,7 @@ h5 {
 }
 
 .masthead-application {
-  padding: 32px 0px;
+  padding: 64px 0px;
   margin-bottom: 16px;
   text-align: left;
   background-color: var(--accent-2);
@@ -284,17 +288,6 @@ h5 {
 
 .no-margin {
   margin: 0px !important;
-}
-
-.footer {
-  background-color: var(--primary);
-  color: var(--white);
-  max-height: 41px;
-  min-height: 41px;
-}
-
-.footer-padding {
-  padding: 8px 0px !important;
 }
 
 .heart {

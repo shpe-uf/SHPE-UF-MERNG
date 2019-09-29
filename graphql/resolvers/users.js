@@ -331,7 +331,7 @@ module.exports = {
           });
         }
 
-        const updatedUser = await User.findOneAndUpdate(
+        var updatedUser = await User.findOneAndUpdate(
           {
             username
           },
@@ -351,6 +351,8 @@ module.exports = {
             new: true
           }
         );
+
+        updatedUser.message = "";
 
         await Event.findOneAndUpdate(
           {

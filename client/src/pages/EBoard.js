@@ -22,7 +22,7 @@ function email(email) {
 
 function EBoard() {
   return (
-    <div>
+    <div className="body">
       <div className="masthead masthead-eboard">
         <div className="overlay-blue">
           <Container>

@@ -16,7 +16,7 @@ import placeholder from "../assets/images/team/placeholder.png";
 
 function DevTeam() {
   return (
-    <div>
+    <div className="body">
       <div className="masthead masthead-team">
         <div className="overlay-blue">
           <Container>

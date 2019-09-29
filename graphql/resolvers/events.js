@@ -50,7 +50,7 @@ module.exports = {
       expiration = new Date(
         new Date().getTime() + parseInt(expiration, 10) * 60 * 60 * 1000
       );
-      request = request === "true" || request === true ? true : false;
+      request = (request === "true" || request === true ? true : false);
 
       isEventNameDuplicate = await Event.findOne({ name });
 

@@ -34,7 +34,7 @@ import visa from "../assets/images/sponsors/visa.png";
 
 function Sponsors() {
   return (
-    <div>
+    <div className="body">
       <div className="masthead masthead-sponsors">
         <div className="overlay-blue">
           <Container>
