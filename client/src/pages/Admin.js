@@ -95,8 +95,6 @@ function Admin() {
     createEvent();
   }
 
-  console.log(errors);
-
   const panes = [
     {
       menuItem: {
@@ -151,9 +149,9 @@ function Admin() {
                       <Table.Cell>{event.semester}</Table.Cell>
                       <Table.Cell textAlign="center">
                         {event.request === true ? (
-                          <Icon name="check" />
+                          <Icon className="request-true" name="check" />
                         ) : (
-                          <Icon name="x" />
+                          <Icon className="request-false" name="x" />
                         )}
                       </Table.Cell>
                       <Table.Cell textAlign="center">
@@ -234,6 +232,10 @@ function Admin() {
                   <Table.HeaderCell>Category</Table.HeaderCell>
                   <Table.HeaderCell>Date</Table.HeaderCell>
                   <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">
+                    Approve
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">Deny</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -253,6 +255,16 @@ function Admin() {
                       </Table.Cell>
                       <Table.Cell textAlign="center">
                         {request.points}
+                      </Table.Cell>
+                      <Table.Cell textAlign="center">
+                        <Button icon color="green">
+                          <Icon name="check" />
+                        </Button>
+                      </Table.Cell>
+                      <Table.Cell textAlign="center">
+                        <Button icon color="red">
+                          <Icon name="x" />
+                        </Button>
                       </Table.Cell>
                     </Table.Row>
                   ))}
@@ -346,7 +358,9 @@ function Admin() {
                     type="text"
                     label="Points"
                     name="points"
-                    value={values.category === "Miscellaneous" ? values.points : "0"}
+                    value={
+                      values.category === "Miscellaneous" ? values.points : "0"
+                    }
                     error={errors.points ? true : false}
                     onChange={onChange}
                   />

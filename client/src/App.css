@@ -49,7 +49,7 @@ main {
 }
 
 .body {
-  margin-bottom: 32px !important;
+  margin-bottom: 16px !important;
 }
 
 footer {
@@ -95,6 +95,15 @@ h5 {
   font-size: 1.5rem !important;
 }
 
+.logout {
+  color: rgb(255, 0, 0) !important;
+  font-weight: bold;
+}
+
+.ui.grid {
+  margin: 0px !important
+}
+
 .accent-1-text {
   color: var(--accent-1);
 }
@@ -108,31 +117,27 @@ h5 {
   margin-bottom: 0px !important;
 }
 
-.ui.menu {
+.ui.inverted.menu {
   border-radius: 0px !important;
+  box-shadow: none;
+  margin-bottom: 0px;
+  background-color: var(--primary) !important;
 }
 
 .ui.inverted.menu .accent-1.active.item, .ui.inverted.accent-1.menu {
   background-color: var(--accent-1);
 }
 
-.ui.inverted.menu .accent-2.active.item, .ui.inverted.accent-2.menu {
+/* .ui.inverted.menu .accent-2.active.item, .ui.inverted.accent-2.menu {
   background-color: var(--accent-2);
 }
 
 .ui.inverted.menu .active.item {
   background: var(--accent-2);
   color: var(--white) !important;
-}
+} */
 
-.ui.inverted.menu {
-  border: 0 solid transparent;
-  background: var(--primary);
-  box-shadow: none;
-  margin-bottom: 0px;
-}
-
-.username {
+.email {
   text-transform: lowercase !important;
 }
 
@@ -163,7 +168,7 @@ h5 {
 .overlay-register, .overlay-login {
   background-color: var(--primary-overlay);
   width: 100%;
-  min-height: calc(100vh - 65px - 40px);
+  min-height: calc(100vh - 64px - 38px) !important;
 }
 
 .masthead {
@@ -218,7 +223,7 @@ h5 {
 }
 
 .masthead-application {
-  padding: 64px 0px;
+  padding: 72px 0px 16px 0px;
   margin-bottom: 16px;
   text-align: left;
   background-color: var(--accent-2);
@@ -290,10 +295,6 @@ h5 {
   margin: 0px !important;
 }
 
-.heart {
-  color: rgb(255, 0, 0);
-}
-
 .card-team, .card-points {
   padding: 8px !important;
 }
@@ -315,18 +316,11 @@ h5 {
 .login {
   background: url(assets/images/login.jpg) !important;
   border-radius: 0px;
-  background-position: 50% 50% !important;
+  background-position: 15% 50% !important;
   background-attachment: fixed !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   min-height: calc(100vh - 65px - 41px);
-}
-
-.jumbotron-register, .jumbotron-login {
-  background-color: var(--white) !important;
-  padding: 16px !important;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
 }
 
 .title-bg-accent-1 {
@@ -334,6 +328,11 @@ h5 {
   padding: 16px 16px 0px 16px !important;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
+
+.segment-spacing {
+  padding: 32px 0px !important;
+  border: 0px !important;
 }
 
 .sponsor {
@@ -355,7 +354,7 @@ h5 {
 }
 
 .platinum {
-  background: url(assets/images/sponsors/platinum.png);
+  background: url(assets/images/sponsors/platinum-min.png);
 }
 
 .chevron {
@@ -466,10 +465,10 @@ th {
   overflow-x: scroll;
 }
 
-.check {
-  color: rgb(0, 159, 77);
+.request-true {
+  color: rgb(33, 186, 69);
 }
 
-.x {
-  color: rgb(228, 0, 43);
+.request-false {
+  color: rgb(220, 42, 42);
 }

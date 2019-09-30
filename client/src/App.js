@@ -36,8 +36,8 @@ function App() {
           <Route exact path="/devteam" component={DevTeam} />
           <Route exact path="/sponsors" component={Sponsors} />
           <UserRoute exact path="/admin" component={Admin} />
-          <UserRoute exact path="/points" component={Points} />
           <UserRoute exact path="/profile" component={Profile} />
+          <UserRoute exact path="/points" component={Points} />
         </main>
         <Footer />
       </Router>
