@@ -27,8 +27,6 @@ function MenuBar() {
     setToggleSidebar(!toggleSidebar);
   };
 
-  console.log(user);
-
   return (
     <>
       <Responsive minWidth={992}>
