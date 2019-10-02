@@ -66,7 +66,7 @@ footer p {
 }
 
 .row-footer-mobile {
-  padding: 4px 0px !important;
+  padding: 8px 0px !important;
 }
 
 i.inverted.bordered.icon, i.inverted.circular.icon {
@@ -156,6 +156,7 @@ a:hover {
   justify-content: center !important;
   background-color: var(--accent-1) !important;
   text-transform: uppercase !important;
+  color: var(--white) !important;
 }
 
 .brand-name-logo {
@@ -505,19 +506,24 @@ ui.tabular.menu {
   background-color: green !important;
 }
 
+.fa-inbox, .fa-frown {
+  font-size: 10rem !important;
+  margin-bottom: 16px !important;
+}
+
 @media (max-width: 991px) {
   main {
-    min-height: calc(100vh - 62.41px - 102px) !important;
+    min-height: calc(100vh - 62.41px - 118px) !important;
   }
 
   .overlay-register,
   .overlay-login {
-    min-height: calc(100vh - 62.41px - 102px) !important;
+    min-height: calc(100vh - 62.41px - 118px) !important;
   }
 
   .overlay-register,
   .overlay-login {
-    min-height: calc(100vh - 62.41px - 102px) !important;
+    min-height: calc(100vh - 62.41px - 118px) !important;
   }
 }
 

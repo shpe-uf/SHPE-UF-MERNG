@@ -119,7 +119,7 @@ function Admin() {
         {activeItem === "Events" && (
           <Segment attached="bottom">
             <Grid>
-              <Grid.Column className="no-padding">
+              <Grid.Column>
                 <Button
                   content="Create Event"
                   icon="pencil"

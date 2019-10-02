@@ -24,7 +24,6 @@ module.exports = {
         approveRejectRequestInput: { username, eventName }
       }
     ) {
-      console.log("REJECT REQUEST");
       const res = await Request.deleteOne({
         username: username,
         eventName: eventName
