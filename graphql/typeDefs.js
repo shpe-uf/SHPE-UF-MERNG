@@ -82,8 +82,8 @@ module.exports = gql`
   }
 
   input ApproveRejectRequestInput {
-    name: String!
     username: String!
+    eventName: String!
   }
 
   type Query {

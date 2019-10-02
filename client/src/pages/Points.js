@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Grid, Container, Button, Modal, Form, Icon } from "semantic-ui-react";
+import { Grid, Container, Button, Modal, Form } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -93,7 +93,17 @@ function Points() {
               </Grid.Column>
             </Grid.Row>
           )}
-
+          <Grid.Row>
+            <Grid.Column>
+              <Button
+                content="Redeem Code"
+                icon="font"
+                labelPosition="left"
+                floated="right"
+                onClick={() => openModal("redeemPoints")}
+              />
+            </Grid.Column>
+          </Grid.Row>
           <PointsBar user={getUser} />
           <PointsTable user={getUser} />
         </Grid>

@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { Grid, Container, Tab, Modal, Button, Form } from "semantic-ui-react";
+import {
+  Grid,
+  Container,
+  Modal,
+  Button,
+  Form,
+  Menu,
+  Segment
+} from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import {
-  FETCH_USERS_QUERY,
-  FETCH_EVENTS_QUERY,
-  FETCH_REQUESTS_QUERY
-} from "../util/graphql";
+import { FETCH_EVENTS_QUERY } from "../util/graphql";
 import { useForm } from "../util/hooks";
 
 import Title from "../components/Title";
@@ -24,14 +28,6 @@ function Admin() {
   const {
     data: { getEvents }
   } = useQuery(FETCH_EVENTS_QUERY);
-
-  const {
-    data: { getUsers }
-  } = useQuery(FETCH_USERS_QUERY);
-
-  const {
-    data: { getRequests }
-  } = useQuery(FETCH_REQUESTS_QUERY);
 
   const [createEventModal, setCreateEventModal] = useState(false);
 
@@ -92,54 +88,60 @@ function Admin() {
     createEvent();
   }
 
-  const panes = [
-    {
-      menuItem: {
-        key: "events",
-        icon: "calendar alternate",
-        content: "Events"
-      },
-      render: () => (
-        <Tab.Pane>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <Button
-                  floated="right"
-                  onClick={() => openModal("createEvent")}
-                >
-                  Create Event
-                </Button>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          <EventsTable />
-        </Tab.Pane>
-      )
-    },
-    {
-      menuItem: { key: "members", icon: "users", content: "Members" },
-      render: () => (
-        <Tab.Pane>
-          <MembersTable />
-        </Tab.Pane>
-      )
-    },
-    {
-      menuItem: { key: "requests", icon: "exclamation", content: "Requests" },
-      render: () => (
-        <Tab.Pane>
-          <RequestsTable />
-        </Tab.Pane>
-      )
-    }
-  ];
+  const [activeItem, setActiveItem] = useState("Events");
+
+  const handleItemClick = (e, { name }) => {
+    setActiveItem(name);
+  };
 
   return (
     <div className="body">
       <Title title="Admin Tools" />
       <Container>
-        <Tab panes={panes} />
+        <Menu attached="top" tabular>
+          <Menu.Item
+            name="Events"
+            active={activeItem === "Events"}
+            onClick={handleItemClick}
+          />
+          <Menu.Item
+            name="Members"
+            active={activeItem === "Members"}
+            onClick={handleItemClick}
+          />
+          <Menu.Item
+            name="Requests"
+            active={activeItem === "Requests"}
+            onClick={handleItemClick}
+          />
+        </Menu>
+
+        {activeItem === "Events" && (
+          <Segment attached="bottom">
+            <Grid>
+              <Grid.Column className="no-padding">
+                <Button
+                  content="Create Event"
+                  icon="pencil"
+                  labelPosition="left"
+                  onClick={() => openModal("createEvent")}
+                  floated="right"
+                />
+              </Grid.Column>
+            </Grid>
+            <EventsTable />
+          </Segment>
+        )}
+        {activeItem === "Members" && (
+          <Segment attached="bottom">
+            <MembersTable />
+          </Segment>
+        )}
+        {activeItem === "Requests" && (
+          <Segment attached="bottom">
+            <RequestsTable />
+          </Segment>
+        )}
       </Container>
 
       <Modal

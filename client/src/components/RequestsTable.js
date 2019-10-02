@@ -1,5 +1,5 @@
-import React from "react";
-import { Table, Icon, Button } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Table, Icon, Button, Dimmer, Loader } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
 import gql from "graphql-tag";
@@ -7,12 +7,41 @@ import gql from "graphql-tag";
 import { FETCH_REQUESTS_QUERY } from "../util/graphql";
 
 function RequestsTable() {
-  const {
+  const [errors, setErrors] = useState({});
+
+  var values = {};
+
+  var {
     data: { getRequests }
   } = useQuery(FETCH_REQUESTS_QUERY);
 
+  // const [rejectRequest, { data }] = useMutation(REJECT_REQUEST_MUTATION);
+
+  const [rejectRequest, { data }] = useMutation(REJECT_REQUEST_MUTATION, {
+    update(
+      _,
+      {
+        data: { rejectRequest: requestData }
+      }
+    ) {
+      getRequests.map((request, index) => {
+        var result = requestData.filter(student => (student.eventName === request.eventName) && (student.username === request.username));
+        if (result.length === 0) {
+          getRequests.splice(index, 1);
+        }
+      });
+    },
+
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+    }
+  });
+
   return (
     <div className="table-responsive">
+      <Dimmer active={getRequests ? false : true} inverted>
+        <Loader />
+      </Dimmer>
       <Table striped selectable unstackable singleLine>
         <Table.Header>
           <Table.Row>
@@ -48,7 +77,18 @@ function RequestsTable() {
                   </Button>
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  <Button icon color="red">
+                  <Button
+                    icon
+                    color="red"
+                    onClick={() => {
+                      rejectRequest({
+                        variables: {
+                          username: request.username,
+                          eventName: request.eventName
+                        }
+                      });
+                    }}
+                  >
                     <Icon name="x" />
                   </Button>
                 </Table.Cell>
@@ -61,18 +101,19 @@ function RequestsTable() {
 }
 
 const REJECT_REQUEST_MUTATION = gql`
-  mutation rejectRequest($username: String!, $name: String!) {
-    rejectRequest(rejectRequestInput: { username: $username, name: $name }) {
-      name
-      code
+  mutation rejectRequest($username: String!, $eventName: String!) {
+    rejectRequest(
+      approveRejectRequestInput: { username: $username, eventName: $eventName }
+    ) {
+      eventName
       category
-      expiration
-      request
-      semester
       points
+      firstName
+      lastName
+      username
       createdAt
-      attendance
     }
   }
 `;
+
 export default RequestsTable;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Dimmer, Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
 
 import { FETCH_USERS_QUERY } from "../util/graphql";
@@ -11,6 +11,9 @@ function MembersTable() {
 
   return (
     <div className="table-responsive">
+      <Dimmer active={getUsers ? false : true} inverted>
+        <Loader />
+      </Dimmer>
       <Table striped selectable unstackable singleLine>
         <Table.Header>
           <Table.Row>
@@ -37,8 +40,12 @@ function MembersTable() {
                 <Table.Cell>{member.username}</Table.Cell>
                 <Table.Cell>{member.email}</Table.Cell>
                 <Table.Cell textAlign="center">{member.fallPoints}</Table.Cell>
-                <Table.Cell textAlign="center">{member.springPoints}</Table.Cell>
-                <Table.Cell textAlign="center">{member.summerPoints}</Table.Cell>
+                <Table.Cell textAlign="center">
+                  {member.springPoints}
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  {member.summerPoints}
+                </Table.Cell>
                 <Table.Cell textAlign="center">{member.points}</Table.Cell>
               </Table.Row>
             ))}

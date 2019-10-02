@@ -22,7 +22,7 @@ function Profile() {
 
   return (
     <div className="body">
-      <Title title="My Profile" />;
+      <Title title="My Profile" />
       <Container>
         <Grid stackable>
           <UserProfile user={getUser} />

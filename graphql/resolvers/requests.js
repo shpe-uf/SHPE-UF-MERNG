@@ -21,12 +21,13 @@ module.exports = {
     async rejectRequest(
       _,
       {
-        approveRejectRequestInput: { username, name }
+        approveRejectRequestInput: { username, eventName }
       }
     ) {
+      console.log("REJECT REQUEST");
       const res = await Request.deleteOne({
         username: username,
-        eventName: name
+        eventName: eventName
       });
 
       const requests = await Request.find().sort({ createdAt: 1 });
@@ -37,10 +38,10 @@ module.exports = {
     async approveRequest(
       _,
       {
-        approveRejectRequestInput: { username, name }
+        approveRejectRequestInput: { username, eventName }
       }
     ) {
-      const event = await Event.findOne({ name });
+      const event = await Event.findOne({ name: eventName });
       const user = await User.findOne({ username });
 
       var pointsIncrease = {};
@@ -90,7 +91,7 @@ module.exports = {
 
       await Event.findOneAndUpdate(
         {
-          name
+          name: eventName
         },
         {
           $push: {
@@ -109,7 +110,7 @@ module.exports = {
 
       const res = await Request.deleteOne({
         username: username,
-        eventName: name
+        eventName: eventName
       });
 
       const requests = await Request.find().sort({ createdAt: 1 });

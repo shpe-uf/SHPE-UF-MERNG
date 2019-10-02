@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Icon } from "semantic-ui-react";
+import { Table, Icon, Dimmer, Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
 import moment from "moment";
 
@@ -12,6 +12,9 @@ function EventsTable() {
 
   return (
     <div className="table-responsive">
+      <Dimmer active={getEvents ? false : true} inverted>
+        <Loader />
+      </Dimmer>
       <Table striped selectable unstackable singleLine>
         <Table.Header>
           <Table.Row>
