@@ -86,6 +86,11 @@ module.exports = gql`
     eventName: String!
   }
 
+  input ManualInputInput {
+    username: String!
+    eventName: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
@@ -100,5 +105,6 @@ module.exports = gql`
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
+    manualInput(manualInputInput: ManualInputInput): User!
   }
 `;

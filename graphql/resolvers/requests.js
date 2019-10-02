@@ -3,8 +3,6 @@ const Request = require("../../models/Request.js");
 const Event = require("../../models/Event.js");
 const User = require("../../models/User.js");
 
-const { validateCreateEventInput } = require("../../util/validators");
-
 module.exports = {
   Query: {
     async getRequests() {
@@ -61,8 +59,8 @@ module.exports = {
           summerPoints: event.points
         };
       } else {
-        errors.general = "Invalid event";
-        throw new UserInputError("Invalid event", {
+        errors.general = "Invalid event.";
+        throw new UserInputError("Invalid event.", {
           errors
         });
       }

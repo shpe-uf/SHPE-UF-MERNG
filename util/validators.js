@@ -163,3 +163,33 @@ module.exports.validateCreateEventInput = (
     valid: Object.keys(errors).length < 1
   };
 };
+
+module.exports.validateRedeemPointsInput = (
+  code
+) => {
+  const errors = {};
+
+  if (code.trim() === "") {
+    errors.code = "No code was provided."
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
+module.exports.validateManualInputInput = (
+  username
+) => {
+  const errors = {};
+
+  if (username.trim() === "") {
+    errors.username = "No username was provided."
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
