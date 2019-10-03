@@ -23,6 +23,7 @@ module.exports = gql`
     listServ: Boolean!
     events: [Event]!
     token: String!
+    message: String!
   }
 
   type Event {
@@ -33,9 +34,21 @@ module.exports = gql`
     points: Int!
     attendance: Int!
     expiration: String!
+    request: Boolean!
     semester: String!
     createdAt: String!
     users: [User]!
+  }
+
+  type Request {
+    id: ID!
+    eventName: String!
+    category: String!
+    points: String!
+    firstName: String!
+    lastName: String!
+    username: String!
+    createdAt: String!
   }
 
   input RegisterInput {
@@ -58,7 +71,9 @@ module.exports = gql`
     name: String!
     code: String!
     category: String!
+    points: String!
     expiration: String!
+    request: String!
   }
 
   input RedeemPointsInput {
@@ -66,10 +81,21 @@ module.exports = gql`
     username: String!
   }
 
+  input ApproveRejectRequestInput {
+    username: String!
+    eventName: String!
+  }
+
+  input ManualInputInput {
+    username: String!
+    eventName: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
     getEvents: [Event]
+    getRequests: [Request]
   }
 
   type Mutation {
@@ -77,5 +103,8 @@ module.exports = gql`
     login(username: String!, password: String!): User!
     createEvent(createEventInput: CreateEventInput): Event!
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
+    approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
+    rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
+    manualInput(manualInputInput: ManualInputInput): User!
   }
 `;

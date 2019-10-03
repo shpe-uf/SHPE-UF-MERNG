@@ -114,6 +114,7 @@ module.exports.validateCreateEventInput = (
   name,
   code,
   category,
+  points,
   expiration
 ) => {
   const errors = {};
@@ -145,6 +146,46 @@ module.exports.validateCreateEventInput = (
 
   if (expiration.trim() === "") {
     errors.expiration = "Expires in is required.";
+  }
+
+  if (category.trim() === "Miscellaneous") {
+    if (points.trim() === 0 || points.trim() === "0") {
+      errors.points = "Points is required.";
+    }
+
+    if (Number(points) < 1 || !Number(points)) {
+      errors.points = "Points must be a number greater than 0.";
+    }
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
+module.exports.validateRedeemPointsInput = (
+  code
+) => {
+  const errors = {};
+
+  if (code.trim() === "") {
+    errors.code = "No code was provided."
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
+module.exports.validateManualInputInput = (
+  username
+) => {
+  const errors = {};
+
+  if (username.trim() === "") {
+    errors.username = "No username was provided."
   }
 
   return {

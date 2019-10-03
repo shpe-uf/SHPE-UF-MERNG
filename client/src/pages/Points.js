@@ -1,19 +1,14 @@
 import React, { useContext, useState } from "react";
+import { Grid, Container, Button, Modal, Form } from "semantic-ui-react";
 import gql from "graphql-tag";
-import {
-  Grid,
-  Container,
-  Card,
-  Table,
-  Button,
-  Modal,
-  Form,
-  Icon
-} from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { useForm } from "../util/hooks";
 
+import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
+
+import Title from "../components/Title";
+import PointsBar from "../components/PointsBar";
+import PointsTable from "../components/PointsTable";
 
 function Points() {
   const [errors, setErrors] = useState({});
@@ -59,6 +54,7 @@ function Points() {
       }
     ) {
       values.code = "";
+      setErrors(false);
       setRedeemPointsModal(false);
       updateGetUser(userData);
     },
@@ -79,136 +75,82 @@ function Points() {
     getUser.springPoints = userData.springPoints;
     getUser.summerPoints = userData.summerPoints;
     getUser.events = userData.events;
+    getUser.message = userData.message;
   }
 
   return (
     <div className="body">
-      <div className="masthead masthead-application">
-        <Container>
-          <Grid stackable columns={2}>
-            <Grid.Row className="no-padding">
+      <Title title="Points Program" />
+
+      <Container>
+        <Grid stackable>
+          {getUser && getUser.message && getUser.message !== undefined && (
+            <Grid.Row>
               <Grid.Column>
-                <h1 className="text-white">Points System</h1>
-              </Grid.Column>
-              <Grid.Column>
-                <Button
-                  secondary
-                  icon
-                  floated="right"
-                  onClick={() => openModal("redeemPoints")}
-                >
-                  <Icon name="plus" />
-                </Button>
+                <div className="ui warning message">
+                  <p>{getUser.message}</p>
+                </div>
               </Grid.Column>
             </Grid.Row>
-          </Grid>
-        </Container>
-      </div>
-      <Container>
-        <Grid stackable columns={3}>
+          )}
           <Grid.Row>
-            <Grid.Column className="card-points">
-              <Card fluid className="fall">
-                <Card.Content>
-                  <p className="points-header">Fall Points</p>
-                  <p className="points-number">
-                    {getUser ? getUser.fallPoints : "0"}
-                  </p>
-                  <p className="points-header">0 Percentile</p>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
-            <Grid.Column className="card-points">
-              <Card fluid className="spring">
-                <Card.Content>
-                  <p className="points-header">Spring Points</p>
-                  <p className="points-number">
-                    {getUser ? getUser.springPoints : "0"}
-                  </p>
-                  <p className="points-header">0 Percentile</p>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
-            <Grid.Column className="card-points">
-              <Card fluid className="summer">
-                <Card.Content>
-                  <p className="points-header">Summer Points</p>
-                  <p className="points-number">
-                    {getUser ? getUser.summerPoints : "0"}
-                  </p>
-                  <p className="points-header">0 Percentile</p>
-                </Card.Content>
-              </Card>
+            <Grid.Column>
+              <Button
+                content="Redeem Code"
+                icon="font"
+                labelPosition="left"
+                floated="right"
+                onClick={() => openModal("redeemPoints")}
+              />
             </Grid.Column>
           </Grid.Row>
+          <PointsBar user={getUser} />
+          <PointsTable user={getUser} />
         </Grid>
-        <div className="table-responsive">
-          <Table striped selectable unstackable singleLine>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Event</Table.HeaderCell>
-                <Table.HeaderCell>Category</Table.HeaderCell>
-                <Table.HeaderCell>Date</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {getUser &&
-                getUser.events.map(event => (
-                  <Table.Row key={event.id}>
-                    <Table.Cell>{event.name}</Table.Cell>
-                    <Table.Cell>{event.category}</Table.Cell>
-                    <Table.Cell>{event.createdAt}</Table.Cell>
-                    <Table.Cell textAlign="center">{event.points}</Table.Cell>
-                  </Table.Row>
-                ))}
-            </Table.Body>
-          </Table>
-        </div>
-
-        <Modal open={redeemPointsModal} size="tiny">
-          <Modal.Header>
-            <h2>Redeem Points</h2>
-          </Modal.Header>
-          <Modal.Content scrolling>
-            <Modal.Description>
-              {Object.keys(errors).length > 0 && (
-                <div className="ui error message">
-                  <ul className="list">
-                    {Object.values(errors).map(value => (
-                      <li key={value}>{value}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <Form
-                onSubmit={onSubmit}
-                noValidate
-                className={loading ? "loading" : ""}
-              >
-                <Form.Input
-                  type="text"
-                  label="Event Code"
-                  name="code"
-                  value={values.code}
-                  error={errors.code ? true : false}
-                  onChange={onChange}
-                />
-                <Button
-                  type="reset"
-                  color="grey"
-                  onClick={() => closeModal("redeemPoints")}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit" floated="right">
-                  Submit
-                </Button>
-              </Form>
-            </Modal.Description>
-          </Modal.Content>
-        </Modal>
       </Container>
+
+      <Modal open={redeemPointsModal} size="tiny">
+        <Modal.Header>
+          <h2>Redeem Points</h2>
+        </Modal.Header>
+        <Modal.Content scrolling>
+          <Modal.Description>
+            {Object.keys(errors).length > 0 && (
+              <div className="ui error message">
+                <ul className="list">
+                  {Object.values(errors).map(value => (
+                    <li key={value}>{value}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <Form
+              onSubmit={onSubmit}
+              noValidate
+              className={loading ? "loading" : ""}
+            >
+              <Form.Input
+                type="text"
+                label="Event Code"
+                name="code"
+                value={values.code}
+                error={errors.code ? true : false}
+                onChange={onChange}
+              />
+              <Button
+                type="reset"
+                color="grey"
+                onClick={() => closeModal("redeemPoints")}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" floated="right">
+                Submit
+              </Button>
+            </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
     </div>
   );
 }
@@ -240,6 +182,7 @@ const REDEEM_POINTS_MUTATION = gql`
       fallPoints
       springPoints
       summerPoints
+      message
       events {
         id
         name

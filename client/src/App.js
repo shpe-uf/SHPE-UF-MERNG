@@ -20,6 +20,7 @@ import EBoard from "./pages/EBoard";
 import Sponsors from "./pages/Sponsors";
 import Admin from "./pages/Admin";
 import Points from "./pages/Points";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/devteam" component={DevTeam} />
           <Route exact path="/sponsors" component={Sponsors} />
           <UserRoute exact path="/admin" component={Admin} />
+          <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
         </main>
         <Footer />

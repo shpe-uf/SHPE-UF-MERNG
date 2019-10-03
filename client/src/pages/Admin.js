@@ -1,29 +1,29 @@
 import React, { useState } from "react";
-import gql from "graphql-tag";
 import {
   Grid,
   Container,
-  Table,
-  Tab,
   Modal,
   Button,
-  Form
+  Form,
+  Menu,
+  Segment
 } from "semantic-ui-react";
+import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+
+import { FETCH_EVENTS_QUERY } from "../util/graphql";
 import { useForm } from "../util/hooks";
 
-import { FETCH_USERS_QUERY, FETCH_EVENTS_QUERY } from "../util/graphql";
-import moment from "moment";
+import Title from "../components/Title";
+import EventsTable from "../components/EventsTable";
+import MembersTable from "../components/MembersTable";
+import RequestsTable from "../components/RequestsTable";
 
 import categoryOptions from "../assets/options/category.json";
 import expirationOptions from "../assets/options/expiration.json";
 
 function Admin() {
   const [errors, setErrors] = useState({});
-
-  const {
-    data: { getUsers }
-  } = useQuery(FETCH_USERS_QUERY);
 
   const {
     data: { getEvents }
@@ -42,7 +42,9 @@ function Admin() {
       values.name = "";
       values.code = "";
       values.category = "";
+      values.points = "";
       values.expiration = "";
+      values.request = "false";
       setErrors(false);
       setCreateEventModal(false);
     }
@@ -52,7 +54,9 @@ function Admin() {
     name: "",
     code: "",
     category: "",
-    expiration: ""
+    expiration: "",
+    points: "",
+    request: "false"
   });
 
   const [createEvent, { loading }] = useMutation(CREATE_EVENT_MUTATION, {
@@ -62,12 +66,15 @@ function Admin() {
         data: { createEvent: eventData }
       }
     ) {
-      getEvents.push(eventData);
       values.name = "";
       values.code = "";
       values.category = "";
+      values.points = "";
       values.expiration = "";
+      values.request = "false";
+      setErrors(false);
       setCreateEventModal(false);
+      getEvents.push(eventData);
     },
 
     onError(err) {
@@ -81,217 +88,176 @@ function Admin() {
     createEvent();
   }
 
-  const panes = [
-    {
-      menuItem: {
-        key: "events",
-        icon: "calendar alternate",
-        content: "Events"
-      },
-      render: () => (
-        <Tab.Pane>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <Button
-                  floated="right"
-                  onClick={() => openModal("createEvent")}
-                >
-                  Create Event
-                </Button>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          <div className="table-responsive">
-            <Table striped selectable unstackable singleLine>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>Name</Table.HeaderCell>
-                  <Table.HeaderCell>Code</Table.HeaderCell>
-                  <Table.HeaderCell>Category</Table.HeaderCell>
-                  <Table.HeaderCell>Expiration</Table.HeaderCell>
-                  <Table.HeaderCell>Semester</Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    Attendance
-                  </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {getEvents &&
-                  getEvents.map(event => (
-                    <Table.Row key={event.name}>
-                      <Table.Cell>{event.name}</Table.Cell>
-                      <Table.Cell>{event.code}</Table.Cell>
-                      <Table.Cell>{event.category}</Table.Cell>
-                      <Table.Cell>
-                        {moment(event.expiration)
-                          .local()
-                          .format("MM/DD/YYYY @ hh:mm A")}
-                      </Table.Cell>
-                      <Table.Cell>{event.semester}</Table.Cell>
-                      <Table.Cell textAlign="center">
-                        {event.attendance}
-                      </Table.Cell>
-                      <Table.Cell textAlign="center">{event.points}</Table.Cell>
-                    </Table.Row>
-                  ))}
-              </Table.Body>
-            </Table>
-          </div>
-        </Tab.Pane>
-      )
-    },
-    {
-      menuItem: { key: "members", icon: "users", content: "Members" },
-      render: () => (
-        <Tab.Pane>
-          <div className="table-responsive">
-            <Table striped selectable unstackable singleLine>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>Name</Table.HeaderCell>
-                  <Table.HeaderCell>Username</Table.HeaderCell>
-                  <Table.HeaderCell>E-mail</Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    Fall Points
-                  </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    Spring Points
-                  </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    Summer Points
-                  </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    Total Points
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {getUsers &&
-                  getUsers.map(user => (
-                    <Table.Row key={user.username}>
-                      <Table.Cell>
-                        {user.lastName}, {user.firstName}
-                      </Table.Cell>
-                      <Table.Cell>{user.username}</Table.Cell>
-                      <Table.Cell>{user.email}</Table.Cell>
-                      <Table.Cell textAlign="center">
-                        {user.fallPoints}
-                      </Table.Cell>
-                      <Table.Cell textAlign="center">
-                        {user.springPoints}
-                      </Table.Cell>
-                      <Table.Cell textAlign="center">
-                        {user.summerPoints}
-                      </Table.Cell>
-                      <Table.Cell textAlign="center">{user.points}</Table.Cell>
-                    </Table.Row>
-                  ))}
-              </Table.Body>
-            </Table>
-          </div>
-        </Tab.Pane>
-      )
-    }
-  ];
+  const [activeItem, setActiveItem] = useState("Events");
+
+  const handleItemClick = (e, { name }) => {
+    setActiveItem(name);
+  };
 
   return (
     <div className="body">
-      <Grid>
-        <Grid.Row className="no-padding">
-          <Grid.Column>
-            <div className="masthead masthead-application">
-              <Container>
-                <h1 className="text-white">Admin Tools</h1>
-              </Container>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Title title="Admin Tools" />
       <Container>
-        <Tab panes={panes} />
+        <Menu attached="top" tabular>
+          <Menu.Item
+            name="Events"
+            active={activeItem === "Events"}
+            onClick={handleItemClick}
+          />
+          <Menu.Item
+            name="Members"
+            active={activeItem === "Members"}
+            onClick={handleItemClick}
+          />
+          <Menu.Item
+            name="Requests"
+            active={activeItem === "Requests"}
+            onClick={handleItemClick}
+          />
+        </Menu>
 
-        <Modal
-          open={createEventModal}
-          size="tiny"
-          closeOnEscape={true}
-          closeOnDimmerClick={false}
-        >
-          <Modal.Header>
-            <h2>Create Event</h2>
-          </Modal.Header>
-          <Modal.Content scrolling>
-            <Modal.Description>
-              {Object.keys(errors).length > 0 && (
-                <div className="ui error message">
-                  <ul className="list">
-                    {Object.values(errors).map(value => (
-                      <li key={value}>{value}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <Form
-                onSubmit={onSubmit}
-                noValidate
-                className={loading ? "loading" : ""}
+        {activeItem === "Events" && (
+          <Segment attached="bottom">
+            <Grid>
+              <Grid.Column>
+                <Button
+                  content="Create Event"
+                  icon="pencil"
+                  labelPosition="left"
+                  onClick={() => openModal("createEvent")}
+                  floated="right"
+                />
+              </Grid.Column>
+            </Grid>
+            <EventsTable />
+          </Segment>
+        )}
+        {activeItem === "Members" && (
+          <Segment attached="bottom">
+            <MembersTable />
+          </Segment>
+        )}
+        {activeItem === "Requests" && (
+          <Segment attached="bottom">
+            <RequestsTable />
+          </Segment>
+        )}
+      </Container>
+
+      <Modal
+        open={createEventModal}
+        size="tiny"
+        closeOnEscape={true}
+        closeOnDimmerClick={false}
+      >
+        <Modal.Header>
+          <h2>Create Event</h2>
+        </Modal.Header>
+        <Modal.Content scrolling>
+          <Modal.Description>
+            {Object.keys(errors).length > 0 && (
+              <div className="ui error message">
+                <ul className="list">
+                  {Object.values(errors).map(value => (
+                    <li key={value}>{value}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <Form
+              onSubmit={onSubmit}
+              noValidate
+              className={loading ? "loading" : ""}
+            >
+              <Form.Input
+                type="text"
+                label="Name"
+                name="name"
+                value={values.name}
+                error={errors.name ? true : false}
+                onChange={onChange}
+              />
+              <Form.Input
+                type="text"
+                label="Code"
+                name="code"
+                value={values.code}
+                error={errors.code ? true : false}
+                onChange={onChange}
+              />
+              <Form.Field
+                control="select"
+                label="Category"
+                name="category"
+                value={values.category}
+                error={errors.category ? true : false}
+                onChange={onChange}
               >
-                <Form.Input
-                  type="text"
-                  label="Name"
-                  name="name"
-                  value={values.name}
-                  error={errors.name ? true : false}
-                  onChange={onChange}
-                />
-                <Form.Input
-                  type="text"
-                  label="Code"
-                  name="code"
-                  value={values.code}
-                  error={errors.code ? true : false}
-                  onChange={onChange}
-                />
-                <Form.Field
-                  control="select"
-                  label="Category"
-                  name="category"
-                  value={values.category}
-                  error={errors.category ? true : false}
-                  onChange={onChange}
-                >
-                  {categoryOptions.map(category => (
+                {categoryOptions.map(category =>
+                  category.points === 0 ? (
+                    <option value={category.value} key={category.key}>
+                      {category.value}
+                    </option>
+                  ) : (
                     <option value={category.value} key={category.key}>
                       {category.value} ({category.points})
                     </option>
-                  ))}
-                </Form.Field>
-                <Form.Field
-                  control="select"
-                  label="Expires in"
-                  name="expiration"
-                  value={values.expiration}
-                  error={errors.expiration ? true : false}
+                  )
+                )}
+              </Form.Field>
+              {values.category === "Miscellaneous" ? (
+                <Form.Input
+                  type="text"
+                  label="Points"
+                  name="points"
+                  value={
+                    values.category === "Miscellaneous" ? values.points : "0"
+                  }
+                  error={errors.points ? true : false}
                   onChange={onChange}
-                >
-                  {expirationOptions.map(expiration => (
-                    <option value={expiration.value} key={expiration.key}>
-                      {expiration.key}
-                    </option>
-                  ))}
-                </Form.Field>
-                <Button type="reset" color="grey" onClick={() => closeModal("createEvent")}>
-                  Cancel
-                </Button>
-                <Button type="submit" floated="right">
-                  Create
-                </Button>
-              </Form>
-            </Modal.Description>
-          </Modal.Content>
-        </Modal>
-      </Container>
+                />
+              ) : (
+                <></>
+              )}
+              <Form.Field
+                control="select"
+                label="Expires in"
+                name="expiration"
+                value={values.expiration}
+                error={errors.expiration ? true : false}
+                onChange={onChange}
+              >
+                {expirationOptions.map(expiration => (
+                  <option value={expiration.value} key={expiration.key}>
+                    {expiration.key}
+                  </option>
+                ))}
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="request"
+                    value={values.request === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>Request?</label>
+                </div>
+              </Form.Field>
+              <Button
+                type="reset"
+                color="grey"
+                onClick={() => closeModal("createEvent")}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" floated="right">
+                Create
+              </Button>
+            </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
     </div>
   );
 }
@@ -301,20 +267,25 @@ const CREATE_EVENT_MUTATION = gql`
     $name: String!
     $code: String!
     $category: String!
+    $points: String!
     $expiration: String!
+    $request: String!
   ) {
     createEvent(
       createEventInput: {
         name: $name
         code: $code
         category: $category
+        points: $points
         expiration: $expiration
+        request: $request
       }
     ) {
       name
       code
       category
       expiration
+      request
       semester
       points
       createdAt
