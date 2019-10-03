@@ -1,14 +1,80 @@
-import React from "react";
-import { Table, Icon, Dimmer, Loader, Segment, Header } from "semantic-ui-react";
-import { useQuery } from "@apollo/react-hooks";
+import React, { useState } from "react";
+import {
+  Table,
+  Icon,
+  Dimmer,
+  Loader,
+  Segment,
+  Header,
+  Button,
+  Modal,
+  Form
+} from "semantic-ui-react";
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
 
 import { FETCH_EVENTS_QUERY } from "../util/graphql";
+import { useForm } from "../util/hooks";
 
 function EventsTable() {
+  const [errors, setErrors] = useState({});
+
   const {
     data: { getEvents }
   } = useQuery(FETCH_EVENTS_QUERY);
+
+  const [manualInputModal, setManualInputModal] = useState(false);
+
+  const openModal = name => {
+    if (name === "manualInput") {
+      setManualInputModal(true);
+    }
+  };
+
+  const closeModal = name => {
+    if (name === "manualInput") {
+      values.username = "";
+      values.eventName = "";
+      setErrors(false);
+      setManualInputModal(false);
+    }
+  };
+
+  const { values, onChange, onSubmit } = useForm(manualInputCallback, {
+    username: "",
+    eventName: ""
+  });
+
+  const [manualInput, { loading }] = useMutation(MANUAL_INPUT_MUTATION, {
+    update(
+      _,
+      {
+        data: { manualInput: userData }
+      }
+    ) {
+      values.username = "";
+      values.eventName = "";
+      setErrors(false);
+      setManualInputModal(false);
+    },
+
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+    },
+
+    variables: values
+  });
+
+  function manualInputCallback() {
+    manualInput();
+  }
+
+  function setEventNameValue(eventName) {
+    values.eventName = eventName;
+  }
+
+  console.log(values);
 
   return (
     <>
@@ -37,6 +103,9 @@ function EventsTable() {
                   Attendance
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">
+                  Manual Input
+                </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -63,14 +132,84 @@ function EventsTable() {
                       {event.attendance}
                     </Table.Cell>
                     <Table.Cell textAlign="center">{event.points}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <Button
+                        icon
+                        onClick={() => {
+                          setEventNameValue(event.name);
+                          openModal("manualInput");
+                        }}
+                      >
+                        <Icon name="i cursor" />
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
                 ))}
             </Table.Body>
           </Table>
         </div>
       )}
+      <Modal
+        open={manualInputModal}
+        size="tiny"
+        closeOnEscape={true}
+        closeOnDimmerClick={false}
+      >
+        <Modal.Header>
+          <h2>Manual Input</h2>
+        </Modal.Header>
+        <Modal.Content scrolling>
+          <Modal.Description>
+          {Object.keys(errors).length > 0 && (
+            <div className="ui error message">
+              <ul className="list">
+                {Object.values(errors).map(value => (
+                  <li key={value}>{value}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+            <Form
+              onSubmit={onSubmit}
+              noValidate
+              className={loading ? "loading" : ""}
+            >
+              <Form.Input
+                type="text"
+                label="Member's Username"
+                name="username"
+                value={values.username}
+                error={errors.username ? true : false}
+                onChange={onChange}
+              />
+              <Button
+                type="reset"
+                color="grey"
+                onClick={() => closeModal("manualInput")}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" floated="right">
+                Submit
+              </Button>
+            </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
     </>
   );
 }
+
+const MANUAL_INPUT_MUTATION = gql`
+  mutation manualInput($username: String!, $eventName: String!) {
+    manualInput(
+      manualInputInput: { username: $username, eventName: $eventName }
+    ) {
+      username
+      firstName
+      lastName
+    }
+  }
+`;
 
 export default EventsTable;
