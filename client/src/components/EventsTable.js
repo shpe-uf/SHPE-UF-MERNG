@@ -8,13 +8,14 @@ import {
   Header,
   Button,
   Modal,
-  Form
+  Form,
+  Dropdown
 } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
 
-import { FETCH_EVENTS_QUERY } from "../util/graphql";
+import { FETCH_EVENTS_QUERY, FETCH_USERS_QUERY } from "../util/graphql";
 import { useForm } from "../util/hooks";
 
 function EventsTable() {
@@ -23,6 +24,22 @@ function EventsTable() {
   const {
     data: { getEvents }
   } = useQuery(FETCH_EVENTS_QUERY);
+
+  var getUsers = [
+    {
+      username: "",
+      firstName: "",
+      lastName: ""
+    }
+  ];
+
+  var userData = useQuery(FETCH_USERS_QUERY).data.getUsers;
+
+  if (userData) {
+    userData.map(user => {
+      getUsers.push(user);
+    });
+  }
 
   const [manualInputModal, setManualInputModal] = useState(false);
 
@@ -73,8 +90,6 @@ function EventsTable() {
   function setEventNameValue(eventName) {
     values.eventName = eventName;
   }
-
-  console.log(values);
 
   return (
     <>
@@ -160,20 +175,21 @@ function EventsTable() {
         </Modal.Header>
         <Modal.Content scrolling>
           <Modal.Description>
-          {Object.keys(errors).length > 0 && (
-            <div className="ui error message">
-              <ul className="list">
-                {Object.values(errors).map(value => (
-                  <li key={value}>{value}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+            {Object.keys(errors).length > 0 && (
+              <div className="ui error message">
+                <ul className="list">
+                  {Object.values(errors).map(value => (
+                    <li key={value}>{value}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <Form
               onSubmit={onSubmit}
               noValidate
               className={loading ? "loading" : ""}
             >
+              {/*
               <Form.Input
                 type="text"
                 label="Member's Username"
@@ -182,6 +198,28 @@ function EventsTable() {
                 error={errors.username ? true : false}
                 onChange={onChange}
               />
+              */}
+              <Form.Field
+                control="select"
+                label="Member"
+                name="username"
+                value={values.username}
+                error={errors.username ? true : false}
+                onChange={onChange}
+              >
+                {getUsers &&
+                  getUsers.map(user =>
+                    user.username === "" ? (
+                      <option value={user.username} key={user.username}>
+                        {user.lastName + user.firstName}
+                      </option>
+                    ) : (
+                      <option value={user.username} key={user.username}>
+                        {user.lastName + ", " + user.firstName}
+                      </option>
+                    )
+                  )}
+              </Form.Field>
               <Button
                 type="reset"
                 color="grey"

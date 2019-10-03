@@ -32,7 +32,7 @@ module.exports = {
     async getUsers() {
       try {
         const users = await User.find().sort({
-          lastName: 1
+          lastName: 1, firstName: 1
         });
         return users;
       } catch (err) {
