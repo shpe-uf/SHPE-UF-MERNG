@@ -14,7 +14,7 @@ function MembersTable() {
       <Dimmer active={getUsers ? false : true} inverted>
         <Loader />
       </Dimmer>
-      <Table striped selectable unstackable singleLine>
+      <Table striped selectable unstackable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>

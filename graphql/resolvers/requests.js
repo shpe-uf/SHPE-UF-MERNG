@@ -72,7 +72,6 @@ module.exports = {
         {
           $push: {
             events: {
-              id: event._id,
               name: event.name,
               category: event.category,
               createdAt: event.createdAt,
@@ -93,7 +92,10 @@ module.exports = {
         {
           $push: {
             users: {
-              _id: user._id
+              firstName: user.firstName,
+              lastName: user.lastName,
+              username: user.username,
+              email: user.email
             }
           },
           $inc: {

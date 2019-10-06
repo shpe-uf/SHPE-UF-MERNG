@@ -84,7 +84,7 @@ h5 {
   font-family: "heading-font" !important;
   text-transform: uppercase !important;
   color: var(--accent-1);
-  margin: 0px !important;
+  margin-bottom: 8px;
 }
 
 h1 {
@@ -492,6 +492,7 @@ th {
 .table-responsive {
   display: block;
   overflow-x: scroll;
+  margin-bottom: 16px;
 }
 
 .request-true {

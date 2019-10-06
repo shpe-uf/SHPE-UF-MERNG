@@ -73,7 +73,6 @@ const userSchema = new Schema({
   permission: String,
   listServ: Boolean,
   events: [{
-    id: String,
     name: String,
     category: String,
     createdAt: String,

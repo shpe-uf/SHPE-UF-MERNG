@@ -119,27 +119,45 @@ function Admin() {
         {activeItem === "Events" && (
           <Segment attached="bottom">
             <Grid>
-              <Grid.Column>
-                <Button
-                  content="Create Event"
-                  icon="pencil"
-                  labelPosition="left"
-                  onClick={() => openModal("createEvent")}
-                  floated="right"
-                />
-              </Grid.Column>
+              <Grid.Row>
+                <Grid.Column>
+                  <Button
+                    content="Create Event"
+                    icon="pencil"
+                    labelPosition="left"
+                    onClick={() => openModal("createEvent")}
+                    floated="right"
+                  />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <EventsTable />
+                </Grid.Column>
+              </Grid.Row>
             </Grid>
-            <EventsTable />
           </Segment>
         )}
         {activeItem === "Members" && (
           <Segment attached="bottom">
-            <MembersTable />
+            <Grid>
+              <Grid.Row>
+                <Grid.Column>
+                  <MembersTable />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Segment>
         )}
         {activeItem === "Requests" && (
           <Segment attached="bottom">
-            <RequestsTable />
+            <Grid>
+              <Grid.Row>
+                <Grid.Column>
+                  <RequestsTable />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Segment>
         )}
       </Container>
@@ -153,7 +171,7 @@ function Admin() {
         <Modal.Header>
           <h2>Create Event</h2>
         </Modal.Header>
-        <Modal.Content scrolling>
+        <Modal.Content>
           <Modal.Description>
             {Object.keys(errors).length > 0 && (
               <div className="ui error message">
