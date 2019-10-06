@@ -13,6 +13,7 @@ import {
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
+import { CSVLink, CSVDownload } from "react-csv";
 
 import { FETCH_EVENTS_QUERY, FETCH_USERS_QUERY } from "../util/graphql";
 import { useForm } from "../util/hooks";
@@ -264,29 +265,38 @@ function EventsTable() {
           <Modal.Description>
             <h3>{eventAttendance.name}</h3>
             <p>Attendance: {eventAttendance.attendance}</p>
-            <div className="table-responsive">
-              <Table striped selectable unstackable>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Name</Table.HeaderCell>
-                    <Table.HeaderCell>Username</Table.HeaderCell>
-                    <Table.HeaderCell>Email</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {eventAttendance.users &&
-                    eventAttendance.users.map(member => (
-                      <Table.Row key={member.username}>
-                        <Table.Cell>
-                          {member.lastName + " " + member.firstName}
-                        </Table.Cell>
-                        <Table.Cell>{member.username}</Table.Cell>
-                        <Table.Cell>{member.email}</Table.Cell>
-                      </Table.Row>
-                    ))}
-                </Table.Body>
-              </Table>
-            </div>
+            {eventAttendance.attendance === 0 ? (
+              <Segment placeholder>
+                <Header icon>
+                  <i class="fas fa-exclamation-circle"></i>
+                  <p>This event has no attendance records.</p>
+                </Header>
+              </Segment>
+            ) : (
+              <div className="table-responsive">
+                <Table striped selectable unstackable>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>Name</Table.HeaderCell>
+                      <Table.HeaderCell>Username</Table.HeaderCell>
+                      <Table.HeaderCell>Email</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {eventAttendance.users &&
+                      eventAttendance.users.map(member => (
+                        <Table.Row key={member.username}>
+                          <Table.Cell>
+                            {member.lastName + ", " + member.firstName}
+                          </Table.Cell>
+                          <Table.Cell>{member.username}</Table.Cell>
+                          <Table.Cell>{member.email}</Table.Cell>
+                        </Table.Row>
+                      ))}
+                  </Table.Body>
+                </Table>
+              </div>
+            )}
             <Button
               type="reset"
               color="grey"
@@ -294,9 +304,14 @@ function EventsTable() {
             >
               Cancel
             </Button>
-            <Button color="green" floated="right">
-              Download as CSV
-            </Button>
+            <CSVLink
+              data={eventAttendance.users}
+              filename={eventAttendance.name + ".csv"}
+            >
+              <Button color="green" floated="right">
+                Download as CSV
+              </Button>
+            </CSVLink>
           </Modal.Description>
         </Modal.Content>
       </Modal>

@@ -69,7 +69,8 @@ footer p {
   padding: 8px 0px !important;
 }
 
-i.inverted.bordered.icon, i.inverted.circular.icon {
+i.inverted.bordered.icon,
+i.inverted.circular.icon {
   color: var(--white) !important;
   background-color: var(--accent-1) !important;
   margin: 0px 8px;
@@ -105,14 +106,6 @@ h4 {
 
 h5 {
   font-size: 1.5rem !important;
-}
-
-a {
-  color: var(--accent-2);
-}
-
-a:hover {
-  color: var(--accent-2-dark-1);
 }
 
 .logout {
@@ -375,9 +368,11 @@ a:hover {
 }
 
 .chevron {
-  border-image-source: linear-gradient(0deg,
+  border-image-source: linear-gradient(
+    0deg,
     rgb(227, 13, 25),
-    rgb(25, 143, 204)) !important;
+    rgb(25, 143, 204)
+  ) !important;
   border-image-slice: 1 !important;
 }
 
@@ -454,30 +449,38 @@ a:hover {
 
 .redeem {
   background: rgb(63, 38, 99) !important;
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     rgba(63, 38, 99, 1) 25%,
-    rgba(42, 145, 195, 1) 75%) !important;
+    rgba(42, 145, 195, 1) 75%
+  ) !important;
 }
 
 .fall {
   background: rgb(124, 24, 47) !important;
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     rgba(124, 24, 47, 1) 25%,
-    rgba(230, 55, 0, 1) 75%) !important;
+    rgba(230, 55, 0, 1) 75%
+  ) !important;
 }
 
 .spring {
   background: rgb(0, 131, 116) !important;
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     rgba(0, 131, 116, 1) 25%,
-    rgba(137, 186, 22, 1) 75%) !important;
+    rgba(137, 186, 22, 1) 75%
+  ) !important;
 }
 
 .summer {
   background: rgb(255, 92, 0) !important;
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     rgba(255, 92, 0, 1) 25%,
-    rgba(255, 222, 0, 1) 75%) !important;
+    rgba(255, 222, 0, 1) 75%
+  ) !important;
 }
 
 .ui.tabular.menu .active.item {
@@ -507,9 +510,16 @@ ui.tabular.menu {
   background-color: green !important;
 }
 
-.fa-inbox, .fa-frown {
+.fa-inbox,
+.fa-frown,
+.fa-exclamation-circle {
   font-size: 10rem !important;
   margin-bottom: 16px !important;
+}
+
+.ui.button,
+.ui.card > .content > .header {
+  font-family: "body-font" !important;
 }
 
 @media (max-width: 991px) {
