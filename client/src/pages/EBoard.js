@@ -1,15 +1,15 @@
 import React from "react";
 import { Container, Grid, Card, Icon } from "semantic-ui-react";
 
-import president from "../assets/images/eboard/president-min.png";
-import graduate from "../assets/images/eboard/graduate-min.jpg";
-import secretary from "../assets/images/eboard/secretary-min.jpg";
-import treasurer from "../assets/images/eboard/treasurer-min.jpg";
-import marketing from "../assets/images/eboard/marketing-min.jpg";
-import corporate from "../assets/images/eboard/corporate-min.jpg";
-import technology from "../assets/images/eboard/technology-min.jpg";
-import external from "../assets/images/eboard/external-min.png";
-import internal from "../assets/images/eboard/internal-min.png";
+import president from "../assets/images/eboard/president.png";
+import graduate from "../assets/images/eboard/graduate.jpg";
+import secretary from "../assets/images/eboard/secretary.jpg";
+import treasurer from "../assets/images/eboard/treasurer.jpg";
+import marketing from "../assets/images/eboard/marketing.jpg";
+import corporate from "../assets/images/eboard/corporate.jpg";
+import technology from "../assets/images/eboard/technology.jpg";
+import external from "../assets/images/eboard/external.png";
+import internal from "../assets/images/eboard/internal.png";
 
 function email(email) {
   return (
