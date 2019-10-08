@@ -12,18 +12,21 @@ import PointsTable from "../components/PointsTable";
 
 function Points() {
   const [errors, setErrors] = useState({});
+  var getUser = "";
 
   var {
     user: { id, username }
   } = useContext(AuthContext);
 
-  var {
-    data: { getUser }
-  } = useQuery(FETCH_USER_QUERY, {
+  var { data } = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
     }
   });
+
+  if (data.getUser) {
+    getUser = data.getUser;
+  }
 
   const [redeemPointsModal, setRedeemPointsModal] = useState(false);
 
@@ -104,8 +107,12 @@ function Points() {
               />
             </Grid.Column>
           </Grid.Row>
-          <PointsBar user={getUser} />
-          <PointsTable user={getUser} />
+          {getUser && (
+            <>
+              <PointsBar user={getUser} />
+              <PointsTable user={getUser} />
+            </>
+          )}
         </Grid>
       </Container>
 
@@ -165,7 +172,6 @@ const FETCH_USER_QUERY = gql`
       springPoints
       summerPoints
       events {
-        id
         name
         category
         createdAt

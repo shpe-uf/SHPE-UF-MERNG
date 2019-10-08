@@ -8,8 +8,7 @@ import {
   Header,
   Button,
   Modal,
-  Form,
-  Dropdown
+  Form
 } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";

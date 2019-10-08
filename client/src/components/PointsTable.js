@@ -28,7 +28,7 @@ function PointsTable({ user }) {
               <Table.Body>
                 {user &&
                   user.events.map(event => (
-                    <Table.Row key={event.id}>
+                    <Table.Row key={event.name}>
                       <Table.Cell>{event.name}</Table.Cell>
                       <Table.Cell>{event.category}</Table.Cell>
                       <Table.Cell>
