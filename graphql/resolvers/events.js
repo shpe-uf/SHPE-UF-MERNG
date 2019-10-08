@@ -151,7 +151,7 @@ module.exports = {
       }
 
       user.events.map(userEvent => {
-        if (String(userEvent.id) == String(event._id)) {
+        if (String(userEvent.name) == String(event.name)) {
           errors.general = "Event code already redeemed by the user.";
           throw new UserInputError("Event code already redeemed by the user.", {
             errors
@@ -190,11 +190,15 @@ module.exports = {
         {
           $push: {
             events: {
-              id: event._id,
-              name: event.name,
-              category: event.category,
-              createdAt: event.createdAt,
-              points: event.points
+              $each: [
+                {
+                  name: event.name,
+                  category: event.category,
+                  createdAt: event.createdAt,
+                  points: event.points
+                }
+              ],
+              $sort: { createdAt: 1 }
             }
           },
           $inc: pointsIncrease
@@ -213,7 +217,15 @@ module.exports = {
         {
           $push: {
             users: {
-              _id: user._id
+              $each: [
+                {
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  username: user.username,
+                  email: user.email
+                }
+              ],
+              $sort: { lastName: 1, firstName: 1 }
             }
           },
           $inc: {

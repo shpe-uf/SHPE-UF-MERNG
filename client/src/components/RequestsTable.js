@@ -90,7 +90,7 @@ function RequestsTable() {
         </Segment>
       ) : (
         <div className="table-responsive">
-          <Table striped selectable unstackable singleLine>
+          <Table striped selectable unstackable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Name</Table.HeaderCell>

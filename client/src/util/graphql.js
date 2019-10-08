@@ -27,6 +27,7 @@ export const FETCH_USERS_QUERY = gql`
 export const FETCH_EVENTS_QUERY = gql`
   {
     getEvents {
+      id
       name
       code
       category
@@ -36,6 +37,12 @@ export const FETCH_EVENTS_QUERY = gql`
       expiration
       semester
       createdAt
+      users {
+        firstName
+        lastName
+        username
+        email
+      }
     }
   }
 `;
