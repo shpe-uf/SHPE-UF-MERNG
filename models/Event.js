@@ -42,10 +42,10 @@ const eventSchema = new Schema({
     required: true
   },
   users: [{
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    }
+    firstName: String,
+    lastName: String,
+    email: String,
+    username: String
   }]
 });
 

@@ -120,7 +120,7 @@ function Points() {
         <Modal.Header>
           <h2>Redeem Points</h2>
         </Modal.Header>
-        <Modal.Content scrolling>
+        <Modal.Content>
           <Modal.Description>
             {Object.keys(errors).length > 0 && (
               <div className="ui error message">

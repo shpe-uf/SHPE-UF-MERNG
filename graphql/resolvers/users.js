@@ -32,7 +32,8 @@ module.exports = {
     async getUsers() {
       try {
         const users = await User.find().sort({
-          lastName: 1, firstName: 1
+          lastName: 1,
+          firstName: 1
         });
         return users;
       } catch (err) {
@@ -157,11 +158,14 @@ module.exports = {
       });
 
       if (isEmailDuplicate) {
-        throw new UserInputError("An account with that e-mail already exists.", {
-          errors: {
-            email: "An account with that email already exists."
+        throw new UserInputError(
+          "An account with that e-mail already exists.",
+          {
+            errors: {
+              email: "An account with that email already exists."
+            }
           }
-        });
+        );
       }
 
       username = username.toLowerCase();
@@ -207,11 +211,10 @@ module.exports = {
         redeemPointsInput: { code, username }
       }
     ) {
-
       code = code
-      .toLowerCase()
-      .trim()
-      .replace(/ /g, "");
+        .toLowerCase()
+        .trim()
+        .replace(/ /g, "");
 
       const { valid, errors } = validateRedeemPointsInput(code);
 
@@ -249,7 +252,7 @@ module.exports = {
       }
 
       user.events.map(userEvent => {
-        if (String(userEvent.id) == String(event._id)) {
+        if (String(userEvent.name) == String(event.name)) {
           errors.general = "Event code already redeemed.";
           throw new UserInputError("Event code already redeemed.", {
             errors
@@ -338,11 +341,15 @@ module.exports = {
           {
             $push: {
               events: {
-                id: event._id,
-                name: event.name,
-                category: event.category,
-                createdAt: event.createdAt,
-                points: event.points
+                $each: [
+                  {
+                    name: event.name,
+                    category: event.category,
+                    createdAt: event.createdAt,
+                    points: event.points
+                  }
+                ],
+                $sort: { createdAt: 1 }
               }
             },
             $inc: pointsIncrease
@@ -361,7 +368,15 @@ module.exports = {
           {
             $push: {
               users: {
-                _id: user._id
+                $each: [
+                  {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    username: user.username,
+                    email: user.email
+                  }
+                ],
+                $sort: { lastName: 1, firstName: 1 }
               }
             },
             $inc: {

@@ -13,12 +13,14 @@ import {
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
+import { CSVLink, CSVDownload } from "react-csv";
 
 import { FETCH_EVENTS_QUERY, FETCH_USERS_QUERY } from "../util/graphql";
 import { useForm } from "../util/hooks";
 
 function EventsTable() {
   const [errors, setErrors] = useState({});
+  const [eventAttendance, setEventAttendance] = useState({});
 
   const {
     data: { getEvents }
@@ -41,10 +43,15 @@ function EventsTable() {
   }
 
   const [manualInputModal, setManualInputModal] = useState(false);
+  const [eventInfoModal, setEventInfoModal] = useState(false);
 
   const openModal = name => {
     if (name === "manualInput") {
       setManualInputModal(true);
+    }
+
+    if (name === "eventInfo") {
+      setEventInfoModal(true);
     }
   };
 
@@ -54,6 +61,11 @@ function EventsTable() {
       values.eventName = "";
       setErrors(false);
       setManualInputModal(false);
+    }
+
+    if (name === "eventInfo") {
+      setEventAttendance({});
+      setEventInfoModal(false);
     }
   };
 
@@ -90,6 +102,10 @@ function EventsTable() {
     values.eventName = eventName;
   }
 
+  function getEventAttendance(eventUsers) {
+    setEventAttendance(eventUsers);
+  }
+
   return (
     <>
       <Dimmer active={getEvents ? false : true} inverted>
@@ -104,7 +120,7 @@ function EventsTable() {
         </Segment>
       ) : (
         <div className="table-responsive">
-          <Table striped selectable unstackable singleLine>
+          <Table striped selectable unstackable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Name</Table.HeaderCell>
@@ -120,6 +136,7 @@ function EventsTable() {
                 <Table.HeaderCell textAlign="center">
                   Manual Input
                 </Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">Info</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -157,6 +174,17 @@ function EventsTable() {
                         <Icon name="i cursor" />
                       </Button>
                     </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <Button
+                        icon
+                        onClick={() => {
+                          getEventAttendance(event);
+                          openModal("eventInfo");
+                        }}
+                      >
+                        <Icon name="info" />
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
                 ))}
             </Table.Body>
@@ -172,7 +200,7 @@ function EventsTable() {
         <Modal.Header>
           <h2>Manual Input</h2>
         </Modal.Header>
-        <Modal.Content scrolling>
+        <Modal.Content>
           <Modal.Description>
             {Object.keys(errors).length > 0 && (
               <div className="ui error message">
@@ -188,16 +216,6 @@ function EventsTable() {
               noValidate
               className={loading ? "loading" : ""}
             >
-              {/*
-              <Form.Input
-                type="text"
-                label="Member's Username"
-                name="username"
-                value={values.username}
-                error={errors.username ? true : false}
-                onChange={onChange}
-              />
-              */}
               <Form.Field
                 control="select"
                 label="Member"
@@ -230,6 +248,70 @@ function EventsTable() {
                 Submit
               </Button>
             </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
+
+      <Modal
+        open={eventInfoModal}
+        size="small"
+        closeOnEscape={true}
+        closeOnDimmerClick={false}
+      >
+        <Modal.Header>
+          <h2>Event Information</h2>
+        </Modal.Header>
+        <Modal.Content>
+          <Modal.Description>
+            <h3>{eventAttendance.name}</h3>
+            <p>Attendance: {eventAttendance.attendance}</p>
+            {eventAttendance.attendance === 0 ? (
+              <Segment placeholder>
+                <Header icon>
+                  <i class="fas fa-exclamation-circle"></i>
+                  <p>This event has no attendance records.</p>
+                </Header>
+              </Segment>
+            ) : (
+              <div className="table-responsive">
+                <Table striped selectable unstackable>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>Name</Table.HeaderCell>
+                      <Table.HeaderCell>Username</Table.HeaderCell>
+                      <Table.HeaderCell>Email</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {eventAttendance.users &&
+                      eventAttendance.users.map(member => (
+                        <Table.Row key={member.username}>
+                          <Table.Cell>
+                            {member.lastName + ", " + member.firstName}
+                          </Table.Cell>
+                          <Table.Cell>{member.username}</Table.Cell>
+                          <Table.Cell>{member.email}</Table.Cell>
+                        </Table.Row>
+                      ))}
+                  </Table.Body>
+                </Table>
+              </div>
+            )}
+            <Button
+              type="reset"
+              color="grey"
+              onClick={() => closeModal("eventInfo")}
+            >
+              Cancel
+            </Button>
+            <CSVLink
+              data={eventAttendance.users}
+              filename={eventAttendance.name + ".csv"}
+            >
+              <Button color="green" floated="right">
+                Download as CSV
+              </Button>
+            </CSVLink>
           </Modal.Description>
         </Modal.Content>
       </Modal>

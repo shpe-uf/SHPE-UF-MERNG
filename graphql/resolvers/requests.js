@@ -72,11 +72,15 @@ module.exports = {
         {
           $push: {
             events: {
-              id: event._id,
-              name: event.name,
-              category: event.category,
-              createdAt: event.createdAt,
-              points: event.points
+              $each: [
+                {
+                  name: event.name,
+                  category: event.category,
+                  createdAt: event.createdAt,
+                  points: event.points
+                }
+              ],
+              $sort: { createdAt: 1 }
             }
           },
           $inc: pointsIncrease
@@ -93,7 +97,15 @@ module.exports = {
         {
           $push: {
             users: {
-              _id: user._id
+              $each: [
+                {
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  username: user.username,
+                  email: user.email
+                }
+              ],
+              $sort: { lastName: 1, firstName: 1 }
             }
           },
           $inc: {
