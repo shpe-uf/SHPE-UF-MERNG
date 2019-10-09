@@ -24,6 +24,20 @@ module.exports = gql`
     events: [Event]!
     token: String!
     message: String!
+    schedule: [Class]!
+    matches: [Match]!
+  }
+
+  type Match {
+    user: User!
+    sharedClasses: [Class]!
+    score: Int!
+  }
+
+  type Class {
+    courseNum: String!
+    sectionNum: String!
+    users: [User]!
   }
 
   type Event {
@@ -91,11 +105,19 @@ module.exports = gql`
     eventName: String!
   }
 
+  input ClassInput {
+    courseNum: String!
+    sectionNum: String!
+    username: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
+    getClasses: [Class]
+    getMatches: [Match]
   }
 
   type Mutation {
@@ -106,5 +128,6 @@ module.exports = gql`
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): User!
+    addClass(classInput: ClassInput): Class!
   }
 `;
