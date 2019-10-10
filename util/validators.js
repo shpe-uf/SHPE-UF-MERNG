@@ -121,6 +121,7 @@ module.exports.validateCreateEventInput = (
 
   const nameValidator = /^[a-zA-Z0-9- ]{6,50}$/i;
   const codeValidator = /^[a-zA-Z0-9]{6,50}$/i;
+  const pointsValidator = /^[1-9][1-9]*$/i;
 
   if (name.trim() === "") {
     errors.name = "Name is required.";
@@ -149,12 +150,8 @@ module.exports.validateCreateEventInput = (
   }
 
   if (category.trim() === "Miscellaneous") {
-    if (points.trim() === 0 || points.trim() === "0") {
-      errors.points = "Points is required.";
-    }
-
-    if (Number(points) < 1 || !Number(points)) {
-      errors.points = "Points must be a number greater than 0.";
+    if (!points.match(pointsValidator)) {
+      errors.points = "Points must be a whole number greater than 0.";
     }
   }
 
@@ -164,13 +161,11 @@ module.exports.validateCreateEventInput = (
   };
 };
 
-module.exports.validateRedeemPointsInput = (
-  code
-) => {
+module.exports.validateRedeemPointsInput = code => {
   const errors = {};
 
   if (code.trim() === "") {
-    errors.code = "No code was provided."
+    errors.code = "No code was provided.";
   }
 
   return {
@@ -179,13 +174,11 @@ module.exports.validateRedeemPointsInput = (
   };
 };
 
-module.exports.validateManualInputInput = (
-  username
-) => {
+module.exports.validateManualInputInput = username => {
   const errors = {};
 
   if (username.trim() === "") {
-    errors.username = "No username was provided."
+    errors.username = "No username was provided.";
   }
 
   return {

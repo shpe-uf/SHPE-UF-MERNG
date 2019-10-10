@@ -5,9 +5,13 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_USERS_QUERY } from "../util/graphql";
 
 function MembersTable() {
-  const {
-    data: { getUsers }
-  } = useQuery(FETCH_USERS_QUERY);
+  var getUsers = "";
+
+  var { data } = useQuery(FETCH_USERS_QUERY);
+
+  if (data.getUsers) {
+    getUsers = data.getUsers;
+  }
 
   return (
     <div className="table-responsive">

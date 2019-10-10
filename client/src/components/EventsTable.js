@@ -21,11 +21,14 @@ import { useForm } from "../util/hooks";
 function EventsTable() {
   const [errors, setErrors] = useState({});
   const [eventAttendance, setEventAttendance] = useState({});
+  var getEvents = "";
 
-  const {
-    data: { getEvents }
-  } = useQuery(FETCH_EVENTS_QUERY);
+  var { data } = useQuery(FETCH_EVENTS_QUERY);
 
+  if (data.getEvents) {
+    getEvents = data.getEvents;
+  }
+  
   var getUsers = [
     {
       username: "",
