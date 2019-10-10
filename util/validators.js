@@ -110,6 +110,24 @@ module.exports.validateLoginInput = (username, password) => {
   };
 };
 
+module.exports.validateEmailInput = (email) => {
+  const emailRegex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
+  const errors = {};
+
+  if (email.trim() === "") {
+    errors.email = "Email is required.";
+  } else {
+    if (!email.match(emailRegex)) {
+      errors.email = "Invalid email address.";
+    }
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateCreateEventInput = (
   name,
   code,

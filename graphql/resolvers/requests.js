@@ -2,6 +2,7 @@ const { UserInputError } = require("apollo-server");
 const Request = require("../../models/Request.js");
 const Event = require("../../models/Event.js");
 const User = require("../../models/User.js");
+const { validateEmailInput } = require("../../util/validators");
 
 module.exports = {
   Query: {
@@ -129,16 +130,27 @@ module.exports = {
 
     async resetPassword(
       _,
-      email
+      { email }
     ) {
       //error checking
+      const { errors, valid } = validateEmailInput(email);
+      if (!valid) {
+        throw new UserInputError("Errors.", {
+          errors
+        });
+      }
 
       const user = await User.findOne({
         email
       });
-      if(user){
-        console.log("found user with email");
+      if (!user) {
+        errors.general = "User not found.";
+        throw new UserInputError("User not found.", {
+          errors
+        });
       }
+      
+      return user;
     }
   }
 };
