@@ -125,6 +125,20 @@ module.exports = {
       const requests = await Request.find().sort({ createdAt: 1 });
 
       return requests;
+    },
+
+    async resetPassword(
+      _,
+      email
+    ) {
+      //error checking
+
+      const user = await User.findOne({
+        email
+      });
+      if(user){
+        console.log("found user with email");
+      }
     }
   }
 };

@@ -48,59 +48,6 @@ function Login(props) {
   return (
     <div className="login">
       <div className="overlay-login">
-<<<<<<< HEAD
-        <Container>
-          <Segment.Group>
-            <Segment className="title-bg-accent-1">
-              <h1 className="text-white">Login</h1>
-            </Segment>
-            <Segment>
-              {Object.keys(errors).length > 0 && (
-                <div className="ui error message">
-                  <ul className="list">
-                    {Object.values(errors).map(value => (
-                      <li key={value}>{value}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <Form
-                onSubmit={onSubmit}
-                noValidate
-                className={loading ? "loading" : ""}
-              >
-                <Form.Input
-                  type="text"
-                  label="Username"
-                  name="username"
-                  value={values.username}
-                  error={errors.username ? true : false}
-                  onChange={onChange}
-                />
-                <Form.Input
-                  type="password"
-                  label="Password"
-                  name="password"
-                  value={values.password}
-                  error={errors.password ? true : false}
-                  onChange={onChange}
-                />
-                <span>
-                  <Button type="submit">Login</Button>
-                  <p style={{display : 'inline-block', float : 'right', marginTop: 12}}>
-                    Forgot Password? <a href="/reset">Click Here</a>
-                  </p>
-                </span>
-              </Form>
-            </Segment>
-          </Segment.Group>
-          <Segment textAlign="center">
-            <p>
-              New to SHPE UF? <a href="/register">Register here!</a>
-            </p>
-          </Segment>
-        </Container>
-=======
         <Responsive {...Responsive.onlyComputer}>
           <Container>
             <Grid>
@@ -308,7 +255,6 @@ function Login(props) {
             </Grid>
           </Container>
         </Responsive>
->>>>>>> ded985c233892a1f2a94ea6f916b86e3408cb1ba
       </div>
     </div>
   );
