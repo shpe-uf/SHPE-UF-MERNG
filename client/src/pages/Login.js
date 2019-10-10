@@ -5,8 +5,7 @@ import {
   Container,
   Segment,
   Grid,
-  Responsive,
-  Divider
+  Responsive
 } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
@@ -20,7 +19,8 @@ function Login(props) {
 
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
     username: "",
-    password: ""
+    password: "",
+    remember: "false"
   });
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
@@ -88,6 +88,19 @@ function Login(props) {
                           error={errors.password ? true : false}
                           onChange={onChange}
                         />
+                        <Form.Field>
+                          <div className="ui toggle checkbox">
+                            <input
+                              type="checkbox"
+                              name="remember"
+                              value={values.remember === "true" ? false : true}
+                              onChange={onChange}
+                            />
+                            <label>
+                              Remember me (30 days)
+                            </label>
+                          </div>
+                        </Form.Field>
                         <Button fluid type="submit">
                           Login
                         </Button>
@@ -144,6 +157,19 @@ function Login(props) {
                           error={errors.password ? true : false}
                           onChange={onChange}
                         />
+                        <Form.Field>
+                          <div className="ui toggle checkbox">
+                            <input
+                              type="checkbox"
+                              name="remember"
+                              value={values.remember === "true" ? false : true}
+                              onChange={onChange}
+                            />
+                            <label>
+                              Remember me (30 days)
+                            </label>
+                          </div>
+                        </Form.Field>
                         <Button fluid type="submit">
                           Login
                         </Button>
@@ -200,6 +226,19 @@ function Login(props) {
                           error={errors.password ? true : false}
                           onChange={onChange}
                         />
+                        <Form.Field>
+                          <div className="ui toggle checkbox">
+                            <input
+                              type="checkbox"
+                              name="remember"
+                              value={values.remember === "true" ? false : true}
+                              onChange={onChange}
+                            />
+                            <label>
+                              Remember me (30 days)
+                            </label>
+                          </div>
+                        </Form.Field>
                         <Button fluid type="submit">
                           Login
                         </Button>
@@ -222,8 +261,8 @@ function Login(props) {
 }
 
 const LOGIN_USER = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
+  mutation login($username: String!, $password: String!, $remember: String!) {
+    login(username: $username, password: $password, remember: $remember) {
       id
       email
       username

@@ -13,7 +13,7 @@ const {
   validateRedeemPointsInput
 } = require("../../util/validators");
 
-function generateToken(user) {
+function generateToken(user, time) {
   return jwt.sign(
     {
       id: user.id,
@@ -22,7 +22,7 @@ function generateToken(user) {
     },
     process.env.SECRET,
     {
-      expiresIn: "24h"
+      expiresIn: time
     }
   );
 }
@@ -57,7 +57,7 @@ module.exports = {
   },
 
   Mutation: {
-    async login(_, { username, password }) {
+    async login(_, { username, password, remember }) {
       username = username.toLowerCase();
 
       const { errors, valid } = validateLoginInput(username, password);
@@ -88,7 +88,8 @@ module.exports = {
         });
       }
 
-      const token = generateToken(user);
+      time = remember === "true" || remember === true ? "30d" : "24h";
+      const token = generateToken(user, time);
 
       return {
         ...user._doc,
@@ -197,7 +198,9 @@ module.exports = {
 
       const res = await newUser.save();
 
-      const token = generateToken(res);
+      var time = "24h";
+
+      const token = generateToken(res, time);
 
       return {
         ...res._doc,
