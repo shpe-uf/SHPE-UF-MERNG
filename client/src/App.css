@@ -180,7 +180,8 @@ h5 {
 }
 
 .overlay-register,
-.overlay-login {
+.overlay-login,
+.overlay-reset {
   background-color: var(--primary-overlay);
   width: 100%;
   padding: 32px 0px;
@@ -330,6 +331,15 @@ h5 {
 }
 
 .login {
+  background: url(assets/images/login.jpg) !important;
+  border-radius: 0px;
+  background-position: 15% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.reset {
   background: url(assets/images/login.jpg) !important;
   border-radius: 0px;
   background-position: 15% 50% !important;
@@ -528,12 +538,14 @@ ui.tabular.menu {
   }
 
   .overlay-register,
-  .overlay-login {
+  .overlay-login,
+  .overlay-reset{
     min-height: calc(100vh - 62.41px - 118px) !important;
   }
 
   .overlay-register,
-  .overlay-login {
+  .overlay-login,
+  .overlay-reset {
     min-height: calc(100vh - 62.41px - 118px) !important;
   }
 }
@@ -544,12 +556,14 @@ ui.tabular.menu {
   }
 
   .overlay-register,
-  .overlay-login {
+  .overlay-login,
+  .overlay-reset {
     min-height: calc(100vh - 64px - 64px) !important;
   }
 
   .overlay-register,
-  .overlay-login {
+  .overlay-login,
+  .overlay-reset {
     min-height: calc(100vh - 64px - 64px) !important;
   }
 }

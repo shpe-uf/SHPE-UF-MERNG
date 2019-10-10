@@ -76,7 +76,12 @@ function Login(props) {
                   error={errors.password ? true : false}
                   onChange={onChange}
                 />
-                <Button type="submit">Login</Button>
+                <span>
+                  <Button type="submit">Login</Button>
+                  <p style={{display : 'inline-block', float : 'right', marginTop: 12}}>
+                    Forgot Password? <a href="/reset">Click Here</a>
+                  </p>
+                </span>
               </Form>
             </Segment>
           </Segment.Group>
