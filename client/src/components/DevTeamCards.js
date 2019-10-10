@@ -10,7 +10,7 @@ import sofia from "../assets/images/team/2019-2020/sofia.jpeg";
 import placeholder from "../assets/images/team/placeholder.png";
 
 
-function DevTeamCards({ title }) {
+function DevTeamCards() {
   return (
     <>
       <Card

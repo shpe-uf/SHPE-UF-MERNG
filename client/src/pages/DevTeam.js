@@ -15,7 +15,6 @@ function DevTeam() {
       </div>
 
       <Container>
-        <h2>Fall 2019 - Spring 2020</h2>
         <Responsive {...Responsive.onlyComputer}>
           <Card.Group itemsPerRow={5}>
             <DevTeamCards />
