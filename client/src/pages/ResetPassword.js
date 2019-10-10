@@ -10,7 +10,7 @@ function ResetPassword(props){
   });
 
   function resetCallback() {
-    
+
   }
 
   return (
