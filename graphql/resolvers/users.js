@@ -58,6 +58,8 @@ module.exports = {
 
   Mutation: {
     async login(_, { username, password }) {
+      username = username.toLowerCase();
+
       const { errors, valid } = validateLoginInput(username, password);
 
       if (!valid) {
@@ -65,8 +67,6 @@ module.exports = {
           errors
         });
       }
-
-      username = username.toLowerCase();
 
       const user = await User.findOne({
         username
@@ -118,7 +118,7 @@ module.exports = {
       }
     ) {
       username = username.toLowerCase();
-      
+
       const { valid, errors } = validateRegisterInput(
         firstName,
         lastName,

@@ -36,9 +36,11 @@ function MenuBar() {
               E-Board
             </Menu.Item>
 
+            {/*
             <Menu.Item as={Link} to="/devteam">
               Dev Team
             </Menu.Item>
+            */}
 
             <Menu.Item as={Link} to="/sponsors">
               Sponsors

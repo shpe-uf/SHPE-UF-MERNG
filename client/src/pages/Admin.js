@@ -24,10 +24,13 @@ import expirationOptions from "../assets/options/expiration.json";
 
 function Admin() {
   const [errors, setErrors] = useState({});
+  var getEvents = "";
 
-  const {
-    data: { getEvents }
-  } = useQuery(FETCH_EVENTS_QUERY);
+  var { data } = useQuery(FETCH_EVENTS_QUERY);
+
+  if (data.getEvents) {
+    getEvents = data.getEvents;
+  }
 
   const [createEventModal, setCreateEventModal] = useState(false);
 

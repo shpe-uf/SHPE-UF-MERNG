@@ -17,10 +17,13 @@ import { FETCH_REQUESTS_QUERY } from "../util/graphql";
 function RequestsTable() {
   const [errors, setErrors] = useState({});
   const [disableButton, setDisableButton] = useState(false);
+  var getRequests = "";
 
-  var {
-    data: { getRequests }
-  } = useQuery(FETCH_REQUESTS_QUERY);
+  var { data } = useQuery(FETCH_REQUESTS_QUERY);
+
+  if (data.getRequests) {
+    getRequests = data.getRequests;
+  }
 
   const [rejectRequest] = useMutation(REJECT_REQUEST_MUTATION, {
     update(

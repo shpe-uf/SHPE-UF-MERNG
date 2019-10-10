@@ -6,6 +6,7 @@ import alejandro from "../assets/images/team/2019-2020/alejandro.jpeg";
 import david from "../assets/images/team/2019-2020/david.jpeg";
 import juan from "../assets/images/team/2019-2020/juan.jpeg";
 import gabriel from "../assets/images/team/2019-2020/gabriel.jpeg";
+import sofia from "../assets/images/team/2019-2020/sofia.jpeg";
 import placeholder from "../assets/images/team/placeholder.png";
 
 
@@ -28,49 +29,49 @@ function DevTeamCards({ title }) {
         fluid
         image={alejandro}
         header="Alejandro Alonso"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={placeholder}
         header="Diego Coviella"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={david}
         header="David Espantoso"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
-        image={placeholder}
+        image={sofia}
         header="Sofia Harmon"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={placeholder}
         header="Isabel Mitre"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={gabriel}
         header="Gabriel Rodriguez Torres"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={juan}
         header="Juan Suhr"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={placeholder}
         header="Mariana Torres Torres"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
     </>
   );
