@@ -40,6 +40,19 @@ module.exports = gql`
     users: [User]!
   }
 
+  type Task {
+    id: ID!
+    name: String!
+    startDate: String!
+    endDate: String!
+    description: String!
+    points: Int!
+    attendance: Int!
+    semester: String!
+    createdAt: String!
+    users: [User]!
+  }
+
   type Request {
     id: ID!
     eventName: String!
