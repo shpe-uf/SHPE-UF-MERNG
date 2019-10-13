@@ -5,7 +5,8 @@ const Request = require("../../models/Request.js");
 const Event = require("../../models/Event.js");
 const User = require("../../models/User.js");
 const {
-  validateEmailInput
+  validateEmailInput,
+  validatePasswordInput
 } = require("../../util/validators");
 
 const nodemailer = require('nodemailer');
@@ -197,7 +198,7 @@ module.exports = {
         subject: 'Reset Password',
         text: 'You have requested the reset of the password for your account for shpe.co\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n' +
-          `http://localhost:3031/reset/${token}\n\n` +
+          `http://localhost:3000/reset/${token}\n\n` +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n',
       };
 
@@ -210,7 +211,33 @@ module.exports = {
         }
       });
 
-      return user;
+      return {
+        ...user._doc,
+        id: user._id,
+        token
+      };
+    },
+
+    async reset(
+      _, {
+        password,
+        confirmPassword
+      }
+    ) {
+      const {
+        errors,
+        valid
+      } = validatePasswordInput(password, confirmPassword);
+
+      if (!valid) {
+        throw new UserInputError("Errors.", {
+          errors
+        });
+      }
+      var Token = {
+        token: "asdf"
+      }
+      return Token;
     }
   }
 };

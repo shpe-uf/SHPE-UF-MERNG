@@ -22,6 +22,7 @@ import Admin from "./pages/Admin";
 import Points from "./pages/Points";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -36,7 +37,8 @@ function App() {
           <Route exact path="/eboard" component={EBoard} />
           <Route exact path="/devteam" component={DevTeam} />
           <Route exact path="/sponsors" component={Sponsors} />
-          <Route exact path="/reset" component={ResetPassword} />
+          <Route exact path="/reset/:token" component={ResetPassword} />
+          <Route exact path="/forgot" component={ForgotPassword} />
           <UserRoute exact path="/admin" component={Admin} />
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />

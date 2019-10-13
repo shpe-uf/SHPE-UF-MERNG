@@ -26,6 +26,10 @@ module.exports = gql`
     message: String!
   }
 
+  type Token{
+    token: String!
+  }
+
   type Event {
     id: ID!
     name: String!
@@ -107,5 +111,6 @@ module.exports = gql`
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): User!
     resetPassword(email: String!): User!
+    reset(password: String!, confirmPassword: String!): Token!
   }
 `;

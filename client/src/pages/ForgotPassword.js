@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, Button, Container, Segment } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
 
-function ResetPassword(props){
+function ForgotPassword(props){
 
   const [errors, setErrors] = useState({});
 
-  const { onChange, onSubmit, values } = useForm(callback, {
-    password: "",
-    confirmPassword: ""
+  const { onChange, onSubmit, values } = useForm(resetCallback, {
+    email: ""
   });
 
-  const [reset, { loading }] = useMutation(RESET_PASSWORD, {
-    update(
-      _,
-      {
-        data: { login: userData }
-      }
-    ) {
-      //context.login(userData);
-      props.history.push("/points");
+
+  const [resetUser, { loading }] = useMutation(RESET_PASSWORD, {
+    onComplete(_, {
+      data: { login: userData }
+    } ) {
+      console.log(userData);
+      //setToken();
     },
 
     onError(err) {
@@ -32,12 +29,11 @@ function ResetPassword(props){
     variables: values
   });
 
-  useEffect(() => {
-  })
-
-  function callback() {
-    reset();
+  function resetCallback() {
+    resetUser();
   }
+
+
 
   return (
     <div className="reset">
@@ -62,21 +58,14 @@ function ResetPassword(props){
               noValidate
             >
               <Form.Input
-                type="password"
-                label="Password"
-                name="password"
-                value={values.password}
-                onChange={onChange}
-              />
-              <Form.Input
-                type="password"
-                label="Confirm Password"
-                name="confirmPassword"
-                value={values.confirmPassword}
+                type="text"
+                label="Email"
+                name="email"
+                value={values.email}
                 onChange={onChange}
               />
               <span>
-                <Button type="submit">Submit</Button>
+                <Button type="submit">Reset Password</Button>
                 <p style={{display : 'inline-block', marginTop: 12, marginLeft: 10}}>
                   or <a href="/login">Log In</a>
                 </p>
@@ -91,11 +80,15 @@ function ResetPassword(props){
 }
 
 const RESET_PASSWORD = gql`
-  mutation reset($password: String!, $confirmPassword: String!) {
-    reset(password: $password, confirmPassword: $confirmPassword) {
+  mutation resetPassword($email: String!) {
+    resetPassword(email: $email) {
+      id
+      email
+      username
+      createdAt
       token
     }
   }
 `;
 
-export default ResetPassword;
+export default ForgotPassword;
