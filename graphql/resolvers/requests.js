@@ -11,6 +11,7 @@ const {
 
 const nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 function generateToken(user, time) {
   return jwt.sign({
@@ -182,7 +183,24 @@ module.exports = {
       }
 
       var time = "24h";
-      const token = generateToken(user, time);
+      var token = generateToken(user, time);
+      var uniqueToken = false;
+
+      while(!uniqueToken){
+        const user = await User.findOne({ token });
+        if(user){
+          token = generateToken(user, time);
+        } else{
+          uniqueToken = true;
+        }
+      }
+
+      const newUser = await User.findOneAndUpdate({
+        email
+      },
+      {
+        token
+      });
 
       const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -196,7 +214,7 @@ module.exports = {
         from: 'shpeuf.website@gmail.com',
         to: `${user.email}`,
         subject: 'Reset Password',
-        text: 'You have requested the reset of the password for your account for shpe.co\n\n' +
+        text: 'You have requested the reset of the password for your account for shpe.com\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n' +
           `http://localhost:3000/reset/${token}\n\n` +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n',
@@ -212,8 +230,8 @@ module.exports = {
       });
 
       return {
-        ...user._doc,
-        id: user._id,
+        ...newUser._doc,
+        id: newUser._id,
         token
       };
     },
@@ -221,7 +239,8 @@ module.exports = {
     async reset(
       _, {
         password,
-        confirmPassword
+        confirmPassword,
+        token
       }
     ) {
       const {
@@ -234,8 +253,34 @@ module.exports = {
           errors
         });
       }
+
+
+
+      const user = await User.findOne({
+        token
+      });
+      if (!user) {
+        errors.general = "Invalid Token";
+        throw new UserInputError("Invalid Token", {
+          errors
+        });
+      }
+
+      password = await bcrypt.hash(password, 12);
+
+      //update update
+      const newUser = await User.findOneAndUpdate({
+        email: user.email
+      },
+      {
+        password,
+        token: ""
+      });
+
+      console.log(newUser);
+
       var Token = {
-        token: "asdf"
+        token: token
       }
       return Token;
     }

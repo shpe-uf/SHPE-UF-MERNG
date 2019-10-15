@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Container, Segment } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { AuthContext } from "../context/auth";
 
 import { useForm } from "../util/hooks";
 
 function ForgotPassword(props){
 
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
   const { onChange, onSubmit, values } = useForm(resetCallback, {
@@ -15,11 +17,14 @@ function ForgotPassword(props){
 
 
   const [resetUser, { loading }] = useMutation(RESET_PASSWORD, {
-    onComplete(_, {
-      data: { login: userData }
-    } ) {
-      console.log(userData);
-      //setToken();
+    update(
+      _,
+      {
+        data: { login: userData }
+      }
+    ) {
+      context.login(userData);
+      props.history.push("/points");
     },
 
     onError(err) {

@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Form, Button, Container, Segment } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { AuthContext } from "../context/auth";
 
 import { useForm } from "../util/hooks";
 
 function ResetPassword(props){
 
   const [errors, setErrors] = useState({});
+  const context = useContext(AuthContext);
 
+  // var {
+  //   user: { username }
+  // } = useContext(AuthContext);
+
+  // console.log(username);
+  console.log(props.match.params.token);
   const { onChange, onSubmit, values } = useForm(callback, {
     password: "",
     confirmPassword: ""
