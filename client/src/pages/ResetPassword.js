@@ -1,37 +1,25 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form, Button, Container, Segment } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { AuthContext } from "../context/auth";
 
 import { useForm } from "../util/hooks";
 
 function ResetPassword(props){
 
   const [errors, setErrors] = useState({});
-  const context = useContext(AuthContext);
 
-  // var {
-  //   user: { username }
-  // } = useContext(AuthContext);
-
-  // console.log(username);
-  console.log(props.match.params.token);
   const { onChange, onSubmit, values } = useForm(callback, {
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    token: props.match.params.token
   });
 
+
   const [reset, { loading }] = useMutation(RESET_PASSWORD, {
-    update(
-      _,
-      {
-        data: { login: userData }
-      }
-    ) {
-      //context.login(userData);
-      props.history.push("/points");
-    },
+    // onComplete() {
+    //   props.history.push("/login");
+    // },
 
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -40,11 +28,9 @@ function ResetPassword(props){
     variables: values
   });
 
-  useEffect(() => {
-  })
-
   function callback() {
     reset();
+    props.history.push("/login");
   }
 
   return (
@@ -99,8 +85,11 @@ function ResetPassword(props){
 }
 
 const RESET_PASSWORD = gql`
-  mutation reset($password: String!, $confirmPassword: String!) {
-    reset(password: $password, confirmPassword: $confirmPassword) {
+  mutation resetPassword($password: String!, $confirmPassword: String!, $token: String!) {
+    resetPassword(password: $password,
+      confirmPassword: $confirmPassword,
+      token: $token
+    ) {
       token
     }
   }

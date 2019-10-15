@@ -110,7 +110,7 @@ module.exports = gql`
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): User!
-    resetPassword(email: String!): User!
-    reset(password: String!, confirmPassword: String!, token: String!): Token!
+    forgotPassword(email: String!): User!
+    resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
   }
 `;

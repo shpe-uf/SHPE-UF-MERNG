@@ -16,16 +16,7 @@ function ForgotPassword(props){
   });
 
 
-  const [resetUser, { loading }] = useMutation(RESET_PASSWORD, {
-    update(
-      _,
-      {
-        data: { login: userData }
-      }
-    ) {
-      context.login(userData);
-      props.history.push("/points");
-    },
+  const [resetUser, { loading }] = useMutation(FORGOT_PASSWORD, {
 
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -84,9 +75,9 @@ function ForgotPassword(props){
   );
 }
 
-const RESET_PASSWORD = gql`
-  mutation resetPassword($email: String!) {
-    resetPassword(email: $email) {
+const FORGOT_PASSWORD = gql`
+  mutation forgotPassword($email: String!) {
+    forgotPassword(email: $email) {
       id
       email
       username
