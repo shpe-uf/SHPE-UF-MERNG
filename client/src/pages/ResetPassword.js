@@ -17,20 +17,17 @@ function ResetPassword(props){
 
 
   const [reset, { loading }] = useMutation(RESET_PASSWORD, {
-    // onComplete() {
-    //   props.history.push("/login");
-    // },
-
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-
+    onCompleted(){
+      props.history.push("/login");
+    },
     variables: values
   });
 
   function callback() {
     reset();
-    props.history.push("/login");
   }
 
   return (

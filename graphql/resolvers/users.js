@@ -522,15 +522,12 @@ module.exports = {
 
       password = await bcrypt.hash(password, 12);
 
-      //update update
       const newUser = await User.findOneAndUpdate({
         email: user.email
       }, {
         password,
         token: ""
       });
-
-      console.log(newUser);
 
       var Token = {
         token: token

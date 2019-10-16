@@ -17,7 +17,6 @@ function ForgotPassword(props){
 
 
   const [resetUser, { loading }] = useMutation(FORGOT_PASSWORD, {
-
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
