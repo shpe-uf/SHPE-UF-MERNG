@@ -18,6 +18,7 @@ import Title from "../components/Title";
 import EventsTable from "../components/EventsTable";
 import MembersTable from "../components/MembersTable";
 import RequestsTable from "../components/RequestsTable";
+import StatisticsData from "../components/StatisticsData";
 
 import categoryOptions from "../assets/options/category.json";
 import expirationOptions from "../assets/options/expiration.json";
@@ -113,6 +114,11 @@ function Admin() {
             onClick={handleItemClick}
           />
           <Menu.Item
+            name="Statistics"
+            active={activeItem ==="Statistics"}
+            onClick={handleItemClick}
+          />
+          <Menu.Item
             name="Requests"
             active={activeItem === "Requests"}
             onClick={handleItemClick}
@@ -150,6 +156,11 @@ function Admin() {
                 </Grid.Column>
               </Grid.Row>
             </Grid>
+          </Segment>
+        )}
+        {activeItem === "Statistics" &&(
+          <Segment attached="bottom">
+           <StatisticsData/> 
           </Segment>
         )}
         {activeItem === "Requests" && (
