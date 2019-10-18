@@ -1,10 +1,13 @@
 import React, {useState} from "react";
 
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_USERS_QUERY } from "../util/graphql";
 import { Menu, Segment, Container, Message } from "semantic-ui-react";
+import Statistic from "./Statistic";
+import {FETCH_USERS_QUERY, MAJOR_STAT, COUNTRY_STAT} from "../util/graphql";
 
 function StatisticsData(){
+    var majorData = useQuery(MAJOR_STAT).data.getMajorStat;
+    var countryData = useQuery(COUNTRY_STAT).data.getCountryStat;
 
     const [activeItem, setActiveItem] = useState("Events");
 
@@ -13,7 +16,7 @@ function StatisticsData(){
     };
         return (
             <Container>
-                <Menu fluid widths={6}>
+                <Menu fluid widths={5}>
                     <Menu.Item
                         name="Major"
                         active={activeItem ==="Major"}
@@ -39,58 +42,27 @@ function StatisticsData(){
                         active={activeItem ==="Ethnicity"}
                         onClick={handleItemClick}
                     />
-                    <Menu.Item
-                        name="Point Distribution"
-                        active={activeItem ==="Point Distribution"}
-                        onClick={handleItemClick}
-                    />
                 </Menu>
 
-                    {activeItem === "Major" &&(
-                        <Segment attached="bottom">
-                            <Message>
-                                Display major information
-                            </Message> 
-                        </Segment>
+                    {activeItem === "Major" && majorData && (
+                        <Statistic statData={majorData} />                       
                     )}
                     {activeItem === "Year" &&(
-                        <Segment attached="bottom">
-                            <Message>
-                                Display year information
-                            </Message> 
-                        </Segment>
+                        <Statistic/>
                     )}
-                    {activeItem === "Country of Origin" &&(
-                        <Segment attached="bottom">
-                            <Message>
-                                Display country of origin
-                            </Message> 
-                        </Segment>
+                    {activeItem === "Country of Origin" && countryData && (
+                        <Statistic statData={countryData} />
                     )}
                     {activeItem === "Sex" &&(
-                        <Segment attached="bottom">
-                            <Message>
-                                Display sex information
-                            </Message> 
-                        </Segment>
+                        <Statistic/>
                     )}
                     {activeItem === "Ethnicity" &&(
-                        <Segment attached="bottom">
-                            <Message>
-                                Display ethnicity information
-                            </Message> 
-                        </Segment>
-                    )}
-                    {activeItem === "Point Distribution" &&(
-                        <Segment attached="bottom">
-                            <Message>
-                                Display Point Distribution
-                            </Message> 
-                        </Segment>
+                        <Statistic/>                      
                     )}
             </Container>
         );
 
 }
+
 
 export default StatisticsData;
