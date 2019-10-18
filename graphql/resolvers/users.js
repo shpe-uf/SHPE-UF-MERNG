@@ -43,10 +43,56 @@ module.exports = {
 
     async getUser(_, { userId }) {
       try {
-        const user = await User.findById(userId);
+        var user = await User.findById(userId);
 
-        if (user) {
-          return user;
+        const users = await User.find();
+        const fallBelowUsers = await User.find()
+          .where("fallPoints")
+          .lt(user.fallPoints);
+        const springBelowUsers = await User.find()
+          .where("springPoints")
+          .lt(user.springPoints);
+        const summerBelowUsers = await User.find()
+          .where("summerPoints")
+          .lt(user.summerPoints);
+
+        const fallPercentile = Math.trunc(
+          (fallBelowUsers.length / users.length) * 100
+        );
+        const springPercentile = Math.trunc(
+          (springBelowUsers.length / users.length) * 100
+        );
+        const summerPercentile = Math.trunc(
+          (summerBelowUsers.length / users.length) * 100
+        );
+
+        var newUser = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          email: user.email,
+          major: user.major,
+          year: user.year,
+          graduating: user.graduating,
+          country: user.country,
+          ethnicity: user.ethnicity,
+          sex: user.sex,
+          ethnicity: user.ethnicity,
+          points: user.points,
+          fallPoints: user.fallPoints,
+          springPoints: user.springPoints,
+          summerPoints: user.summerPoints,
+          fallPercentile: fallPercentile,
+          springPercentile: springPercentile,
+          summerPercentile: summerPercentile,
+          createdAt: user.createdAt,
+          permission: user.permission,
+          listServ: user.listServ,
+          events: user.events
+        };
+
+        if (newUser) {
+          return newUser;
         } else {
           throw new Error("User not found.");
         }
