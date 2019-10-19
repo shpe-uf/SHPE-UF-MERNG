@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "semantic-ui-react";
 
 import alejandro from "../assets/images/team/2019-2020/alejandro.JPG";
-import cesar from "../assets/images/team/2019-2020/cesar.JPG";
+import cesar from "../assets/images/team/2019-2020/cesar.jpg";
 import david from "../assets/images/team/2019-2020/david.JPG";
 import diego from "../assets/images/team/2019-2020/diego.JPG";
 import eduardo from "../assets/images/team/2019-2020/eduardo.JPG";

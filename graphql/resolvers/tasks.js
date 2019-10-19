@@ -1,7 +1,7 @@
 const { UserInputError } = require("apollo-server");
 const User = require("../../models/User.js");
 
-const { validateManuelInputInput } = require("../../util/validators");
+const { validateCreateTaskInput } = require("../../util/validators");
 
 const monthOptions = require("../../client/src/assets/options/month.json");
 
@@ -24,7 +24,7 @@ module.exports = {
         createTaskInput: { name, startDate, endDate, description, points }
       }
     ) {
-      const { valid, errors } = validateCreateTaskInput(name, points);
+      const { valid, errors } = validateCreateTaskInput(name, startDate, endDate, description, points);
 
       if (!valid) {
         throw new UserInputError("Errors", { errors });
@@ -56,22 +56,23 @@ module.exports = {
 
       const res = await newTask.save();
 
-      return {    //?
+      return {
+        //?
         ...res.doc,
         id: res._id
       };
     },
 
-    async manualInput (
+    async manualInput(
       _,
       {
-        manualInputInput: { username, eventName }
+        manualTaskInputInput: { username, taskName }
       }
     ) {
       const { valid, errors } = validateManualInputInput(username);
 
       if (!valid) {
-        trhow new UserInputError("Errors", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -96,7 +97,7 @@ module.exports = {
         });
       }
 
-      if(request) {
+      if (request) {
         errors.general =
           "This member has sent a request for this task. Check the Requests tab.";
         throw new UserInputError(
@@ -118,7 +119,7 @@ module.exports = {
 
       var pointsIncrease = {};
 
-      if(task.semester === "Fall Semester") {
+      if (task.semester === "Fall Semester") {
         pointsIncrease = {
           points: task.points,
           fallPoints: task.points
@@ -135,29 +136,65 @@ module.exports = {
         };
       } else {
         errors.general = "Invalid task.";
-        throw new UserInputError("Invalid event.", {
+        throw new UserInputError("Invalid task.", {
           errors
         });
       }
-    }
 
-    var updatedUser = await User.findOneAndUpdate(
-      {
-        username
-      },
-      {
-        $push: {
-          tasks: {
-            $each: [
-              {
-                name: task.name
-                createdAt: task.createdAt,
-                points: task.points
-              }
-            ],
-          }
+      var updatedUser = await User.findOneAndUpdate(
+        {
+          username
+        },
+        {
+          $push: {
+            tasks: {
+              $each: [
+                {
+                  name: task.name,
+                  createdAt: task.createdAt,
+                  points: task.points
+                }
+              ],
+              $sort: { createdAt: 1 }
+            }
+          },
+          $inc: pointsIncrease
+        },
+        {
+          new: true
         }
-      }
-    )
+      );
+
+      updatedUser.message = "";
+
+      await Task.findOneAndUpdate(
+        {
+          name: taskName
+        },
+        {
+          $push: {
+            users: {
+              $each: [
+                {
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  username: user.username,
+                  email: user.email
+                }
+              ],
+              $sort: { lastName: 1, firstName: 1 }
+            }
+          },
+          $inc: {
+            attendance: 1
+          }
+        },
+        {
+          new: true
+        }
+      );
+
+      return updatedUser;
+    }
   }
 };

@@ -84,9 +84,17 @@ module.exports = gql`
     name: String!
     code: String!
     category: String!
-    points: String!
+    points: Int!
     expiration: String!
     request: String!
+  }
+
+  input CreateTaskInput {
+    name: String!
+    startDate: String!
+    endDate: String!
+    description: String!
+    points: Int!
   }
 
   input RedeemPointsInput {
@@ -104,10 +112,16 @@ module.exports = gql`
     eventName: String!
   }
 
+   input ManualTaskInputInput {
+     username: String!
+     taskName: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
     getEvents: [Event]
+    getTasks: [Task]
     getRequests: [Request]
   }
 
@@ -115,6 +129,7 @@ module.exports = gql`
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
     createEvent(createEventInput: CreateEventInput): Event!
+    createTask(createTaskInput: CreateTaskInput): Task!
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
