@@ -1,12 +1,14 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
 
-import cesar from "../assets/images/team/2019-2020/cesar.jpg";
-import alejandro from "../assets/images/team/2019-2020/alejandro.jpeg";
-import david from "../assets/images/team/2019-2020/david.jpeg";
-import juan from "../assets/images/team/2019-2020/juan.jpeg";
-import gabriel from "../assets/images/team/2019-2020/gabriel.jpeg";
-import sofia from "../assets/images/team/2019-2020/sofia.jpeg";
+import alejandro from "../assets/images/team/2019-2020/alejandro.JPG";
+import cesar from "../assets/images/team/2019-2020/cesar.JPG";
+import david from "../assets/images/team/2019-2020/david.JPG";
+import diego from "../assets/images/team/2019-2020/diego.JPG";
+import eduardo from "../assets/images/team/2019-2020/eduardo.JPG";
+import isabel from "../assets/images/team/2019-2020/isabel.JPG";
+import juan from "../assets/images/team/2019-2020/juan.JPG";
+import mariana from "../assets/images/team/2019-2020/mariana.JPG";
 import placeholder from "../assets/images/team/placeholder.png";
 
 
@@ -15,7 +17,7 @@ function DevTeamCards() {
     <>
       <Card
         fluid
-        image={placeholder}
+        image={eduardo}
         header="Eduardo Graziano"
         meta="Project Manager"
       />
@@ -33,7 +35,7 @@ function DevTeamCards() {
       />
       <Card
         fluid
-        image={placeholder}
+        image={diego}
         header="Diego Coviella"
         meta="Developer"
       />
@@ -45,19 +47,19 @@ function DevTeamCards() {
       />
       <Card
         fluid
-        image={sofia}
+        image={placeholder}
         header="Sofia Harmon"
         meta="Developer"
       />
       <Card
         fluid
-        image={placeholder}
+        image={isabel}
         header="Isabel Mitre"
         meta="Developer"
       />
       <Card
         fluid
-        image={gabriel}
+        image={placeholder}
         header="Gabriel Rodriguez Torres"
         meta="Developer"
       />
@@ -69,7 +71,7 @@ function DevTeamCards() {
       />
       <Card
         fluid
-        image={placeholder}
+        image={mariana}
         header="Mariana Torres Torres"
         meta="Developer"
       />
