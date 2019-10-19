@@ -459,13 +459,13 @@ module.exports = {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: `shpeuf.website@gmail.com`,
-          pass: `Shpe2020`,
+          user: process.env.EMAIL,
+          pass: process.env.EMAIL_PASSWORD,
         },
       });
 
       const mailOptions = {
-        from: 'shpeuf.website@gmail.com',
+        from: process.env.EMAIL,
         to: `${user.email}`,
         subject: 'Reset Password',
         text: 'You have requested the reset of the password for your account for shpe.com\n\n' +
