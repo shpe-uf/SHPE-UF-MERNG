@@ -567,3 +567,9 @@ ui.tabular.menu {
     min-height: calc(100vh - 64px - 64px) !important;
   }
 }
+
+.resetLink {
+  display: inline-block;
+  margin-top: 12px;
+  margin-left: 10px;
+}
