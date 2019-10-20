@@ -1,16 +1,15 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
 
-import alejandro from "../assets/images/team/2019-2020/alejandro.jpg";
-import cesar from "../assets/images/team/2019-2020/cesar.jpg";
-import david from "../assets/images/team/2019-2020/david.jpg";
-import diego from "../assets/images/team/2019-2020/diego.jpg";
-import eduardo from "../assets/images/team/2019-2020/eduardo.jpg";
-import isabel from "../assets/images/team/2019-2020/isabel.jpg";
-import juan from "../assets/images/team/2019-2020/juan.jpg";
-import mariana from "../assets/images/team/2019-2020/mariana.jpg";
+import alejandro from "../assets/images/team/2019-2020/alejandro.png";
+import cesar from "../assets/images/team/2019-2020/cesar.png";
+import david from "../assets/images/team/2019-2020/david.png";
+import diego from "../assets/images/team/2019-2020/diego.png";
+import eduardo from "../assets/images/team/2019-2020/eduardo.png";
+import isabel from "../assets/images/team/2019-2020/isabel.png";
+import juan from "../assets/images/team/2019-2020/juan.png";
+import mariana from "../assets/images/team/2019-2020/mariana.png";
 import placeholder from "../assets/images/team/placeholder.png";
-
 
 function DevTeamCards() {
   return (
