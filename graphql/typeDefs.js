@@ -84,7 +84,7 @@ module.exports = gql`
     name: String!
     code: String!
     category: String!
-    points: Int!
+    points: String!
     expiration: String!
     request: String!
   }
@@ -94,7 +94,7 @@ module.exports = gql`
     startDate: String!
     endDate: String!
     description: String!
-    points: Int!
+    points: String!
   }
 
   input RedeemPointsInput {
