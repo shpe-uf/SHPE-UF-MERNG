@@ -11,6 +11,7 @@ import gql from "graphql-tag";
 
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
+import ModalBasic from "../components/ModalBasic"
 
 import majorOptions from "../assets/options/major.json";
 import yearOptions from "../assets/options/year.json";
@@ -22,6 +23,12 @@ import sexOptions from "../assets/options/sex.json";
 function Register(props) {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleClose = () => {
+    setOpenModal(false);
+    props.history.push("/login");
+  }
 
   const { onChange, onSubmit, values } = useForm(registerUser, {
     firstName: "",
@@ -46,10 +53,12 @@ function Register(props) {
         data: { register: userData }
       }
     ) {
-      context.login(userData);
-      props.history.push("/");
+      //context.login(userData);
+      //props.history.push("/login");
     },
-
+    onCompleted(){
+      setOpenModal(true);
+    },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
@@ -65,6 +74,7 @@ function Register(props) {
     <div className="register">
       <div className="overlay-register">
         <Container>
+          <ModalBasic open={openModal} handleClose={handleClose} />
           <Segment.Group className="segment-spacing">
             <Segment className="title-bg-accent-1">
               <h1 className="text-white">Register</h1>

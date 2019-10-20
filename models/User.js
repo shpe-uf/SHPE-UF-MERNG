@@ -81,6 +81,10 @@ const userSchema = new Schema({
   token: {
     type: String,
     unique: true
+  },
+  permission: {
+    type: Boolean,
+    default: false
   }
 });
 
