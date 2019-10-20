@@ -1,5 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Grid, Container, Button, Modal, Form } from "semantic-ui-react";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -11,6 +15,10 @@ import PointsBar from "../components/PointsBar";
 import PointsTable from "../components/PointsTable";
 
 function Points() {
+  // function notify(){
+  //   toast("Wow so easy !");
+  // }
+
   const [errors, setErrors] = useState({});
   var getUser = "";
 
@@ -79,6 +87,12 @@ function Points() {
     getUser.summerPoints = userData.summerPoints;
     getUser.events = userData.events;
     getUser.message = userData.message;
+
+    if (getUser.message !== "") {
+      toast.warn(getUser.message, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    }
   }
 
   return (
@@ -87,6 +101,10 @@ function Points() {
 
       <Container>
         <Grid stackable>
+          <div>
+            <ToastContainer />
+          </div>
+          {/*
           {getUser && getUser.message && getUser.message !== undefined && (
             <Grid.Row>
               <Grid.Column>
@@ -96,6 +114,7 @@ function Points() {
               </Grid.Column>
             </Grid.Row>
           )}
+          */}
           <Grid.Row>
             <Grid.Column>
               <Button
