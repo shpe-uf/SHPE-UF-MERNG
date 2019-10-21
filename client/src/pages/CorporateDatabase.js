@@ -12,7 +12,6 @@ import industryOptions from "../assets/options/industry.json";
 import Title from "../components/Title";
 
 function CorporateDatabase() {
-  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
   const { onChange, onSubmit, values } = useForm(createCorporation, {
@@ -26,35 +25,38 @@ function CorporateDatabase() {
     businessModel: "",
     newsLink: "",
     applyLink: "",
-    otherInformation: {
-      academia: "false",
-      govContractor: "false",
-      nonProfit: "false",
-      visaSponsor: "false",
-      shpeSponsor: "false",
-      industryPartnership: "false",
-      fallBBQ: "false",
-      springBBQ: "false",
-      nationalConvention: "false"
-    }
+    academia: "No",
+    govContractor: "No",
+    nonProfit: "No",
+    visaSponsor: "No",
+    shpeSponsor: "No",
+    industryPartnership: "No",
+    fallBBQ: "No",
+    springBBQ: "No",
+    nationalConvention: "No"
   })
 
   const [addCorporation, { loading }] = useMutation(CREATE_CORPORATION, {
     update(
       _,
       {
-        data: { register: corporationData }
+        data: { createCorporation: corporationData }
       }
-    ) {},
-
+    ) {
+      console.log('HERES THE DATA')
+      console.log(corporationData)
+    },
     onError(err) {
+      console.log(err.message)
+      console.log(err.graphQLErrors)
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
 
     variables: values
-  });
+  },console.log('useMutation method'));
 
   function createCorporation() {
+    console.log('create corporation method')
     addCorporation();
   }
 
@@ -93,10 +95,10 @@ function CorporateDatabase() {
                 />
                 <Form.Input
                   type="text"
-                  label="Company Name"
-                  name="name"
-                  value={values.name}
-                  error={errors.name ? true : false}
+                  label="Slogan"
+                  name="slogan"
+                  value={values.slogan}
+                  error={errors.slogan ? true : false}
                   onChange={onChange}
                 />
               </Form.Group>
@@ -105,8 +107,8 @@ function CorporateDatabase() {
                     label="Majors"
                     control="select"
                     name="majors"
-                    value={values.major}
-                    error={errors.major ? true : false}
+                    value={values.majors}
+                    error={errors.majors ? true : false}
                     onChange={onChange}
                     multiple={true}
                   >
@@ -115,9 +117,236 @@ function CorporateDatabase() {
                         {major.value}
                       </option>
                     ))}
-                  </Form.Dropdown>
-                  
+                </Form.Dropdown>
+                <Form.Dropdown
+                    label="Industries"
+                    control="select"
+                    name="industries"
+                    value={values.industries}
+                    error={errors.industries ? true : false}
+                    onChange={onChange}
+                    multiple={true}
+                  >
+                    {industryOptions.map(industry => (
+                      <option value={industry.value} key={industry.key}>
+                        {industry.value}
+                      </option>
+                    ))}
+                </Form.Dropdown>
               </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Input
+                  type="text"
+                  label="Overview"
+                  name="overview"
+                  value={values.overview}
+                  error={errors.overview ? true : false}
+                  onChange={onChange}
+                />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Input
+                  type="text"
+                  label="Mission"
+                  name="mission"
+                  value={values.mission}
+                  error={errors.mission ? true : false}
+                  onChange={onChange}
+                />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Input
+                  type="text"
+                  label="Goals"
+                  name="goals"
+                  value={values.goals}
+                  error={errors.goals ? true : false}
+                  onChange={onChange}
+                />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Input
+                  type="text"
+                  label="Business Model/Operations Highlights"
+                  name="businessModel"
+                  value={values.businessModel}
+                  error={errors.businessModel ? true : false}
+                  onChange={onChange}
+                />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Input
+                  type="text"
+                  label="News Link"
+                  name="newsLink"
+                  value={values.newsLink}
+                  error={errors.newsLink ? true : false}
+                  onChange={onChange}
+                />
+                <Form.Input
+                  type="text"
+                  label="Apply Link"
+                  name="applyLink"
+                  value={values.applyLink}
+                  error={errors.applyLink ? true : false}
+                  onChange={onChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="Academia"
+                  control="select"
+                  name="academia"
+                  value={values.academia}
+                  error={errors.academia ? true : false}
+                  onChange={onChange}
+                >
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="Government Contractor"
+                  control="select"
+                  name="govContractor"
+                  value={values.govContractor}
+                  error={errors.govContractor ? true : false}
+                  onChange={onChange}
+                >
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="Non Profit"
+                  control="select"
+                  name="nonProfit"
+                  value={values.nonProfit}
+                  error={errors.nonProfit ? true : false}
+                  onChange={onChange}
+                >
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="Visa Sponsorship"
+                  control="select"
+                  name="visaSponsor"
+                  value={values.visaSponsor}
+                  error={errors.visaSponsor ? true : false}
+                  onChange={onChange}
+                >
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="SHPE Sponsor"
+                  control="select"
+                  name="shpeSponsor"
+                  value={values.shpeSponsor}
+                  error={errors.shpeSponsor ? true : false}
+                  onChange={onChange}
+                >
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="Industry Partnership"
+                  control="select"
+                  name="industryPartnership"
+                  value={values.industryPartnership}
+                  error={errors.industryPartnership ? true : false}
+                  onChange={onChange}
+                >
+                  {console.log("ERRORS", errors.industryPartnership)}
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="Attending Fall SHPE BBQ"
+                  control="select"
+                  name="fallBBQ"
+                  value={values.fallBBQ}
+                  error={errors.fallBBQ ? true : false}
+                  onChange={onChange}
+                >
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="Attending Spring BBQ"
+                  control="select"
+                  name="springBBQ"
+                  value={values.springBBQ}
+                  error={errors.springBBQ ? true : false}
+                  onChange={onChange}
+                >
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Form.Group>
+                <Form.Dropdown
+                  label="Attending SHPE National Convention"
+                  control="select"
+                  name="nationalConvention"
+                  value={values.nationalConvention}
+                  error={errors.nationalConvention ? true : false}
+                  onChange={onChange}
+                >
+                  <option>
+                    {"Yes"}
+                  </option>
+                  <option>
+                    {"No"}
+                  </option>
+                </Form.Dropdown>
+              </Form.Group>
+              <Button type="submit">Add Corporation</Button>
             </Form>
           </Segment>
         </Segment.Group>
@@ -127,7 +356,7 @@ function CorporateDatabase() {
 }
 
 const CREATE_CORPORATION = gql`
-  mutation create(
+  mutation createCorporation(
     $name: String!
     $slogan: String!
     $majors: [String!]
@@ -148,8 +377,8 @@ const CREATE_CORPORATION = gql`
     $springBBQ: String!
     $nationalConvention: String!
   ) {
-    create(
-      createInput: {
+    createCorporation(
+      createCorporationInput: {
         name: $name
         slogan: $slogan
         majors: $majors
@@ -160,22 +389,19 @@ const CREATE_CORPORATION = gql`
         businessModel: $businessModel
         newsLink: $newsLink
         applyLink: $applyLink
-        otherInformation: {
-          academia: $academia
-          govContractor: $govContractor
-          nonProfit: $nonProfit
-          visaSponsor: $visaSponsor
-          shpeSponsor: $shpeSponsor
-          industryPartnership: $industryPartnership
-          fallBBQ: $fallBBQ
-          springBBQ: $springBBQ
-          nationalConvention: $nationalConvention
-        }
+        academia: $academia
+        govContractor: $govContractor
+        nonProfit: $nonProfit
+        visaSponsor: $visaSponsor
+        shpeSponsor: $shpeSponsor
+        industryPartnership: $industryPartnership
+        fallBBQ: $fallBBQ
+        springBBQ: $springBBQ
+        nationalConvention: $nationalConvention
       }
     ) {
       id
       createdAt
-      token
     }
   }
 `;

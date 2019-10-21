@@ -40,6 +40,28 @@ module.exports = gql`
     users: [User]!
   }
 
+  type Corporation {
+    name: String!,
+    slogan: String!,
+    majors: [String]!,
+    industries: [String]!,
+    overview: String!,
+    mission: String!,
+    goals: String!,
+    businessModel: String!,
+    newsLink: String!,
+    applyLink: String!,
+    academia: String!,
+    govContractor: String!,
+    nonProfit: String!,
+    visaSponsor: String!,
+    shpeSponsor: String!,
+    industryPartnership: String!,
+    fallBBQ: String!,
+    springBBQ: String!,
+    nationalConvention: String!
+  }
+
   type Request {
     id: ID!
     eventName: String!
@@ -76,6 +98,28 @@ module.exports = gql`
     request: String!
   }
 
+  input CreateCorporationInput {
+    name: String!,
+    slogan: String!,
+    majors: [String!],
+    industries: [String!],
+    overview: String!,
+    mission: String!,
+    goals: String!,
+    businessModel: String!,
+    newsLink: String!,
+    applyLink: String!,
+    academia: String!,
+    govContractor: String!,
+    nonProfit: String!,
+    visaSponsor: String!,
+    shpeSponsor: String!,
+    industryPartnership: String!,
+    fallBBQ: String!,
+    springBBQ: String!,
+    nationalConvention: String!
+  }
+
   input RedeemPointsInput {
     code: String!
     username: String!
@@ -102,6 +146,7 @@ module.exports = gql`
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
     createEvent(createEventInput: CreateEventInput): Event!
+    createCorporation(createCorporationInput: CreateCorporationInput): Corporation!
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]

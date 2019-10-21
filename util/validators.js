@@ -93,6 +93,115 @@ module.exports.validateRegisterInput = (
   };
 };
 
+module.exports.validateCreateCorporationInput = (
+  name,
+  slogan,
+  majors,
+  industries,
+  overview,
+  mission,
+  goals,
+  businessModel,
+  newsLink,
+  applyLink
+) => {
+  const errors = {};
+
+  console.log('VALIDATING')
+
+  const nameValidator = /[A-z]{1,25}$/;
+  const shortPhraseValidator = /[A-z]{1,25}$/;
+  const longPhraseValidator = /[A-z]{1,25}$/;
+  const urlValidator = /[A-z]{1,25}$/;
+
+  if (name.trim() === "") {
+    errors.name = "Name is required.";
+  } else {
+    if (!name.match(shortPhraseValidator)) {
+      errors.name =
+        "Must be no greater than 50 characters";
+    }
+  }
+
+  if (slogan.trim() === "") {
+    errors.slogan = "Slogan is required";
+  } else {
+    if (!slogan.match(shortPhraseValidator)) {
+      errors.lastName =
+        "Must be no greater than 50 characters";
+    }
+  }
+
+  if (majors.length < 1) {
+    errors.majors =
+      "Please select at least 1";
+  }
+
+  if (industries.length < 1) {
+    errors.industries =
+      "Please select at least 1";
+  }
+
+  if (overview.trim() === "") {
+    errors.overview = "overview is required";
+  } else {
+    if (!overview.match(longPhraseValidator)) {
+      errors.lastName =
+        "Must be no greater than 50 characters";
+    }
+  }
+
+  if (mission.trim() === "") {
+    errors.mission = "mission is required";
+  } else {
+    if (!mission.match(longPhraseValidator)) {
+      errors.lastName =
+        "Must be no greater than 50 characters";
+    }
+  }
+
+  if (goals.trim() === "") {
+    errors.goals = "goals is required";
+  } else {
+    if (!goals.match(longPhraseValidator)) {
+      errors.lastName =
+        "Must be no greater than 50 characters";
+    }
+  }
+
+  if (businessModel.trim() === "") {
+    errors.businessModel = "businessModel is required";
+  } else {
+    if (!businessModel.match(longPhraseValidator)) {
+      errors.lastName =
+        "Must be no greater than 50 characters";
+    }
+  }
+
+  if (newsLink.trim() === "") {
+    errors.newsLink = "newsLink is required";
+  } else {
+    if (!newsLink.match(urlValidator)) {
+      errors.lastName =
+        "Must be no greater than 50 characters";
+    }
+  }
+
+  if (applyLink.trim() === "") {
+    errors.applyLink = "applyLink is required";
+  } else {
+    if (!applyLink.match(urlValidator)) {
+      errors.lastName =
+        "Must be no greater than 50 characters";
+    }
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateLoginInput = (username, password) => {
   const errors = {};
 
