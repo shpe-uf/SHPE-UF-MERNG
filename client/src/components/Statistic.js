@@ -4,23 +4,27 @@ import ReactDOM from "react-dom";
 //import * as V from 'victory';
 import { VictoryPie } from "victory";
 import StatisticData from './StatisticsData';
+import palette from 'google-palette';
 
 function Statistic({ statData }) {
   if (statData) {
     var statArray = [];
     for (var i = 0; i < statData.length; i++) {
-      var obj = { x: statData[i]._id, y: statData[i].value };
+      var obj = { x: statData[i]._id, y: statData[i].value, label: " " };
       statArray.push(obj);
     }
   }
-
+/*
+  var paletteScale = palette('tol-dv', 2);
+  paletteScale = paletteScale[1];
+*/
   return (
     <Segment attached="bottom">
       <Grid stackable>
         <Grid.Row>
 
           <Grid.Column width={8}>
-            {statArray && <VictoryPie colorScale={["tomato", "blue", "orange", "green"]} data={statArray} />}
+            {statArray && <VictoryPie colorScale="qualitative" data={statArray} events={[{target: "data", eventHandlers:{onMouseOver: ()=>{return [{target: "data"}]} }}]}/>}
           </Grid.Column>
 
           <Grid.Column width={8}>

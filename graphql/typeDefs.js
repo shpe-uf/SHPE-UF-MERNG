@@ -103,6 +103,9 @@ module.exports = gql`
     getRequests: [Request]
     getMajorStat: [StatData]
     getCountryStat: [StatData]
+    getYearStat: [StatData]
+    getSexStat: [StatData]
+    getEthnicityStat: [StatData]
   }
 
   type Mutation {

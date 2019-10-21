@@ -78,3 +78,30 @@ export const COUNTRY_STAT = gql `
     }
   }
 `;
+
+export const YEAR_STAT = gql `
+  {
+    getYearStat{
+      _id
+      value
+    }
+  }
+`;
+
+export const SEX_STAT = gql `
+  {
+    getSexStat{
+      _id
+      value
+    }
+  }
+`;
+
+export const ETHNICITY_STAT = gql `
+  {
+    getEthnicityStat{
+      _id
+      value
+    }
+  }
+`;

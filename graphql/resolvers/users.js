@@ -84,6 +84,33 @@ module.exports = {
         }
       },
 
+      async getYearStat() {
+        try {
+          const data = await User.aggregate([{
+              $group: {
+                _id: '$year',
+                value: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                _id: 1
+              }
+            }
+          ]);
+
+          if(data){
+            return data;
+          } else{
+            throw new Error("Data not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
+      },
+
       async getCountryStat() {
         try {
           const data = await User.aggregate([{
@@ -109,7 +136,62 @@ module.exports = {
         } catch (err) {
           throw new Error(err);
         }
+      },
+
+      async getSexStat() {
+        try {
+          const data = await User.aggregate([{
+              $group: {
+                _id: '$sex',
+                value: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                value: -1
+              }
+            }
+          ]);
+          
+          if(data){
+            return data;
+          } else{
+            throw new Error("Data not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
+      },
+
+      async getEthnicityStat() {
+        try {
+          const data = await User.aggregate([{
+              $group: {
+                _id: '$ethnicity',
+                value: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                value: -1
+              }
+            }
+          ]);
+          
+          if(data){
+            return data;
+          } else{
+            throw new Error("Data not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
       }
+      
     },
 
       Mutation: {
