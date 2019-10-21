@@ -13,7 +13,7 @@ import {
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 
 import { FETCH_EVENTS_QUERY, FETCH_USERS_QUERY } from "../util/graphql";
 import { useForm } from "../util/hooks";
@@ -28,7 +28,7 @@ function EventsTable() {
   if (data.getEvents) {
     getEvents = data.getEvents;
   }
-  
+
   var getUsers = [
     {
       username: "",

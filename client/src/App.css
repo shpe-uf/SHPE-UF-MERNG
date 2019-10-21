@@ -135,6 +135,7 @@ h5 {
   box-shadow: none;
   margin-bottom: 0px;
   background-color: var(--primary) !important;
+  height: 64px;
 }
 
 .email {
@@ -144,19 +145,12 @@ h5 {
 .brand-name {
   font-size: 2rem !important;
   font-family: "heading-font" !important;
-  padding: 16px 32px 16px 8px !important;
+  padding: 16px !important;
   align-items: center !important;
   justify-content: center !important;
   background-color: var(--accent-1) !important;
   text-transform: uppercase !important;
   color: var(--white) !important;
-}
-
-.brand-name-logo {
-  padding: 16px 8px 16px 32px !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background-color: var(--accent-1) !important;
 }
 
 .brand-logo {
@@ -252,7 +246,7 @@ h5 {
 
 .masthead-title {
   margin: 0px;
-  font-size: 4rem !important;
+  font-size: 3.5rem !important;
 }
 
 .background-grey {
@@ -506,10 +500,6 @@ th {
   color: rgb(220, 42, 42);
 }
 
-ui.tabular.menu {
-  background-color: green !important;
-}
-
 .fa-inbox,
 .fa-frown,
 .fa-exclamation-circle {
@@ -524,17 +514,17 @@ ui.tabular.menu {
 
 @media (max-width: 991px) {
   main {
-    min-height: calc(100vh - 62.41px - 118px) !important;
+    min-height: calc(100vh - 64px - 118px) !important;
   }
 
   .overlay-register,
   .overlay-login {
-    min-height: calc(100vh - 62.41px - 118px) !important;
+    min-height: calc(100vh - 64px - 118px) !important;
   }
 
   .overlay-register,
   .overlay-login {
-    min-height: calc(100vh - 62.41px - 118px) !important;
+    min-height: calc(100vh - 64px - 118px) !important;
   }
 }
 
