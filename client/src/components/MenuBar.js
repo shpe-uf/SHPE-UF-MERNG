@@ -58,6 +58,9 @@ function MenuBar() {
                       <Dropdown.Item as={Link} to="/points">
                         Points System
                       </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/corporateDatabase">
+                        Corporate Database
+                      </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
                         <p className="logout">Logout</p>
@@ -106,6 +109,9 @@ function MenuBar() {
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
                         Points System
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/corporateDatabase">
+                        Corporate Database
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
