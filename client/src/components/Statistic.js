@@ -20,7 +20,7 @@ function Statistic({ statData }) {
         <Grid.Row>
 
           <Grid.Column width={8}>
-            {statArray && <VictoryPie data={statArray} />}
+            {statArray && <VictoryPie colorScale={["tomato", "blue", "orange", "green"]} data={statArray} />}
           </Grid.Column>
 
           <Grid.Column width={8}>
