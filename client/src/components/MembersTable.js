@@ -1,11 +1,23 @@
-import React from "react";
-import { Table, Dimmer, Loader } from "semantic-ui-react";
-import { useQuery } from "@apollo/react-hooks";
-
-import { FETCH_USERS_QUERY } from "../util/graphql";
+import React, { useState } from "react";
+import { Table, Dimmer, Loader, Icon, Button, Modal } from "semantic-ui-react";
 
 function MembersTable({ users }) {
+  const [userInfoModal, setUserInfoModal] = useState(false);
+
+  const openModal = name => {
+    if (name === "userInfo") {
+      setUserInfoModal(true);
+    }
+  };
+
+  const closeModal = name => {
+    if (name === "userInfo") {
+      setUserInfoModal(false);
+    }
+  };
+
   return (
+    <>
     <div className="table-responsive">
       <Dimmer active={users ? false : true} inverted>
         <Loader />
@@ -24,30 +36,61 @@ function MembersTable({ users }) {
               Summer Points
             </Table.HeaderCell>
             <Table.HeaderCell textAlign="center">Total Points</Table.HeaderCell>
+            <Table.HeaderCell textAlign="center">Info</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {users &&
-            users.map((member, index) => (
+            users.map((user, index) => (
               <Table.Row key={index}>
                 <Table.Cell>
-                  {member.lastName}, {member.firstName}
+                  {user.lastName}, {user.firstName}
                 </Table.Cell>
-                <Table.Cell>{member.username}</Table.Cell>
-                <Table.Cell>{member.email}</Table.Cell>
-                <Table.Cell textAlign="center">{member.fallPoints}</Table.Cell>
+                <Table.Cell>{user.username}</Table.Cell>
+                <Table.Cell>{user.email}</Table.Cell>
+                <Table.Cell textAlign="center">{user.fallPoints}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {member.springPoints}
+                  {user.springPoints}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  {member.summerPoints}
+                  {user.summerPoints}
                 </Table.Cell>
-                <Table.Cell textAlign="center">{member.points}</Table.Cell>
+                <Table.Cell textAlign="center">{user.points}</Table.Cell>
+                <Table.Cell textAlign="center">
+                  <Button icon onClick={() => {
+                    openModal("userInfo");
+                  }}>
+                    <Icon name="info" />
+                  </Button>
+                </Table.Cell>
               </Table.Row>
             ))}
         </Table.Body>
       </Table>
     </div>
+
+    <Modal
+      open={userInfoModal}
+      size="small"
+      closeOnEscape={true}
+      closeOnDimmerClick={false}
+    >
+      <Modal.Header>
+        <h2>User Information</h2>
+      </Modal.Header>
+      <Modal.Content>
+        <Modal.Description>
+        <Button
+          type="reset"
+          color="grey"
+          onClick={() => closeModal("userInfo")}
+        >
+          Cancel
+        </Button>
+        </Modal.Description>
+      </Modal.Content>
+    </Modal>
+    </>
   );
 }
 
