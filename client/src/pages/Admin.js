@@ -8,7 +8,7 @@ import {
 
 import Title from "../components/Title";
 import Events from "../components/Events";
-import MembersTable from "../components/MembersTable";
+import Members from "../components/Members";
 import RequestsTable from "../components/RequestsTable";
 
 function Admin() {
@@ -56,7 +56,7 @@ function Admin() {
             <Grid>
               <Grid.Row>
                 <Grid.Column>
-                  <MembersTable />
+                  <Members />
                 </Grid.Column>
               </Grid.Row>
             </Grid>

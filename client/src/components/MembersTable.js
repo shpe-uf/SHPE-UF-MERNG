@@ -4,18 +4,10 @@ import { useQuery } from "@apollo/react-hooks";
 
 import { FETCH_USERS_QUERY } from "../util/graphql";
 
-function MembersTable() {
-  var getUsers = "";
-
-  var { data } = useQuery(FETCH_USERS_QUERY);
-
-  if (data.getUsers) {
-    getUsers = data.getUsers;
-  }
-
+function MembersTable({ users }) {
   return (
     <div className="table-responsive">
-      <Dimmer active={getUsers ? false : true} inverted>
+      <Dimmer active={users ? false : true} inverted>
         <Loader />
       </Dimmer>
       <Table striped selectable unstackable>
@@ -35,8 +27,8 @@ function MembersTable() {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {getUsers &&
-            getUsers.map((member, index) => (
+          {users &&
+            users.map((member, index) => (
               <Table.Row key={index}>
                 <Table.Cell>
                   {member.lastName}, {member.firstName}
