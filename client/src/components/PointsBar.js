@@ -3,8 +3,8 @@ import { Grid, Card } from "semantic-ui-react";
 
 function PointsBar({ user }) {
   return (
-    <Grid.Row columns={3}>
-      <Grid.Column>
+    <>
+      <Grid.Column width="equal">
         <Card fluid className="fall">
           <Card.Content>
             <p className="points-header">Fall Points</p>
@@ -15,7 +15,7 @@ function PointsBar({ user }) {
           </Card.Content>
         </Card>
       </Grid.Column>
-      <Grid.Column>
+      <Grid.Column width="equal">
         <Card fluid className="spring">
           <Card.Content>
             <p className="points-header">Spring Points</p>
@@ -26,7 +26,7 @@ function PointsBar({ user }) {
           </Card.Content>
         </Card>
       </Grid.Column>
-      <Grid.Column>
+      <Grid.Column width="equal">
         <Card fluid className="summer">
           <Card.Content>
             <p className="points-header">Summer Points</p>
@@ -37,7 +37,7 @@ function PointsBar({ user }) {
           </Card.Content>
         </Card>
       </Grid.Column>
-    </Grid.Row>
+    </>
   );
 }
 

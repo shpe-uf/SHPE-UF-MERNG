@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Table, Dimmer, Loader, Icon, Button, Modal } from "semantic-ui-react";
+import {
+  Table,
+  Dimmer,
+  Loader,
+  Icon,
+  Button,
+  Modal,
+  Grid
+} from "semantic-ui-react";
 
 import UserProfile from "./UserProfile";
 import PointsTable from "./PointsTable";
@@ -99,15 +107,19 @@ function MembersTable({ users }) {
         closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h2>User Information</h2>
+          <h2>Member Information</h2>
         </Modal.Header>
         <Modal.Content>
           <Modal.Description>
             {userInfo && (
-              <>
-                <UserProfile user={userInfo} />
-                <PointsTable user={userInfo} />
-              </>
+              <Grid>
+                <Grid.Row>
+                  <UserProfile user={userInfo} />
+                </Grid.Row>
+                <Grid.Row>
+                  <PointsTable user={userInfo} />
+                </Grid.Row>
+              </Grid>
             )}
             <Button
               type="reset"

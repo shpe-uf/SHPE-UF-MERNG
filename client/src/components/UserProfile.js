@@ -6,7 +6,7 @@ import placeholder from "../assets/images/placeholder.png";
 
 function UserProfile({ user }) {
   return (
-    <Grid.Row>
+    <>
       <Grid.Column width={8}>
         <Image fluid rounded src={placeholder} className="image-profile" />
       </Grid.Column>
@@ -118,7 +118,7 @@ function UserProfile({ user }) {
           </Table.Body>
         </Table>
       </Grid.Column>
-    </Grid.Row>
+    </>
   );
 }
 

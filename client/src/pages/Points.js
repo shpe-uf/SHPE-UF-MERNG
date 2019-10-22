@@ -109,8 +109,12 @@ function Points() {
           </Grid.Row>
           {getUser && (
             <>
-              <PointsBar user={getUser} />
-              <PointsTable user={getUser} />
+              <Grid.Row>
+                <PointsBar user={getUser} />
+              </Grid.Row>
+              <Grid.Row>
+                <PointsTable user={getUser} />
+              </Grid.Row>
             </>
           )}
         </Grid>
