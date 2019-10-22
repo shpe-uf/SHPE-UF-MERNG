@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Grid,
-  Container,
-  Menu,
-  Segment
-} from "semantic-ui-react";
+import { Grid, Container, Menu, Segment } from "semantic-ui-react";
 
 import Title from "../components/Title";
 import Events from "../components/Events";
@@ -42,13 +37,7 @@ function Admin() {
 
         {activeItem === "Events" && (
           <Segment attached="bottom">
-            <Grid>
-              <Grid.Row>
-                <Grid.Column>
-                  <Events />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
+            <Events />
           </Segment>
         )}
         {activeItem === "Members" && (
