@@ -4,6 +4,8 @@ import { Grid, Table, Segment, Header } from "semantic-ui-react";
 import moment from "moment";
 
 function PointsTable({ user }) {
+  console.log(user);
+
   return (
     <Grid.Row>
       <Grid.Column>

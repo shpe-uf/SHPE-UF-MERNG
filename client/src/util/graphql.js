@@ -20,6 +20,12 @@ export const FETCH_USERS_QUERY = gql`
       summerPoints
       permission
       listServ
+      events {
+        name
+        category
+        createdAt
+        points
+      }
     }
   }
 `;
