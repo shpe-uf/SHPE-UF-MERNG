@@ -105,6 +105,6 @@ module.exports = gql`
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
-    manualInput(manualInputInput: ManualInputInput): User!
+    manualInput(manualInputInput: ManualInputInput): [Event]
   }
 `;

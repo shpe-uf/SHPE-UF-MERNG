@@ -73,11 +73,15 @@ function EventsTable({ events }) {
     update(
       _,
       {
-        data: { manualInput: userData }
+        data: { manualInput: eventsData }
       }
     ) {
       values.username = "";
       values.eventName = "";
+      events.splice(0, events.length);
+      for (var i = 0; i < eventsData.length; i++) {
+        events.push(eventsData[i]);
+      }
       setErrors(false);
       setManualInputModal(false);
     },
@@ -325,9 +329,20 @@ const MANUAL_INPUT_MUTATION = gql`
     manualInput(
       manualInputInput: { username: $username, eventName: $eventName }
     ) {
-      username
-      firstName
-      lastName
+      name
+      code
+      category
+      expiration
+      semester
+      request
+      attendance
+      points
+      users {
+        firstName
+        lastName
+        username
+        email
+      }
     }
   }
 `;

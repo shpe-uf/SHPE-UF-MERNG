@@ -237,7 +237,9 @@ module.exports = {
         }
       );
 
-      return updatedUser;
+      const updatedEvents = await Event.find();
+      
+      return updatedEvents;
     }
   }
 };
