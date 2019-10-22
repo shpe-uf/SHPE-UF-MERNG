@@ -102,6 +102,16 @@ module.exports = {
         });
       }
 
+      //Eduardo
+      const isConfirmed = user.confirmed;
+
+      if (!isConfirmed) {
+        errors.general = "User not confirmed.";
+        throw new UserInputError("User not confirmed.", {
+          errors
+        });
+      }
+
       time = remember === "true" || remember === true ? "30d" : "24h";
       const token = generateToken(user, time);
 
@@ -215,6 +225,31 @@ module.exports = {
       var time = "24h";
 
       const token = generateToken(res, time);
+
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: `${user.email}`,
+        subject: 'Confirm Email',
+        text: 'Thank you for registering, please click on the link below to confirm your email and complete your registration, Thank you!\n\n' +
+          `http://localhost:3000/confirm/${id}\n\n`, //is this the right id?
+      };
+
+      transporter.sendMail(mailOptions, (err, response) => {
+        if (err) {
+          console.error('there was an error: ', err);
+        } else {
+          console.log('here is the res: ', response);
+          res.status(200).json('recovery email sent');
+        }
+      });
 
       return {
         ...res._doc,
@@ -409,12 +444,37 @@ module.exports = {
         return updatedUser;
       }
     },
+
+
+    //CREATE RESOLVER Update user
+    async confirmUser(
+      _, {
+        id
+      }
+    ) {
+
+      const user = await User.findOneAndUpdate({ _id: id }, {
+        confirmed: true
+      });
+
+      if (!user) {
+        errors.general = "User not found.";
+        throw new UserInputError("User not found.", {
+          errors
+        });
+      }
+
+      return user;
+
+    },
+
+
     async forgotPassword(
       _, {
         email
       }
     ) {
-      //error checking
+
       const {
         errors,
         valid

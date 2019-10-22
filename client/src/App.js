@@ -23,6 +23,7 @@ import Points from "./pages/Points";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
+import Confirm from "./pages/Confirm";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/sponsors" component={Sponsors} />
           <Route exact path="/reset/:token" component={ResetPassword} />
           <Route exact path="/forgot" component={ForgotPassword} />
+          <Route exact path="/confirm/:id" component={Confirm} />
           <UserRoute exact path="/admin" component={Admin} />
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />

@@ -6,8 +6,7 @@ const ModalBasic = (props) => (
     <Header icon='mail' content='Confirm Email' />
     <Modal.Content>
       <p>
-        Please go to your UF email and click on the link to
-        to confirm you email, thank you!
+        { props.message }
       </p>
     </Modal.Content>
     <Modal.Actions>

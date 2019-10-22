@@ -74,7 +74,7 @@ function Register(props) {
     <div className="register">
       <div className="overlay-register">
         <Container>
-          <ModalBasic open={openModal} handleClose={handleClose} />
+          <ModalBasic open={openModal} handleClose={handleClose} message={"test"}/>
           <Segment.Group className="segment-spacing">
             <Segment className="title-bg-accent-1">
               <h1 className="text-white">Register</h1>

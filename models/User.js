@@ -82,7 +82,7 @@ const userSchema = new Schema({
     type: String,
     unique: true
   },
-  permission: {
+  confirmed: {
     type: Boolean,
     default: false
   }

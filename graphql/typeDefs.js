@@ -24,6 +24,7 @@ module.exports = gql`
     events: [Event]!
     token: String!
     message: String!
+    confirmed: Boolean!
   }
 
   type Token{
@@ -112,5 +113,6 @@ module.exports = gql`
     manualInput(manualInputInput: ManualInputInput): User!
     forgotPassword(email: String!): User!
     resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
+    confirmUser(id: String!): User!
   }
 `;
