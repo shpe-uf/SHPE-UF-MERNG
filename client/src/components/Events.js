@@ -49,7 +49,7 @@ function Events() {
     update(
       _,
       {
-        data: { createEvent: eventData }
+        data: { createEvent: eventsData }
       }
     ) {
       values.name = "";
@@ -58,6 +58,10 @@ function Events() {
       values.points = "";
       values.expiration = "";
       values.request = "false";
+      events.splice(0, events.length);
+      for (var i = 0; i < eventsData.length; i++) {
+        events.push(eventsData[i]);
+      }
       setErrors(false);
       setCreateEventModal(false);
     },

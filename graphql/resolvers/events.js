@@ -90,12 +90,13 @@ module.exports = {
         createdAt: new Date().toISOString()
       });
 
-      const res = await newEvent.save();
+      await newEvent.save();
 
-      return {
-        ...res._doc,
-        id: res._id
-      };
+      const updatedEvents = await Event.find();
+
+      console.log(updatedEvents);
+
+      return updatedEvents;
     },
 
     async manualInput(
@@ -238,7 +239,7 @@ module.exports = {
       );
 
       const updatedEvents = await Event.find();
-      
+
       return updatedEvents;
     }
   }
