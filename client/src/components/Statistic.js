@@ -2,29 +2,37 @@ import React from "react";
 import { Grid, Segment, Message, Table } from "semantic-ui-react";
 import ReactDOM from "react-dom";
 //import * as V from 'victory';
-import { VictoryPie } from "victory";
-import StatisticData from './StatisticsData';
-import palette from 'google-palette';
+import { VictoryPie, VictoryTooltip } from "victory";
+import StatisticData from "./StatisticsData";
+import palette from "google-palette";
 
 function Statistic({ statData }) {
   if (statData) {
     var statArray = [];
     for (var i = 0; i < statData.length; i++) {
-      var obj = { x: statData[i]._id, y: statData[i].value, label: " " };
+      var obj = { x: statData[i]._id, y: statData[i].value, label: statData[i]._id + ": " + statData[i].value };
       statArray.push(obj);
     }
   }
-/*
-  var paletteScale = palette('tol-dv', 2);
-  paletteScale = paletteScale[1];
-*/
+  
+  var paletteScale = palette('tol-rainbow', statData.length);
+  
+  for (var i = 0; i < paletteScale.length; i++) {
+    paletteScale[i] = "#" + paletteScale[i];
+  }
+
   return (
     <Segment attached="bottom">
       <Grid stackable>
         <Grid.Row>
-
           <Grid.Column width={8}>
-            {statArray && <VictoryPie colorScale="qualitative" data={statArray} events={[{target: "data", eventHandlers:{onMouseOver: ()=>{return [{target: "data"}]} }}]}/>}
+            {statArray && (
+              <VictoryPie
+                colorScale={paletteScale}
+                data={statArray}
+                labelComponent={<VictoryTooltip/>}
+              />
+            )}
           </Grid.Column>
 
           <Grid.Column width={8}>
@@ -48,7 +56,6 @@ function Statistic({ statData }) {
               </Table>
             </div>
           </Grid.Column>
-          
         </Grid.Row>
       </Grid>
     </Segment>
