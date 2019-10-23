@@ -5,7 +5,7 @@ import Title from "../components/Title";
 import Events from "../components/Events";
 import MembersTable from "../components/MembersTable";
 import RequestsTable from "../components/RequestsTable";
-import StatisticsData from "../components/StatisticsData";
+import Statistics from "../components/Statistics";
 
 function Admin() {
   const [activeItem, setActiveItem] = useState("Events");
@@ -59,7 +59,7 @@ function Admin() {
         )}
         {activeItem === "Statistics" &&(
           <Segment attached="bottom">
-           <StatisticsData/> 
+           <Statistics/> 
           </Segment>
         )}
         {activeItem === "Requests" && (
