@@ -12,21 +12,19 @@ import {
 } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import moment from "moment";
-import { CSVLink, CSVDownload } from "react-csv";
-
-import { FETCH_EVENTS_QUERY, FETCH_USERS_QUERY } from "../util/graphql";
 import { useForm } from "../util/hooks";
+import moment from "moment";
+import { CSVLink } from "react-csv";
 
-function EventsTable() {
+import { FETCH_USERS_QUERY } from "../util/graphql";
+
+function EventsTable({ events }) {
   const [errors, setErrors] = useState({});
+  const [manualInputModal, setManualInputModal] = useState(false);
+  const [eventInfoModal, setEventInfoModal] = useState(false);
   const [eventAttendance, setEventAttendance] = useState({});
 
-  const {
-    data: { getEvents }
-  } = useQuery(FETCH_EVENTS_QUERY);
-
-  var getUsers = [
+  var users = [
     {
       username: "",
       firstName: "",
@@ -37,13 +35,10 @@ function EventsTable() {
   var userData = useQuery(FETCH_USERS_QUERY).data.getUsers;
 
   if (userData) {
-    userData.map(user => {
-      getUsers.push(user);
-    });
+    for (var i = 0; i < userData.length; i++) {
+      users.push(userData[i]);
+    }
   }
-
-  const [manualInputModal, setManualInputModal] = useState(false);
-  const [eventInfoModal, setEventInfoModal] = useState(false);
 
   const openModal = name => {
     if (name === "manualInput") {
@@ -78,11 +73,15 @@ function EventsTable() {
     update(
       _,
       {
-        data: { manualInput: userData }
+        data: { manualInput: eventsData }
       }
     ) {
       values.username = "";
       values.eventName = "";
+      events.splice(0, events.length);
+      for (var i = 0; i < eventsData.length; i++) {
+        events.push(eventsData[i]);
+      }
       setErrors(false);
       setManualInputModal(false);
     },
@@ -102,16 +101,16 @@ function EventsTable() {
     values.eventName = eventName;
   }
 
-  function getEventAttendance(eventUsers) {
-    setEventAttendance(eventUsers);
+  function getEventAttendance(eventInfo) {
+    setEventAttendance(eventInfo);
   }
 
   return (
     <>
-      <Dimmer active={getEvents ? false : true} inverted>
+      <Dimmer active={events ? false : true} inverted>
         <Loader />
       </Dimmer>
-      {getEvents === undefined || getEvents.length === 0 ? (
+      {events === undefined || events.length === 0 ? (
         <Segment placeholder>
           <Header icon>
             <i className="fas fa-inbox"></i>
@@ -140,8 +139,8 @@ function EventsTable() {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {getEvents &&
-                getEvents.map((event, index) => (
+              {events &&
+                events.map((event, index) => (
                   <Table.Row key={index}>
                     <Table.Cell>{event.name}</Table.Cell>
                     <Table.Cell>{event.code}</Table.Cell>
@@ -191,6 +190,7 @@ function EventsTable() {
           </Table>
         </div>
       )}
+
       <Modal
         open={manualInputModal}
         size="tiny"
@@ -224,15 +224,20 @@ function EventsTable() {
                 error={errors.username ? true : false}
                 onChange={onChange}
               >
-                {getUsers &&
-                  getUsers.map(user =>
+                {users &&
+                  users.map(user =>
                     user.username === "" ? (
                       <option value={user.username} key={user.username}>
                         {user.lastName + user.firstName}
                       </option>
                     ) : (
                       <option value={user.username} key={user.username}>
-                        {user.lastName + ", " + user.firstName}
+                        {user.lastName +
+                          ", " +
+                          user.firstName +
+                          " (" +
+                          user.username +
+                          ")"}
                       </option>
                     )
                   )}
@@ -268,7 +273,7 @@ function EventsTable() {
             {eventAttendance.attendance === 0 ? (
               <Segment placeholder>
                 <Header icon>
-                  <i class="fas fa-exclamation-circle"></i>
+                  <i className="fas fa-exclamation-circle"></i>
                   <p>This event has no attendance records.</p>
                 </Header>
               </Segment>
@@ -324,9 +329,20 @@ const MANUAL_INPUT_MUTATION = gql`
     manualInput(
       manualInputInput: { username: $username, eventName: $eventName }
     ) {
-      username
-      firstName
-      lastName
+      name
+      code
+      category
+      expiration
+      semester
+      request
+      attendance
+      points
+      users {
+        firstName
+        lastName
+        username
+        email
+      }
     }
   }
 `;

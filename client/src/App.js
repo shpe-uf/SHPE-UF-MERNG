@@ -21,6 +21,7 @@ import Sponsors from "./pages/Sponsors";
 import Admin from "./pages/Admin";
 import Points from "./pages/Points";
 import Profile from "./pages/Profile";
+import ClassSharing from "./pages/ClassSharing";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <UserRoute exact path="/admin" component={Admin} />
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
+          <UserRoute exact path="/classsharing" component={ClassSharing} />
         </main>
         <Footer />
       </Router>

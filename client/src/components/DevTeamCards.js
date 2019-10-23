@@ -1,20 +1,23 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
 
-import cesar from "../assets/images/team/2019-2020/cesar.jpg";
-import alejandro from "../assets/images/team/2019-2020/alejandro.jpeg";
-import david from "../assets/images/team/2019-2020/david.jpeg";
-import juan from "../assets/images/team/2019-2020/juan.jpeg";
-import gabriel from "../assets/images/team/2019-2020/gabriel.jpeg";
+import alejandro from "../assets/images/team/2019-2020/alejandro.png";
+import cesar from "../assets/images/team/2019-2020/cesar.png";
+import david from "../assets/images/team/2019-2020/david.png";
+import diego from "../assets/images/team/2019-2020/diego.png";
+import eduardo from "../assets/images/team/2019-2020/eduardo.png";
+import isabel from "../assets/images/team/2019-2020/isabel.png";
+import juan from "../assets/images/team/2019-2020/juan.png";
+import mariana from "../assets/images/team/2019-2020/mariana.png";
 import placeholder from "../assets/images/team/placeholder.png";
 
 
-function DevTeamCards({ title }) {
+function DevTeamCards() {
   return (
     <>
       <Card
         fluid
-        image={placeholder}
+        image={eduardo}
         header="Eduardo Graziano"
         meta="Project Manager"
       />
@@ -28,49 +31,49 @@ function DevTeamCards({ title }) {
         fluid
         image={alejandro}
         header="Alejandro Alonso"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
-        image={placeholder}
+        image={diego}
         header="Diego Coviella"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={david}
         header="David Espantoso"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={placeholder}
         header="Sofia Harmon"
-        meta="Full-Stack Developer"
+        meta="Developer"
+      />
+      <Card
+        fluid
+        image={isabel}
+        header="Isabel Mitre"
+        meta="Developer"
       />
       <Card
         fluid
         image={placeholder}
-        header="Isabel Mitre"
-        meta="Full-Stack Developer"
-      />
-      <Card
-        fluid
-        image={gabriel}
         header="Gabriel Rodriguez Torres"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
         image={juan}
         header="Juan Suhr"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
       <Card
         fluid
-        image={placeholder}
+        image={mariana}
         header="Mariana Torres Torres"
-        meta="Full-Stack Developer"
+        meta="Developer"
       />
     </>
   );
