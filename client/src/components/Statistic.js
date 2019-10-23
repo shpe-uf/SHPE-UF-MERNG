@@ -30,7 +30,7 @@ function Statistic({ statData }) {
               <VictoryPie
                 colorScale={paletteScale}
                 data={statArray}
-                labelComponent={<VictoryTooltip/>}
+                labelComponent={<VictoryTooltip constrainToVisibleArea/>}
               />
             )}
           </Grid.Column>
