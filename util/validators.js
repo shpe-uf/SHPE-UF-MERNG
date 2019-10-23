@@ -121,7 +121,7 @@ module.exports.validateCreateEventInput = (
 
   const nameValidator = /^[a-zA-Z0-9- ]{6,50}$/i;
   const codeValidator = /^[a-zA-Z0-9]{6,50}$/i;
-  const pointsValidator = /^[1-9][1-9]*$/i;
+  const pointsValidator = /^[1-9][0-9]*$/i;
 
   if (name.trim() === "") {
     errors.name = "Name is required.";
@@ -179,6 +179,49 @@ module.exports.validateManualInputInput = username => {
 
   if (username.trim() === "") {
     errors.username = "No username was provided.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
+module.exports.validateCreateTaskInput = (
+  name,
+  startDate,
+  endDate,
+  description,
+  points
+) => {
+  const errors = {};
+
+  const nameValidator = /^[a-zA-Z0-9- ]{6,50}$/i;
+  const pointsValidator = /^[1-9][0-9]*$/i;
+
+  if (name.trim() === "") {
+    errors.name = "Name is required.";
+  } else {
+    if (!name.match(nameValidator)) {
+      errors.name =
+        "Task name must be at least 6 characters, max 50. No special characters, except for hyphens (-) and dashes (/).";
+    }
+  }
+
+  if (startDate.trim() === "") {
+    errors.startDate = "Start date is required.";
+  }
+
+  if (endDate.trim() === "") {
+    errors.endDate = "End date is required.";
+  }
+
+  if (description.trim() === "" && description.length > 280) {
+    errors.description = "Description must be between 1 and 280 characters.";
+  }
+
+  if (!points.match(pointsValidator)) {
+    errors.points = "Points must be a whole number greater than 0.";
   }
 
   return {

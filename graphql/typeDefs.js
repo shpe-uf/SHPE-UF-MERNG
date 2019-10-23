@@ -51,6 +51,19 @@ module.exports = gql`
     createdAt: String!
   }
 
+  type Task {
+    id: ID!
+    name: String!
+    startDate: String!
+    endDate: String!
+    description: String!
+    points: Int!
+    attendance: Int!
+    semester: String!
+    createdAt: String!
+    users: [User]!
+  }
+
   input RegisterInput {
     firstName: String!
     lastName: String!
@@ -76,6 +89,14 @@ module.exports = gql`
     request: String!
   }
 
+  input CreateTaskInput {
+    name: String!
+    startDate: String!
+    endDate: String!
+    description: String!
+    points: String!
+  }
+
   input RedeemPointsInput {
     code: String!
     username: String!
@@ -91,17 +112,24 @@ module.exports = gql`
     eventName: String!
   }
 
+  input ManualTaskInputInput {
+    username: String!
+    taskName: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
+    getTasks: [Task]
   }
 
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
     createEvent(createEventInput: CreateEventInput): [Event]
+    createTask(createTaskInput: CreateTaskInput): Task!
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]

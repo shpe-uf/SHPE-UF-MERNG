@@ -60,3 +60,25 @@ export const FETCH_REQUESTS_QUERY = gql`
   }
 }
 `;
+
+export const FETCH_TASKS_QUERY = gql`
+  {
+    getTasks {
+      id
+      name
+      startDate
+      endDate
+      description
+      points
+      attendance
+      semester
+      createdAt
+      users {
+        firstName
+        lastName
+        username
+        email
+      }
+    }
+  }
+`;
