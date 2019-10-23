@@ -1,5 +1,6 @@
 const { model, Schema } = require("mongoose");
 const Event = require("./Event").schema;
+const Class = require("./Class.js").schema;
 
 const userSchema = new Schema({
   firstName: {
@@ -77,7 +78,8 @@ const userSchema = new Schema({
     category: String,
     createdAt: String,
     points: Number
-  }]
+  }],
+  classes: [String]
 });
 
 module.exports = model("User", userSchema);

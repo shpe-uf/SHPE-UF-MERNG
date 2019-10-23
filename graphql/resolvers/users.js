@@ -191,7 +191,9 @@ module.exports = {
         summerPoints: 0,
         permission: "User",
         listServ,
-        events: []
+        events: [],
+        schedule: [],
+        matches: []
       });
 
       const res = await newUser.save();

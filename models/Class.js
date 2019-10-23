@@ -2,17 +2,16 @@ const { model, Schema } = require("mongoose");
 const User = require("./User").schema;
 
 const classSchema = new Schema({
-    courseNum: {
+    code: {
       type: String,
-      required: true
-    },
-    sectionNum: {
-      type: String,
-      required: true
+      required: true,
+      unique: true
     },
     users: [{
-        type: User,
-        required: true
+      firstName: String,
+      lastName: String,
+      email: String,
+      username: String
     }]
 })
 
