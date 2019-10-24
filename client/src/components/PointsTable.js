@@ -4,16 +4,17 @@ import { Grid, Table, Segment, Header } from "semantic-ui-react";
 import moment from "moment";
 
 function PointsTable({ user }) {
-
   return (
-    <Grid.Column>
+    <>
       {user === undefined || user.events.length === 0 ? (
-        <Segment placeholder>
-          <Header icon>
-            <i className="far fa-frown"></i>
-            <p>It seems like you haven't attended any events.</p>
-          </Header>
-        </Segment>
+        <div style={{ paddingBottom: 16 }}>
+          <Segment placeholder>
+            <Header icon>
+              <i className="far fa-frown"></i>
+              <p>No events on record.</p>
+            </Header>
+          </Segment>
+        </div>
       ) : (
         <div className="table-responsive">
           <Table striped selectable unstackable singleLine>
@@ -43,7 +44,7 @@ function PointsTable({ user }) {
           </Table>
         </div>
       )}
-    </Grid.Column>
+    </>
   );
 }
 

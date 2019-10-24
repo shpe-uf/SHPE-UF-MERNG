@@ -24,10 +24,8 @@ function Profile() {
     <div className="body">
       <Title title="My Profile" />
       <Container>
-        <Grid stackable>
-          <Grid.Row>
-            <UserProfile user={getUser} />
-          </Grid.Row>
+        <Grid doubling columns={2}>
+          <UserProfile user={getUser} />
         </Grid>
       </Container>
     </div>

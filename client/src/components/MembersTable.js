@@ -6,7 +6,8 @@ import {
   Icon,
   Button,
   Modal,
-  Grid
+  Grid,
+  Container
 } from "semantic-ui-react";
 
 import UserProfile from "./UserProfile";
@@ -36,8 +37,6 @@ function MembersTable({ users }) {
   function getUserInfo(userInfo) {
     setUserInfo(userInfo);
   }
-
-  console.log(userInfo);
 
   return (
     <>
@@ -102,7 +101,7 @@ function MembersTable({ users }) {
 
       <Modal
         open={userInfoModal}
-        size="small"
+        size="large"
         closeOnEscape={true}
         closeOnDimmerClick={false}
       >
@@ -110,25 +109,23 @@ function MembersTable({ users }) {
           <h2>Member Information</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            {userInfo && (
-              <Grid>
-                <Grid.Row>
-                  <UserProfile user={userInfo} />
-                </Grid.Row>
-                <Grid.Row>
-                  <PointsTable user={userInfo} />
-                </Grid.Row>
+          {userInfo && (
+            <>
+              <Grid doubling columns={2}>
+                <UserProfile user={userInfo} />
               </Grid>
-            )}
-            <Button
-              type="reset"
-              color="grey"
-              onClick={() => closeModal("userInfo")}
-            >
-              Close
-            </Button>
-          </Modal.Description>
+              <Container>
+                <PointsTable user={userInfo} />
+              </Container>
+            </>
+          )}
+          <Button
+            type="reset"
+            color="grey"
+            onClick={() => closeModal("userInfo")}
+          >
+            Close
+          </Button>
         </Modal.Content>
       </Modal>
     </>
