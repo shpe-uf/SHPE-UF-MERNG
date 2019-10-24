@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Button, Form, Modal } from "semantic-ui-react";
+import { Grid, Button, Form, Modal, Container } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { useForm } from "../util/hooks";
@@ -79,24 +79,23 @@ function Events() {
 
   return (
     <>
-      <Grid>
-        <Grid.Row>
-          <Grid.Column>
-            <Button
-              content="Create Event"
-              icon="pencil"
-              labelPosition="left"
-              onClick={() => openModal("createEvent")}
-              floated="right"
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <EventsTable events={events} />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Container>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column className="no-padding">
+              <Button
+                content="Create Event"
+                icon="pencil"
+                labelPosition="left"
+                onClick={() => openModal("createEvent")}
+                floated="right"
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
+        <EventsTable events={events} />
+      </Container>
 
       <Modal
         open={createEventModal}
