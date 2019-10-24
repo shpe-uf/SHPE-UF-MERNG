@@ -56,7 +56,8 @@ module.exports = {
           industryPartnership,
           fallBBQ, 
           springBBQ, 
-          nationalConvention }
+          nationalConvention 
+        }
       }
     ) {
       console.log('RUNNING')
@@ -113,8 +114,7 @@ module.exports = {
       const res = await newCorporation.save();
 
       return {
-        ...res._doc,
-        id: res._id
+        createdAt
       };
     }
   }

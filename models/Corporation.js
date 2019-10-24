@@ -42,39 +42,39 @@ const corporationSchema = new Schema({
     required: true
   },
   academia: {
-    type: String,
+    type: Boolean,
     required: true
   },
   govContractor: {
-    type: String,
+    type: Boolean,
     required: true
   },
   nonProfit: {
-    type: String,
+    type: Boolean,
     required: true
   },
   visaSponsor: {
-    type: String,
+    type: Boolean,
     required: true
   },
   shpeSponsor: {
-    type: String,
+    type: Boolean,
     required: true
   },
   industryPartnership: {
-    type: String,
+    type: Boolean,
     required: true
   },
   fallBBQ: {
-    type: String,
+    type: Boolean,
     required: true
   },
   springBBQ: {
-    type: String,
+    type: Boolean,
     required: true
   },
   nationalConvention: {
-    type: String,
+    type: Boolean,
     required: true
   }
 });

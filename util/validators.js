@@ -132,12 +132,12 @@ module.exports.validateCreateCorporationInput = (
     }
   }
 
-  if (majors.length < 1) {
+  if (majors.length < 0) {
     errors.majors =
       "Please select at least 1";
   }
 
-  if (industries.length < 1) {
+  if (industries.length < 0) {
     errors.industries =
       "Please select at least 1";
   }

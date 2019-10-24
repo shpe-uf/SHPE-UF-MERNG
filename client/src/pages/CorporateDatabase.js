@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
-import { Grid, Container, Button, Modal, Form, Segment } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Container, Button, Form, Segment } from "semantic-ui-react";
 import gql from "graphql-tag";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
-import { AuthContext } from "../context/auth";
 
 import majorOptions from "../assets/options/major.json";
 import industryOptions from "../assets/options/industry.json";
@@ -43,8 +42,6 @@ function CorporateDatabase() {
         data: { createCorporation: corporationData }
       }
     ) {
-      console.log('HERES THE DATA')
-      console.log(corporationData)
     },
     onError(err) {
       console.log(err.message)
@@ -53,7 +50,7 @@ function CorporateDatabase() {
     },
 
     variables: values
-  },console.log('useMutation method'));
+  },console.log(values));
 
   function createCorporation() {
     console.log('create corporation method')
@@ -104,35 +101,22 @@ function CorporateDatabase() {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Dropdown
-                    label="Majors"
-                    control="select"
-                    name="majors"
-                    value={values.majors}
-                    error={errors.majors ? true : false}
-                    onChange={onChange}
-                    multiple={true}
-                  >
-                    {majorOptions.map(major => (
-                      <option value={major.value} key={major.key}>
-                        {major.value}
-                      </option>
-                    ))}
+                  label="Majors"
+                  fluid multiple selection 
+                  options={majorOptions}
+                  onChange={(param, data) => {
+                    values.majors = data.value;
+                  }}
+                >
                 </Form.Dropdown>
                 <Form.Dropdown
-                    label="Industries"
-                    control="select"
-                    name="industries"
-                    value={values.industries}
-                    error={errors.industries ? true : false}
-                    onChange={onChange}
-                    multiple={true}
-                  >
-                    {industryOptions.map(industry => (
-                      <option value={industry.value} key={industry.key}>
-                        {industry.value}
-                      </option>
-                    ))}
-                </Form.Dropdown>
+                  label="Industries"
+                  fluid multiple selection 
+                  options={industryOptions}
+                  onChange={(param, data) => {
+                    values.industries = data.value;
+                  }}
+                />
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
@@ -359,8 +343,8 @@ const CREATE_CORPORATION = gql`
   mutation createCorporation(
     $name: String!
     $slogan: String!
-    $majors: [String!]
-    $industries: [String!]
+    $majors: [String!]!
+    $industries: [String!]!
     $overview: String!
     $mission: String!
     $goals: String!
@@ -400,8 +384,7 @@ const CREATE_CORPORATION = gql`
         nationalConvention: $nationalConvention
       }
     ) {
-      id
-      createdAt
+      name
     }
   }
 `;

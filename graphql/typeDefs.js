@@ -43,23 +43,23 @@ module.exports = gql`
   type Corporation {
     name: String!,
     slogan: String!,
-    majors: [String]!,
-    industries: [String]!,
+    majors: [String!]!,
+    industries: [String!]!,
     overview: String!,
     mission: String!,
     goals: String!,
     businessModel: String!,
     newsLink: String!,
     applyLink: String!,
-    academia: String!,
-    govContractor: String!,
-    nonProfit: String!,
-    visaSponsor: String!,
-    shpeSponsor: String!,
-    industryPartnership: String!,
-    fallBBQ: String!,
-    springBBQ: String!,
-    nationalConvention: String!
+    academia: Boolean!,
+    govContractor: Boolean!,
+    nonProfit: Boolean!,
+    visaSponsor: Boolean!,
+    shpeSponsor: Boolean!,
+    industryPartnership: Boolean!,
+    fallBBQ: Boolean!,
+    springBBQ: Boolean!,
+    nationalConvention: Boolean!
   }
 
   type Request {
@@ -101,8 +101,8 @@ module.exports = gql`
   input CreateCorporationInput {
     name: String!,
     slogan: String!,
-    majors: [String!],
-    industries: [String!],
+    majors: [String!]!,
+    industries: [String!]!,
     overview: String!,
     mission: String!,
     goals: String!,
@@ -140,6 +140,7 @@ module.exports = gql`
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
+    getCorporations: [Corporation]
   }
 
   type Mutation {
