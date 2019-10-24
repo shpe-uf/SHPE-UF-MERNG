@@ -51,6 +51,11 @@ module.exports = gql`
     createdAt: String!
   }
 
+  type StatData{
+    _id: String!
+    value: Int!
+  }
+
   input RegisterInput {
     firstName: String!
     lastName: String!
@@ -96,6 +101,11 @@ module.exports = gql`
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
+    getMajorStat: [StatData]
+    getCountryStat: [StatData]
+    getYearStat: [StatData]
+    getSexStat: [StatData]
+    getEthnicityStat: [StatData]
   }
 
   type Mutation {
