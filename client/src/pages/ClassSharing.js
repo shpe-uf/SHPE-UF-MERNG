@@ -1,25 +1,70 @@
 import React, { useContext, useState } from "react";
-import { Grid, Container, Button, Modal, Form, GridRow, GridColumn } from "semantic-ui-react";
+import { Grid, Container, Button, Modal, Form, List } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+
+import { useForm } from "../util/hooks";
+import { AuthContext } from "../context/auth";
 
 import Title from "../components/Title";
 
 function ClassSharing() {
 
+    var {
+        user: { username }
+      } = useContext(AuthContext)
+      
     const [addClassModal, setAddClassModal] = useState(false);
+    const [displayClassModal, setDisplayClassModal] = useState(false);
 
     const openModal = name => {
         if (name === "addClass") {
           setAddClassModal(true);
         }
+        if (name === "displayClass") {
+            setDisplayClassModal(true);
+          }
       };
     
       const closeModal = name => {
         if (name === "addClass") {
           setAddClassModal(false);
         }
+        if (name === "displayClass") {
+            setDisplayClassModal(false);
+          }
       };  
+
+      const { values, onChange, onSubmit } = useForm(addClassCallback, {
+        code: "",
+        username: username
+      });
+
+      const [addClass, { loading }] = useMutation(ADD_CLASS_MUTATION, {
+        update(
+          _,
+          {
+            data: { addClass: classData }
+          }
+        ) {
+          setAddClassModal(false);
+        },
+        variables: values
+      });
+
+      var getClasses = "";
+
+  var { data } = useQuery(GET_CLASSES_QUERY, {
+      variables: {username}
+  });
+
+  if (data.getClasses) {
+    getClasses = data.getClasses;
+  }
+
+      function addClassCallback() {
+        addClass();
+      }
 
   return (
     <div className="body">
@@ -31,10 +76,20 @@ function ClassSharing() {
                 <h2>My Schedule</h2>
                 <Button
                 content="Add Class"
-                icon="font"
+                icon="plus"
                 labelPosition="left"
                 onClick={() => openModal("addClass")}
               />
+              <List selection verticalAlign='middle'>
+                {getClasses && getClasses.map((classTemp) => (
+                    <List.Item>
+                    <List.Content onClick={() => openModal("displayClass")}> 
+                      <List.Header>{classTemp}</List.Header>
+                    </List.Content>
+                  </List.Item>
+                )
+                )}
+                </List>
               </Grid.Column>
               <Grid.Column width={8}>
                 <h2>My Matches</h2>  
@@ -48,21 +103,90 @@ function ClassSharing() {
         </Modal.Header>
         <Modal.Content>
           <Modal.Description>
-              <Button
+          <Form
+              onSubmit={onSubmit}
+              noValidate
+              className={loading ? "loading" : ""}
+            >
+                <Form.Input
+                type="text"
+                label="Course Code"
+                name="code"
+                value={values.code}
+                onChange={onChange}
+              />
+                <Button
                 type="reset"
                 color="grey"
                 onClick={() => closeModal("addClass")}
               >
                 Cancel
               </Button>
+              <Button type="submit" floated="right">
+                Add
+              </Button>
+                </Form>
           </Modal.Description>
         </Modal.Content>
       </Modal>
+
+      {/* <Modal open={displayClassModal} size="tiny">
+        <Modal.Header>
+          <h2>{this.state.classCode}</h2>
+        </Modal.Header>
+        <Modal.Content>
+          <Modal.Description>
+          <Form
+              onSubmit={onSubmit}
+              noValidate
+              className={loading ? "loading" : ""}
+            >
+                <Form.Input
+                type="text"
+                label="Course Code"
+                name="code"
+                value={values.code}
+                onChange={onChange}
+              />
+                <Button
+                type="reset"
+                color="grey"
+                onClick={() => closeModal("displayClass")}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" floated="right">
+                Add
+              </Button>
+                </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal> */}
     </div>
 
     
      
   );
 }
+
+const ADD_CLASS_MUTATION = gql`
+  mutation createClass($code: String!, $username: String!) {
+    createClass(createClassInput: { code: $code, username: $username }) {
+      code
+      users {
+        firstName
+        lastName
+        email
+        username
+      }
+    }
+  }
+`;
+
+const GET_CLASSES_QUERY = gql`
+  query getClasses($username: String!) {
+    getClasses(username: $username)
+    }
+`;
 
 export default ClassSharing;

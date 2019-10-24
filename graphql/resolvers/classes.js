@@ -8,10 +8,11 @@ const {
 
 module.exports = {
     Query: {
-        async getClasses() {
+        async getClasses(_, { username }) {
           try {
-            const classes = await Class.find().sort({ code: 1 });
-            return classes;
+            const user = await User.findOne({ username });
+            const foundClasses = user.classes;
+            return foundClasses;
           } catch (err) {
             throw new Error(err);
           }
@@ -30,7 +31,6 @@ module.exports = {
             code = code.toUpperCase();
 
             const user = await User.findOne({ username });
-
 
             if(!user) {
               throw new UserInputError("User not found.", {

@@ -112,7 +112,7 @@ module.exports = gql`
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
-    getClasses: [Class]
+    getClasses(username: String!): [String]
   }
 
   type Mutation {
