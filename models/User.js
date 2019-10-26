@@ -37,7 +37,7 @@ const userSchema = new Schema({
   username: {
     type: String,
     required: true,
-    lowecase: true,
+    lowercase: true,
     unique: true
   },
   email: {

@@ -226,8 +226,10 @@ module.exports = {
 
       const token = generateToken(res, time);
 
+      const user = await User.findOne({ email });
+
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: process.env.EMAIL_SERVICE,
         auth: {
           user: process.env.EMAIL,
           pass: process.env.EMAIL_PASSWORD,
@@ -238,8 +240,8 @@ module.exports = {
         from: process.env.EMAIL,
         to: `${user.email}`,
         subject: 'Confirm Email',
-        text: 'Thank you for registering, please click on the link below to confirm your email and complete your registration, Thank you!\n\n' +
-          `http://localhost:3000/confirm/${id}\n\n`, //is this the right id?
+        text: 'Thank you for registering, please click in the link below to complete your registration\n\n' +
+          `http://localhost:3000/confirm/${user._id}\n\n`
       };
 
       transporter.sendMail(mailOptions, (err, response) => {
@@ -446,7 +448,6 @@ module.exports = {
     },
 
 
-    //CREATE RESOLVER Update user
     async confirmUser(
       _, {
         id
@@ -517,7 +518,7 @@ module.exports = {
       });
 
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: process.env.EMAIL_SERVICE,
         auth: {
           user: process.env.EMAIL,
           pass: process.env.EMAIL_PASSWORD,

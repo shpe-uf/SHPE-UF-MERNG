@@ -70,11 +70,13 @@ function Register(props) {
     addUser();
   }
 
+  const msg = "Please confirm your email to complete registration, thank you!"
+
   return (
     <div className="register">
       <div className="overlay-register">
         <Container>
-          <ModalBasic open={openModal} handleClose={handleClose} message={"test"}/>
+          <ModalBasic open={openModal} handleClose={handleClose} message={msg}/>
           <Segment.Group className="segment-spacing">
             <Segment className="title-bg-accent-1">
               <h1 className="text-white">Register</h1>
