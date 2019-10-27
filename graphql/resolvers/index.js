@@ -1,6 +1,7 @@
 const usersResolvers = require("./users.js");
 const eventsResolvers = require("./events.js");
 const requestsResolvers = require("./requests.js");
+const corporationResolvers = require("./corporations.js");
 
 module.exports = {
   Query: {
@@ -12,6 +13,7 @@ module.exports = {
   Mutation: {
     ...usersResolvers.Mutation,
     ...eventsResolvers.Mutation,
-    ...requestsResolvers.Mutation
+    ...requestsResolvers.Mutation,
+    ...corporationResolvers.Mutation
   }
 }

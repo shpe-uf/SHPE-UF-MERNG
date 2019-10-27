@@ -88,6 +88,17 @@ module.exports = {
         });
       }
 
+      academia = academia === "true" || academia === true ? true : false;
+      govContractor = govContractor === "true" || govContractor === true ? true : false;
+      nonProfit = nonProfit === "true" || nonProfit === true ? true : false;
+      visaSponsor = visaSponsor === "true" || visaSponsor === true ? true : false;
+      shpeSponsor = shpeSponsor === "true" || shpeSponsor === true ? true : false;
+      industryPartnership = industryPartnership === "true" || industryPartnership === true ? true : false;
+      fallBBQ = fallBBQ === "true" || fallBBQ === true ? true : false;
+      springBBQ = springBBQ === "true" || springBBQ === true ? true : false;
+      nationalConvention = nationalConvention === "true" || nationalConvention === true ? true : false;
+
+
       const newCorporation = new Corporation({
         name,
         slogan,
@@ -107,15 +118,14 @@ module.exports = {
         industryPartnership,
         fallBBQ, 
         springBBQ, 
-        nationalConvention,
-        createdAt: new Date().toISOString()
+        nationalConvention
       });
 
-      const res = await newCorporation.save();
+      await newCorporation.save();
 
-      return {
-        createdAt
-      };
+      const corporations = await Corporation.find();
+
+      return corporations;
     }
   }
 };

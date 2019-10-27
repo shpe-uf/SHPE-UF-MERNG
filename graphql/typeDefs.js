@@ -146,7 +146,7 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
-    createCorporation(createCorporationInput: CreateCorporationInput): Corporation!
+    createCorporation(createCorporationInput: CreateCorporationInput): [Corporation]
     createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]

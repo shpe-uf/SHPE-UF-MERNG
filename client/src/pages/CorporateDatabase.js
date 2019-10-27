@@ -24,15 +24,15 @@ function CorporateDatabase() {
     businessModel: "",
     newsLink: "",
     applyLink: "",
-    academia: "No",
-    govContractor: "No",
-    nonProfit: "No",
-    visaSponsor: "No",
-    shpeSponsor: "No",
-    industryPartnership: "No",
-    fallBBQ: "No",
-    springBBQ: "No",
-    nationalConvention: "No"
+    academia: "false",
+    govContractor: "false",
+    nonProfit: "false",
+    visaSponsor: "false",
+    shpeSponsor: "false",
+    industryPartnership: "false",
+    fallBBQ: "false",
+    springBBQ: "false",
+    nationalConvention: "false"
   })
 
   const [addCorporation, { loading }] = useMutation(CREATE_CORPORATION, {
@@ -42,18 +42,16 @@ function CorporateDatabase() {
         data: { createCorporation: corporationData }
       }
     ) {
+      setErrors(false)
     },
     onError(err) {
-      console.log(err.message)
-      console.log(err.graphQLErrors)
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
 
     variables: values
-  },console.log(values));
+  });
 
   function createCorporation() {
-    console.log('create corporation method')
     addCorporation();
   }
 
@@ -107,6 +105,7 @@ function CorporateDatabase() {
                   onChange={(param, data) => {
                     values.majors = data.value;
                   }}
+                  error={errors.majors ? true : false}
                 >
                 </Form.Dropdown>
                 <Form.Dropdown
@@ -116,48 +115,41 @@ function CorporateDatabase() {
                   onChange={(param, data) => {
                     values.industries = data.value;
                   }}
+                  error={errors.industries ? true : false}
                 />
               </Form.Group>
-              <Form.Group widths="equal">
-                <Form.Input
-                  type="text"
-                  label="Overview"
-                  name="overview"
-                  value={values.overview}
-                  error={errors.overview ? true : false}
-                  onChange={onChange}
-                />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <Form.Input
-                  type="text"
-                  label="Mission"
-                  name="mission"
-                  value={values.mission}
-                  error={errors.mission ? true : false}
-                  onChange={onChange}
-                />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <Form.Input
-                  type="text"
-                  label="Goals"
-                  name="goals"
-                  value={values.goals}
-                  error={errors.goals ? true : false}
-                  onChange={onChange}
-                />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <Form.Input
-                  type="text"
-                  label="Business Model/Operations Highlights"
-                  name="businessModel"
-                  value={values.businessModel}
-                  error={errors.businessModel ? true : false}
-                  onChange={onChange}
-                />
-              </Form.Group>
+              <Form.TextArea
+                type="text"
+                label="Overview"
+                name="overview"
+                value={values.overview}
+                error={errors.overview ? true : false}
+                onChange={onChange}
+              />
+              <Form.TextArea
+                type="text"
+                label="Mission"
+                name="mission"
+                value={values.mission}
+                error={errors.mission ? true : false}
+                onChange={onChange}
+              />
+              <Form.TextArea
+                type="text"
+                label="Goals"
+                name="goals"
+                value={values.goals}
+                error={errors.goals ? true : false}
+                onChange={onChange}
+              />
+              <Form.TextArea
+                type="text"
+                label="Business Model/Operations Highlights"
+                name="businessModel"
+                value={values.businessModel}
+                error={errors.businessModel ? true : false}
+                onChange={onChange}
+              />
               <Form.Group widths="equal">
                 <Form.Input
                   type="text"
@@ -176,160 +168,123 @@ function CorporateDatabase() {
                   onChange={onChange}
                 />
               </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="Academia"
-                  control="select"
-                  name="academia"
-                  value={values.academia}
-                  error={errors.academia ? true : false}
-                  onChange={onChange}
-                >
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="Government Contractor"
-                  control="select"
-                  name="govContractor"
-                  value={values.govContractor}
-                  error={errors.govContractor ? true : false}
-                  onChange={onChange}
-                >
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="Non Profit"
-                  control="select"
-                  name="nonProfit"
-                  value={values.nonProfit}
-                  error={errors.nonProfit ? true : false}
-                  onChange={onChange}
-                >
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="Visa Sponsorship"
-                  control="select"
-                  name="visaSponsor"
-                  value={values.visaSponsor}
-                  error={errors.visaSponsor ? true : false}
-                  onChange={onChange}
-                >
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="SHPE Sponsor"
-                  control="select"
-                  name="shpeSponsor"
-                  value={values.shpeSponsor}
-                  error={errors.shpeSponsor ? true : false}
-                  onChange={onChange}
-                >
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="Industry Partnership"
-                  control="select"
-                  name="industryPartnership"
-                  value={values.industryPartnership}
-                  error={errors.industryPartnership ? true : false}
-                  onChange={onChange}
-                >
-                  {console.log("ERRORS", errors.industryPartnership)}
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="Attending Fall SHPE BBQ"
-                  control="select"
-                  name="fallBBQ"
-                  value={values.fallBBQ}
-                  error={errors.fallBBQ ? true : false}
-                  onChange={onChange}
-                >
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="Attending Spring BBQ"
-                  control="select"
-                  name="springBBQ"
-                  value={values.springBBQ}
-                  error={errors.springBBQ ? true : false}
-                  onChange={onChange}
-                >
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
-              <Form.Group>
-                <Form.Dropdown
-                  label="Attending SHPE National Convention"
-                  control="select"
-                  name="nationalConvention"
-                  value={values.nationalConvention}
-                  error={errors.nationalConvention ? true : false}
-                  onChange={onChange}
-                >
-                  <option>
-                    {"Yes"}
-                  </option>
-                  <option>
-                    {"No"}
-                  </option>
-                </Form.Dropdown>
-              </Form.Group>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="academia"
+                    value={values.academia === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    Academia?
+                  </label>
+                </div>
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="govContractor"
+                    value={values.govContractor === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    Government Contractor?
+                  </label>
+                </div>
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="nonProfit"
+                    value={values.nonProfit === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    Non profit?
+                  </label>
+                </div>
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="visaSponsor"
+                    value={values.visaSponsor === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    Visa Sponsor?
+                  </label>
+                </div>
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="shpeSponsor"
+                    value={values.shpeSponsor === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    SHPE UF Sponsor?
+                  </label>
+                </div>
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="industryPartnership"
+                    value={values.industryPartnership === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    Industry Partner?
+                  </label>
+                </div>
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="fallBBQ"
+                    value={values.fallBBQ === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    Attending Fall BBQ?
+                  </label>
+                </div>
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="springBBQ"
+                    value={values.springBBQ === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    Attending Spring BBQ?
+                  </label>
+                </div>
+              </Form.Field>
+              <Form.Field>
+                <div className="ui toggle checkbox">
+                  <input
+                    type="checkbox"
+                    name="nationalConvention"
+                    value={values.nationalConvention === "true" ? false : true}
+                    onChange={onChange}
+                  />
+                  <label>
+                    Attending SHPE National Convention?
+                  </label>
+                </div>
+              </Form.Field>
               <Button type="submit">Add Corporation</Button>
             </Form>
           </Segment>
