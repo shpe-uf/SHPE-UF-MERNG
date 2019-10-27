@@ -6,7 +6,9 @@ import {
   Dimmer,
   Loader,
   Segment,
-  Header
+  Header,
+  Container,
+  Grid
 } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
@@ -80,7 +82,7 @@ function RequestsTable() {
   };
 
   return (
-    <>
+    <Container>
       <Dimmer active={getRequests ? false : true} inverted>
         <Loader />
       </Dimmer>
@@ -164,7 +166,7 @@ function RequestsTable() {
           </Table>
         </div>
       )}
-    </>
+    </Container>
   );
 }
 
