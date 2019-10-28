@@ -3,6 +3,7 @@ import { Grid, Container, Menu, Segment } from "semantic-ui-react";
 
 import Title from "../components/Title";
 import Events from "../components/Events";
+import Tasks from "../components/Tasks";
 import MembersTable from "../components/MembersTable";
 import RequestsTable from "../components/RequestsTable";
 
@@ -24,6 +25,11 @@ function Admin() {
             onClick={handleItemClick}
           />
           <Menu.Item
+            name="Tasks"
+            active={activeItem === "Tasks"}
+            onClick={handleItemClick}
+          />
+          <Menu.Item
             name="Members"
             active={activeItem === "Members"}
             onClick={handleItemClick}
@@ -38,6 +44,11 @@ function Admin() {
         {activeItem === "Events" && (
           <Segment attached="bottom">
             <Events />
+          </Segment>
+        )}
+        {activeItem === "Tasks" && (
+          <Segment attached="bottom">
+            <Tasks />
           </Segment>
         )}
         {activeItem === "Members" && (
