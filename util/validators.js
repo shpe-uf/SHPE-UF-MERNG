@@ -216,7 +216,7 @@ module.exports.validateCreateTaskInput = (
     errors.endDate = "End date is required.";
   }
 
-  if (description.trim() === "" && description.length > 280) {
+  if (description.trim() === "" || description.length > 280) {
     errors.description = "Description must be between 1 and 280 characters.";
   }
 

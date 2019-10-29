@@ -8,9 +8,6 @@ import TasksTable from "../components/TasksTable";
 
 import { FETCH_TASKS_QUERY } from "../util/graphql";
 
-import categoryOptions from "../assets/options/category.json";
-import expirationOptions from "../assets/options/expiration.json";
-
 function Tasks() {
   const [errors, setErrors] = useState({});
   var tasks = useQuery(FETCH_TASKS_QUERY).data.getTasks;
@@ -24,11 +21,10 @@ function Tasks() {
   const closeModal = name => {
     if (name === "createTask") {
       values.name = "";
-      values.code = "";
-      values.category = "";
+      values.description = "";
+      values.startDate = "";
+      values.endDate = "";
       values.points = "";
-      values.expiration = "";
-      values.request = "false";
       setErrors(false);
       setCreateTaskModal(false);
     }
@@ -38,14 +34,13 @@ function Tasks() {
 
   const { values, onChange, onSubmit } = useForm(createTaskCallback, {
     name: "",
-    code: "",
-    category: "",
-    expiration: "",
-    points: "",
-    request: "false"
+    description: "",
+    startDate: "",
+    endDate: "",
+    points: ""
   });
 
-  const [createTask, { loading }] = useMutation(CREATE_EVENT_MUTATION, {
+  const [createTask, { loading }] = useMutation(CREATE_TASK_MUTATION, {
     update(
       _,
       {
@@ -53,11 +48,10 @@ function Tasks() {
       }
     ) {
       values.name = "";
-      values.code = "";
-      values.category = "";
+      values.description = "";
+      values.startDate = "";
+      values.endDate = "";
       values.points = "";
-      values.expiration = "";
-      values.request = "false";
       tasks.splice(0, tasks.length);
       for (var i = 0; i < tasksData.length; i++) {
         tasks.push(tasksData[i]);
@@ -131,6 +125,22 @@ function Tasks() {
                 error={errors.name ? true : false}
                 onChange={onChange}
               />
+              <Form.TextArea
+                type="text"
+                label="Description"
+                name="description"
+                value={values.description}
+                error={errors.description ? true : false}
+                onChange={onChange}
+              />
+              <Form.Input
+                type="text"
+                label="Points"
+                name="points"
+                value={values.points}
+                error={errors.points ? true : false}
+                onChange={onChange}
+              />
               <Form.Input
                 type="text"
                 label="Start Date"
@@ -145,14 +155,6 @@ function Tasks() {
                 name="endDate"
                 value={values.endDate}
                 error={errors.endDate ? true : false}
-                onChange={onChange}
-              />
-              <Form.TextArea
-                type="text"
-                label="Description"
-                name="description"
-                value={values.description}
-                error={errors.description ? true : false}
                 onChange={onChange}
               />
               <Button
@@ -173,30 +175,27 @@ function Tasks() {
   );
 }
 
-const CREATE_EVENT_MUTATION = gql`
+const CREATE_TASK_MUTATION = gql`
   mutation createTask(
     $name: String!
-    $code: String!
-    $category: String!
+    $startDate: String!
+    $endDate: String!
+    $description: String!
     $points: String!
-    $expiration: String!
-    $request: String!
   ) {
     createTask(
       createTaskInput: {
         name: $name
-        code: $code
-        category: $category
+        startDate: $startDate
+        endDate: $endDate
+        description: $description
         points: $points
-        expiration: $expiration
-        request: $request
       }
     ) {
       name
-      code
-      category
-      expiration
-      request
+      description
+      startDate
+      endDate
       semester
       points
       createdAt

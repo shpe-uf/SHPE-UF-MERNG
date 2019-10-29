@@ -139,7 +139,7 @@ module.exports = gql`
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
     createEvent(createEventInput: CreateEventInput): [Event]
-    createTask(createTaskInput: CreateTaskInput): Task!
+    createTask(createTaskInput: CreateTaskInput): [Task]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
