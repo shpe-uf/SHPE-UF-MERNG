@@ -8,6 +8,7 @@
     "apollo-client": "^2.6.4",
     "apollo-link-context": "^1.0.18",
     "apollo-link-http": "^1.5.15",
+    "google-palette": "^1.1.0",
     "graphql": "^14.5.4",
     "graphql-tag": "^2.10.1",
     "jwt-decode": "^2.2.0",
@@ -16,7 +17,8 @@
     "react-csv": "^1.1.1",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
-    "react-toastify": "^5.4.0"
+    "react-toastify": "^5.4.0",
+    "victory": "^33.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

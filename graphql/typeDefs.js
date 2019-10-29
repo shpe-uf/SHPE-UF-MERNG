@@ -51,6 +51,11 @@ module.exports = gql`
     createdAt: String!
   }
 
+  type StatData{
+    _id: String!
+    value: Int!
+  }
+
   input RegisterInput {
     firstName: String!
     lastName: String!
@@ -96,15 +101,20 @@ module.exports = gql`
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
+    getMajorStat: [StatData]
+    getCountryStat: [StatData]
+    getYearStat: [StatData]
+    getSexStat: [StatData]
+    getEthnicityStat: [StatData]
   }
 
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
-    createEvent(createEventInput: CreateEventInput): Event!
+    createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
-    manualInput(manualInputInput: ManualInputInput): User!
+    manualInput(manualInputInput: ManualInputInput): [Event]
   }
 `;

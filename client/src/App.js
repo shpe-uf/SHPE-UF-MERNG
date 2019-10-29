@@ -21,6 +21,10 @@ import Sponsors from "./pages/Sponsors";
 import Admin from "./pages/Admin";
 import Points from "./pages/Points";
 import Profile from "./pages/Profile";
+import Events from "./pages/Events";
+import Members from "./pages/Members";
+import Requests from "./pages/RequestsTable";
+import Statistics from "./pages/Statistics";
 
 function App() {
   return (
@@ -36,9 +40,13 @@ function App() {
           <Route exact path="/devteam" component={DevTeam} />
           <Route exact path="/sponsors" component={Sponsors} />
           <UserRoute exact path="/admin" component={Admin} />
+          <UserRoute exact path="/admin/events" component={Events} />
+          <UserRoute exact path="/admin/members" component={Members} />
+          <UserRoute exact path="/admin/requests" component={Requests} />
+          <UserRoute exact path="/admin/statistics" component={Statistics} />
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
-        </main>
+          </main>
         <Footer />
       </Router>
     </AuthProvider>

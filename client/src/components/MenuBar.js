@@ -5,7 +5,6 @@ import {
   Dropdown,
   Responsive,
   Button,
-  Sticky,
   Icon
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -18,7 +17,7 @@ function MenuBar() {
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <Sticky>
+    <>
       <Responsive minWidth={992}>
         <Menu inverted>
           <Container>
@@ -44,13 +43,13 @@ function MenuBar() {
                   <Dropdown pointing item className="email" text={user.email}>
                     <Dropdown.Menu>
                       <Dropdown.Item as={Link} to="/admin">
-                        Admin Tools
+                        Admin Panel
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/profile">
                         My Profile
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
-                        Points System
+                        Points Program
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
@@ -93,13 +92,13 @@ function MenuBar() {
                   >
                     <Dropdown.Menu>
                       <Dropdown.Item as={Link} to="/admin">
-                        Admin Tools
+                        Admin Panel
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/profile">
                         My Profile
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
-                        Points System
+                        Points Program
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
@@ -119,7 +118,7 @@ function MenuBar() {
           </Container>
         </Menu>
       </Responsive>
-    </Sticky>
+    </>
   );
 }
 
