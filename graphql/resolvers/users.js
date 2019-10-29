@@ -241,7 +241,7 @@ module.exports = {
         to: `${user.email}`,
         subject: 'Confirm Email',
         text: 'Thank you for registering, please click in the link below to complete your registration\n\n' +
-          `http://localhost:3000/confirm/${user._id}\n\n`
+          `${process.env.CLIENT_ORIGIN}/confirm/${user._id}\n\n`
       };
 
       transporter.sendMail(mailOptions, (err, response) => {
@@ -531,7 +531,7 @@ module.exports = {
         subject: 'Reset Password',
         text: 'You have requested the reset of the password for your account for shpe.com\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n' +
-          `http://localhost:3000/reset/${token}\n\n` +
+          `${process.env.CLIENT_ORIGIN}/reset/${token}\n\n` +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n',
       };
 

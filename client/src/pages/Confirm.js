@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Segment, Dimmer, Loader } from "semantic-ui-react";
+import { Segment, Dimmer, Loader, Container, Grid } from "semantic-ui-react";
 
 function Confirm(props){
   const [confirming, setConfirming] = useState(true);
@@ -25,19 +25,36 @@ function Confirm(props){
   });
 
   return(
-    <div className="loading">
+    <div className="login">
+      <div className="overlay-confirm">
+        <Container>
+          <Grid>
+            <Grid.Row centered>
+              <Grid.Column width={8}>
+                <Segment.Group>
+                  <Segment className="title-bg-accent-1">
+                    <div className="loading">
+                      <Dimmer active={confirming} inverted>
+                        <Loader size='massive' disabled={!confirming}>Loading</Loader>
+                      </Dimmer>
+                      {!confirming && (
+                        <div>
+                          <h1 className="text-white confirmMsg">
+                            Your email is confirmed
+                          </h1>
+                        </div>
+                      )}
+                    </div>
+                  </Segment>
+                </Segment.Group>
 
-        <Dimmer active={confirming} inverted>
-          <Loader size='massive' disabled={!confirming}>Loading</Loader>
-        </Dimmer>
-        {!confirming && (
-          <div>
-            <h3>
-              Your email is confirmed
-            </h3>
-          </div>
-        )}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+      </div>
     </div>
+
   );
 
 }

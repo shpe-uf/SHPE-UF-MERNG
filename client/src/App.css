@@ -187,6 +187,12 @@ h5 {
   padding: 32px 0px;
 }
 
+.overlay-confirm {
+  background-color: var(--primary-overlay);
+  width: 100%;
+  padding: 150px 0px;
+}
+
 .masthead {
   background-color: var(--grey);
   width: 100%;
@@ -539,13 +545,15 @@ ui.tabular.menu {
 
   .overlay-register,
   .overlay-login,
-  .overlay-reset{
+  .overlay-reset,
+  .overlay-confirm {
     min-height: calc(100vh - 62.41px - 118px) !important;
   }
 
   .overlay-register,
   .overlay-login,
-  .overlay-reset {
+  .overlay-reset,
+  .overlay-confirm {
     min-height: calc(100vh - 62.41px - 118px) !important;
   }
 }
@@ -557,13 +565,15 @@ ui.tabular.menu {
 
   .overlay-register,
   .overlay-login,
-  .overlay-reset {
+  .overlay-reset,
+  .overlay-confirm {
     min-height: calc(100vh - 64px - 64px) !important;
   }
 
   .overlay-register,
   .overlay-login,
-  .overlay-reset {
+  .overlay-reset,
+  .overlay-confirm {
     min-height: calc(100vh - 64px - 64px) !important;
   }
 }
@@ -575,5 +585,10 @@ ui.tabular.menu {
 }
 
 .loading {
-  padding-top: 20%
+  padding: 15%
+
+}
+
+.confirmMsg {
+  text-align: center;
 }
