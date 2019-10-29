@@ -32,7 +32,10 @@ function Points() {
     }
   });
 
-  if (data.getUser) {
+  var tasks = useQuery(FETCH_TASKS_QUERY).data.getTasks;
+
+
+  if (data) {
     getUser = data.getUser;
   }
 
@@ -195,21 +198,19 @@ function Points() {
                   </Grid.Column>
                 </Grid.Row>
               )}
-              <Card.Group>
+              <Card.Group itemsPerRow={3}>
               {tasks && tasks.map((task, index) => (
-                <Card>
+                <Card color="blue">
                   <Card.Content>
                     <Card.Header floated='right'>{task.points}</Card.Header>
                     <Card.Header>{task.name}</Card.Header>
-                    <Card.Meta>{task.startDate}   {task.endDate}</Card.Meta>
+                    <Card.Meta>{task.startDate}  -  {task.endDate}</Card.Meta>
                     <Card.Description>{task.description}</Card.Description>
                   </Card.Content>
                 </Card>
               ))}
               </Card.Group>
             </Grid>
-
-
           </Segment>
         )}
       </Container>
