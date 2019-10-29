@@ -573,3 +573,7 @@ ui.tabular.menu {
   margin-top: 12px;
   margin-left: 10px;
 }
+
+.loading {
+  padding-top: 20%
+}
