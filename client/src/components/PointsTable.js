@@ -9,12 +9,14 @@ function PointsTable({ user }) {
       <Grid.Column width={8}>
         <h1>Events</h1>
         {user === undefined || user.events.length === 0 ? (
-          <Segment placeholder>
-            <Header icon>
-              <i className="far fa-frown"></i>
-              <p>It seems like you haven't attended any events.</p>
-            </Header>
-          </Segment>
+          <div style={{ paddingBottom: 16 }}>
+            <Segment placeholder>
+              <Header icon>
+                <i className="far fa-frown"></i>
+                <p>No events on record.</p>
+              </Header>
+            </Segment>
+          </div>
         ) : (
           <div className="table-responsive">
             <Table striped selectable unstackable singleLine>
@@ -47,7 +49,9 @@ function PointsTable({ user }) {
       </Grid.Column>
       <Grid.Column width={8}>
         <h1>Tasks</h1>
-        {user === undefined ||user.tasks === undefined || user.tasks.length === 0 ? (
+        {user === undefined ||
+        user.tasks === undefined ||
+        user.tasks.length === 0 ? (
           <Segment placeholder>
             <Header icon>
               <i className="far fa-frown"></i>

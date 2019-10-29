@@ -1,5 +1,14 @@
 import React, { useContext, useState } from "react";
-import { Grid, Container, Card, Menu, Segment, Button, Modal, Form } from "semantic-ui-react";
+import {
+  Grid,
+  Container,
+  Card,
+  Menu,
+  Segment,
+  Button,
+  Modal,
+  Form
+} from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -20,24 +29,17 @@ function Points() {
   };
 
   const [errors, setErrors] = useState({});
-  var getUser = "";
-
   var {
     user: { id, username }
   } = useContext(AuthContext);
 
-  var { data } = useQuery(FETCH_USER_QUERY, {
+  var user = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
     }
-  });
+  }).data.getUser;
 
   var tasks = useQuery(FETCH_TASKS_QUERY).data.getTasks;
-
-
-  if (data) {
-    getUser = data.getUser;
-  }
 
   const [redeemPointsModal, setRedeemPointsModal] = useState(false);
 
@@ -85,18 +87,17 @@ function Points() {
   }
 
   function updateGetUser(userData) {
-    getUser.fallPoints = userData.fallPoints;
-    getUser.springPoints = userData.springPoints;
-    getUser.summerPoints = userData.summerPoints;
-    getUser.events = userData.events;
-    getUser.tasks = userData.tasks;
-    getUser.message = userData.message;
+    user.fallPoints = userData.fallPoints;
+    user.springPoints = userData.springPoints;
+    user.summerPoints = userData.summerPoints;
+    user.events = userData.events;
+    user.tasks = userData.tasks;
+    user.message = userData.message;
   }
 
   return (
     <div className="body">
       <Title title="Points Program" />
-
       <Container>
         <Menu attached="top" tabular>
           <Menu.Item
@@ -114,11 +115,11 @@ function Points() {
         {activeItem === "Your Points" && (
           <Segment attached="bottom">
             <Grid stackable>
-              {getUser && getUser.message && getUser.message !== undefined && (
+              {user && user.message && user.message !== undefined && (
                 <Grid.Row>
                   <Grid.Column>
                     <div className="ui warning message">
-                      <p>{getUser.message}</p>
+                      <p>{user.message}</p>
                     </div>
                   </Grid.Column>
                 </Grid.Row>
@@ -134,10 +135,10 @@ function Points() {
                   />
                 </Grid.Column>
               </Grid.Row>
-              {getUser && (
+              {user && (
                 <>
-                  <PointsBar user={getUser} />
-                  <PointsTable user={getUser} />
+                  <PointsBar user={user} />
+                  <PointsTable user={user} />
                 </>
               )}
             </Grid>
@@ -189,26 +190,29 @@ function Points() {
         {activeItem === "Tasks" && (
           <Segment attached="bottom">
             <Grid stackable>
-              {getUser && getUser.message && getUser.message !== undefined && (
+              {user && user.message && user.message !== undefined && (
                 <Grid.Row>
                   <Grid.Column>
                     <div className="ui warning message">
-                      <p>{getUser.message}</p>
+                      <p>{user.message}</p>
                     </div>
                   </Grid.Column>
                 </Grid.Row>
               )}
               <Card.Group itemsPerRow={3}>
-              {tasks && tasks.map((task, index) => (
-                <Card color="blue">
-                  <Card.Content>
-                    <Card.Header floated='right'>{task.points}</Card.Header>
-                    <Card.Header>{task.name}</Card.Header>
-                    <Card.Meta>{task.startDate}  -  {task.endDate}</Card.Meta>
-                    <Card.Description>{task.description}</Card.Description>
-                  </Card.Content>
-                </Card>
-              ))}
+                {tasks &&
+                  tasks.map((task, index) => (
+                    <Card color="blue">
+                      <Card.Content>
+                        <Card.Header floated="right">{task.points}</Card.Header>
+                        <Card.Header>{task.name}</Card.Header>
+                        <Card.Meta>
+                          {task.startDate} - {task.endDate}
+                        </Card.Meta>
+                        <Card.Description>{task.description}</Card.Description>
+                      </Card.Content>
+                    </Card>
+                  ))}
               </Card.Group>
             </Grid>
           </Segment>
@@ -231,13 +235,6 @@ const FETCH_USER_QUERY = gql`
         name
         category
         createdAt
-        points
-      }
-      tasks {
-        name
-        startDate
-        endDate
-        description
         points
       }
     }

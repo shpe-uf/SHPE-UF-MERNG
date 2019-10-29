@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Grid, Container, Menu, Segment } from "semantic-ui-react";
+import { Container, Menu, Segment } from "semantic-ui-react";
 
 import Title from "../components/Title";
 import Events from "../components/Events";
 import Tasks from "../components/Tasks";
 import MembersTable from "../components/MembersTable";
+import Members from "../components/Members";
 import RequestsTable from "../components/RequestsTable";
+import Statistics from "../components/Statistics";
 
 function Admin() {
   const [activeItem, setActiveItem] = useState("Events");
@@ -35,6 +37,11 @@ function Admin() {
             onClick={handleItemClick}
           />
           <Menu.Item
+            name="Statistics"
+            active={activeItem ==="Statistics"}
+            onClick={handleItemClick}
+          />
+          <Menu.Item
             name="Requests"
             active={activeItem === "Requests"}
             onClick={handleItemClick}
@@ -53,24 +60,17 @@ function Admin() {
         )}
         {activeItem === "Members" && (
           <Segment attached="bottom">
-            <Grid>
-              <Grid.Row>
-                <Grid.Column>
-                  <MembersTable />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
+            <Members />
+          </Segment>
+        )}
+        {activeItem === "Statistics" &&(
+          <Segment attached="bottom">
+           <Statistics/>
           </Segment>
         )}
         {activeItem === "Requests" && (
           <Segment attached="bottom">
-            <Grid>
-              <Grid.Row>
-                <Grid.Column>
-                  <RequestsTable />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
+            <RequestsTable />
           </Segment>
         )}
       </Container>
