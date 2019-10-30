@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 
 import UserProfile from "./UserProfile";
-import PointsTable from "./PointsTable";
+import UserEventsTable from "./UserEventsTable";
 
 function MembersTable({ users }) {
   const [userInfoModal, setUserInfoModal] = useState(false);
@@ -115,7 +115,7 @@ function MembersTable({ users }) {
                 <UserProfile user={userInfo} />
               </Grid>
               <Container>
-                <PointsTable user={userInfo} />
+                <UserEventsTable user={userInfo} />
               </Container>
             </>
           )}

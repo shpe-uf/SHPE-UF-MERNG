@@ -17,7 +17,7 @@ import { AuthContext } from "../context/auth";
 
 import Title from "../components/Title";
 import PointsBar from "../components/PointsBar";
-import PointsTable from "../components/PointsTable";
+import UserEventsTable from "../components/UserEventsTable";
 
 import { FETCH_TASKS_QUERY } from "../util/graphql";
 
@@ -138,7 +138,7 @@ function Points() {
               {user && (
                 <>
                   <PointsBar user={user} />
-                  <PointsTable user={user} />
+                  <UserEventsTable user={user} />
                 </>
               )}
             </Grid>

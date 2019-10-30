@@ -3,7 +3,7 @@ import { Grid, Table, Segment, Header } from "semantic-ui-react";
 
 import moment from "moment";
 
-function PointsTable({ user }) {
+function UserEventsTable({ user }) {
   return (
     <Grid.Row>
       <Grid.Column width={8}>
@@ -19,7 +19,7 @@ function PointsTable({ user }) {
           </div>
         ) : (
           <div className="table-responsive">
-            <Table striped selectable unstackable singleLine>
+            <Table striped selectable unstackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Event</Table.HeaderCell>
@@ -43,6 +43,7 @@ function PointsTable({ user }) {
                     </Table.Row>
                   ))}
               </Table.Body>
+
             </Table>
           </div>
         )}
@@ -88,4 +89,4 @@ function PointsTable({ user }) {
   );
 }
 
-export default PointsTable;
+export default UserEventsTable;
