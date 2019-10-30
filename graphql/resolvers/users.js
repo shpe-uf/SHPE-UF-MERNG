@@ -46,9 +46,7 @@ module.exports = {
       }) {
         try {
           const user = await User.findById(userId);
-
-          console.log(user);
-
+          
           if (user) {
             return user;
           } else {

@@ -204,12 +204,24 @@ function Points() {
                   tasks.map((task, index) => (
                     <Card color="blue">
                       <Card.Content>
-                        <Card.Header floated="right">{task.points}</Card.Header>
-                        <Card.Header>{task.name}</Card.Header>
-                        <Card.Meta>
-                          {task.startDate} - {task.endDate}
-                        </Card.Meta>
-                        <Card.Description>{task.description}</Card.Description>
+                        <Grid.Row itemsPerRow={2}>
+                          <Grid.Column width={13}>
+                            <Card.Header>{task.name}</Card.Header>
+                          </Grid.Column>
+                          <Grid.Column width={3}>
+                            <Card.Header floated="right">
+                              {task.points}
+                            </Card.Header>
+                          </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Card.Meta>
+                            {task.startDate} - {task.endDate}
+                          </Card.Meta>
+                          <Card.Description>
+                            {task.description}
+                          </Card.Description>
+                        </Grid.Row>
                       </Card.Content>
                     </Card>
                   ))}

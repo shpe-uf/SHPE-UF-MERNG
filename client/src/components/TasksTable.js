@@ -55,8 +55,8 @@ function TasksTable({ tasks }) {
                     <Table.Cell>{task.startDate}</Table.Cell>
                     <Table.Cell>{task.endDate}</Table.Cell>
                     <Table.Cell>{task.semester}</Table.Cell>
-                    <Table.Cell>{task.attendance}</Table.Cell>
-                    <Table.Cell>{task.points}</Table.Cell>
+                    <Table.Cell textAlign="center">{task.attendance}</Table.Cell>
+                    <Table.Cell textAlign="center">{task.points}</Table.Cell>
                   </Table.Row>
                 ))}
             </Table.Body>
