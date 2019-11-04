@@ -20,7 +20,7 @@ function Title({ title, adminPath }) {
                       style={{ marginLeft: 8, marginRight: 8 }}
                       name="angle right"
                     />
-                    <Dropdown inline scrolling text={title}>
+                    <Dropdown inline text={title}>
                       <Dropdown.Menu>
                         {title !== "Members" && (
                           <Dropdown.Item
