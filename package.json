@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "server": "node index",
+    "client": "node scripts/start-client",
+    "start": "concurrently \"nodemon index\" \"npm run client\"",
+    "build": "node scripts/build",
+    "seed": "node scripts/seedDB",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "installDeps": "yarn && cd client && yarn",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
