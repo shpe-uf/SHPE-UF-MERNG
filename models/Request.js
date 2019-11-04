@@ -3,11 +3,11 @@ const User = require("./User").schema;
 const Event = require("./Event").schema;
 
 const requestSchema = new Schema({
-  eventName: {
+  name: {
     type: String,
     required: true
   },
-  category: {
+  type: {
     type: String,
     required: true
   },

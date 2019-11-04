@@ -18,8 +18,8 @@ import { AuthContext } from "../context/auth";
 import Title from "../components/Title";
 import PointsBar from "../components/PointsBar";
 import UserEventsTable from "../components/UserEventsTable";
-
-import { FETCH_TASKS_QUERY } from "../util/graphql";
+import UserTasksTable from "../components/UserTasksTable";
+import TasksCards from "../components/TasksCards";
 
 function Points() {
   const [activeItem, setActiveItem] = useState("Your Points");
@@ -38,8 +38,6 @@ function Points() {
       userId: id
     }
   }).data.getUser;
-
-  var tasks = useQuery(FETCH_TASKS_QUERY).data.getTasks;
 
   const [redeemPointsModal, setRedeemPointsModal] = useState(false);
 
@@ -138,7 +136,14 @@ function Points() {
               {user && (
                 <>
                   <PointsBar user={user} />
-                  <UserEventsTable user={user} />
+                  <Grid.Row itemsPerRow={2}>
+                    <Grid.Column width={8}>
+                      <UserEventsTable user={user} />
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                      <UserTasksTable user={user} />
+                    </Grid.Column>
+                  </Grid.Row>
                 </>
               )}
             </Grid>
@@ -199,33 +204,7 @@ function Points() {
                   </Grid.Column>
                 </Grid.Row>
               )}
-              <Card.Group itemsPerRow={3}>
-                {tasks &&
-                  tasks.map((task, index) => (
-                    <Card color="blue">
-                      <Card.Content>
-                        <Grid.Row itemsPerRow={2}>
-                          <Grid.Column width={13}>
-                            <Card.Header>{task.name}</Card.Header>
-                          </Grid.Column>
-                          <Grid.Column width={3}>
-                            <Card.Header floated="right">
-                              {task.points}
-                            </Card.Header>
-                          </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Card.Meta>
-                            {task.startDate} - {task.endDate}
-                          </Card.Meta>
-                          <Card.Description>
-                            {task.description}
-                          </Card.Description>
-                        </Grid.Row>
-                      </Card.Content>
-                    </Card>
-                  ))}
-              </Card.Group>
+              <TasksCards user={user} />
             </Grid>
           </Segment>
         )}

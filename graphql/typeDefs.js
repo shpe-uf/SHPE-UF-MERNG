@@ -42,8 +42,8 @@ module.exports = gql`
 
   type Request {
     id: ID!
-    eventName: String!
-    category: String!
+    name: String!
+    type: String!
     points: String!
     firstName: String!
     lastName: String!
