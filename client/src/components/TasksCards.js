@@ -20,25 +20,31 @@ function TasksCards({ user }) {
           </Header>
         </Segment>
       ) : (
-        <Card.Group itemsPerRow={3}>
+        <Card.Group>
           {tasks &&
             tasks.map((task, index) => (
               <Card color="blue">
                 <Card.Content>
-                  <Grid.Row itemsPerRow={2}>
-                    <Grid.Column>
-                      <Card.Header>{task.name}</Card.Header>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Card.Header textAlign="right">{task.points}</Card.Header>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Card.Meta>
-                      {task.startDate} - {task.endDate}
-                    </Card.Meta>
-                    <Card.Description>{task.description}</Card.Description>
-                  </Grid.Row>
+                  <Grid>
+                    <Grid.Row itemsPerRow={2}>
+                      <Grid.Column width={14}>
+                        <Card.Header>{task.name}</Card.Header>
+                      </Grid.Column>
+                      <Grid.Column width={2}>
+                        <Card.Header textAlign="right">
+                          {task.points}
+                        </Card.Header>
+                      </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Grid.Column>
+                        <Card.Meta>
+                          {task.startDate} - {task.endDate}
+                        </Card.Meta>
+                        <Card.Description>{task.description}</Card.Description>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
                 </Card.Content>
               </Card>
             ))}
