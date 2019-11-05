@@ -23,7 +23,7 @@ import Points from "./pages/Points";
 import Profile from "./pages/Profile";
 import Events from "./pages/Events";
 import Members from "./pages/Members";
-import Requests from "./pages/RequestsTable";
+import Requests from "./pages/Requests";
 import Statistics from "./pages/Statistics";
 
 function App() {

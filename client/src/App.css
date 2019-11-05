@@ -43,6 +43,10 @@
   font-size: 1rem !important;
 }
 
+.ui.accordion .title:not(.ui){
+  font-family: "body-font" !important;
+}
+
 main {
   background-color: var(--white);
 }

@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
-  Menu,
-  Segment,
   Grid,
-  Label,
   Responsive
 } from "semantic-ui-react";
 

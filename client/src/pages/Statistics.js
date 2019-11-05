@@ -3,18 +3,16 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import {
   Menu,
-  Segment,
   Container,
-  Message,
   Responsive,
   Accordion,
-  Icon
+  Icon,
+  Segment
 } from "semantic-ui-react";
 import StatisticDisplay from "../components/StatisticDisplay";
 import Title from "../components/Title";
 
 import {
-  FETCH_USERS_QUERY,
   MAJOR_STAT,
   COUNTRY_STAT,
   YEAR_STAT,
@@ -70,14 +68,30 @@ function Statistics() {
               onClick={handleItemClick}
             />
           </Menu>
-          {activeItem === "Major" && <StatisticDisplay statData={majorData} />}
-          {activeItem === "Year" && <StatisticDisplay statData={yearData} />}
-          {activeItem === "Country of Origin" && (
-            <StatisticDisplay statData={countryData} />
+          {activeItem === "Major" && (
+            <Segment attached="bottom">
+              <StatisticDisplay statData={majorData} />
+            </Segment>
           )}
-          {activeItem === "Sex" && <StatisticDisplay statData={sexData} />}
+          {activeItem === "Year" && (
+            <Segment attached="bottom">
+              <StatisticDisplay statData={yearData} />
+            </Segment>
+          )}
+          {activeItem === "Country of Origin" && (
+            <Segment attached="bottom">
+              <StatisticDisplay statData={countryData} />
+            </Segment>
+          )}
+          {activeItem === "Sex" && (
+            <Segment attached="bottom">
+              <StatisticDisplay statData={sexData} />
+            </Segment>
+          )}
           {activeItem === "Ethnicity" && (
-            <StatisticDisplay statData={ethnicityData} />
+            <Segment attached="bottom">
+              <StatisticDisplay statData={ethnicityData} />
+            </Segment>
           )}
         </Responsive>
 

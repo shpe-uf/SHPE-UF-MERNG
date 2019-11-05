@@ -12,7 +12,7 @@ function Title({ title, adminPath }) {
               <Grid.Column className="no-padding">
                 <h1 className="text-white">{title}</h1>
                 {adminPath && (
-                  <p className="text-white">
+                  <div className="text-white">
                     <Link className="text-white" to="/admin">
                       Admin Panel
                     </Link>
@@ -69,7 +69,7 @@ function Title({ title, adminPath }) {
                         )}
                       </Dropdown.Menu>
                     </Dropdown>
-                  </p>
+                  </div>
                 )}
               </Grid.Column>
             </Grid.Row>

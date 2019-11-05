@@ -106,7 +106,7 @@ function MembersTable({ users }) {
         closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h2>Member Information</h2>
+          <h2>Member Info</h2>
         </Modal.Header>
         <Modal.Content>
           {userInfo && (
