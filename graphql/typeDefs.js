@@ -25,9 +25,12 @@ module.exports = gql`
     token: String!
     message: String!
     confirmed: Boolean!
+    fallPercentile: Int!
+    springPercentile: Int!
+    summerPercentile: Int!
   }
 
-  type Token{
+  type Token {
     token: String!
   }
 

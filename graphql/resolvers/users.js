@@ -33,170 +33,214 @@ function generateToken(user, time) {
 }
 
 module.exports = {
-  Query: {
-    async getUsers() {
-      try {
-        const users = await User.find().sort({
-          lastName: 1,
-          firstName: 1
-        });
-        return users;
-      } catch (err) {
-        throw new Error(err);
-      }
-    },
-
-    async getUser(_, {
-      userId
-    }) {
-      try {
-        const user = await User.findById(userId);
-
-        if (user) {
-          return user;
-        } else {
-          throw new Error("User not found.");
+    Query: {
+      async getUsers() {
+        try {
+          const users = await User.find().sort({
+            lastName: 1,
+            firstName: 1
+          });
+          return users;
+        } catch (err) {
+          throw new Error(err);
         }
-      } catch (err) {
-        throw new Error(err);
-      }
+      },
+
+      async getUser(_, { userId }) {
+        try {
+          var user = await User.findById(userId);
+
+          const users = await User.find();
+          const fallBelowUsers = await User.find()
+            .where("fallPoints")
+            .lt(user.fallPoints);
+          const springBelowUsers = await User.find()
+            .where("springPoints")
+            .lt(user.springPoints);
+          const summerBelowUsers = await User.find()
+            .where("summerPoints")
+            .lt(user.summerPoints);
+
+          const fallPercentile = Math.trunc(
+            (fallBelowUsers.length / users.length) * 100
+          );
+          const springPercentile = Math.trunc(
+            (springBelowUsers.length / users.length) * 100
+          );
+          const summerPercentile = Math.trunc(
+            (summerBelowUsers.length / users.length) * 100
+          );
+
+          var newUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            email: user.email,
+            major: user.major,
+            year: user.year,
+            graduating: user.graduating,
+            country: user.country,
+            ethnicity: user.ethnicity,
+            sex: user.sex,
+            ethnicity: user.ethnicity,
+            points: user.points,
+            fallPoints: user.fallPoints,
+            springPoints: user.springPoints,
+            summerPoints: user.summerPoints,
+            fallPercentile: fallPercentile,
+            springPercentile: springPercentile,
+            summerPercentile: summerPercentile,
+            createdAt: user.createdAt,
+            permission: user.permission,
+            listServ: user.listServ,
+            events: user.events
+          };
+
+          if (newUser) {
+            return newUser;
+          } else {
+            throw new Error("User not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
     },
 
     async getMajorStat() {
-      try {
-        const data = await User.aggregate([{
-            $group: {
-              _id: '$major',
-              value: {
-                $sum: 1
+        try {
+          const data = await User.aggregate([{
+              $group: {
+                _id: '$major',
+                value: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                value: -1
               }
             }
-          },
-          {
-            $sort: {
-              value: -1
-            }
-          }
-        ]);
+          ]);
 
-        if (data) {
-          return data;
-        } else {
-          throw new Error("Data not found.");
+          if(data){
+            return data;
+          } else{
+            throw new Error("Data not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
         }
-      } catch (err) {
-        throw new Error(err);
+      },
+
+      async getYearStat() {
+        try {
+          const data = await User.aggregate([{
+              $group: {
+                _id: '$year',
+                value: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                _id: 1
+              }
+            }
+          ]);
+
+          if(data){
+            return data;
+          } else{
+            throw new Error("Data not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
+      },
+
+      async getCountryStat() {
+        try {
+          const data = await User.aggregate([{
+              $group: {
+                _id: '$country',
+                value: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                value: -1
+              }
+            }
+          ]);
+
+          if(data){
+            return data;
+          } else{
+            throw new Error("Data not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
+      },
+
+      async getSexStat() {
+        try {
+          const data = await User.aggregate([{
+              $group: {
+                _id: '$sex',
+                value: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                value: -1
+              }
+            }
+          ]);
+
+          if(data){
+            return data;
+          } else{
+            throw new Error("Data not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
+      },
+
+      async getEthnicityStat() {
+        try {
+          const data = await User.aggregate([{
+              $group: {
+                _id: '$ethnicity',
+                value: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                value: -1
+              }
+            }
+          ]);
+
+          if(data){
+            return data;
+          } else{
+            throw new Error("Data not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
       }
     },
-
-    async getYearStat() {
-      try {
-        const data = await User.aggregate([{
-            $group: {
-              _id: '$year',
-              value: {
-                $sum: 1
-              }
-            }
-          },
-          {
-            $sort: {
-              _id: 1
-            }
-          }
-        ]);
-
-        if (data) {
-          return data;
-        } else {
-          throw new Error("Data not found.");
-        }
-      } catch (err) {
-        throw new Error(err);
-      }
-    },
-
-    async getCountryStat() {
-      try {
-        const data = await User.aggregate([{
-            $group: {
-              _id: '$country',
-              value: {
-                $sum: 1
-              }
-            }
-          },
-          {
-            $sort: {
-              value: -1
-            }
-          }
-        ]);
-
-        if (data) {
-          return data;
-        } else {
-          throw new Error("Data not found.");
-        }
-      } catch (err) {
-        throw new Error(err);
-      }
-    },
-
-    async getSexStat() {
-      try {
-        const data = await User.aggregate([{
-            $group: {
-              _id: '$sex',
-              value: {
-                $sum: 1
-              }
-            }
-          },
-          {
-            $sort: {
-              value: -1
-            }
-          }
-        ]);
-
-        if (data) {
-          return data;
-        } else {
-          throw new Error("Data not found.");
-        }
-      } catch (err) {
-        throw new Error(err);
-      }
-    },
-
-    async getEthnicityStat() {
-      try {
-        const data = await User.aggregate([{
-            $group: {
-              _id: '$ethnicity',
-              value: {
-                $sum: 1
-              }
-            }
-          },
-          {
-            $sort: {
-              value: -1
-            }
-          }
-        ]);
-
-        if (data) {
-          return data;
-        } else {
-          throw new Error("Data not found.");
-        }
-      } catch (err) {
-        throw new Error(err);
-      }
-    }
-  },
 
   Mutation: {
     async login(_, {
