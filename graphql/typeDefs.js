@@ -25,14 +25,14 @@ module.exports = gql`
     token: String!
     message: String!
     classes: [String]!
+    fallPercentile: Int!
+    springPercentile: Int!
+    summerPercentile: Int!
   }
 
   type Class {
     code: String!
     users: [User]!
-    fallPercentile: Int!
-    springPercentile: Int!
-    summerPercentile: Int!
   }
 
   type Event {
