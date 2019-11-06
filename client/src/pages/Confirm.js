@@ -40,7 +40,7 @@ function Confirm(props){
                           <div className="loading">
                               <div>
                                 <h1 className="text-white confirmMsg">
-                                  Your email is confirmed!
+                                  Your account is confirmed!
                                 </h1>
                               </div>
                           </div>

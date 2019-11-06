@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Form, Button, Container, Segment, Grid, Responsive } from "semantic-ui-react";
+import { Form, Button, Container, Segment, Grid, Responsive, Message } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -8,6 +8,7 @@ import { useForm } from "../util/hooks";
 function ForgotPassword(props){
 
   const [errors, setErrors] = useState({});
+  const [sent, setSent] = useState(false);
 
   const { onChange, onSubmit, values } = useForm(resetCallback, {
     email: ""
@@ -16,7 +17,7 @@ function ForgotPassword(props){
 
   const [resetUser, { loading }] = useMutation(FORGOT_PASSWORD, {
     onCompleted(){
-      props.history.push("/login");
+      setSent(true);
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -53,6 +54,11 @@ function ForgotPassword(props){
                             ))}
                           </ul>
                         </div>
+                      )}
+                      { sent && (
+                        <Message info>
+                          Please check your email to complete the registration
+                        </Message>
                       )}
                       <Form
                         onSubmit={onSubmit}
@@ -98,6 +104,11 @@ function ForgotPassword(props){
                           </ul>
                         </div>
                       )}
+                      { sent && (
+                        <Message info>
+                          Please check your email to complete the registration
+                        </Message>
+                      )}
                       <Form
                         onSubmit={onSubmit}
                         noValidate
@@ -141,6 +152,11 @@ function ForgotPassword(props){
                             ))}
                           </ul>
                         </div>
+                      )}
+                      { sent && (
+                        <Message info>
+                          Please check your email to complete the registration
+                        </Message>
                       )}
                       <Form
                         onSubmit={onSubmit}
