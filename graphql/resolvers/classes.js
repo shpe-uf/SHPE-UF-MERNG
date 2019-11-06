@@ -6,6 +6,15 @@ const {
   validateCreateClassInput
 } = require("../../util/validators");
 
+const findMatch = (matches, username) => {
+  matches.map((match) => {
+    if (match.username === username) {
+      match.score += 5;
+      return true;
+    }})
+  return false;
+}
+
 module.exports = {
     Query: {
         async getClasses(_, { username }) {
@@ -16,6 +25,22 @@ module.exports = {
           } catch (err) {
             throw new Error(err);
           }
+        },
+        async getMatches(_, { username }) {
+          const matches = [];
+          const user = await User.findOne({ username });
+          user.classes.map(async (classTemp) => {
+            const newClassTemp = await Class.findOne({ code: classTemp });
+            newClassTemp.users.map(userTemp => {
+              if(!findMatch(matches, userTemp.username) && user.username !== userTemp.username){
+                const newTemp = {firstName:userTemp.firstName, lastName: userTemp.lastName, email: userTemp.email, username: userTemp.username, score:5};
+                matches.push(newTemp);
+              }
+            })
+          });
+          await User.findOne({ username });
+          console.log(matches)
+          return matches;
         }
     },
 

@@ -57,9 +57,12 @@ module.exports = gql`
     createdAt: String!
   }
 
-  type Section {
-    number: String!,
-    users: [User]!
+  type Match {
+    firstName: String!
+    lastName: String!
+    username: String!
+    email: String!
+    score: Int!
   }
 
   input RegisterInput {
@@ -113,6 +116,7 @@ module.exports = gql`
     getEvents: [Event]
     getRequests: [Request]
     getClasses(username: String!): [String]
+    getMatches(username: String!): [Match]
   }
 
   type Mutation {

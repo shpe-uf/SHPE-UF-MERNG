@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Grid, Container, Button, Modal, Form, List } from "semantic-ui-react";
+import { Segment, Header, Grid, Container, Button, Modal, Form, List } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import ReactDOM from "react-dom";
 
+import placeholder from "../assets/images/team/placeholder.png";
 import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
 
@@ -52,15 +54,25 @@ function ClassSharing() {
         variables: values
       });
 
-      var getClasses = "";
+      var getClasses = [];
+      var getMatches = [];
 
-  var { data } = useQuery(GET_CLASSES_QUERY, {
+    var { data } = useQuery(GET_CLASSES_QUERY, {
       variables: {username}
-  });
+    });
 
-  if (data.getClasses) {
-    getClasses = data.getClasses;
-  }
+    if (data.getClasses) {
+        getClasses = data.getClasses;
+    }
+
+    // var { data: dataM } = useQuery(GET_MATCHES_QUERY, {
+    //     variables: {username}
+    // });
+
+    // if (dataM.getMatches) {
+    //     getMatches = dataM.getMatches;
+    // }
+    getMatches = ["sofie", "kjdnf", "sdkjn"];
 
       function addClassCallback() {
         addClass();
@@ -92,7 +104,14 @@ function ClassSharing() {
                 </List>
               </Grid.Column>
               <Grid.Column width={8}>
-                <h2>My Matches</h2>  
+              <Container style={{ margin: 20 }}>
+              <Segment attached="top">
+                <Header as="h2" content="My Matches" />
+                </Segment>
+                <Segment attached="bottom">
+                
+                </Segment>
+                    </Container>
               </Grid.Column>
           </Grid.Row>
       </Grid>
@@ -186,6 +205,12 @@ const ADD_CLASS_MUTATION = gql`
 const GET_CLASSES_QUERY = gql`
   query getClasses($username: String!) {
     getClasses(username: $username)
+    }
+`;
+
+const GET_MATCHES_QUERY = gql`
+  query getMatches($username: String!) {
+    getMatches(username: $username)
     }
 `;
 
