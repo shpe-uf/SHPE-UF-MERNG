@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { Segment, Header, Grid, Container, Button, Modal, Form, List } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import ReactDOM from "react-dom";
 
 import placeholder from "../assets/images/team/placeholder.png";
 import { useForm } from "../util/hooks";
