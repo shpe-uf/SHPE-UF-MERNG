@@ -24,6 +24,9 @@ module.exports = gql`
     events: [Event]!
     token: String!
     message: String!
+    fallPercentile: Int!
+    springPercentile: Int!
+    summerPercentile: Int!
   }
 
   type Event {
