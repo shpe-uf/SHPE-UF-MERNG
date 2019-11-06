@@ -12,7 +12,6 @@ import mariana from "../assets/images/team/2019-2020/mariana.png";
 import sofia from "../assets/images/team/2019-2020/sofia.png";
 import placeholder from "../assets/images/team/placeholder.png";
 
-
 function DevTeamCards() {
   return (
     <>
