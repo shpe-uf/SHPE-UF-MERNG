@@ -60,6 +60,141 @@ module.exports = {
       } catch (err) {
         throw new Error(err);
       }
+    },
+
+    async getMajorStat() {
+      try {
+        const data = await User.aggregate([{
+            $group: {
+              _id: '$major',
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              value: -1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getYearStat() {
+      try {
+        const data = await User.aggregate([{
+            $group: {
+              _id: '$year',
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              _id: 1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getCountryStat() {
+      try {
+        const data = await User.aggregate([{
+            $group: {
+              _id: '$country',
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              value: -1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getSexStat() {
+      try {
+        const data = await User.aggregate([{
+            $group: {
+              _id: '$sex',
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              value: -1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getEthnicityStat() {
+      try {
+        const data = await User.aggregate([{
+            $group: {
+              _id: '$ethnicity',
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              value: -1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
     }
   },
 
@@ -102,7 +237,7 @@ module.exports = {
         });
       }
 
-      //Eduardo
+
       const isConfirmed = user.confirmed;
 
       if (!isConfirmed) {
@@ -222,11 +357,9 @@ module.exports = {
 
       const res = await newUser.save();
 
-      var time = "24h";
-
-      const token = generateToken(res, time);
-
-      const user = await User.findOne({ email });
+      const user = await User.findOne({
+        email
+      });
 
       const transporter = nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE,
@@ -252,11 +385,10 @@ module.exports = {
           res.status(200).json('recovery email sent');
         }
       });
-
+      console.log("TESTTTTTT");
       return {
         ...res._doc,
-        id: res._id,
-        token
+        id: res._id
       };
     },
 
@@ -447,14 +579,14 @@ module.exports = {
       }
     },
 
-
     async confirmUser(
       _, {
         id
       }
     ) {
-
-      const user = await User.findOneAndUpdate({ _id: id }, {
+      const user = await User.findOneAndUpdate({
+        _id: id
+      }, {
         confirmed: true
       });
 
@@ -468,7 +600,6 @@ module.exports = {
       return user;
 
     },
-
 
     async forgotPassword(
       _, {
@@ -568,8 +699,6 @@ module.exports = {
           errors
         });
       }
-
-
 
       const user = await User.findOne({
         token

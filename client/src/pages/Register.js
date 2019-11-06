@@ -60,6 +60,7 @@ function Register(props) {
       setOpenModal(true);
     },
     onError(err) {
+      console.log(err);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
 
@@ -304,7 +305,6 @@ const REGISTER_USER = gql`
       email
       username
       createdAt
-      token
     }
   }
 `;

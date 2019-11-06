@@ -12,21 +12,15 @@ import PointsTable from "../components/PointsTable";
 
 function Points() {
   const [errors, setErrors] = useState({});
-  var getUser = "";
-
   var {
     user: { id, username }
   } = useContext(AuthContext);
 
-  var { data } = useQuery(FETCH_USER_QUERY, {
+  var user = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
     }
-  });
-
-  if (data.getUser) {
-    getUser = data.getUser;
-  }
+  }).data.getUser;
 
   const [redeemPointsModal, setRedeemPointsModal] = useState(false);
 
@@ -74,30 +68,29 @@ function Points() {
   }
 
   function updateGetUser(userData) {
-    getUser.fallPoints = userData.fallPoints;
-    getUser.springPoints = userData.springPoints;
-    getUser.summerPoints = userData.summerPoints;
-    getUser.events = userData.events;
-    getUser.message = userData.message;
+    user.fallPoints = userData.fallPoints;
+    user.springPoints = userData.springPoints;
+    user.summerPoints = userData.summerPoints;
+    user.events = userData.events;
+    user.message = userData.message;
   }
 
   return (
     <div className="body">
       <Title title="Points Program" />
-
       <Container>
-        <Grid stackable>
-          {getUser && getUser.message && getUser.message !== undefined && (
+        <Grid>
+          {user && user.message && user.message !== undefined && (
             <Grid.Row>
               <Grid.Column>
                 <div className="ui warning message">
-                  <p>{getUser.message}</p>
+                  <p>{user.message}</p>
                 </div>
               </Grid.Column>
             </Grid.Row>
           )}
           <Grid.Row>
-            <Grid.Column>
+            <Grid.Column className="no-padding">
               <Button
                 content="Redeem Code"
                 icon="font"
@@ -107,13 +100,14 @@ function Points() {
               />
             </Grid.Column>
           </Grid.Row>
-          {getUser && (
-            <>
-              <PointsBar user={getUser} />
-              <PointsTable user={getUser} />
-            </>
-          )}
         </Grid>
+
+        {user && (
+          <>
+            <PointsBar user={user} />
+            <PointsTable user={user} />
+          </>
+        )}
       </Container>
 
       <Modal open={redeemPointsModal} size="tiny">
