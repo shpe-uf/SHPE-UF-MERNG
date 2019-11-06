@@ -30,6 +30,9 @@ module.exports = gql`
   type Class {
     code: String!
     users: [User]!
+    fallPercentile: Int!
+    springPercentile: Int!
+    summerPercentile: Int!
   }
 
   type Event {
@@ -63,6 +66,10 @@ module.exports = gql`
     username: String!
     email: String!
     score: Int!
+  }
+  type StatData{
+    _id: String!
+    value: Int!
   }
 
   input RegisterInput {
@@ -117,6 +124,11 @@ module.exports = gql`
     getRequests: [Request]
     getClasses(username: String!): [String]
     getMatches(username: String!): [Match]
+    getMajorStat: [StatData]
+    getCountryStat: [StatData]
+    getYearStat: [StatData]
+    getSexStat: [StatData]
+    getEthnicityStat: [StatData]
   }
 
   type Mutation {
