@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Card } from "semantic-ui-react";
+import { Grid, Responsive, Segment, Card } from "semantic-ui-react";
 
 function PointsBar({ user }) {
   return (

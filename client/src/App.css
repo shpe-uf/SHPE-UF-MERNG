@@ -447,15 +447,6 @@ h5 {
   color: var(--white);
 }
 
-.redeem {
-  background: rgb(63, 38, 99) !important;
-  background: linear-gradient(
-    135deg,
-    rgba(63, 38, 99, 1) 25%,
-    rgba(42, 145, 195, 1) 75%
-  ) !important;
-}
-
 .fall {
   background: rgb(124, 24, 47) !important;
   background: linear-gradient(
@@ -463,6 +454,7 @@ h5 {
     rgba(124, 24, 47, 1) 25%,
     rgba(230, 55, 0, 1) 75%
   ) !important;
+  border: 0px !important;
 }
 
 .spring {
@@ -472,6 +464,7 @@ h5 {
     rgba(0, 131, 116, 1) 25%,
     rgba(137, 186, 22, 1) 75%
   ) !important;
+  border: 0px !important;
 }
 
 .summer {
@@ -481,21 +474,22 @@ h5 {
     rgba(255, 92, 0, 1) 25%,
     rgba(255, 222, 0, 1) 75%
   ) !important;
+  border: 0px !important;
 }
 
 .ui.tabular.menu .active.item {
   color: var(--accent-1);
 }
 
-th {
-  text-transform: uppercase !important;
-  color: var(--accent-2) !important;
-}
-
 .table-responsive {
   display: block;
   overflow-x: scroll;
   margin-bottom: 16px;
+}
+
+th {
+  text-transform: uppercase !important;
+  color: var(--accent-2) !important;
 }
 
 .request-true {
@@ -520,6 +514,18 @@ ui.tabular.menu {
 .ui.button,
 .ui.card > .content > .header {
   font-family: "body-font" !important;
+}
+
+div::-webkit-scrollbar {
+  height: 5px;
+}
+div::-webkit-scrollbar-track {
+  border-radius: 0px;
+  webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+div::-webkit-scrollbar-thumb {
+  background-color: var(--accent-1);
+  webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 991px) {
