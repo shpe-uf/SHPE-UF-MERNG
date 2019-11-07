@@ -89,12 +89,12 @@ function Points() {
     <div className="body">
       <Title title="Points Program" />
       <Container>
-        <Grid stackable>
+        <Grid>
           <div>
             <ToastContainer />
           </div>
           <Grid.Row>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <Button
                 content="Redeem Code"
                 icon="font"
@@ -119,7 +119,9 @@ function Points() {
           <h2>Redeem Points</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
             {Object.keys(errors).length > 0 && (
               <div className="ui error message">
                 <ul className="list">
@@ -153,7 +155,9 @@ function Points() {
                 Submit
               </Button>
             </Form>
-          </Modal.Description>
+            </Grid.Column>
+            </Grid.Row>
+            </Grid>
         </Modal.Content>
       </Modal>
     </div>

@@ -31,7 +31,7 @@ function Statistics() {
 
   const handleItemClick = (e, { name }) => {
     if (activeItem === name) {
-      setActiveItem("");
+      setActiveItem(false);
     } else {
       setActiveItem(name);
     }

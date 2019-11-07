@@ -12,21 +12,17 @@ function Profile() {
     user: { id }
   } = useContext(AuthContext);
 
-  var {
-    data: { getUser }
-  } = useQuery(FETCH_USER_QUERY, {
+  var user = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
     }
-  });
+  }).data.getUser;
 
   return (
     <div className="body">
       <Title title="My Profile" />
       <Container>
-        <Grid doubling columns={2}>
-          <UserProfile user={getUser} />
-        </Grid>
+        <UserProfile user={user} />
       </Container>
     </div>
   );

@@ -43,8 +43,12 @@
   font-size: 1rem !important;
 }
 
-.ui.accordion .title:not(.ui){
+.ui.accordion .title:not(.ui) {
   font-family: "body-font" !important;
+}
+
+.ui.styled.accordion .content {
+  padding: 0px !important;
 }
 
 main {
@@ -110,6 +114,17 @@ h4 {
 
 h5 {
   font-size: 1.5rem !important;
+}
+
+/* .modals > .header {
+  padding: 16px !important;
+} */
+.ui.modal > .header {
+  padding: 16px !important;
+}
+
+.ui.modal > .content {
+  padding: 0px !important;
 }
 
 .logout {

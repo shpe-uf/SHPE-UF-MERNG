@@ -88,7 +88,7 @@ function MenuBar() {
                     pointing
                     item
                     className="email"
-                    text={user.username}
+                    text={user.email}
                   >
                     <Dropdown.Menu>
                       <Dropdown.Item as={Link} to="/admin">

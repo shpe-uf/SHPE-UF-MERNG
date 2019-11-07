@@ -80,7 +80,7 @@ function Events() {
 
   return (
     <>
-    <Title title="Events" adminPath={window.location.pathname} />
+      <Title title="Events" adminPath={window.location.pathname} />
       <Container className="body">
         <Grid>
           <Grid.Row>
@@ -109,108 +109,114 @@ function Events() {
           <h2>Create Event</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            {Object.keys(errors).length > 0 && (
-              <div className="ui error message">
-                <ul className="list">
-                  {Object.values(errors).map(value => (
-                    <li key={value}>{value}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <Form
-              onSubmit={onSubmit}
-              noValidate
-              className={loading ? "loading" : ""}
-            >
-              <Form.Input
-                type="text"
-                label="Name"
-                name="name"
-                value={values.name}
-                error={errors.name ? true : false}
-                onChange={onChange}
-              />
-              <Form.Input
-                type="text"
-                label="Code"
-                name="code"
-                value={values.code}
-                error={errors.code ? true : false}
-                onChange={onChange}
-              />
-              <Form.Field
-                control="select"
-                label="Category"
-                name="category"
-                value={values.category}
-                error={errors.category ? true : false}
-                onChange={onChange}
-              >
-                {categoryOptions.map(category =>
-                  category.points === 0 ? (
-                    <option value={category.value} key={category.key}>
-                      {category.value}
-                    </option>
-                  ) : (
-                    <option value={category.value} key={category.key}>
-                      {category.value} ({category.points})
-                    </option>
-                  )
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                {Object.keys(errors).length > 0 && (
+                  <div className="ui error message">
+                    <ul className="list">
+                      {Object.values(errors).map(value => (
+                        <li key={value}>{value}</li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
-              </Form.Field>
-              {values.category === "Miscellaneous" ? (
-                <Form.Input
-                  type="text"
-                  label="Points"
-                  name="points"
-                  value={
-                    values.category === "Miscellaneous" ? values.points : "0"
-                  }
-                  error={errors.points ? true : false}
-                  onChange={onChange}
-                />
-              ) : (
-                <></>
-              )}
-              <Form.Field
-                control="select"
-                label="Expires in"
-                name="expiration"
-                value={values.expiration}
-                error={errors.expiration ? true : false}
-                onChange={onChange}
-              >
-                {expirationOptions.map(expiration => (
-                  <option value={expiration.value} key={expiration.key}>
-                    {expiration.key}
-                  </option>
-                ))}
-              </Form.Field>
-              <Form.Field>
-                <div className="ui toggle checkbox">
-                  <input
-                    type="checkbox"
-                    name="request"
-                    value={values.request === "true" ? false : true}
+                <Form
+                  onSubmit={onSubmit}
+                  noValidate
+                  className={loading ? "loading" : ""}
+                >
+                  <Form.Input
+                    type="text"
+                    label="Name"
+                    name="name"
+                    value={values.name}
+                    error={errors.name ? true : false}
                     onChange={onChange}
                   />
-                  <label>Request?</label>
-                </div>
-              </Form.Field>
-              <Button
-                type="reset"
-                color="grey"
-                onClick={() => closeModal("createEvent")}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" floated="right">
-                Create
-              </Button>
-            </Form>
-          </Modal.Description>
+                  <Form.Input
+                    type="text"
+                    label="Code"
+                    name="code"
+                    value={values.code}
+                    error={errors.code ? true : false}
+                    onChange={onChange}
+                  />
+                  <Form.Field
+                    control="select"
+                    label="Category"
+                    name="category"
+                    value={values.category}
+                    error={errors.category ? true : false}
+                    onChange={onChange}
+                  >
+                    {categoryOptions.map(category =>
+                      category.points === 0 ? (
+                        <option value={category.value} key={category.key}>
+                          {category.value}
+                        </option>
+                      ) : (
+                        <option value={category.value} key={category.key}>
+                          {category.value} ({category.points})
+                        </option>
+                      )
+                    )}
+                  </Form.Field>
+                  {values.category === "Miscellaneous" ? (
+                    <Form.Input
+                      type="text"
+                      label="Points"
+                      name="points"
+                      value={
+                        values.category === "Miscellaneous"
+                          ? values.points
+                          : "0"
+                      }
+                      error={errors.points ? true : false}
+                      onChange={onChange}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                  <Form.Field
+                    control="select"
+                    label="Expires in"
+                    name="expiration"
+                    value={values.expiration}
+                    error={errors.expiration ? true : false}
+                    onChange={onChange}
+                  >
+                    {expirationOptions.map(expiration => (
+                      <option value={expiration.value} key={expiration.key}>
+                        {expiration.key}
+                      </option>
+                    ))}
+                  </Form.Field>
+                  <Form.Field>
+                    <div className="ui toggle checkbox">
+                      <input
+                        type="checkbox"
+                        name="request"
+                        value={values.request === "true" ? false : true}
+                        onChange={onChange}
+                      />
+                      <label>Request?</label>
+                    </div>
+                  </Form.Field>
+                  <Button
+                    type="reset"
+                    color="grey"
+                    onClick={() => closeModal("createEvent")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" floated="right">
+                    Create
+                  </Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Modal.Content>
       </Modal>
     </>

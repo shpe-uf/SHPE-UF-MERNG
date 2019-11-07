@@ -8,7 +8,8 @@ import {
   Header,
   Button,
   Modal,
-  Form
+  Form,
+  Grid
 } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
@@ -201,59 +202,63 @@ function EventsTable({ events }) {
           <h2>Manual Input</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            {Object.keys(errors).length > 0 && (
-              <div className="ui error message">
-                <ul className="list">
-                  {Object.values(errors).map(value => (
-                    <li key={value}>{value}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <Form
-              onSubmit={onSubmit}
-              noValidate
-              className={loading ? "loading" : ""}
-            >
-              <Form.Field
-                control="select"
-                label="Member"
-                name="username"
-                value={values.username}
-                error={errors.username ? true : false}
-                onChange={onChange}
-              >
-                {users &&
-                  users.map(user =>
-                    user.username === "" ? (
-                      <option value={user.username} key={user.username}>
-                        {user.lastName + user.firstName}
-                      </option>
-                    ) : (
-                      <option value={user.username} key={user.username}>
-                        {user.lastName +
-                          ", " +
-                          user.firstName +
-                          " (" +
-                          user.username +
-                          ")"}
-                      </option>
-                    )
-                  )}
-              </Form.Field>
-              <Button
-                type="reset"
-                color="grey"
-                onClick={() => closeModal("manualInput")}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" floated="right">
-                Submit
-              </Button>
-            </Form>
-          </Modal.Description>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                {Object.keys(errors).length > 0 && (
+                  <div className="ui error message">
+                    <ul className="list">
+                      {Object.values(errors).map(value => (
+                        <li key={value}>{value}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <Form
+                  onSubmit={onSubmit}
+                  noValidate
+                  className={loading ? "loading" : ""}
+                >
+                  <Form.Field
+                    control="select"
+                    label="Member"
+                    name="username"
+                    value={values.username}
+                    error={errors.username ? true : false}
+                    onChange={onChange}
+                  >
+                    {users &&
+                      users.map(user =>
+                        user.username === "" ? (
+                          <option value={user.username} key={user.username}>
+                            {user.lastName + user.firstName}
+                          </option>
+                        ) : (
+                          <option value={user.username} key={user.username}>
+                            {user.lastName +
+                              ", " +
+                              user.firstName +
+                              " (" +
+                              user.username +
+                              ")"}
+                          </option>
+                        )
+                      )}
+                  </Form.Field>
+                  <Button
+                    type="reset"
+                    color="grey"
+                    onClick={() => closeModal("manualInput")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" floated="right">
+                    Submit
+                  </Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Modal.Content>
       </Modal>
 
@@ -267,7 +272,9 @@ function EventsTable({ events }) {
           <h2>Event Information</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
             <h3>{eventAttendance.name}</h3>
             <p>Attendance: {eventAttendance.attendance}</p>
             {eventAttendance.attendance === 0 ? (
@@ -317,7 +324,9 @@ function EventsTable({ events }) {
                 Download as CSV
               </Button>
             </CSVLink>
-          </Modal.Description>
+            </Grid.Column>
+            </Grid.Row>
+            </Grid>
         </Modal.Content>
       </Modal>
     </>

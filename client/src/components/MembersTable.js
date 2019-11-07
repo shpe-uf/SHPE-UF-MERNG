@@ -111,21 +111,23 @@ function MembersTable({ users }) {
         <Modal.Content>
           {userInfo && (
             <>
-              <Grid doubling columns={2}>
-                <UserProfile user={userInfo} />
-              </Grid>
-              <Container style={{ marginBottom: 16 }}>
-                <PointsTable user={userInfo} />
-              </Container>
+              <UserProfile user={userInfo} />
+              <PointsTable user={userInfo} />
             </>
           )}
-          <Button
-            type="reset"
-            color="grey"
-            onClick={() => closeModal("userInfo")}
-          >
-            Close
-          </Button>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <Button
+                  type="reset"
+                  color="grey"
+                  onClick={() => closeModal("userInfo")}
+                >
+                  Close
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Modal.Content>
       </Modal>
     </>

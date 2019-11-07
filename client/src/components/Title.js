@@ -9,7 +9,7 @@ function Title({ title, adminPath }) {
         <Container>
           <Grid>
             <Grid.Row>
-              <Grid.Column className="no-padding">
+              <Grid.Column>
                 <h1 className="text-white">{title}</h1>
                 {adminPath && (
                   <div className="text-white">

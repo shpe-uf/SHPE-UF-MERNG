@@ -7,12 +7,12 @@ function PointsBar({ user }) {
       <Responsive minWidth={768}>
         <Grid columns={3}>
           <Grid.Row>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <div className="fall">
                 <Segment vertical>
                   <p className="points-header">Fall Points</p>
                 </Segment>
-                <Segment vertical className="no-padding">
+                <Segment vertical>
                   <p className="points-number">
                     {user ? user.fallPoints : "0"}
                   </p>
@@ -24,12 +24,12 @@ function PointsBar({ user }) {
                 </Segment>
               </div>
             </Grid.Column>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <div className="spring">
                 <Segment vertical>
                   <p className="points-header">Spring Points</p>
                 </Segment>
-                <Segment vertical className="no-padding">
+                <Segment vertical>
                   <p className="points-number">
                     {user ? user.springPoints : "0"}
                   </p>
@@ -41,12 +41,12 @@ function PointsBar({ user }) {
                 </Segment>
               </div>
             </Grid.Column>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <div className="summer">
                 <Segment vertical>
                   <p className="points-header">Summer Points</p>
                 </Segment>
-                <Segment vertical className="no-padding">
+                <Segment vertical>
                   <p className="points-number">
                     {user ? user.summerPoints : "0"}
                   </p>
@@ -64,12 +64,12 @@ function PointsBar({ user }) {
       <Responsive maxWidth={767}>
         <Grid>
           <Grid.Row>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <div className="fall">
                 <Segment vertical>
                   <p className="points-header">Fall Points</p>
                 </Segment>
-                <Segment vertical className="no-padding">
+                <Segment vertical>
                   <p className="points-number">
                     {user ? user.fallPoints : "0"}
                   </p>
@@ -83,12 +83,12 @@ function PointsBar({ user }) {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <div className="spring">
                 <Segment vertical>
                   <p className="points-header">Spring Points</p>
                 </Segment>
-                <Segment vertical className="no-padding">
+                <Segment vertical>
                   <p className="points-number">
                     {user ? user.springPoints : "0"}
                   </p>
@@ -102,12 +102,12 @@ function PointsBar({ user }) {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <div className="summer">
                 <Segment vertical>
                   <p className="points-header">Summer Points</p>
                 </Segment>
-                <Segment vertical className="no-padding">
+                <Segment vertical>
                   <p className="points-number">
                     {user ? user.summerPoints : "0"}
                   </p>
