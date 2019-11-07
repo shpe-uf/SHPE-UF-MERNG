@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
-    "heroku-postbuild": "cd client && npm install && npm start"
+    "start": "node index"
   },
   "engines": {
     "node": "10.15.3"

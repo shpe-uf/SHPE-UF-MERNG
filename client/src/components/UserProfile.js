@@ -6,7 +6,7 @@ import placeholder from "../assets/images/placeholder.png";
 
 function UserProfile({ user }) {
   return (
-    <Grid stackable columns={2}>
+    <Grid columns={2} doubling>
       <Grid.Row>
         <Grid.Column>
           <Image fluid rounded src={placeholder} className="image-profile" />
