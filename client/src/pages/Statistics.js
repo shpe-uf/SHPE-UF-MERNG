@@ -7,7 +7,8 @@ import {
   Responsive,
   Accordion,
   Icon,
-  Segment
+  Segment,
+  Grid
 } from "semantic-ui-react";
 import StatisticDisplay from "../components/StatisticDisplay";
 import Title from "../components/Title";
@@ -40,6 +41,9 @@ function Statistics() {
     <>
       <Title title="Statistics" adminPath={window.location.pathname} />
       <Container className="body">
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
         <Responsive minWidth={992}>
           <Menu fluid widths={5}>
             <Menu.Item
@@ -158,6 +162,9 @@ function Statistics() {
             </Accordion.Content>
           </Accordion>
         </Responsive>
+        </Grid.Column>
+        </Grid.Row>
+        </Grid>
       </Container>
     </>
   );

@@ -6,8 +6,7 @@ import {
   Icon,
   Button,
   Modal,
-  Grid,
-  Container
+  Grid
 } from "semantic-ui-react";
 
 import UserProfile from "./UserProfile";

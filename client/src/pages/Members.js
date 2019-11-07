@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
 
 import Title from "../components/Title";
@@ -14,7 +14,13 @@ function Members() {
     <>
       <Title title="Members" adminPath={window.location.pathname} />
       <Container className="body">
-        <MembersTable users={users} />
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+              <MembersTable users={users} />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Container>
     </>
   );

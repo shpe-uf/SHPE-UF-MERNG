@@ -272,61 +272,64 @@ function EventsTable({ events }) {
           <h2>Event Information</h2>
         </Modal.Header>
         <Modal.Content>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column>
-            <h3>{eventAttendance.name}</h3>
-            <p>Attendance: {eventAttendance.attendance}</p>
-            {eventAttendance.attendance === 0 ? (
-              <Segment placeholder>
-                <Header icon>
-                  <i className="fas fa-exclamation-circle"></i>
-                  <p>This event has no attendance records.</p>
-                </Header>
-              </Segment>
-            ) : (
-              <div className="table-responsive" style={{ marginBottom: 16 }}>
-                <Table striped selectable unstackable>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Name</Table.HeaderCell>
-                      <Table.HeaderCell>Username</Table.HeaderCell>
-                      <Table.HeaderCell>Email</Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-                  <Table.Body>
-                    {eventAttendance.users &&
-                      eventAttendance.users.map(member => (
-                        <Table.Row key={member.username}>
-                          <Table.Cell>
-                            {member.lastName + ", " + member.firstName}
-                          </Table.Cell>
-                          <Table.Cell>{member.username}</Table.Cell>
-                          <Table.Cell>{member.email}</Table.Cell>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <h3>{eventAttendance.name}</h3>
+                <p>Attendance: {eventAttendance.attendance}</p>
+                {eventAttendance.attendance === 0 ? (
+                  <Segment placeholder>
+                    <Header icon>
+                      <i className="fas fa-exclamation-circle"></i>
+                      <p>This event has no attendance records.</p>
+                    </Header>
+                  </Segment>
+                ) : (
+                  <div
+                    className="table-responsive"
+                    style={{ marginBottom: 16 }}
+                  >
+                    <Table striped selectable unstackable>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Name</Table.HeaderCell>
+                          <Table.HeaderCell>Username</Table.HeaderCell>
+                          <Table.HeaderCell>Email</Table.HeaderCell>
                         </Table.Row>
-                      ))}
-                  </Table.Body>
-                </Table>
-              </div>
-            )}
-            <Button
-              type="reset"
-              color="grey"
-              onClick={() => closeModal("eventInfo")}
-            >
-              Cancel
-            </Button>
-            <CSVLink
-              data={eventAttendance.users}
-              filename={eventAttendance.name + ".csv"}
-            >
-              <Button color="green" floated="right">
-                Download as CSV
-              </Button>
-            </CSVLink>
-            </Grid.Column>
+                      </Table.Header>
+                      <Table.Body>
+                        {eventAttendance.users &&
+                          eventAttendance.users.map(member => (
+                            <Table.Row key={member.username}>
+                              <Table.Cell>
+                                {member.lastName + ", " + member.firstName}
+                              </Table.Cell>
+                              <Table.Cell>{member.username}</Table.Cell>
+                              <Table.Cell>{member.email}</Table.Cell>
+                            </Table.Row>
+                          ))}
+                      </Table.Body>
+                    </Table>
+                  </div>
+                )}
+                <Button
+                  type="reset"
+                  color="grey"
+                  onClick={() => closeModal("eventInfo")}
+                >
+                  Cancel
+                </Button>
+                <CSVLink
+                  data={eventAttendance.users}
+                  filename={eventAttendance.name + ".csv"}
+                >
+                  <Button color="green" floated="right">
+                    Download as CSV
+                  </Button>
+                </CSVLink>
+              </Grid.Column>
             </Grid.Row>
-            </Grid>
+          </Grid>
         </Modal.Content>
       </Modal>
     </>

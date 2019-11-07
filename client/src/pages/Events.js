@@ -84,7 +84,7 @@ function Events() {
       <Container className="body">
         <Grid>
           <Grid.Row>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <Button
                 content="Create Event"
                 icon="pencil"
@@ -94,9 +94,12 @@ function Events() {
               />
             </Grid.Column>
           </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <EventsTable events={events} />
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
-
-        <EventsTable events={events} />
       </Container>
 
       <Modal

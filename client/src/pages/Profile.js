@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import gql from "graphql-tag";
-import { Grid, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
 import { AuthContext } from "../context/auth";
 

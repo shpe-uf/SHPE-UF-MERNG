@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
 
 import { FETCH_REQUESTS_QUERY } from "../util/graphql";
@@ -14,7 +14,13 @@ function Requests() {
     <>
       <Title title="Requests" adminPath={window.location.pathname} />
       <Container className="body">
-        <RequestsTable requests={requests} />
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+              <RequestsTable requests={requests} />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Container>
     </>
   );
