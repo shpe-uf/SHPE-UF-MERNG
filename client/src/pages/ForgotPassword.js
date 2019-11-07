@@ -17,6 +17,7 @@ function ForgotPassword(props){
 
   const [resetUser, { loading }] = useMutation(FORGOT_PASSWORD, {
     onCompleted(){
+      setErrors({});
       setSent(true);
     },
     onError(err) {
@@ -57,7 +58,7 @@ function ForgotPassword(props){
                       )}
                       { sent && (
                         <Message info>
-                          Please check your email to complete the registration
+                          Please check your email
                         </Message>
                       )}
                       <Form
