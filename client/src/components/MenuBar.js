@@ -58,6 +58,9 @@ function MenuBar() {
                       <Dropdown.Item as={Link} to="/points">
                         Points Program
                       </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/classsharing">
+                        Class Sharing
+                      </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
                         <p className="logout">Logout</p>
@@ -106,6 +109,9 @@ function MenuBar() {
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
                         Points Program
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/classsharing">
+                        Class Sharing
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>

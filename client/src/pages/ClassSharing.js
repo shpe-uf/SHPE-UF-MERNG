@@ -10,30 +10,24 @@ import { AuthContext } from "../context/auth";
 import Title from "../components/Title";
 
 function ClassSharing() {
-
+    //const [errors, setErrors] = useState({});
     var {
         user: { username }
       } = useContext(AuthContext)
       
     const [addClassModal, setAddClassModal] = useState(false);
-    const [displayClassModal, setDisplayClassModal] = useState(false);
+    //const [displayClassModal, setDisplayClassModal] = useState(false);
 
     const openModal = name => {
         if (name === "addClass") {
           setAddClassModal(true);
         }
-        if (name === "displayClass") {
-            setDisplayClassModal(true);
-          }
       };
     
       const closeModal = name => {
         if (name === "addClass") {
           setAddClassModal(false);
         }
-        if (name === "displayClass") {
-            setDisplayClassModal(false);
-          }
       };  
 
       const { values, onChange, onSubmit } = useForm(addClassCallback, {
@@ -41,28 +35,35 @@ function ClassSharing() {
         username: username
       });
 
-      const [addClass, { loading }] = useMutation(ADD_CLASS_MUTATION, {
+      var getClasses = [];
+
+      var { data } = useQuery(GET_CLASSES_QUERY, {
+          variables: {username}
+        });
+        
+        if (data.getClasses) {
+            getClasses = data.getClasses;
+        }
+
+      const [createClass, { loading }] = useMutation(ADD_CLASS_MUTATION, {
         update(
           _,
           {
-            data: { addClass: classData }
+            data: { createClass: classData }
           }
         ) {
+          values.code = "";
+          getClasses.splice(0, getClasses.length);
+          for (var i = 0; i < classData.length; i++) {
+            getClasses.push(classData[i]);
+          }
           setAddClassModal(false);
         },
+
         variables: values
       });
 
-      var getClasses = [];
       var getMatches = [];
-
-    var { data } = useQuery(GET_CLASSES_QUERY, {
-      variables: {username}
-    });
-
-    if (data.getClasses) {
-        getClasses = data.getClasses;
-    }
 
     // var { data: dataM } = useQuery(GET_MATCHES_QUERY, {
     //     variables: {username}
@@ -74,7 +75,7 @@ function ClassSharing() {
     getMatches = ["sofie", "kjdnf", "sdkjn"];
 
       function addClassCallback() {
-        addClass();
+        createClass();
       }
 
   return (
@@ -94,9 +95,10 @@ function ClassSharing() {
               <List selection verticalAlign='middle'>
                 {getClasses && getClasses.map((classTemp) => (
                     <List.Item>
-                    <List.Content onClick={() => openModal("displayClass")}> 
+                    {/* <List.Content onClick={() => openModal("displayClass")}> 
                       <List.Header>{classTemp}</List.Header>
-                    </List.Content>
+                    </List.Content> */}
+                    <List.Header>{classTemp}</List.Header>
                   </List.Item>
                 )
                 )}
@@ -189,15 +191,7 @@ function ClassSharing() {
 
 const ADD_CLASS_MUTATION = gql`
   mutation createClass($code: String!, $username: String!) {
-    createClass(createClassInput: { code: $code, username: $username }) {
-      code
-      users {
-        firstName
-        lastName
-        email
-        username
-      }
-    }
+    createClass(createClassInput: { code: $code, username: $username })
   }
 `;
 

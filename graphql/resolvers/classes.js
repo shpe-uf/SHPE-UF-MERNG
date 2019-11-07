@@ -20,7 +20,8 @@ module.exports = {
         async getClasses(_, { username }) {
           try {
             const user = await User.findOne({ username });
-            const foundClasses = user.classes;
+            var foundClasses = [];
+            foundClasses = user.classes;
             return foundClasses;
           } catch (err) {
             throw new Error(err);
@@ -123,9 +124,9 @@ module.exports = {
               }
             );
 
-            const res = await Class.findOne({ code });
+            var res = await User.findOne({ username });
 
-            return res;
+            return res.classes;
         }
     }
 }

@@ -139,6 +139,6 @@ module.exports = gql`
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
-    createClass(createClassInput: CreateClassInput): Class!
+    createClass(createClassInput: CreateClassInput): [String]
   }
 `;
