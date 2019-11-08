@@ -79,8 +79,7 @@ const userSchema = new Schema({
     points: Number,
   }],
   token: {
-    type: String,
-    unique: true
+    type: String
   },
   confirmed: {
     type: Boolean,

@@ -22,6 +22,7 @@ function ForgotPassword(props){
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      setSent(false);
     },
 
 
