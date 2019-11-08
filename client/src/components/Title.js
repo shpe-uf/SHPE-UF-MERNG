@@ -60,6 +60,13 @@ function Title({ title, adminPath }) {
                             text="Corporate Database"
                           />
                         )}
+                        {title !== "Reimbursements" && (
+                          <Dropdown.Item
+                            as={Link}
+                            to="/admin/"
+                            text="Reimbursements"
+                          />
+                        )}
                         {title !== "Archive" && (
                           <Dropdown.Item
                             as={Link}

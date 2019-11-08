@@ -14,17 +14,17 @@ function Admin() {
       <Title title="Admin Panel" />
       <Container>
         <Responsive {...Responsive.onlyComputer}>
-          <Grid columns={4}>
-            <AdminPanel />
-          </Grid>
-        </Responsive>
-        <Responsive {...Responsive.onlyTablet}>
           <Grid columns={3}>
             <AdminPanel />
           </Grid>
         </Responsive>
-        <Responsive {...Responsive.onlyMobile}>
+        <Responsive {...Responsive.onlyTablet}>
           <Grid columns={2}>
+            <AdminPanel />
+          </Grid>
+        </Responsive>
+        <Responsive {...Responsive.onlyMobile}>
+          <Grid columns={1}>
             <AdminPanel />
           </Grid>
         </Responsive>
