@@ -94,8 +94,6 @@ module.exports = {
 
       const updatedEvents = await Event.find();
 
-      console.log(updatedEvents);
-
       return updatedEvents;
     },
 

@@ -9,6 +9,7 @@ import eduardo from "../assets/images/team/2019-2020/eduardo.png";
 import isabel from "../assets/images/team/2019-2020/isabel.png";
 import juan from "../assets/images/team/2019-2020/juan.png";
 import mariana from "../assets/images/team/2019-2020/mariana.png";
+import sofia from "../assets/images/team/2019-2020/sofia.png";
 import placeholder from "../assets/images/team/placeholder.png";
 
 function DevTeamCards() {
@@ -46,7 +47,7 @@ function DevTeamCards() {
       />
       <Card
         fluid
-        image={placeholder}
+        image={sofia}
         header="Sofia Harmon"
         meta="Developer"
       />
