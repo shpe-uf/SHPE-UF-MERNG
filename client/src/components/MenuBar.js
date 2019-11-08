@@ -27,23 +27,19 @@ function MenuBar() {
             <Menu.Item className="brand-name" as={Link} to="/">
               SHPE UF
             </Menu.Item>
-
             <Menu.Item as={Link} to="/about">
               About Us
             </Menu.Item>
-
             <Menu.Item as={Link} to="/eboard">
               E-Board
             </Menu.Item>
-
             <Menu.Item as={Link} to="/devteam">
               Dev Team
             </Menu.Item>
-
             <Menu.Item as={Link} to="/sponsors">
               Sponsors
             </Menu.Item>
-
+            
             <Menu.Menu position="right">
               {user ? (
                 <>
