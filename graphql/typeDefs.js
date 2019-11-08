@@ -24,9 +24,14 @@ module.exports = gql`
     events: [Event]!
     token: String!
     message: String!
+    confirmed: Boolean!
     fallPercentile: Int!
     springPercentile: Int!
     summerPercentile: Int!
+  }
+
+  type Token {
+    token: String!
   }
 
   type Event {
@@ -119,5 +124,8 @@ module.exports = gql`
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
+    forgotPassword(email: String!): User!
+    resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
+    confirmUser(id: String!): User!
   }
 `;

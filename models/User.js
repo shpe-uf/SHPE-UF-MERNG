@@ -76,8 +76,15 @@ const userSchema = new Schema({
     name: String,
     category: String,
     createdAt: String,
-    points: Number
-  }]
+    points: Number,
+  }],
+  token: {
+    type: String
+  },
+  confirmed: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = model("User", userSchema);
