@@ -281,7 +281,6 @@ module.exports = {
         });
       }
 
-
       const isConfirmed = user.confirmed;
 
       if (!isConfirmed) {
@@ -320,6 +319,9 @@ module.exports = {
         }
       }
     ) {
+      firstName = firstName.trim();
+      lastName = lastName.trim();
+      email = email.toLowerCase();
       username = username.toLowerCase();
 
       const {
