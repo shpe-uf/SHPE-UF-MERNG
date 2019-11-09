@@ -158,7 +158,7 @@ module.exports.validateCreateEventInput = (
 
   const nameValidator = /^[a-zA-Z0-9- ]{6,50}$/i;
   const codeValidator = /^[a-zA-Z0-9]{6,50}$/i;
-  const pointsValidator = /^[1-9][1-9]*$/i;
+  const pointsValidator = /^[1-9][0-9]*$/i;
 
   if (name.trim() === "") {
     errors.name = "Name is required.";
