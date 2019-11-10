@@ -110,6 +110,43 @@ module.exports.validateLoginInput = (username, password) => {
   };
 };
 
+module.exports.validatePasswordInput = (password, confirmPassword) => {
+  const errors = {};
+  const passwordValidator = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,}$/;
+
+  if (password === "") {
+    errors.password = "Password is required.";
+  } else if (!password.match(passwordValidator)) {
+    errors.password =
+      "Passwords must be at least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.";
+  } else if (password !== confirmPassword) {
+    errors.confirmPassword = "Password and Confirm Password must match.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+}
+
+module.exports.validateEmailInput = (email) => {
+  const emailRegex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
+  const errors = {};
+
+  if (email.trim() === "") {
+    errors.email = "Email is required.";
+  } else {
+    if (!email.match(emailRegex)) {
+      errors.email = "Invalid email address.";
+    }
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateCreateEventInput = (
   name,
   code,
@@ -121,7 +158,7 @@ module.exports.validateCreateEventInput = (
 
   const nameValidator = /^[a-zA-Z0-9- ]{6,50}$/i;
   const codeValidator = /^[a-zA-Z0-9]{6,50}$/i;
-  const pointsValidator = /^[1-9][1-9]*$/i;
+  const pointsValidator = /^[1-9][0-9]*$/i;
 
   if (name.trim() === "") {
     errors.name = "Name is required.";

@@ -26,7 +26,7 @@ const requestSchema = new Schema({
   username: {
     type: String,
     required: true,
-    lowecase: true
+    lowercase: true
   },
   createdAt: {
     type: String,

@@ -22,6 +22,13 @@ import Admin from "./pages/Admin";
 import Points from "./pages/Points";
 import Profile from "./pages/Profile";
 import CorporateDatabase from "./pages/CorporateDatabase";
+import Events from "./pages/Events";
+import Members from "./pages/Members";
+import Requests from "./pages/Requests";
+import Statistics from "./pages/Statistics";
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
+import Confirm from "./pages/Confirm";
 
 function App() {
   return (
@@ -36,7 +43,14 @@ function App() {
           <Route exact path="/eboard" component={EBoard} />
           <Route exact path="/devteam" component={DevTeam} />
           <Route exact path="/sponsors" component={Sponsors} />
+          <Route exact path="/reset/:token" component={ResetPassword} />
+          <Route exact path="/forgot" component={ForgotPassword} />
+          <Route exact path="/confirm/:id" component={Confirm} />
           <UserRoute exact path="/admin" component={Admin} />
+          <UserRoute exact path="/admin/events" component={Events} />
+          <UserRoute exact path="/admin/members" component={Members} />
+          <UserRoute exact path="/admin/requests" component={Requests} />
+          <UserRoute exact path="/admin/statistics" component={Statistics} />
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
           <UserRoute exact path="/corporatedatabase" component={CorporateDatabase} />

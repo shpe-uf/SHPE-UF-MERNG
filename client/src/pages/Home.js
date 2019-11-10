@@ -113,8 +113,10 @@ function Home() {
             worthwhile."
           </h2>
           <Divider />
-          <h2 className="text-white">Ellen Ochoa</h2>
-          <h4 className="text-white">
+          <h2 className="text-white">
+            Ellen Ochoa
+          </h2>
+          <h4 className="text-white" style={{ marginTop: 8 }}>
             Electrical Engineer & First Latina Astronaut
           </h4>
         </Container>

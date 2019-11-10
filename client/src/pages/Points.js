@@ -1,5 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Grid, Container, Button, Modal, Form } from "semantic-ui-react";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -73,6 +77,12 @@ function Points() {
     user.summerPoints = userData.summerPoints;
     user.events = userData.events;
     user.message = userData.message;
+
+    if (user.message !== "") {
+      toast.warn(user.message, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    }
   }
 
   return (
@@ -80,17 +90,11 @@ function Points() {
       <Title title="Points Program" />
       <Container>
         <Grid>
-          {user && user.message && user.message !== undefined && (
-            <Grid.Row>
-              <Grid.Column>
-                <div className="ui warning message">
-                  <p>{user.message}</p>
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-          )}
+          <div>
+            <ToastContainer />
+          </div>
           <Grid.Row>
-            <Grid.Column className="no-padding">
+            <Grid.Column>
               <Button
                 content="Redeem Code"
                 icon="font"
@@ -115,7 +119,9 @@ function Points() {
           <h2>Redeem Points</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
             {Object.keys(errors).length > 0 && (
               <div className="ui error message">
                 <ul className="list">
@@ -149,7 +155,9 @@ function Points() {
                 Submit
               </Button>
             </Form>
-          </Modal.Description>
+            </Grid.Column>
+            </Grid.Row>
+            </Grid>
         </Modal.Content>
       </Modal>
     </div>
@@ -165,6 +173,9 @@ const FETCH_USER_QUERY = gql`
       fallPoints
       springPoints
       summerPoints
+      fallPercentile
+      springPercentile
+      summerPercentile
       events {
         name
         category

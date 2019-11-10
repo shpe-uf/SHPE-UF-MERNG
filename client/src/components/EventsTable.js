@@ -202,59 +202,63 @@ function EventsTable({ events }) {
           <h2>Manual Input</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            {Object.keys(errors).length > 0 && (
-              <div className="ui error message">
-                <ul className="list">
-                  {Object.values(errors).map(value => (
-                    <li key={value}>{value}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <Form
-              onSubmit={onSubmit}
-              noValidate
-              className={loading ? "loading" : ""}
-            >
-              <Form.Field
-                control="select"
-                label="Member"
-                name="username"
-                value={values.username}
-                error={errors.username ? true : false}
-                onChange={onChange}
-              >
-                {users &&
-                  users.map(user =>
-                    user.username === "" ? (
-                      <option value={user.username} key={user.username}>
-                        {user.lastName + user.firstName}
-                      </option>
-                    ) : (
-                      <option value={user.username} key={user.username}>
-                        {user.lastName +
-                          ", " +
-                          user.firstName +
-                          " (" +
-                          user.username +
-                          ")"}
-                      </option>
-                    )
-                  )}
-              </Form.Field>
-              <Button
-                type="reset"
-                color="grey"
-                onClick={() => closeModal("manualInput")}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" floated="right">
-                Submit
-              </Button>
-            </Form>
-          </Modal.Description>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                {Object.keys(errors).length > 0 && (
+                  <div className="ui error message">
+                    <ul className="list">
+                      {Object.values(errors).map(value => (
+                        <li key={value}>{value}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <Form
+                  onSubmit={onSubmit}
+                  noValidate
+                  className={loading ? "loading" : ""}
+                >
+                  <Form.Field
+                    control="select"
+                    label="Member"
+                    name="username"
+                    value={values.username}
+                    error={errors.username ? true : false}
+                    onChange={onChange}
+                  >
+                    {users &&
+                      users.map(user =>
+                        user.username === "" ? (
+                          <option value={user.username} key={user.username}>
+                            {user.lastName + user.firstName}
+                          </option>
+                        ) : (
+                          <option value={user.username} key={user.username}>
+                            {user.lastName +
+                              ", " +
+                              user.firstName +
+                              " (" +
+                              user.username +
+                              ")"}
+                          </option>
+                        )
+                      )}
+                  </Form.Field>
+                  <Button
+                    type="reset"
+                    color="grey"
+                    onClick={() => closeModal("manualInput")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" floated="right">
+                    Submit
+                  </Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Modal.Content>
       </Modal>
 
@@ -268,57 +272,64 @@ function EventsTable({ events }) {
           <h2>Event Information</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            <h3>{eventAttendance.name}</h3>
-            <p>Attendance: {eventAttendance.attendance}</p>
-            {eventAttendance.attendance === 0 ? (
-              <Segment placeholder>
-                <Header icon>
-                  <i className="fas fa-exclamation-circle"></i>
-                  <p>This event has no attendance records.</p>
-                </Header>
-              </Segment>
-            ) : (
-              <div className="table-responsive">
-                <Table striped selectable unstackable>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Name</Table.HeaderCell>
-                      <Table.HeaderCell>Username</Table.HeaderCell>
-                      <Table.HeaderCell>Email</Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-                  <Table.Body>
-                    {eventAttendance.users &&
-                      eventAttendance.users.map(member => (
-                        <Table.Row key={member.username}>
-                          <Table.Cell>
-                            {member.lastName + ", " + member.firstName}
-                          </Table.Cell>
-                          <Table.Cell>{member.username}</Table.Cell>
-                          <Table.Cell>{member.email}</Table.Cell>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <h3>{eventAttendance.name}</h3>
+                <p>Attendance: {eventAttendance.attendance}</p>
+                {eventAttendance.attendance === 0 ? (
+                  <Segment placeholder>
+                    <Header icon>
+                      <i className="fas fa-exclamation-circle"></i>
+                      <p>This event has no attendance records.</p>
+                    </Header>
+                  </Segment>
+                ) : (
+                  <div
+                    className="table-responsive"
+                    style={{ marginBottom: 16 }}
+                  >
+                    <Table striped selectable unstackable>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Name</Table.HeaderCell>
+                          <Table.HeaderCell>Username</Table.HeaderCell>
+                          <Table.HeaderCell>Email</Table.HeaderCell>
                         </Table.Row>
-                      ))}
-                  </Table.Body>
-                </Table>
-              </div>
-            )}
-            <Button
-              type="reset"
-              color="grey"
-              onClick={() => closeModal("eventInfo")}
-            >
-              Cancel
-            </Button>
-            <CSVLink
-              data={eventAttendance.users}
-              filename={eventAttendance.name + ".csv"}
-            >
-              <Button color="green" floated="right">
-                Download as CSV
-              </Button>
-            </CSVLink>
-          </Modal.Description>
+                      </Table.Header>
+                      <Table.Body>
+                        {eventAttendance.users &&
+                          eventAttendance.users.map(member => (
+                            <Table.Row key={member.username}>
+                              <Table.Cell>
+                                {member.lastName + ", " + member.firstName}
+                              </Table.Cell>
+                              <Table.Cell>{member.username}</Table.Cell>
+                              <Table.Cell>{member.email}</Table.Cell>
+                            </Table.Row>
+                          ))}
+                      </Table.Body>
+                    </Table>
+                  </div>
+                )}
+                <Button
+                  type="reset"
+                  color="grey"
+                  onClick={() => closeModal("eventInfo")}
+                >
+                  Cancel
+                </Button>
+                <CSVLink
+                  data={eventAttendance.users}
+                  filename={eventAttendance.name + ".csv"}
+                >
+                  <Button color="green" floated="right">
+                    Download as CSV
+                  </Button>
+                </CSVLink>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Modal.Content>
       </Modal>
     </>
