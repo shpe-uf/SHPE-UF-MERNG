@@ -1,5 +1,6 @@
 const gql = require("graphql-tag");
 
+
 module.exports = gql`
   type User {
     id: ID!
@@ -42,6 +43,7 @@ module.exports = gql`
 
   type Corporation {
     name: String!,
+    logo: String!,
     slogan: String!,
     majors: [String!]!,
     industries: [String!]!,
@@ -105,6 +107,7 @@ module.exports = gql`
 
   input CreateCorporationInput {
     name: String!,
+    logo: String!,
     slogan: String!,
     majors: [String!]!,
     industries: [String!]!,
@@ -145,15 +148,12 @@ module.exports = gql`
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
-<<<<<<< HEAD
     getCorporations: [Corporation]
-=======
     getMajorStat: [StatData]
     getCountryStat: [StatData]
     getYearStat: [StatData]
     getSexStat: [StatData]
     getEthnicityStat: [StatData]
->>>>>>> master
   }
 
   type Mutation {

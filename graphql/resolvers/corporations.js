@@ -38,7 +38,8 @@ module.exports = {
       _,
       {
         createCorporationInput: { 
-          name, 
+          name,
+          logo,
           slogan, 
           majors, 
           industries, 
@@ -61,8 +62,10 @@ module.exports = {
       }
     ) {
       console.log('RUNNING')
+
       const { valid, errors } = validateCreateCorporationInput(
         name,
+        logo,
         slogan,
         majors,
         industries,
@@ -98,9 +101,9 @@ module.exports = {
       springBBQ = springBBQ === "true" || springBBQ === true ? true : false;
       nationalConvention = nationalConvention === "true" || nationalConvention === true ? true : false;
 
-
       const newCorporation = new Corporation({
         name,
+        logo,
         slogan,
         majors,
         industries,

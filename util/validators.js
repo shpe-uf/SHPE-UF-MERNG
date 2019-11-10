@@ -189,6 +189,7 @@ module.exports.validateManualInputInput = username => {
 
 module.exports.validateCreateCorporationInput = (
   name,
+  logo,
   slogan,
   majors,
   industries,
@@ -205,6 +206,15 @@ module.exports.validateCreateCorporationInput = (
 
   if (name.trim() === "") {
     errors.name = "No name was provided.";
+  }
+
+  const fileType = logo.name.substr(logo.name.length - 3).toUpperCase()
+  console.log(fileType)
+  if (!logo.size) {
+    errors.logo = "No logo was provided.";
+  }
+  else if (fileType != 'PNG' || fileType != 'JPG') {
+    errors.logo = "Logo must be png or jpg"
   }
 
   if (slogan.trim() === "") {

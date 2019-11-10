@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Button, Form, Segment } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import ImageUploader from 'react-images-upload';
 
 import { useForm } from "../util/hooks";
 
@@ -15,6 +16,7 @@ function CorporateDatabase() {
 
   const { onChange, onSubmit, values } = useForm(createCorporation, {
     name: "",
+    logo: {},
     slogan: "",
     majors: [],
     industries: [],
@@ -53,6 +55,18 @@ function CorporateDatabase() {
 
   function createCorporation() {
     addCorporation();
+    console.log(values)
+  }
+
+  function addLogo(logo) {
+    logo = logo[logo.length - 1]
+    console.log(logo)
+    //let dataBuffer = new Buffer(logo[0]);
+
+    const mediaType = logo.name.substr(logo.name.length - 3).toUpperCase()
+    console.log(mediaType)
+    //logo = imageDataURI.encode(dataBuffer, mediaType)
+    //values.logo = logo[0];
   }
 
   return (
@@ -79,6 +93,17 @@ function CorporateDatabase() {
               noValidate
               className={loading ? "loading" : ""}
             >
+              <ImageUploader
+                withIcon={true}
+                name="logo"
+                buttonText='Upload Logo'
+                label={'5 MB maximum, jpg or png'}
+                onChange={addLogo}
+                imgExtension={['.jpg','.png']}
+                singleImage={true}
+                error={errors.logo ? true : false}
+                maxFileSize={5242880}
+              />
               <Form.Group widths="equal">
                 <Form.Input
                   type="text"
