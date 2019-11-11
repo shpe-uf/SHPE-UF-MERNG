@@ -13,25 +13,12 @@ module.exports = {
     async getCorporations() {
       try {
         const corporations = await Corporation.find().sort({ createdAt: 1 });
+        console.log(corporations);
         return corporations;
       } catch (err) {
         throw new Error(err);
       }
     }, 
-
-    async getCorporation(_, { corporateId }) {
-      try {
-        const corporation = await Corporation.findById(corporateId);
-        
-        if(corporation) {
-          return corporation;
-        } else {
-          throw new Error("Corporation not found.")
-        }
-      } catch (err) {
-        throw new Error(err);
-      }
-    }
   },
   Mutation: {
     async createCorporation(
@@ -39,7 +26,6 @@ module.exports = {
       {
         createCorporationInput: { 
           name,
-          logo,
           slogan, 
           majors, 
           industries, 
@@ -65,7 +51,6 @@ module.exports = {
 
       const { valid, errors } = validateCreateCorporationInput(
         name,
-        logo,
         slogan,
         majors,
         industries,
@@ -103,7 +88,6 @@ module.exports = {
 
       const newCorporation = new Corporation({
         name,
-        logo,
         slogan,
         majors,
         industries,

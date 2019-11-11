@@ -53,6 +53,33 @@ export const FETCH_EVENTS_QUERY = gql `
   }
 `;
 
+export const FETCH_CORPORATIONS_QUERY = gql `
+  {
+    getCorporations {
+      id
+      name
+      slogan
+      majors
+      industries
+      overview
+      mission
+      goals
+      businessModel
+      newsLink
+      applyLink
+      academia
+      govContractor
+      nonProfit
+      visaSponsor
+      shpeSponsor
+      industryPartnership
+      fallBBQ
+      springBBQ
+      nationalConvention
+    }
+  }
+`;
+
 export const FETCH_REQUESTS_QUERY = gql`
   {
     getRequests {

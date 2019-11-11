@@ -5,10 +5,6 @@ const corporationSchema = new Schema({
     type: String,
     required: true
   },
-  logo: {
-    type: String,
-    required: true
-  },
   slogan: {
     type: String,
     required: true
