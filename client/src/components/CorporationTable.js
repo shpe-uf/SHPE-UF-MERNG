@@ -51,6 +51,7 @@ function CorporationTable({ corporations }) {
               {corporations &&
                 corporations.map((corporation, index) => (
                   <Table.Row key={index}>
+                    <Table.Cell>{corporation.name}</Table.Cell>
                     <Table.Cell textAlign="center">
                       {corporation.shpeSponsor === true ? (
                         <Icon className="request-true" name="check" />

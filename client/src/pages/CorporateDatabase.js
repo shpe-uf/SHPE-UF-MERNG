@@ -16,10 +16,7 @@ function CorporateDatabase() {
   const [errors, setErrors] = useState({});
   const [addCorporationModal, setAddCorporationModal] = useState(false);
 
-  var corporations = useQuery(FETCH_CORPORATIONS_QUERY);
-  console.log(corporations)
-
-  console.log(corporations);
+  var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
 
   const { onChange, onSubmit, values } = useForm(createCorporation, {
     name: "",
@@ -110,7 +107,7 @@ function CorporateDatabase() {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
-              {/* <CorporationTable corporations={corporations}/> */}
+              <CorporationTable corporations={corporations}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
