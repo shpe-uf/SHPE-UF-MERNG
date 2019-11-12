@@ -53,7 +53,7 @@ export const FETCH_EVENTS_QUERY = gql `
   }
 `;
 
-export const FETCH_REQUESTS_QUERY = gql `
+export const FETCH_REQUESTS_QUERY = gql`
   {
     getRequests {
       eventName

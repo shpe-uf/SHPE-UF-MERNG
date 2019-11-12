@@ -1,14 +1,9 @@
 import React, { useContext, useState } from "react";
-import {
-  Grid,
-  Container,
-  Card,
-  Menu,
-  Segment,
-  Button,
-  Modal,
-  Form
-} from "semantic-ui-react";
+import { Grid, Container, Button, Modal, Form } from "semantic-ui-react";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -91,12 +86,21 @@ function Points() {
     user.events = userData.events;
     user.tasks = userData.tasks;
     user.message = userData.message;
+
+    if (user.message !== "") {
+      toast.warn(user.message, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    }
   }
 
   return (
     <div className="body">
       <Title title="Points Program" />
       <Container>
+      <div>
+        <ToastContainer />
+      </div>
         <Menu attached="top" tabular>
           <Menu.Item
             name="Your Points"
@@ -113,6 +117,7 @@ function Points() {
         {activeItem === "Your Points" && (
           <Segment attached="bottom">
             <Grid stackable>
+
               {user && user.message && user.message !== undefined && (
                 <Grid.Row>
                   <Grid.Column>
@@ -222,6 +227,9 @@ const FETCH_USER_QUERY = gql`
       fallPoints
       springPoints
       summerPoints
+      fallPercentile
+      springPercentile
+      summerPercentile
       events {
         name
         category

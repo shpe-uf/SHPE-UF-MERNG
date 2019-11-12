@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Table, Segment, Header } from "semantic-ui-react";
+import { Table, Segment, Header, Grid } from "semantic-ui-react";
 
 import moment from "moment";
 
