@@ -17,6 +17,7 @@ function CorporateDatabase() {
   const [addCorporationModal, setAddCorporationModal] = useState(false);
 
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
+  console.log(corporations);
 
   const { onChange, onSubmit, values } = useForm(createCorporation, {
     name: "",

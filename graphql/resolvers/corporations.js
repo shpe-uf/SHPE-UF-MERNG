@@ -13,7 +13,7 @@ module.exports = {
     async getCorporations() {
       try {
         const corporations = await Corporation.find().sort({ createdAt: 1 });
-        console.log(corporations);
+        return corporations;
       } catch (err) {
         throw new Error(err);
       }

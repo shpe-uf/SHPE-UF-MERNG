@@ -36,6 +36,9 @@ function MenuBar() {
             <Menu.Item as={Link} to="/sponsors">
               Sponsors
             </Menu.Item>
+            <Menu.Item as={Link} to="/corporations">
+              Corporate Database
+            </Menu.Item>
 
             <Menu.Menu position="right">
               {user ? (
