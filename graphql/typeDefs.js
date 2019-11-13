@@ -51,6 +51,7 @@ module.exports = gql`
 
   type Corporation {
     name: String!,
+    logo: String!,
     slogan: String!,
     majors: [String!]!,
     industries: [String!]!,

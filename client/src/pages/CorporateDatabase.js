@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Grid, Container, Button, Form, Segment, Modal } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import imageDataURI from 'image-data-uri';
 
 import { useForm } from "../util/hooks";
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
@@ -17,10 +18,10 @@ function CorporateDatabase() {
   const [addCorporationModal, setAddCorporationModal] = useState(false);
 
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
-  console.log(corporations);
 
   const { onChange, onSubmit, values } = useForm(createCorporation, {
     name: "",
+    logo: "",
     slogan: "",
     majors: [],
     industries: [],
@@ -68,6 +69,7 @@ function CorporateDatabase() {
 
   const closeModal = () => {
     values.name = "";
+    values.logo = "";
     values.slogan = "";
     values.majors = [];
     values.industries = [];
@@ -88,6 +90,28 @@ function CorporateDatabase() {
     values.nationalConvention = "false";
     setErrors(false);
     setAddCorporationModal(false);
+  }
+
+  function addLogo(file) {
+
+    var imageData = file.target.files;
+    var frontValidation = imageData[0].name.slice(-4);
+
+    var dataBuffer = new Buffer(imageData);
+    
+    if (frontValidation === '.png') {
+      var mediaType = 'PNG';
+      values.logo = imageDataURI.encode(dataBuffer, mediaType).toString();
+      console.log(values);
+    } else if (frontValidation === '.jpg') {
+      var mediaType = 'JPG';
+      values.logo = imageDataURI.encode(dataBuffer, mediaType).toString();
+      console.log(values);
+    } else {
+      setErrors({
+        logo: 'Invalid file type'
+      })
+    }
   }
 
   return (
@@ -140,6 +164,15 @@ function CorporateDatabase() {
                 noValidate
                 className={loading ? "loading" : ""}
               >
+                <Form.Group>
+                  <Form.Input
+                    type="file"
+                    label="Logo"
+                    name="logo"
+                    errors={errors.logo ? true : false}
+                    onChange={addLogo}
+                  />
+                </Form.Group>
                 <Form.Group widths="equal">
                   <Form.Input
                     type="text"

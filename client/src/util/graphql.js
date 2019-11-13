@@ -57,6 +57,7 @@ export const FETCH_CORPORATIONS_QUERY = gql `
   {
     getCorporations {
       name
+      logo
     	slogan
       majors
       industries

@@ -25,6 +25,7 @@ module.exports = {
       {
         createCorporationInput: { 
           name,
+          logo,
           slogan, 
           majors, 
           industries, 
@@ -50,6 +51,7 @@ module.exports = {
 
       const { valid, errors } = validateCreateCorporationInput(
         name,
+        logo,
         slogan,
         majors,
         industries,
@@ -87,6 +89,7 @@ module.exports = {
 
       const newCorporation = new Corporation({
         name,
+        logo,
         slogan,
         majors,
         industries,

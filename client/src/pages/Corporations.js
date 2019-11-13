@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Grid, Card, Icon, Tab, Segment } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import imageDataURI from 'image-data-uri';
 
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 
@@ -24,7 +25,7 @@ function Corporations(props) {
                 <Card
                   fluid
                   raised
-                  image={placeholder}
+                  image={corporation.logo}
                   header={corporation.name}
                   extra={<a>
                           <Icon name='plus square' />
