@@ -50,7 +50,7 @@ module.exports.validateRegisterInput = (
   }
 
   if (country.trim() === "") {
-    errors.country = "Country of Origin  is required.";
+    errors.country = "Country of Origin is required.";
   }
 
   if (ethnicity.trim() === "") {
@@ -227,6 +227,7 @@ module.exports.validateManualInputInput = username => {
 module.exports.validateEditUserProfile = (
   firstName,
   lastName,
+  photo,
   major,
   year,
   graduating,
@@ -234,6 +235,17 @@ module.exports.validateEditUserProfile = (
   ethnicity,
   sex
 ) => {
+  console.log("########################");
+  console.log("VALIDATOR!");
+  console.log("firstName: " + firstName);
+  console.log("lastName: " + lastName);
+  console.log("major: " + major);
+  console.log("year: " + year);
+  console.log("graduating: " + graduating);
+  console.log("country: " + country);
+  console.log("ethnicity: " + ethnicity);
+  console.log("sex: " + sex);
+
   const errors = {};
 
   const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
@@ -256,6 +268,10 @@ module.exports.validateEditUserProfile = (
     }
   }
 
+  if (photo.trim() === "") {
+    errors.photo = "Photo is required.";
+  }
+
   if (major.trim() === "") {
     errors.major = "Major is required.";
   }
@@ -269,7 +285,7 @@ module.exports.validateEditUserProfile = (
   }
 
   if (country.trim() === "") {
-    errors.country = "Country of Origin  is required.";
+    errors.country = "Country of Origin is required.";
   }
 
   if (ethnicity.trim() === "") {

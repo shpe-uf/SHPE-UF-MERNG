@@ -109,6 +109,7 @@ module.exports = gql`
     email: String!
     firstName: String!
     lastName: String!
+    photo: String!
     major: String!
     year: String!
     graduating: String!

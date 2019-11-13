@@ -35,6 +35,7 @@ function Profile() {
       setEditProfileModal(true);
       values.firstName = user.firstName;
       values.lastName = user.lastName;
+      values.photo = user.photo;
       values.major = user.major;
       values.year = user.year;
       values.graduating = user.graduating;
@@ -55,6 +56,7 @@ function Profile() {
     email: email,
     firstName: "",
     lastName: "",
+    photo: "",
     major: "",
     year: "",
     graduating: "",
@@ -62,6 +64,8 @@ function Profile() {
     ethnicity: "",
     sex: ""
   });
+
+  console.log(values);
 
   const [editProfile, { loading }] = useMutation(EDIT_USER_PROFILE, {
     update(
@@ -72,6 +76,7 @@ function Profile() {
     ) {
       user.firstName = userData.firstName;
       user.lastName = userData.lastName;
+      user.photo = userData.photo;
       user.major = userData.major;
       user.year = userData.year;
       user.graduating = userData.graduating;
@@ -86,6 +91,7 @@ function Profile() {
     },
 
     onError(err) {
+      console.log(err);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
 
@@ -286,6 +292,7 @@ const EDIT_USER_PROFILE = gql`
     $email: String!
     $firstName: String!
     $lastName: String!
+    $photo: String!
     $major: String!
     $year: String!
     $graduating: String!
@@ -298,6 +305,7 @@ const EDIT_USER_PROFILE = gql`
         email: $email
         firstName: $firstName
         lastName: $lastName
+        photo: $photo
         major: $major
         year: $year
         graduating: $graduating
@@ -308,6 +316,7 @@ const EDIT_USER_PROFILE = gql`
     ) {
       firstName
       lastName
+      photo
       username
       email
       major

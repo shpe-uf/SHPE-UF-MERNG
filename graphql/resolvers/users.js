@@ -775,6 +775,7 @@ module.exports = {
           email,
           firstName,
           lastName,
+          photo,
           major,
           year,
           graduating,
@@ -787,6 +788,7 @@ module.exports = {
       const { errors, valid } = validateEditUserProfile(
         firstName,
         lastName,
+        photo,
         major,
         year,
         graduating,
@@ -794,7 +796,7 @@ module.exports = {
         ethnicity,
         sex
       );
-
+      
       if (!valid) {
         throw new UserInputError("Errors", {
           errors
@@ -809,6 +811,7 @@ module.exports = {
           {
             firstName,
             lastName,
+            photo,
             major,
             year,
             graduating,
