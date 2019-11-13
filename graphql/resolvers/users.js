@@ -14,7 +14,8 @@ const {
   validateLoginInput,
   validateRedeemPointsInput,
   validateEmailInput,
-  validatePasswordInput
+  validatePasswordInput,
+  validateEditUserProfile
 } = require("../../util/validators");
 
 function generateToken(user, time) {
@@ -254,7 +255,7 @@ module.exports = {
       const { errors, valid } = validateLoginInput(username, password);
 
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -653,7 +654,7 @@ module.exports = {
     async forgotPassword(_, { email }) {
       const { errors, valid } = validateEmailInput(email);
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -733,7 +734,7 @@ module.exports = {
       );
 
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -782,41 +783,26 @@ module.exports = {
         }
       }
     ) {
+      const { errors, valid } = validateEditUserProfile(
+        firstName,
+        lastName,
+        major,
+        year,
+        graduating,
+        country,
+        ethnicity,
+        sex
+      );
+
+      if (!valid) {
+        throw new UserInputError("Errors", {
+          errors
+        });
+      }
+
       const user = await User.findOne({ email });
 
       if (user) {
-        if (firstName.trim() === "") {
-          firstName = user.firstName;
-        }
-
-        if (lastName.trim() === "") {
-          lastName = user.lastName;
-        }
-
-        if (major.trim() === "") {
-          major = user.major;
-        }
-
-        if (year.trim() === "") {
-          year = user.year;
-        }
-
-        if (graduating.trim() === "") {
-          graduating = user.graduating;
-        }
-
-        if (country.trim() === "") {
-          country = user.country;
-        }
-
-        if (ethnicity.trim() === "") {
-          ethnicity = user.ethnicity;
-        }
-
-        if (sex.trim() === "") {
-          sex = user.sex;
-        }
-
         const updatedUser = await User.findOneAndUpdate(
           { email },
           {

@@ -127,9 +127,9 @@ module.exports.validatePasswordInput = (password, confirmPassword) => {
     errors,
     valid: Object.keys(errors).length < 1
   };
-}
+};
 
-module.exports.validateEmailInput = (email) => {
+module.exports.validateEmailInput = email => {
   const emailRegex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
   const errors = {};
 
@@ -216,6 +216,68 @@ module.exports.validateManualInputInput = username => {
 
   if (username.trim() === "") {
     errors.username = "No username was provided.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
+module.exports.validateEditUserProfile = (
+  firstName,
+  lastName,
+  major,
+  year,
+  graduating,
+  country,
+  ethnicity,
+  sex
+) => {
+  const errors = {};
+
+  const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+
+  if (firstName.trim() === "") {
+    errors.firstName = "First name is required.";
+  } else {
+    if (!firstName.match(nameValidator)) {
+      errors.firstName =
+        "First Name must be at least 3 character, max 20. No special characters or numbers.";
+    }
+  }
+
+  if (lastName.trim() === "") {
+    errors.lastName = "Last Name is required.";
+  } else {
+    if (!lastName.match(nameValidator)) {
+      errors.lastName =
+        "Last name must be at least 3 character, max 20. No special characters or numbers.";
+    }
+  }
+
+  if (major.trim() === "") {
+    errors.major = "Major is required.";
+  }
+
+  if (year.trim() === "") {
+    errors.year = "Year is required.";
+  }
+
+  if (graduating.trim() === "") {
+    errors.graduating = "Graduating is required.";
+  }
+
+  if (country.trim() === "") {
+    errors.country = "Country of Origin  is required.";
+  }
+
+  if (ethnicity.trim() === "") {
+    errors.ethnicity = "Ethnicity is required.";
+  }
+
+  if (sex.trim() === "") {
+    errors.sex = "Sex is required.";
   }
 
   return {
