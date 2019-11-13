@@ -4,7 +4,9 @@ function CorporationProfile({corporation}) {
 
 
     return(
-        <div></div>
+        <div>
+            
+        </div>
     );
 }
 
