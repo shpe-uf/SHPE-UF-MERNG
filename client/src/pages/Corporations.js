@@ -1,13 +1,31 @@
-import React from "react";
-import { Container, Grid, Card, Icon, Tab, Segment } from "semantic-ui-react";
+import React, {useState} from "react";
+import { Container, Grid, Card, Button,Modal, Tab, Segment } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import imageDataURI from 'image-data-uri';
 
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
+import CorporationProfile from "../components/CorporationProfile";
 
 import placeholder from "../assets/images/placeholder.png"
 
 function Corporations(props) {
+  const [viewCorporationModal, setViewCorporationModal] = useState(false);
+  
+  var selectedCorporation = {};
+
+  const openModal = (name, corporation) => {
+    if (name === "viewCorporation") {
+      setViewCorporationModal(true);
+      selectedCorporation = corporation;
+    }
+  };
+
+  const closeModal = name => {
+    if (name === "viewCorporation") {
+      selectedCorporation=null;
+      setViewCorporationModal(false);
+    }
+  }
 
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
 
@@ -27,10 +45,14 @@ function Corporations(props) {
                   raised
                   image={corporation.logo}
                   header={corporation.name}
-                  extra={<a>
-                          <Icon name='plus square' />
+                  extra={<Button
+                          icon="plus square"
+                          color="red"
+                          onClick={()=>openModal("viewCorporation", corporation)}
+                          >
+                          {/* <Icon name='plus square' /> */}
                           View Profile
-                        </a>}
+                        </Button>}
                 />
               </Grid.Column>
             ))}
@@ -59,7 +81,32 @@ function Corporations(props) {
           panes={[corporationPane, bookmarksPane]}
         />
       </Segment>
-      
+
+      <Modal
+    open={viewCorporationModal}
+    size="small"
+    closeOnEscape={true}
+    closeOnDimmerClick={false}
+    >
+      <Modal.Header>
+        <h2>Corporation</h2>
+      </Modal.Header>
+      <Modal.Content>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+            <CorporationProfile corporation={selectedCorporation}/>
+              <Button 
+                type="reset"
+                color="red"
+                floated="right"
+                onClick={()=> closeModal("viewCorporation")}
+              >Close</Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Modal.Content>
+    </Modal>
     </div>
   );
 }
