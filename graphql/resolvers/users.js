@@ -76,6 +76,7 @@ module.exports = {
           firstName: user.firstName,
           lastName: user.lastName,
           username: user.username,
+          photo: user.photo,
           email: user.email,
           major: user.major,
           year: user.year,

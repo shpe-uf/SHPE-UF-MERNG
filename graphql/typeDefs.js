@@ -5,6 +5,7 @@ module.exports = gql`
     id: ID!
     firstName: String!
     lastName: String!
+    photo: String!
     major: String!
     year: String!
     graduating: String!

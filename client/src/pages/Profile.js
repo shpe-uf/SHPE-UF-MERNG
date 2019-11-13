@@ -266,6 +266,7 @@ const FETCH_USER_QUERY = gql`
     getUser(userId: $userId) {
       firstName
       lastName
+      photo
       username
       email
       major
