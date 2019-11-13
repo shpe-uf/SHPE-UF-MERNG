@@ -11,20 +11,26 @@ import placeholder from "../assets/images/placeholder.png"
 function Corporations(props) {
   const [viewCorporationModal, setViewCorporationModal] = useState(false);
   
-  var selectedCorporation = {};
+  //State to keep track of the current corporation selected
+  const [corporationInfo, setCorporationInfo] = useState({});
 
-  const openModal = (name, corporation) => {
+  //Corporation information modals
+  const openModal = name => {
     if (name === "viewCorporation") {
       setViewCorporationModal(true);
-      selectedCorporation = corporation;
     }
   };
 
   const closeModal = name => {
     if (name === "viewCorporation") {
-      selectedCorporation=null;
+      setCorporationInfo({});
       setViewCorporationModal(false);
     }
+  }
+
+  //Setter function to update the state with the selected corporation
+  function getCoroporationInfo(corporationInfo) {
+    setCorporationInfo(corporationInfo);
   }
 
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
@@ -48,11 +54,15 @@ function Corporations(props) {
                   extra={<Button
                           icon="plus square"
                           color="red"
-                          onClick={()=>openModal("viewCorporation", corporation)}
+                          onClick={()=>{
+                              getCoroporationInfo(corporation);
+                              openModal("viewCorporation");
+                            }}
                           >
-                          {/* <Icon name='plus square' /> */}
-                          View Profile
-                        </Button>}
+                            {/* <Icon name='plus square' /> */}
+                            View Profile
+                          </Button>
+                        }
                 />
               </Grid.Column>
             ))}
@@ -83,11 +93,11 @@ function Corporations(props) {
       </Segment>
 
       <Modal
-    open={viewCorporationModal}
-    size="small"
-    closeOnEscape={true}
-    closeOnDimmerClick={false}
-    >
+        open={viewCorporationModal}
+        size="small"
+        closeOnEscape={true}
+        closeOnDimmerClick={false}
+      >
       <Modal.Header>
         <h2>Corporation</h2>
       </Modal.Header>
@@ -95,10 +105,10 @@ function Corporations(props) {
         <Grid>
           <Grid.Row>
             <Grid.Column>
-            <CorporationProfile corporation={selectedCorporation}/>
+            <CorporationProfile corporation={corporationInfo}/>
               <Button 
                 type="reset"
-                color="red"
+                color="grey"
                 floated="right"
                 onClick={()=> closeModal("viewCorporation")}
               >Close</Button>
