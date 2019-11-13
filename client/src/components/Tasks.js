@@ -73,24 +73,27 @@ function Tasks() {
 
   return (
     <>
-      <Grid>
-        <Grid.Row>
-          <Grid.Column>
-            <Button
-              content="Create Task"
-              icon="pencil"
-              labelPosition="left"
-              onClick={() => openModal("createTask")}
-              floated="right"
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <TasksTable tasks={tasks} />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Title title="Tasks" adminPath={window.location.pathname} />
+      <Container className="body">
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+              <Button
+                content="Create Task"
+                icon="pencil"
+                labelPosition="left"
+                onClick={() => openModal("createTask")}
+                floated="right"
+              />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <TasksTable tasks={tasks} />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
 
       <Modal
         open={createTaskModal}
@@ -102,78 +105,82 @@ function Tasks() {
           <h2>Create Task</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            {Object.keys(errors).length > 0 && (
-              <div className="ui error message">
-                <ul className="list">
-                  {Object.values(errors).map(value => (
-                    <li key={value}>{value}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <Form
-              onSubmit={onSubmit}
-              noValidate
-              className={loading ? "loading" : ""}
-            >
-              <Form.Input
-                type="text"
-                label="Name"
-                name="name"
-                value={values.name}
-                error={errors.name ? true : false}
-                onChange={onChange}
-              />
-              <Form.TextArea
-                type="text"
-                label="Description"
-                name="description"
-                value={values.description}
-                error={errors.description ? true : false}
-                onChange={onChange}
-              />
-              <Form.Input
-                type="text"
-                label="Points"
-                name="points"
-                value={values.points}
-                error={errors.points ? true : false}
-                onChange={onChange}
-              />
-              <Form.Input
-                type="text"
-                label="Start Date"
-                name="startDate"
-                value={values.startDate}
-                error={errors.startDate ? true : false}
-                onChange={onChange}
-              />
-              <Form.Input
-                type="text"
-                label="End Date"
-                name="endDate"
-                value={values.endDate}
-                error={errors.endDate ? true : false}
-                onChange={onChange}
-              />
-              <Button
-                type="reset"
-                color="grey"
-                onClick={() => closeModal("createTask")}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" floated="right">
-                Create
-              </Button>
-            </Form>
-          </Modal.Description>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                {Object.keys(errors).length > 0 && (
+                  <div className="ui error message">
+                    <ul className="list">
+                      {Object.values(errors).map(value => (
+                        <li key={value}>{value}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <Form
+                  onSubmit={onSubmit}
+                  noValidate
+                  className={loading ? "loading" : ""}
+                >
+                  <Form.Input
+                    type="text"
+                    label="Name"
+                    name="name"
+                    value={values.name}
+                    error={errors.name ? true : false}
+                    onChange={onChange}
+                  />
+                  <Form.TextArea
+                    type="text"
+                    label="Description"
+                    name="description"
+                    value={values.description}
+                    error={errors.description ? true : false}
+                    onChange={onChange}
+                  />
+                  <Form.Input
+                    type="text"
+                    label="Points"
+                    name="points"
+                    value={values.points}
+                    error={errors.points ? true : false}
+                    onChange={onChange}
+                  />
+                  <Form.Input
+                    type="text"
+                    label="Start Date"
+                    name="startDate"
+                    value={values.startDate}
+                    error={errors.startDate ? true : false}
+                    onChange={onChange}
+                  />
+                  <Form.Input
+                    type="text"
+                    label="End Date"
+                    name="endDate"
+                    value={values.endDate}
+                    error={errors.endDate ? true : false}
+                    onChange={onChange}
+                  />
+                  <Button
+                    type="reset"
+                    color="grey"
+                    onClick={() => closeModal("createTask")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" floated="right">
+                    Create
+                  </Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Modal.Content>
       </Modal>
     </>
   );
-}
+  }
 
 const CREATE_TASK_MUTATION = gql`
   mutation createTask(
