@@ -51,19 +51,19 @@ function Corporations(props) {
                   raised
                   image={corporation.logo}
                   header={corporation.name}
-                  extra={<Button
-                          icon="plus square"
+                  extra={
+                        <Button
+                          content="View Profile"
+                          icon="eye"
+                          labelPosition="left"
                           color="red"
                           onClick={()=>{
                               getCoroporationInfo(corporation);
                               openModal("viewCorporation");
                             }}
-                          >
-                            {/* <Icon name='plus square' /> */}
-                            View Profile
-                          </Button>
+                        />
                         }
-                />
+                  />
               </Grid.Column>
             ))}
           </Grid.Row>
@@ -94,7 +94,7 @@ function Corporations(props) {
 
       <Modal
         open={viewCorporationModal}
-        size="small"
+        size="large"
         closeOnEscape={true}
         closeOnDimmerClick={false}
       >
