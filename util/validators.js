@@ -1,3 +1,5 @@
+const parseDataURL = require("data-urls");
+
 module.exports.validateRegisterInput = (
   firstName,
   lastName,
@@ -227,6 +229,7 @@ module.exports.validateManualInputInput = username => {
 module.exports.validateEditUserProfile = (
   firstName,
   lastName,
+  photo,
   major,
   year,
   graduating,
@@ -254,6 +257,15 @@ module.exports.validateEditUserProfile = (
       errors.lastName =
         "Last name must be at least 3 character, max 20. No special characters or numbers.";
     }
+  }
+
+  const dataUrlData = parseDataURL(photo);
+
+  if (dataUrlData.mimeType.toString().slice(0, 6) !== "image/") {
+    errors.photo = "Please use a valid image file for photo.";
+  } else if (Buffer.byteLength(dataUrlData.body) > 102400) {
+    errors.photo =
+      "Please use an image file that doesn't exceed the maximum file size (100 KB)";
   }
 
   if (major.trim() === "") {

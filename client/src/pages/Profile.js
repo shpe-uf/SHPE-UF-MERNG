@@ -111,7 +111,7 @@ function Profile() {
     a.onload = function(e) {
       values.photo = e.target.result;
       setPhotoFile(e.target.result);
-    }
+    };
     console.log(values);
   }
 
@@ -169,7 +169,12 @@ function Profile() {
                     className="image-profile"
                     style={{ marginBottom: 16 }}
                   />
-                  <Form.Input type="file" onChange={()=> onChange, photoSelectedHandler}/>
+                  <Form.Input
+                    type="file"
+                    label="Photo"
+                    error={errors.photo ? true : false}
+                    onChange={(() => onChange, photoSelectedHandler)}
+                  />
                   <Form.Input
                     type="text"
                     label="First Name"

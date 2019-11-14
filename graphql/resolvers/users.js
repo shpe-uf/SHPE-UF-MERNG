@@ -788,6 +788,7 @@ module.exports = {
       const { errors, valid } = validateEditUserProfile(
         firstName,
         lastName,
+        photo,
         major,
         year,
         graduating,
