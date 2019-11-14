@@ -766,6 +766,65 @@ module.exports = {
         token: token
       }
       return Token;
+    },
+    async changePermission(
+      _,
+      {
+        email,
+        currentEmail,
+        permission
+      }
+    ) {
+
+      var {
+        errors,
+        valid
+      } = validateEmailInput(email);
+      if (!valid) {
+        throw new UserInputError("Errors.", {
+          errors
+        });
+      }
+
+      if(email === currentEmail){
+        valid = false;
+        errors.general = "Can't change own permissions";
+        throw new UserInputError("Can't change own permissions", {
+          errors
+        });
+      }
+
+      const adminUser = await User.findOne({
+        email: currentEmail
+      });
+      if (!adminUser) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", {
+          errors
+        });
+      }
+      if(adminUser.permission != 'admin'){
+        valid = false;
+        errors.general = "Must be an admin to change permission";
+        throw new UserInputError("Must be an admin to change permission", {
+          errors
+        });
+      }
+
+      const user = await User.findOneAndUpdate({
+        email
+      }, {
+        permission
+      });
+      if (!user) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", {
+          errors
+        });
+      }
+
+      return valid;
+
     }
   }
 };

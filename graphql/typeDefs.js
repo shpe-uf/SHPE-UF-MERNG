@@ -127,5 +127,6 @@ module.exports = gql`
     forgotPassword(email: String!): User!
     resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
     confirmUser(id: String!): User!
+    changePermission(email: String!, currentEmail: String!, permission: String!): Boolean!
   }
 `;
