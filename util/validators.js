@@ -235,17 +235,6 @@ module.exports.validateEditUserProfile = (
   ethnicity,
   sex
 ) => {
-  console.log("########################");
-  console.log("VALIDATOR!");
-  console.log("firstName: " + firstName);
-  console.log("lastName: " + lastName);
-  console.log("major: " + major);
-  console.log("year: " + year);
-  console.log("graduating: " + graduating);
-  console.log("country: " + country);
-  console.log("ethnicity: " + ethnicity);
-  console.log("sex: " + sex);
-
   const errors = {};
 
   const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;

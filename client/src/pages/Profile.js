@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import gql from "graphql-tag";
-import { Container, Grid, Button, Modal, Form } from "semantic-ui-react";
+import { Container, Grid, Button, Modal, Form, Image } from "semantic-ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { useForm } from "../util/hooks";
@@ -17,6 +17,8 @@ import ethnicityOptions from "../assets/options/ethnicity.json";
 import sexOptions from "../assets/options/sex.json";
 
 function Profile() {
+  var [photoFile, setPhotoFile] = useState({});
+
   const [errors, setErrors] = useState({});
   var {
     user: { id, email }
@@ -42,6 +44,7 @@ function Profile() {
       values.country = user.country;
       values.ethnicity = user.ethnicity;
       values.sex = user.sex;
+      setPhotoFile(user.photo);
     }
   };
 
@@ -102,6 +105,18 @@ function Profile() {
     editProfile();
   }
 
+  function photoSelectedHandler(event) {
+    var a = new FileReader();
+    a.readAsDataURL(event.target.files[0]);
+    a.onload = function(e) {
+      values.photo = e.target.result;
+      setPhotoFile(e.target.result);
+    }
+    console.log(values);
+  }
+
+  console.log(values);
+
   return (
     <div className="body">
       <Title title="My Profile" />
@@ -147,6 +162,14 @@ function Profile() {
                   noValidate
                   className={loading ? "loading" : ""}
                 >
+                  <Image
+                    fluid
+                    rounded
+                    src={photoFile}
+                    className="image-profile"
+                    style={{ marginBottom: 16 }}
+                  />
+                  <Form.Input type="file" onChange={()=> onChange, photoSelectedHandler}/>
                   <Form.Input
                     type="text"
                     label="First Name"
