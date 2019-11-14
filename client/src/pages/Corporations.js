@@ -99,7 +99,7 @@ function Corporations(props) {
         closeOnDimmerClick={false}
       >
       <Modal.Header>
-        <h2>Corporation</h2>
+        <h2>Company Profile</h2>
       </Modal.Header>
       <Modal.Content>
         <Grid>
@@ -107,11 +107,16 @@ function Corporations(props) {
             <Grid.Column>
             <CorporationProfile corporation={corporationInfo}/>
               <Button 
-                type="reset"
-                color="grey"
-                floated="right"
+                color="teal"
+                floated="left"
+                content="Close"
                 onClick={()=> closeModal("viewCorporation")}
-              >Close</Button>
+              />
+              <Button
+                color="red"
+                floated="right"
+                content="Add Bookmark"
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>
