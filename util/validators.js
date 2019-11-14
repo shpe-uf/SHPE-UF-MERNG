@@ -227,7 +227,6 @@ module.exports.validateManualInputInput = username => {
 module.exports.validateEditUserProfile = (
   firstName,
   lastName,
-  photo,
   major,
   year,
   graduating,
@@ -255,10 +254,6 @@ module.exports.validateEditUserProfile = (
       errors.lastName =
         "Last name must be at least 3 character, max 20. No special characters or numbers.";
     }
-  }
-
-  if (photo.trim() === "") {
-    errors.photo = "Photo is required.";
   }
 
   if (major.trim() === "") {
