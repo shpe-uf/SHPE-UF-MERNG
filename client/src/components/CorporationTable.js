@@ -19,31 +19,47 @@ import { CSVLink } from "react-csv";
 
 import { FETCH_USERS_QUERY } from "../util/graphql";
 import CorporationProfile from "../components/CorporationProfile";
+import CorporationProfileForm from "../components/CorporationProfileForm";
 
 
 function CorporationTable({ corporations }) {
   const [viewCorporationModal, setViewCorporationModal] = useState(false);
-  
+  const [editCorporationModal, setEditCorporationModal] = useState(false);
+
   //State to keep track of the current corporation selected
   const [corporationInfo, setCorporationInfo] = useState({});
 
     //Corporation information modals
     const openModal = name => {
-      if (name === "viewCorporation") {
-        setViewCorporationModal(true);
+      switch(name) {
+        case "viewCorporation":
+          setViewCorporationModal(true);
+          break;
+        case "editCorporation":
+          setEditCorporationModal(true);
+          break;
       }
     };
   
     const closeModal = name => {
-      if (name === "viewCorporation") {
-        setCorporationInfo({});
-        setViewCorporationModal(false);
+      switch(name) {
+        case "viewCorporation":
+          setCorporationInfo({});
+          setViewCorporationModal(false);
+          break;
+        case "editCorporation":
+          setCorporationInfo({});
+          setEditCorporationModal(false);
       }
     }
 
     //Setter function to update the state with the selected corporation
     function getCorporationInfo(corporationInfo) {
       setCorporationInfo(corporationInfo);
+    }
+
+    function editCorporationUpdate(state) {
+      setEditCorporationModal(state);
     }
 
   return (
@@ -137,7 +153,7 @@ function CorporationTable({ corporations }) {
           </Table>
 
           <Modal
-            open={viewCorporationModal}
+            open={editCorporationModal}
             size="large"
             closeOnEscape={true}
             closeOnDimmerClick={false}
@@ -156,11 +172,44 @@ function CorporationTable({ corporations }) {
                     content="Close"
                     onClick={()=> closeModal("viewCorporation")}
                   />
+                  <Button 
+                    color="teal"
+                    floated="right"
+                    content="Edit"
+                    onClick={()=>{
+                      closeModal("viewCorporation");
+                      getCorporationInfo(corporation);
+                      openModal("editCorporation");
+                    }}
+                  />
                 </Grid.Column>
               </Grid.Row>
             </Grid>
           </Modal.Content>
-        </Modal>
+          </Modal>
+
+          <Modal
+            open={viewCorporationModal}
+            size="large"
+            closeOnEscape={true}
+            closeOnDimmerClick={false}
+          >
+            <Modal.Header>
+              <h2>Company Profile</h2>
+            </Modal.Header>
+            <Modal.Content>
+              <Gird>
+                <Grid.Row>
+                  <Grid.Column>
+                    <CorporationProfileForm 
+                      corporation={corporationInfo} 
+                      editCorporation={editCorporationUpdate.bind(this)} 
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+              </Gird>
+            </Modal.Content>
+          </Modal>
         </div>
       )}
     </>
