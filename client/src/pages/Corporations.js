@@ -29,7 +29,7 @@ function Corporations(props) {
   }
 
   //Setter function to update the state with the selected corporation
-  function getCoroporationInfo(corporationInfo) {
+  function getCorporationInfo(corporationInfo) {
     setCorporationInfo(corporationInfo);
   }
 
@@ -58,7 +58,7 @@ function Corporations(props) {
                           labelPosition="left"
                           color="red"
                           onClick={()=>{
-                              getCoroporationInfo(corporation);
+                              getCorporationInfo(corporation);
                               openModal("viewCorporation");
                             }}
                         />

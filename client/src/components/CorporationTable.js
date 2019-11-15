@@ -18,8 +18,34 @@ import moment from "moment";
 import { CSVLink } from "react-csv";
 
 import { FETCH_USERS_QUERY } from "../util/graphql";
+import CorporationProfile from "../components/CorporationProfile";
+
 
 function CorporationTable({ corporations }) {
+  const [viewCorporationModal, setViewCorporationModal] = useState(false);
+  
+  //State to keep track of the current corporation selected
+  const [corporationInfo, setCorporationInfo] = useState({});
+
+    //Corporation information modals
+    const openModal = name => {
+      if (name === "viewCorporation") {
+        setViewCorporationModal(true);
+      }
+    };
+  
+    const closeModal = name => {
+      if (name === "viewCorporation") {
+        setCorporationInfo({});
+        setViewCorporationModal(false);
+      }
+    }
+
+    //Setter function to update the state with the selected corporation
+    function getCorporationInfo(corporationInfo) {
+      setCorporationInfo(corporationInfo);
+    }
+
   return (
     <>
       <Dimmer active={corporations ? false : true} inverted>
@@ -90,6 +116,10 @@ function CorporationTable({ corporations }) {
                     <Table.Cell textAlign="center">
                       <Button
                         icon
+                        onClick={()=>{
+                          getCorporationInfo(corporation);
+                          openModal("viewCorporation");
+                        }}
                       >
                         <Icon name="info" />
                       </Button>
@@ -105,6 +135,32 @@ function CorporationTable({ corporations }) {
                 ))}
             </Table.Body>
           </Table>
+
+          <Modal
+            open={viewCorporationModal}
+            size="large"
+            closeOnEscape={true}
+            closeOnDimmerClick={false}
+          >
+          <Modal.Header>
+            <h2>Company Profile</h2>
+          </Modal.Header>
+          <Modal.Content>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column>
+                <CorporationProfile corporation={corporationInfo}/>
+                  <Button 
+                    color="teal"
+                    floated="left"
+                    content="Close"
+                    onClick={()=> closeModal("viewCorporation")}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Modal.Content>
+        </Modal>
         </div>
       )}
     </>
