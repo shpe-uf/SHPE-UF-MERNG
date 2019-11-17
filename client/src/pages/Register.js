@@ -47,15 +47,6 @@ function Register(props) {
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(
-      _,
-      {
-        data: { register: userData }
-      }
-    ) {
-      //context.login(userData);
-      //props.history.push("/login");
-    },
     onCompleted(){
       setOpenModal(true);
     },
