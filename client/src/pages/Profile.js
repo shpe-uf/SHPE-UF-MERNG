@@ -16,8 +16,11 @@ import countryOptions from "../assets/options/country.json";
 import ethnicityOptions from "../assets/options/ethnicity.json";
 import sexOptions from "../assets/options/sex.json";
 
+import placeholder from "../assets/images/placeholder.png";
+
 function Profile() {
   var [photoFile, setPhotoFile] = useState({});
+  var [originalPhoto, setOriginalPhoto] = useState({});
 
   const [errors, setErrors] = useState({});
   var {
@@ -45,6 +48,7 @@ function Profile() {
       values.ethnicity = user.ethnicity;
       values.sex = user.sex;
       setPhotoFile(user.photo);
+      setOriginalPhoto(user.photo);
     }
   };
 
@@ -106,16 +110,19 @@ function Profile() {
   }
 
   function photoSelectedHandler(event) {
-    var a = new FileReader();
-    a.readAsDataURL(event.target.files[0]);
-    a.onload = function(e) {
-      values.photo = e.target.result;
-      setPhotoFile(e.target.result);
-    };
-    console.log(values);
+    console.log(event.target.files.length);
+    if (event.target.files.length > 0) {
+      var a = new FileReader();
+      a.readAsDataURL(event.target.files[0]);
+      a.onload = function(e) {
+        values.photo = e.target.result;
+        setPhotoFile(e.target.result);
+      };
+    } else {
+      setPhotoFile(originalPhoto);
+      values.photo = originalPhoto;
+    }
   }
-
-  console.log(values);
 
   return (
     <div className="body">
@@ -162,13 +169,23 @@ function Profile() {
                   noValidate
                   className={loading ? "loading" : ""}
                 >
-                  <Image
-                    fluid
-                    rounded
-                    src={photoFile}
-                    className="image-profile"
-                    style={{ marginBottom: 16 }}
-                  />
+                  {photoFile === "" ? (
+                    <Image
+                      fluid
+                      rounded
+                      src={placeholder}
+                      className="image-profile"
+                      style={{ marginBottom: 16 }}
+                    />
+                  ) : (
+                    <Image
+                      fluid
+                      rounded
+                      src={photoFile}
+                      className="image-profile"
+                      style={{ marginBottom: 16 }}
+                    />
+                  )}
                   <Form.Input
                     type="file"
                     label="Photo"
