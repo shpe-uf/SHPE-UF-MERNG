@@ -72,7 +72,7 @@ const userSchema = new Schema({
   },
   permission: {
     type: String,
-    default: 'member'
+    default: "member"
   },
   listServ: Boolean,
   events: [{

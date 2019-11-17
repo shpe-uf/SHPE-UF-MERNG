@@ -788,8 +788,8 @@ module.exports = {
 
       if(email === currentEmail){
         valid = false;
-        errors.general = "Can't change own permissions";
-        throw new UserInputError("Can't change own permissions", {
+        errors.general = "Can't change your own permissions";
+        throw new UserInputError("Can't change your own permissions", {
           errors
         });
       }
