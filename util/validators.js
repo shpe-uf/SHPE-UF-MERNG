@@ -16,7 +16,7 @@ module.exports.validateRegisterInput = (
 
   const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
   const usernameValidator = /^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i;
-  const emailRegex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
+  const emailValidator = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
   const passwordValidator = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,}$/;
 
   if (firstName.trim() === "") {
@@ -73,7 +73,7 @@ module.exports.validateRegisterInput = (
   if (email.trim() === "") {
     errors.email = "Email is required.";
   } else {
-    if (!email.match(emailRegex)) {
+    if (!email.match(emailValidator)) {
       errors.email = "Invalid email address.";
     }
   }
@@ -127,16 +127,16 @@ module.exports.validatePasswordInput = (password, confirmPassword) => {
     errors,
     valid: Object.keys(errors).length < 1
   };
-}
+};
 
-module.exports.validateEmailInput = (email) => {
-  const emailRegex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
+module.exports.validateEmailInput = email => {
+  const emailValidator = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
   const errors = {};
 
   if (email.trim() === "") {
     errors.email = "Email is required.";
   } else {
-    if (!email.match(emailRegex)) {
+    if (!email.match(emailValidator)) {
       errors.email = "Invalid email address.";
     }
   }
@@ -216,6 +216,116 @@ module.exports.validateManualInputInput = username => {
 
   if (username.trim() === "") {
     errors.username = "No username was provided.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
+module.exports.validateRegisterAlumniInput = (
+  firstName,
+  lastName,
+  email,
+  undergrad,
+  grad,
+  employer,
+  position,
+  location,
+  linkedin
+) => {
+  const errors = {};
+
+  const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+  const emailValidator = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
+
+  if (firstName.trim() === "") {
+    errors.firstName = "First name is required.";
+  } else {
+    if (!firstName.match(nameValidator)) {
+      errors.firstName =
+        "First Name must be at least 3 character, max 20. No special characters or numbers.";
+    }
+  }
+
+  if (lastName.trim() === "") {
+    errors.lastName = "Last Name is required.";
+  } else {
+    if (!lastName.match(nameValidator)) {
+      errors.lastName =
+        "Last name must be at least 3 character, max 20. No special characters or numbers.";
+    }
+  }
+
+  if (email.trim() === "") {
+    errors.email = "Email is required.";
+  } else {
+    if (!email.match(emailValidator)) {
+      errors.email = "Invalid email address.";
+    }
+  }
+
+  if (undergrad.university.trim() === "") {
+    errors.undergrad.university = "Undergraduate university is required.";
+  }
+
+  if (undergrad.year.trim() === "") {
+    errors.undergrad.year = "Undergraduate year of graduation is required.";
+  }
+
+  if (undergrad.major.trim() === "") {
+    errors.undergrad.major = "Undergraduate major is required.";
+  }
+
+  if (
+    grad.university.trim() !== "" ||
+    grad.year.trim() !== "" ||
+    grad.major.trim() !== ""
+  ) {
+    if (grad.university.trim() === "") {
+      errors.grad.university = "Graduate university is required.";
+    }
+
+    if (grad.year.trim() === "") {
+      errors.grad.year = "Graduate year of graduation is required.";
+    }
+
+    if (grad.major.trim() === "") {
+      errors.grad.major = "Graduate major is required.";
+    }
+  }
+
+  if (
+    grad.university.trim() === "" &&
+    grad.year.trim() === "" &&
+    grad.major.trim() === ""
+  ) {
+    if (employer.trim() === "") {
+      errors.employer = "Employer is required.";
+    }
+
+    if (position.trim() === "") {
+      errors.position = "Position is required.";
+    }
+  }
+
+  if (location.city.trim() === "") {
+    errors.location.city = "City is required.";
+  }
+
+  if (location.country === "United States") {
+    if (location.state.trim() === "") {
+      errors.location.state = "State is required.";
+    }
+  }
+
+  if (location.country.trim() === "") {
+    errors.location.country = "City is required.";
+  }
+
+  if (linkedin.trim() === "") {
+    errors.linkedin = "LinkedIn Profile link is required."
   }
 
   return {

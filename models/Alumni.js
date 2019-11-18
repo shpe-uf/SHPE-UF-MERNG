@@ -9,9 +9,36 @@ const alumniSchema = new Schema({
     type: String,
     required: true
   },
-  ugrad: {
+  email: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true,
+    unique: true
+  },
+  undergrad: {
+    university: {
+      type: String,
+      required: true
+    },
+    year: {
+      type: Number,
+      required: true
+    },
+    major: {
+      type: String,
+      required: true
+    }
+  },
+  grad: {
+    university: {
+      type: String
+    },
+    year: {
+      type: Number
+    },
+    major: {
+      type: String
+    }
   },
   employer: {
     type: String,
@@ -21,29 +48,31 @@ const alumniSchema = new Schema({
     type: String,
     required: true
   },
-  country: {
-    type: String,
-    required: true
-  },
   location: {
-    type: String,
-    required: true
+    city: {
+      type: String,
+      required: true
+    },
+    state: {
+      type: String
+    },
+    country: {
+      type: String,
+      required: true
+    }
   },
-  username: {
-    type: String,
-    required: true,
-    lowercase: true,
-    unique: true
+  coordinates: {
+    latitude: {
+      type: Number,
+      required: true
+    },
+    longitude: {
+      type: Number,
+      required: true
+    }
   },
-  email: {
-    type: String,
-    required: true,
-    lowercase: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
+  linkedin: {
+    type: String
   }
 });
 
