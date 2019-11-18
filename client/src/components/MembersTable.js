@@ -24,10 +24,6 @@ function MembersTable({ users }) {
 
   const closeModal = name => {
     if (name === "userInfo") {
-      setUserInfoModal(false);
-    }
-
-    if (name === "userInfo") {
       setUserInfo({});
       setUserInfoModal(false);
     }
@@ -48,7 +44,7 @@ function MembersTable({ users }) {
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Username</Table.HeaderCell>
-              <Table.HeaderCell>E-mail</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
               <Table.HeaderCell textAlign="center">
                 Fall Points
               </Table.HeaderCell>

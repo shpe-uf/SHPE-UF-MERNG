@@ -20,6 +20,9 @@ import Alumni from "./pages/public/Alumni";
 import EBoard from "./pages/public/EBoard";
 import DevTeam from "./pages/public/DevTeam";
 import Sponsors from "./pages/public/Sponsors";
+import ResetPassword from "./pages/public/ResetPassword";
+import ForgotPassword from "./pages/public/ForgotPassword";
+import Confirm from "./pages/public/Confirm";
 import Admin from "./pages/Admin";
 import Points from "./pages/Points";
 import Profile from "./pages/Profile";
@@ -27,9 +30,7 @@ import Events from "./pages/Events";
 import Members from "./pages/Members";
 import Requests from "./pages/Requests";
 import Statistics from "./pages/Statistics";
-import ResetPassword from "./pages/public/ResetPassword";
-import ForgotPassword from "./pages/public/ForgotPassword";
-import Confirm from "./pages/public/Confirm";
+import AlumniDirectory from "./pages/AlumniDirectory";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           <UserRoute exact path="/admin/statistics" component={Statistics} />
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
+          <UserRoute exact path="/alumnidirectory" component={AlumniDirectory} />
         </main>
         <Footer />
       </Router>
