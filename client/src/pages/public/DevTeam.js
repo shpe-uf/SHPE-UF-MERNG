@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Card, Responsive } from "semantic-ui-react";
 
-import DevTeamCards from "../components/DevTeamCards";
+import DevTeamCards from "../../components/DevTeamCards";
 
 function DevTeam() {
   return (

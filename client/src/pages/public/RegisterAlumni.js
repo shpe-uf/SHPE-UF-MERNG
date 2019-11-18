@@ -11,11 +11,11 @@ import {
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
-import { useForm } from "../util/hooks";
+import { useForm } from "../../util/hooks";
 
-import majorOptions from "../assets/options/major.json";
-import countryOptions from "../assets/options/country.json";
-import stateOptions from "../assets/options/state.json";
+import majorOptions from "../../assets/options/major.json";
+import countryOptions from "../../assets/options/country.json";
+import stateOptions from "../../assets/options/state.json";
 
 function RegisterAlumni(props) {
   const [errors, setErrors] = useState({});

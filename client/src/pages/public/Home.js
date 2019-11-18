@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Container, Image, Divider } from "semantic-ui-react";
 
-import homePhoto1 from "../assets/images/home-1.jpg";
-import homePhoto2 from "../assets/images/home-2.jpg";
-import homePhoto3 from "../assets/images/home-3.jpg";
+import homePhoto1 from "../../assets/images/home-1.jpg";
+import homePhoto2 from "../../assets/images/home-2.jpg";
+import homePhoto3 from "../../assets/images/home-3.jpg";
 
 function Home() {
   return (

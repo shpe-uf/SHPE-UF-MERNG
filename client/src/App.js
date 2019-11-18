@@ -11,15 +11,15 @@ import UserRoute from "./util/UserRoute";
 import MenuBar from "./components/MenuBar";
 import Footer from "./components/Footer";
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import RegisterAlumni from "./pages/RegisterAlumni";
-import About from "./pages/About";
-import Alumni from "./pages/Alumni";
-import EBoard from "./pages/EBoard";
-import DevTeam from "./pages/DevTeam";
-import Sponsors from "./pages/Sponsors";
+import Home from "./pages/public/Home";
+import Login from "./pages/public/Login";
+import Register from "./pages/public/Register";
+import RegisterAlumni from "./pages/public/RegisterAlumni";
+import About from "./pages/public/About";
+import Alumni from "./pages/public/Alumni";
+import EBoard from "./pages/public/EBoard";
+import DevTeam from "./pages/public/DevTeam";
+import Sponsors from "./pages/public/Sponsors";
 import Admin from "./pages/Admin";
 import Points from "./pages/Points";
 import Profile from "./pages/Profile";
@@ -27,9 +27,9 @@ import Events from "./pages/Events";
 import Members from "./pages/Members";
 import Requests from "./pages/Requests";
 import Statistics from "./pages/Statistics";
-import ResetPassword from "./pages/ResetPassword";
-import ForgotPassword from "./pages/ForgotPassword";
-import Confirm from "./pages/Confirm";
+import ResetPassword from "./pages/public/ResetPassword";
+import ForgotPassword from "./pages/public/ForgotPassword";
+import Confirm from "./pages/public/Confirm";
 
 function App() {
   return (
