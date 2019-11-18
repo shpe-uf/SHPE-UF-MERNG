@@ -5,7 +5,7 @@ const Request = require("../../models/Request.js");
 require("dotenv").config();
 
 const {
-  validateCreateCorporationInput
+  validateCreateEditCorporationInput: validateCreateEditCorporationInput
 } = require("../../util/validators");
 
 module.exports = {
@@ -49,7 +49,7 @@ module.exports = {
     ) {
       console.log('RUNNING')
 
-      const { valid, errors } = validateCreateCorporationInput(
+      const { valid, errors } = validateCreateEditCorporationInput(
         name,
         logo,
         slogan,
@@ -120,7 +120,7 @@ module.exports = {
     async updateCorporation(
       _,
       {
-        createCorporationInput: {
+        editCorporationProfileInput: {
           name,
           logo,
           slogan, 
@@ -144,8 +144,25 @@ module.exports = {
         }
       }
     ){
-      console.log("Update Running")
-      /**Enter logic here */
+      console.log("Update Corporation Running")
+
+      const { valid, errors } = validateCreateEditCorporationInput(
+        name,
+        logo,
+        slogan,
+        majors,
+        industries,
+        overview,
+        mission,
+        goals,
+        businessModel,
+        newsLink,
+        applyLink
+      );
+
+      if (!valid) {
+        throw new UserInputError("Errors", {errors});
+      }
 
       academia = (academia === "true" || academia === true) ? true : false;
       govContractor = (govContractor === "true" || govContractor === true) ? true : false;

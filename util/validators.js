@@ -224,7 +224,7 @@ module.exports.validateManualInputInput = username => {
   };
 };
 
-module.exports.validateCreateCorporationInput = (
+module.exports.validateCreateEditCorporationInput = (
   name,
   logo,
   slogan,

@@ -135,6 +135,28 @@ module.exports = gql`
     nationalConvention: String!
   }
 
+  input EditCorporationProfileInput {
+    name: String!,
+    slogan: String!,
+    majors: [String!]!,
+    industries: [String!]!,
+    overview: String!,
+    mission: String!,
+    goals: String!,
+    businessModel: String!,
+    newsLink: String!,
+    applyLink: String!,
+    academia: String!,
+    govContractor: String!,
+    nonProfit: String!,
+    visaSponsor: String!,
+    shpeSponsor: String!,
+    industryPartnership: String!,
+    fallBBQ: String!,
+    springBBQ: String!,
+    nationalConvention: String!
+  }
+
   input RedeemPointsInput {
     code: String!
     username: String!
@@ -167,7 +189,7 @@ module.exports = gql`
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
     createCorporation(createCorporationInput: CreateCorporationInput): [Corporation]
-    updateCorporation(createCorporationInput: CreateCorporationInput): [Corporation]
+    updateCorporation(editCorporationProfileInput: editCorporationProfileInput): [Corporation]
     createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
