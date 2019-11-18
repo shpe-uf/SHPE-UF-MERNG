@@ -11,7 +11,7 @@ module.exports = {
   Query: {
     async getAlumnis() {
       try {
-        const alumni = await Alumni.find().sort({ lastName: 1, firstName: 1 });
+        const alumni = await Alumni.find().sort({lastName: 1, firstName: 1});
         return alumni;
       } catch (err) {
         throw new Error(err);
@@ -59,6 +59,8 @@ module.exports = {
         });
       }
 
+      grad.year = grad.year === "" ? 0 : grad.year;
+
       const isEmailDuplicate = await Alumni.findOne({ email });
 
       if (isEmailDuplicate) {
@@ -87,8 +89,12 @@ module.exports = {
       await geocoder
         .geocode(alumniLocation)
         .then(function(res) {
-          coordinates.latitude = res[0].latitude;
-          coordinates.longitude = res[0].longitude;
+          var north = Math.random() * 0.007;
+          var south = -1 * Math.random() * 0.007;
+          var east = Math.random() * 0.007;
+          var west = -1 * Math.random() * 0.007;
+          coordinates.latitude = res[0].latitude + north + south;
+          coordinates.longitude = res[0].longitude + east + west;
         })
         .catch(function(err) {
           throw new UserInputError(
@@ -102,22 +108,22 @@ module.exports = {
           );
         });
 
-        const newAlumni = new Alumni({
-          firstName,
-          lastName,
-          email,
-          undergrad,
-          grad,
-          employer,
-          position,
-          location,
-          coordinates,
-          linkedin
-        });
+      const newAlumni = new Alumni({
+        firstName,
+        lastName,
+        email,
+        undergrad,
+        grad,
+        employer,
+        position,
+        location,
+        coordinates,
+        linkedin
+      });
 
-        await newAlumni.save();
+      await newAlumni.save();
 
-        return newAlumni;
+      return newAlumni;
     }
   }
 };

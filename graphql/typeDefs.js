@@ -62,12 +62,12 @@ module.exports = gql`
     firstName: String!
     lastName: String!
     email: String!
-    undergrad: Education
-    grad: Education
+    undergrad: Undergrad!
+    grad: Grad!
     employer: String!
     position: String!
     location: Location
-    coordinates: Coordinates
+    coordinates: Coordinates!
     linkedin: String!
   }
 
@@ -81,7 +81,13 @@ module.exports = gql`
     token: String!
   }
 
-  type Education {
+  type Undergrad {
+    university: String!
+    year: Int!
+    major: String!
+  }
+
+  type Grad {
     university: String!
     year: Int!
     major: String!
@@ -94,8 +100,8 @@ module.exports = gql`
   }
 
   type Coordinates {
-    latitude: Int!
-    longitude: Int!
+    latitude: Float!
+    longitude: Float!
   }
 
   ### QUERY AND MUTATION INPUTS ###
@@ -144,16 +150,22 @@ module.exports = gql`
     firstName: String!
     lastName: String!
     email: String!
-    undergrad: EducationInput
-    grad: EducationInput
+    undergrad: UndergradInput!
+    grad: GradInput!
     employer: String!
     position: String!
-    location: LocationInput
+    location: LocationInput!
     linkedin: String!
   }
 
   ### AUXILIARY INPUTS ###
-  input EducationInput {
+  input UndergradInput {
+    university: String!
+    year: String!
+    major: String!
+  }
+
+  input GradInput {
     university: String!
     year: String!
     major: String!

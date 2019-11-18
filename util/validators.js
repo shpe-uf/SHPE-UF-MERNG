@@ -239,6 +239,7 @@ module.exports.validateRegisterAlumniInput = (
 
   const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
   const emailValidator = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
+  const yearValidator = /^\d{4}$/;
 
   if (firstName.trim() === "") {
     errors.firstName = "First name is required.";
@@ -271,7 +272,11 @@ module.exports.validateRegisterAlumniInput = (
   }
 
   if (undergrad.year.trim() === "") {
-    errors.undergrad.year = "Undergraduate year of graduation is required.";
+    errors.undergrad.year = "Undergraduate year is required.";
+  } else {
+    if (!undergrad.year.match(yearValidator)) {
+      errors.undergrad.year = "Invalid undergraduate year.";
+    }
   }
 
   if (undergrad.major.trim() === "") {
@@ -288,7 +293,11 @@ module.exports.validateRegisterAlumniInput = (
     }
 
     if (grad.year.trim() === "") {
-      errors.grad.year = "Graduate year of graduation is required.";
+      errors.grad.year = "Graduate year is required.";
+    } else {
+      if (!grad.year.match(yearValidator)) {
+        errors.grad.year = "Invalid graduate year.";
+      }
     }
 
     if (grad.major.trim() === "") {
@@ -325,7 +334,7 @@ module.exports.validateRegisterAlumniInput = (
   }
 
   if (linkedin.trim() === "") {
-    errors.linkedin = "LinkedIn Profile link is required."
+    errors.linkedin = "LinkedIn Profile link is required.";
   }
 
   return {

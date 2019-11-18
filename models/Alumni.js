@@ -34,7 +34,8 @@ const alumniSchema = new Schema({
       type: String
     },
     year: {
-      type: Number
+      type: Number,
+      default: 0
     },
     major: {
       type: String
