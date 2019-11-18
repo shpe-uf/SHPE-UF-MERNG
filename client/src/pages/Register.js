@@ -80,7 +80,7 @@ function Register(props) {
           <ModalBasic open={openModal} handleClose={handleClose} message={msg}/>
           <Segment.Group className="segment-spacing">
             <Segment className="title-bg-accent-1">
-              <h1 className="text-white">Register</h1>
+              <h1 className="text-white">Registration</h1>
             </Segment>
             <Segment>
               {Object.keys(errors).length > 0 && (

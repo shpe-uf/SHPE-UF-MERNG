@@ -14,9 +14,11 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import DevTeam from "./pages/DevTeam";
+import RegisterAlumni from "./pages/RegisterAlumni";
 import About from "./pages/About";
+import Alumni from "./pages/Alumni";
 import EBoard from "./pages/EBoard";
+import DevTeam from "./pages/DevTeam";
 import Sponsors from "./pages/Sponsors";
 import Admin from "./pages/Admin";
 import Points from "./pages/Points";
@@ -38,7 +40,9 @@ function App() {
           <Route exact path="/" component={Home} />
           <AuthRoute exact path="/login" component={Login} />
           <AuthRoute exact path="/register" component={Register} />
+          <Route exact path="/register/alumni" component={RegisterAlumni} />
           <Route exact path="/about" component={About} />
+          <Route exact path="/alumni" component={Alumni} />
           <Route exact path="/eboard" component={EBoard} />
           <Route exact path="/devteam" component={DevTeam} />
           <Route exact path="/sponsors" component={Sponsors} />
@@ -52,7 +56,7 @@ function App() {
           <UserRoute exact path="/admin/statistics" component={Statistics} />
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
-          </main>
+        </main>
         <Footer />
       </Router>
     </AuthProvider>

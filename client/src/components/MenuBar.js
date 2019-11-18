@@ -27,6 +27,9 @@ function MenuBar() {
             <Menu.Item as={Link} to="/about">
               About Us
             </Menu.Item>
+            <Menu.Item as={Link} to="/alumni">
+              Alumni
+            </Menu.Item>
             <Menu.Item as={Link} to="/eboard">
               E-Board
             </Menu.Item>

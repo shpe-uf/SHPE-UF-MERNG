@@ -73,7 +73,8 @@ const alumniSchema = new Schema({
     }
   },
   linkedin: {
-    type: String
+    type: String,
+    required: true
   }
 });
 

@@ -36,6 +36,16 @@ module.exports = {
         }
       }
     ) {
+      console.log(firstName);
+      console.log(lastName);
+      console.log(email);
+      console.log(undergrad);
+      console.log(grad);
+      console.log(employer);
+      console.log(position);
+      console.log(location);
+      console.log(linkedin);
+
       const { valid, errors } = validateRegisterAlumniInput(
         firstName,
         lastName,

@@ -235,6 +235,23 @@ module.exports.validateRegisterAlumniInput = (
   location,
   linkedin
 ) => {
+  console.log("##### VALIDATOR #####");
+  console.log(firstName);
+  console.log(lastName);
+  console.log(email);
+  console.log(undergrad.university);
+  console.log(undergrad.year);
+  console.log(undergrad.major);
+  console.log(grad.university);
+  console.log(grad.year);
+  console.log(grad.major);
+  console.log(employer);
+  console.log(position);
+  console.log(location.country);
+  console.log(location.city);
+  console.log(location.state);
+  console.log(linkedin);
+
   const errors = {};
 
   const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
@@ -268,19 +285,19 @@ module.exports.validateRegisterAlumniInput = (
   }
 
   if (undergrad.university.trim() === "") {
-    errors.undergrad.university = "Undergraduate university is required.";
+    errors.undergradUniversity = "Undergraduate university is required.";
   }
 
   if (undergrad.year.trim() === "") {
-    errors.undergrad.year = "Undergraduate year is required.";
+    errors.undergradYear = "Undergraduate year is required.";
   } else {
     if (!undergrad.year.match(yearValidator)) {
-      errors.undergrad.year = "Invalid undergraduate year.";
+      errors.undergradYear = "Invalid undergraduate year.";
     }
   }
 
   if (undergrad.major.trim() === "") {
-    errors.undergrad.major = "Undergraduate major is required.";
+    errors.undergradMajor = "Undergraduate major is required.";
   }
 
   if (
@@ -289,19 +306,19 @@ module.exports.validateRegisterAlumniInput = (
     grad.major.trim() !== ""
   ) {
     if (grad.university.trim() === "") {
-      errors.grad.university = "Graduate university is required.";
+      errors.gradUniversity = "Graduate university is required.";
     }
 
     if (grad.year.trim() === "") {
-      errors.grad.year = "Graduate year is required.";
+      errors.gradYear = "Graduate year is required.";
     } else {
       if (!grad.year.match(yearValidator)) {
-        errors.grad.year = "Invalid graduate year.";
+        errors.gradYear = "Invalid graduate year.";
       }
     }
 
     if (grad.major.trim() === "") {
-      errors.grad.major = "Graduate major is required.";
+      errors.gradMajor = "Graduate major is required.";
     }
   }
 
@@ -320,17 +337,17 @@ module.exports.validateRegisterAlumniInput = (
   }
 
   if (location.city.trim() === "") {
-    errors.location.city = "City is required.";
+    errors.locationCity = "City is required.";
   }
 
   if (location.country === "United States") {
     if (location.state.trim() === "") {
-      errors.location.state = "State is required.";
+      errors.locationState = "State is required.";
     }
   }
 
   if (location.country.trim() === "") {
-    errors.location.country = "City is required.";
+    errors.locationCountry = "Country is required.";
   }
 
   if (linkedin.trim() === "") {
