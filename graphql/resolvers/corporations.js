@@ -115,6 +115,86 @@ module.exports = {
       const corporations = await Corporation.find();
 
       return corporations;
+    },
+
+    async updateCorporation(
+      _,
+      {
+        createCorporationInput: {
+          name,
+          logo,
+          slogan, 
+          majors, 
+          industries, 
+          overview, 
+          mission, 
+          goals, 
+          businessModel, 
+          newsLink,       
+          applyLink, 
+          academia, 
+          govContractor, 
+          nonProfit, 
+          visaSponsor, 
+          shpeSponsor, 
+          industryPartnership,
+          fallBBQ, 
+          springBBQ, 
+          nationalConvention 
+        }
+      }
+    ){
+      console.log("Update Running")
+      /**Enter logic here */
+
+      academia = (academia === "true" || academia === true) ? true : false;
+      govContractor = (govContractor === "true" || govContractor === true) ? true : false;
+      nonProfit = (nonProfit === "true" || nonProfit === true) ? true : false;
+      visaSponsor = (visaSponsor === "true" || visaSponsor === true) ? true : false;
+      shpeSponsor = (shpeSponsor === "true" || shpeSponsor === true) ? true : false;
+      industryPartnership = (industryPartnership === "true" || industryPartnership === true) ? true : false;
+      fallBBQ = (fallBBQ === "true" || fallBBQ === true) ? true : false;
+      springBBQ = (springBBQ === "true" || springBBQ === true) ? true : false;
+      nationalConvention = (nationalConvention === "true" || nationalConvention === true) ? true : false;
+    
+      const companyExists = await Corporation.findOne({name});
+
+      if (companyExists) {
+        const updatedCorporation = await Corporation.findOneAndUpdate(
+          {name},
+          {
+            name,
+            logo,
+            slogan,
+            majors,
+            industries,
+            overview,
+            mission,
+            goals,
+            businessModel,
+            newsLink,
+            applyLink,
+            academia, 
+            govContractor, 
+            nonProfit, 
+            visaSponsor, 
+            shpeSponsor, 
+            industryPartnership,
+            fallBBQ, 
+            springBBQ, 
+            nationalConvention          
+          },
+          {
+            //Returns the updated object, instead of the old one
+            new: true
+          }
+          );
+          
+        return updatedCorporation;
+
+      } else {
+        throw new Error("Company not found.");
+      }
     }
   }
 };
