@@ -24,7 +24,7 @@ module.exports = gql`
     events: [Event]!
     token: String!
     message: String!
-    classes: [String]!
+    classes: [Class]!
     fallPercentile: Int!
     springPercentile: Int!
     summerPercentile: Int!
@@ -117,12 +117,16 @@ module.exports = gql`
     username: String!
   }
 
+  input DeleteClassInput {
+    code: String!
+    username: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
-    getClasses(username: String!): [String]
     getMatches(username: String!): [Match]
     getMajorStat: [StatData]
     getCountryStat: [StatData]
@@ -139,6 +143,8 @@ module.exports = gql`
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
-    createClass(createClassInput: CreateClassInput): [String]
+    createClass(createClassInput: CreateClassInput): [Class]
+    deleteClass(deleteClassInput: DeleteClassInput): [Class]
+    getClass(code: String!): Class!
   }
 `;

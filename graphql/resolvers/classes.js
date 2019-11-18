@@ -7,45 +7,47 @@ const {
 } = require("../../util/validators");
 
 const findMatch = (matches, username) => {
-  matches.map((match) => {
-    if (match.username === username) {
-      match.score += 5;
-      return true;
-    }})
-  return false;
+  for (var i=0; i<matches.length; i++) {
+    if (matches[i].username === username) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 module.exports = {
-    Query: {
-        async getClasses(_, { username }) {
-          try {
-            const user = await User.findOne({ username });
-            var foundClasses = [];
-            foundClasses = user.classes;
-            return foundClasses;
-          } catch (err) {
-            throw new Error(err);
-          }
-        },
+    Query: {        
         async getMatches(_, { username }) {
           const matches = [];
           const user = await User.findOne({ username });
-          user.classes.map(async (classTemp) => {
-            const newClassTemp = await Class.findOne({ code: classTemp });
+          await user.classes.map(async (classTemp) => {
+            const newClassTemp = await Class.findOne({ code: classTemp.code });
             newClassTemp.users.map(userTemp => {
-              if(!findMatch(matches, userTemp.username) && user.username !== userTemp.username){
-                const newTemp = {firstName:userTemp.firstName, lastName: userTemp.lastName, email: userTemp.email, username: userTemp.username, score:5};
-                matches.push(newTemp);
+              if(findMatch(matches, userTemp.username) === -1) {
+                if (user.username !== userTemp.username) {
+                  const newTemp = {firstName:userTemp.firstName, lastName: userTemp.lastName, email: userTemp.email, username: userTemp.username, score:5};
+                  matches.push(newTemp);
+                }
+              } else {
+                matches[findMatch(matches, userTemp.username)].score += 5;
+              } 
               }
-            })
+            )
           });
-          await User.findOne({ username });
-          console.log(matches)
+          await User.find();
           return matches;
         }
     },
 
     Mutation: {
+      async getClass(_, { code }) {
+        try {
+          const tclass = await Class.findOne({ code });
+          return tclass;
+        } catch (err) {
+          throw new Error(err);
+        }
+      },
         async createClass(_, { createClassInput: { code, username }}) {
           const { valid, errors } = validateCreateClassInput(
             code);
@@ -109,12 +111,19 @@ module.exports = {
               });
               await newClass.save();
             }
+            
+
+            const classJustAdded = await Class.findOne({ code });
 
             await User.findOneAndUpdate({ username }, 
               {
                 $push: {
                   classes: {  
-                    $each: [code],
+                    $each: [
+                      {
+                        code
+                      }
+                    ],
                     $sort: { code: 1 }
                   }
                 }  
@@ -127,6 +136,25 @@ module.exports = {
             var res = await User.findOne({ username });
 
             return res.classes;
+        },
+        async deleteClass(_, { deleteClassInput: { code, username }}) {
+          const user = await User.findOne({ username });
+          const classFound = await Class.findOne({ code });
+
+          if(classFound) {
+            classFound.users = classFound.users.filter(userT => userT.username !== username);
+            await classFound.save();
+          }
+
+          if(user) {
+            user.classes = user.classes.filter(classT => classT.code !== code);
+            await user.save();
+          }
+
+          const res = await User.findOne({ username });
+          return res.classes;
         }
     }
 }
+
+

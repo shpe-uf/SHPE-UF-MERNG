@@ -1,32 +1,53 @@
 import React, { useContext, useState } from "react";
-import { Segment, Header, Grid, Container, Button, Modal, Form, List } from "semantic-ui-react";
+import { Segment, Card, Image, Message, Table, Header, Grid, Container, Button, Modal, Form, Icon, List, Tab, Placeholder } from "semantic-ui-react";
 import gql from "graphql-tag";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks";
 
 import placeholder from "../assets/images/team/placeholder.png";
 import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
 
 import Title from "../components/Title";
+import { findValuesAddedToEnums } from "graphql/utilities/findBreakingChanges";
 
 function ClassSharing() {
-    //const [errors, setErrors] = useState({});
     var {
-        user: { username }
+        user: { username, id }
       } = useContext(AuthContext)
-      
+    
+    const [errors, setErrors] = useState({});  
     const [addClassModal, setAddClassModal] = useState(false);
-    //const [displayClassModal, setDisplayClassModal] = useState(false);
+    const [userProfileModal, setUserProfileModal] = useState(false);
+    const [displayClassModal, setDisplayClassModal] = useState(false);
+    const [dispUserProfile, setDispUserProfile] = useState({});
+    const [displayClass, setDisplayClass] = useState({});
+    const [displayUsers, setDisplayUsers] = useState([]);  
+    //const [classUsers, setClassUsers] = useState({});
 
     const openModal = name => {
         if (name === "addClass") {
           setAddClassModal(true);
+        }
+        if (name === "displayClass") {
+          setDisplayClassModal(true);
+        }
+        if (name === "userProfile") {
+          setUserProfileModal(true);
         }
       };
     
       const closeModal = name => {
         if (name === "addClass") {
           setAddClassModal(false);
+        }
+        if (name === "displayClass") {
+          setDisplayUsers([]);
+          setDisplayClass({});
+          setDisplayClassModal(false);
+        }
+        if (name === "userProfile") {
+          setDispUserProfile({});
+          setUserProfileModal(false);
         }
       };  
 
@@ -37,13 +58,34 @@ function ClassSharing() {
 
       var getClasses = [];
 
-      var { data } = useQuery(GET_CLASSES_QUERY, {
-          variables: {username}
+      var { data } = useQuery(FETCH_USER_QUERY, {
+          variables: {userId: id}
         });
+
+        if (data.getUser) {
+          getClasses = data.getUser.classes;
+      }
         
-        if (data.getClasses) {
-            getClasses = data.getClasses;
-        }
+        var classUsers = [];
+        const [getClass, { data: getClassData, loading:loadingClass }] = useMutation(GET_CLASS_QUERY, {
+          update(
+            _,
+            {
+              data: { getClass }
+            }
+          ) {
+            classUsers.splice(0, classUsers.length);
+            for (var i = 0; i < getClass.users.length; i++) {
+              classUsers.push(getClass.users[i]);
+            }
+          }
+        });
+
+        // if (getClassData) {
+        //   classUsers = getClassData.getClass;
+        // }
+
+      
 
       const [createClass, { loading }] = useMutation(ADD_CLASS_MUTATION, {
         update(
@@ -53,38 +95,64 @@ function ClassSharing() {
           }
         ) {
           values.code = "";
+          console.log(classData)
           getClasses.splice(0, getClasses.length);
           for (var i = 0; i < classData.length; i++) {
             getClasses.push(classData[i]);
           }
           setAddClassModal(false);
         },
-
+        onError(err) {
+          console.log(err)
+          setErrors(err.graphQLErrors[0].extensions.exception.errors);
+        },
         variables: values
+      });
+
+      const [deleteClass] = useMutation(DELETE_CLASS_MUTATION, {
+        update(
+          _,
+          {
+            data: { deleteClass: deleteData }
+          }
+        ) {
+          getClasses.splice(0, getClasses.length);
+          for (var i = 0; i < deleteData.length; i++) {
+            getClasses.push(deleteData[i]);
+          }
+          setDisplayClassModal(false);
+        }
       });
 
       var getMatches = [];
 
-    // var { data: dataM } = useQuery(GET_MATCHES_QUERY, {
-    //     variables: {username}
-    // });
-
-    // if (dataM.getMatches) {
-    //     getMatches = dataM.getMatches;
-    // }
-    getMatches = ["sofie", "kjdnf", "sdkjn"];
+    var { data: dataM } = useQuery(GET_MATCHES_QUERY, {
+        variables: {username}
+    });
+    
+    if (dataM.getMatches) {
+        getMatches = dataM.getMatches;
+    }
 
       function addClassCallback() {
         createClass();
+      }
+
+      function getDisplayClass(classCode) {
+        setDisplayClass(classCode);
+      }
+
+      function getDisplayUsers(users) {
+        setDisplayUsers(users);
       }
 
   return (
     <div className="body">
       <Title title="Class Sharing" />
       <Container>
-      <Grid>
+      <Grid verticalAlign='top' stackable>
           <Grid.Row>
-              <Grid.Column width={8}>
+              <Grid.Column width={5}>
                 <h2>My Schedule</h2>
                 <Button
                 content="Add Class"
@@ -92,37 +160,77 @@ function ClassSharing() {
                 labelPosition="left"
                 onClick={() => openModal("addClass")}
               />
-              <List selection verticalAlign='middle'>
-                {getClasses && getClasses.map((classTemp) => (
-                    <List.Item>
-                    {/* <List.Content onClick={() => openModal("displayClass")}> 
-                      <List.Header>{classTemp}</List.Header>
-                    </List.Content> */}
-                    <List.Header>{classTemp}</List.Header>
-                  </List.Item>
-                )
-                )}
-                </List>
+              {/* {console.log(getClasses)} */}
+              {getClasses.length > 0 ? 
+              <Table striped selectable unstackable celled>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell width={8} textAlign="left">Class Code</Table.HeaderCell>
+                  </Table.Row>
+                  </Table.Header>
+                  {getClasses && getClasses.map((classTemp) => (
+                    <Table.Row onClick={() => {
+                      getDisplayClass(classTemp.code);
+                      getClass({variables: {code: classTemp.code}});
+                      getDisplayUsers(classUsers);
+                      openModal("displayClass");
+                    }} key={classTemp.code}>
+                      <Table.Cell textAlign="left">{classTemp.code}</Table.Cell>
+                      {/* <Table.Cell textAlign="center" >{(getClass({variables: {code: classTemp.code}}) && !console.log(classUsers)) ? classUsers.length : 7}</Table.Cell> */}
+                  </Table.Row>))}
+              </Table> : 
+              <Message info>
+                <Message.Header>Add classes to match with classmates!</Message.Header>
+              </Message>}
               </Grid.Column>
-              <Grid.Column width={8}>
-              <Container style={{ margin: 20 }}>
-              <Segment attached="top">
-                <Header as="h2" content="My Matches" />
-                </Segment>
-                <Segment attached="bottom">
-                
-                </Segment>
+              <Grid.Column width={11}>
+              <Container>
+                <h2>My Matches</h2>
+                <Card.Group stackable itemsPerRow={3}>
+                  {/* {getMatches.sort((a,b) => (a.score > b.score) ? 1 : ((b.score > a.score) ? -1 : 0))} */}
+                    {getMatches.map((matchTemp) => (
+                      <Card fluid key={matchTemp.username} onClick={() => {
+                        setDispUserProfile(matchTemp)
+                        openModal("userProfile")}
+                      }>
+                      <Card.Content>
+                        <Card.Header>{matchTemp.firstName + " " + matchTemp.lastName}</Card.Header>
+                        <Card.Meta>
+                          <span className='date'>{matchTemp.score/5 + ((matchTemp.score > 5) ? " shared classes" : " shared class")}</span>
+                        </Card.Meta>
+                        {/* <Card.Description>
+                          {"Email: " + matchTemp.email}
+                        </Card.Description> */}
+                      </Card.Content>
+                      <Card.Content extra>
+                        <a>
+                          {"@" + matchTemp.username}
+                        </a>
+                      </Card.Content>
+                    </Card>
+                    ))}
+                    </Card.Group>
                     </Container>
               </Grid.Column>
           </Grid.Row>
       </Grid>
       </Container>
+
       <Modal open={addClassModal} size="tiny">
         <Modal.Header>
           <h2>Add Class</h2>
         </Modal.Header>
         <Modal.Content>
           <Modal.Description>
+          {Object.keys(errors).length > 0 && (
+              <div className="ui error message">
+                <ul className="list">
+                  {Object.values(errors).map(value => (
+                    <li key={value}>{value}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           <Form
               onSubmit={onSubmit}
               noValidate
@@ -150,60 +258,139 @@ function ClassSharing() {
         </Modal.Content>
       </Modal>
 
-      {/* <Modal open={displayClassModal} size="tiny">
+      <Modal open={displayClassModal} closeOnEscape={true} size="tiny">
         <Modal.Header>
-          <h2>{this.state.classCode}</h2>
+          <h2>
+          {displayClass}
+          <Button color='blue' floated="right" onClick={()=>closeModal("displayClass")}>
+            <Icon name='times'/>
+              Close
+          </Button> 
+          </h2>
         </Modal.Header>
         <Modal.Content>
           <Modal.Description>
-          <Form
-              onSubmit={onSubmit}
-              noValidate
-              className={loading ? "loading" : ""}
-            >
-                <Form.Input
-                type="text"
-                label="Course Code"
-                name="code"
-                value={values.code}
-                onChange={onChange}
-              />
-                <Button
-                type="reset"
-                color="grey"
-                onClick={() => closeModal("displayClass")}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" floated="right">
-                Add
-              </Button>
-                </Form>
+            <Table striped selectable unstackable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>User</Table.HeaderCell>
+                  <Table.HeaderCell width={5}>Email</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {displayUsers.map((userTemp) => (
+                <Table.Row key={userTemp.email} onClick={
+                  () => {
+                    setDispUserProfile(userTemp)
+                    openModal("userProfile")
+                  }
+                }>
+                <Table.Cell>
+                  {userTemp.firstName + " " + userTemp.lastName}
+                </Table.Cell>
+                <Table.Cell>
+                  {userTemp.email}
+                </Table.Cell>
+                </Table.Row>))}                  
+              </Table.Body>
+            </Table> 
+            <Button color='red' onClick={() => deleteClass({variables: {code: displayClass, username}})}>
+            <Icon name='trash alternate outline'/>
+            Remove Class
+          </Button>        
           </Modal.Description>
         </Modal.Content>
-      </Modal> */}
-    </div>
+      </Modal>
 
-    
-     
+      <Modal open={userProfileModal} size="tiny">
+        <Modal.Header>
+          <h2>
+          {dispUserProfile.firstName + " " + dispUserProfile.lastName}
+          <Button color='blue' floated="right" onClick={() => closeModal("userProfile")}>
+            {/* {onclick} */}
+            <Icon name='times'/>
+            Close
+          </Button>
+          </h2>
+        </Modal.Header>
+        <Modal.Content>
+        <Container>
+        <Grid>
+          <Grid.Row centered columns={2}>
+            <Grid.Column textAlign='center'>
+              <Image src={placeholder} size="large"/>      
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Table striped unstackable width={6} celled>
+                  <Table.Row>
+                    <Table.HeaderCell textAlign="center">Email:</Table.HeaderCell>
+                    <Table.Cell>
+                      {<a href={"mailto:" + dispUserProfile.email} className="link-email">
+                      <Icon name="mail" />{dispUserProfile.email}</a>}
+                      {/* {dispUserProfile.email} */}
+                    </Table.Cell>
+                  </Table.Row>
+              </Table>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>  
+        </Container>  
+        </Modal.Content>              
+      </Modal>
+    </div>   
   );
 }
 
 const ADD_CLASS_MUTATION = gql`
   mutation createClass($code: String!, $username: String!) {
-    createClass(createClassInput: { code: $code, username: $username })
+    createClass(createClassInput: { code: $code, username: $username }) {
+      code
+    }
   }
 `;
 
-const GET_CLASSES_QUERY = gql`
-  query getClasses($username: String!) {
-    getClasses(username: $username)
+const DELETE_CLASS_MUTATION = gql`
+  mutation deleteClass($code: String!, $username: String!) {
+    deleteClass(deleteClassInput: { code: $code, username: $username }) {
+      code
+    }
+  }
+`;
+
+const FETCH_USER_QUERY = gql`
+  query getUser($userId: ID!) {
+    getUser(userId: $userId) {
+      classes {
+        code
+      }
+    }
+  }
+`;
+
+const GET_CLASS_QUERY = gql`
+  mutation getClass($code: String!) {
+    getClass(code: $code) {
+      code
+      users {
+        firstName
+        lastName
+        email
+      }
+    }
     }
 `;
 
 const GET_MATCHES_QUERY = gql`
   query getMatches($username: String!) {
-    getMatches(username: $username)
+    getMatches(username: $username) {
+      username
+      score
+      firstName
+      lastName
+      email
+    }
     }
 `;
 

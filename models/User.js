@@ -79,7 +79,9 @@ const userSchema = new Schema({
     createdAt: String,
     points: Number
   }],
-  classes: [String]
+  classes: [{
+    code: String
+  }]
 });
 
 module.exports = model("User", userSchema);
