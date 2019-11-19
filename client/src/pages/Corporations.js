@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Card, Icon, Tab, Segment } from "semantic-ui-react";
+import { Container, Grid, Card, Button, Tab, Segment, Image, Icon } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import imageDataURI from 'image-data-uri';
 
@@ -27,11 +27,19 @@ function Corporations(props) {
                   raised
                   image={corporation.logo}
                   header={corporation.name}
-                  extra={<a>
-                          <Icon name='plus square' />
-                          View Profile
-                        </a>}
-                />
+                >
+                  <Image
+                    src={corporation.logo}
+                    fluid
+                    rounded
+                  />
+                  <Button
+                    color="linkedin"
+                    fluid
+                  >
+                    <Icon name="plus square"/> View Profile
+                  </Button>
+                </Card>
               </Grid.Column>
             ))}
           </Grid.Row>

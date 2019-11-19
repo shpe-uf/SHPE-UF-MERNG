@@ -36,9 +36,6 @@ function MenuBar() {
             <Menu.Item as={Link} to="/sponsors">
               Sponsors
             </Menu.Item>
-            <Menu.Item as={Link} to="/corporations">
-              Corporate Database
-            </Menu.Item>
 
             <Menu.Menu position="right">
               {user ? (
@@ -53,6 +50,9 @@ function MenuBar() {
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
                         Points Program
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/corporations">
+                        Corporate Database
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>

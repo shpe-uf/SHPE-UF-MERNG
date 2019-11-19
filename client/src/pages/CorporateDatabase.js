@@ -12,6 +12,7 @@ import industryOptions from "../assets/options/industry.json";
 
 import Title from "../components/Title";
 import CorporationTable from "../components/CorporationTable";
+import ImageUploader from 'react-images-upload'
 
 function CorporateDatabase() {
   const [errors, setErrors] = useState({});
@@ -54,7 +55,6 @@ function CorporateDatabase() {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-
     variables: values
   });
 
@@ -93,25 +93,26 @@ function CorporateDatabase() {
   }
 
   function addLogo(file) {
+    console.log(file)
 
-    var imageData = file.target.files;
-    var frontValidation = imageData[0].name.slice(-4);
+    var imageData = file;
+    //var frontValidation = imageData[0].name.slice(-4);
 
     var dataBuffer = new Buffer(imageData);
     
-    if (frontValidation === '.png') {
-      var mediaType = 'PNG';
-      values.logo = imageDataURI.encode(dataBuffer, mediaType).toString();
-      console.log(values);
-    } else if (frontValidation === '.jpg') {
-      var mediaType = 'JPG';
-      values.logo = imageDataURI.encode(dataBuffer, mediaType).toString();
-      console.log(values);
-    } else {
-      setErrors({
-        logo: 'Invalid file type'
-      })
-    }
+    // if (frontValidation === '.png') { 
+    //   var mediaType = 'PNG';
+    //   values.logo = imageDataURI.encode(dataBuffer, mediaType).toString();
+    //   console.log(values);
+    // } else if (frontValidation === '.jpg') {
+    //   var mediaType = 'JPG';
+    //   values.logo = imageDataURI.encode(dataBuffer, mediaType).toString();
+    //   console.log(values);
+    // } else {
+    //   setErrors({
+    //     logo: 'Invalid file type'
+    //   })
+    //}
   }
 
   return (
@@ -165,13 +166,23 @@ function CorporateDatabase() {
                 className={loading ? "loading" : ""}
               >
                 <Form.Group>
-                  <Form.Input
+                  <ImageUploader
+                    withIcon={true}
+                    buttonText="Pick a logo"
+                    onChange={addLogo}
+                    imgExtension={['.jpg','.png']}
+                    maxFileSize={5242880}
+                    withPreview={true}
+                    label="Max file size: 5MB, jpg or png"
+                    singleImage={true}
+                  />
+                  {/* <Form.Input
                     type="file"
                     label="Logo"
                     name="logo"
                     errors={errors.logo ? true : false}
                     onChange={addLogo}
-                  />
+                  /> */}
                 </Form.Group>
                 <Form.Group widths="equal">
                   <Form.Input
