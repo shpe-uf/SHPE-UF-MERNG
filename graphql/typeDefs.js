@@ -22,6 +22,7 @@ module.exports = gql`
     permission: String!
     listServ: Boolean!
     events: [Event]!
+    tasks: [Task]!
     token: String!
     message: String!
     confirmed: Boolean!
@@ -117,12 +118,12 @@ module.exports = gql`
 
   input ApproveRejectRequestInput {
     username: String!
-    eventName: String!
+    name: String!
   }
 
   input ManualInputInput {
     username: String!
-    eventName: String!
+    name: String!
   }
 
   input ManualTaskInputInput {

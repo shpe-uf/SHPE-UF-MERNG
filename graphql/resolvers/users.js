@@ -95,7 +95,8 @@ module.exports = {
             createdAt: user.createdAt,
             permission: user.permission,
             listServ: user.listServ,
-            events: user.events
+            events: user.events,
+            tasks: user.tasks
           };
 
           return newUser;
@@ -399,7 +400,8 @@ module.exports = {
         summerPoints: 0,
         permission: "User",
         listServ,
-        events: []
+        events: [],
+        tasks: []
       });
 
       const res = await newUser.save();
@@ -546,6 +548,7 @@ module.exports = {
           permission: user.permission,
           listServ: user.listServ,
           events: user.events,
+          tasks: user.tasks,
           message: "Event code has been sent for approval."
         };
 

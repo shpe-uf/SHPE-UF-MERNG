@@ -78,6 +78,14 @@ const userSchema = new Schema({
     createdAt: String,
     points: Number,
   }],
+
+  tasks: [{
+    name: String,
+    type: String,
+    createdAt: String,
+    points: Number
+  }],
+  
   token: {
     type: String
   },

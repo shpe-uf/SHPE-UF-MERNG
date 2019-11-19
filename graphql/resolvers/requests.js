@@ -37,13 +37,13 @@ module.exports = {
       _, {
         approveRejectRequestInput: {
           username,
-          eventName
+          name
         }
       }
     ) {
       const res = await Request.deleteOne({
         username: username,
-        eventName: eventName
+        name: name
       });
 
       const requests = await Request.find().sort({
@@ -57,12 +57,12 @@ module.exports = {
       _, {
         approveRejectRequestInput: {
           username,
-          eventName
+          name
         }
       }
     ) {
       const event = await Event.findOne({
-        name: eventName
+        name: name
       });
       const user = await User.findOne({
         username
@@ -114,7 +114,7 @@ module.exports = {
       });
 
       await Event.findOneAndUpdate({
-        name: eventName
+        name: name
       }, {
         $push: {
           users: {
@@ -139,7 +139,7 @@ module.exports = {
 
       const res = await Request.deleteOne({
         username: username,
-        eventName: eventName
+        name: name
       });
 
       const requests = await Request.find().sort({
