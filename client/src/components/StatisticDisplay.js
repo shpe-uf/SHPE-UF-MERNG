@@ -1,14 +1,11 @@
 import React from "react";
 import {
   Grid,
-  Segment,
-  Message,
   Table,
   Dimmer,
   Loader,
   Placeholder
 } from "semantic-ui-react";
-import ReactDOM from "react-dom";
 import { VictoryPie, VictoryTooltip } from "victory";
 import palette from "google-palette";
 
@@ -26,13 +23,13 @@ function Statistic({ statData }) {
 
     var paletteScale = palette("tol-rainbow", statData.length);
 
-    for (var i = 0; i < paletteScale.length; i++) {
-      paletteScale[i] = "#" + paletteScale[i];
+    for (var j = 0; j < paletteScale.length; j++) {
+      paletteScale[j] = "#" + paletteScale[j];
     }
   }
 
   return (
-    <Segment attached="bottom">
+    <>
       {statData ? (
         <Grid stackable>
           <Grid.Row>
@@ -91,7 +88,7 @@ function Statistic({ statData }) {
           </Placeholder>
         </>
       )}
-    </Segment>
+    </>
   );
 }
 
