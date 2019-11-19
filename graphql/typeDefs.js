@@ -25,6 +25,7 @@ module.exports = gql`
     token: String!
     message: String!
     classes: [Class]!
+    confirmed: Boolean!
     fallPercentile: Int!
     springPercentile: Int!
     summerPercentile: Int!
@@ -33,6 +34,10 @@ module.exports = gql`
   type Class {
     code: String!
     users: [User]!
+  }
+  
+  type Token {
+    token: String!
   }
 
   type Event {
@@ -146,5 +151,8 @@ module.exports = gql`
     createClass(createClassInput: CreateClassInput): [Class]
     deleteClass(deleteClassInput: DeleteClassInput): [Class]
     getClass(code: String!): Class!
+    forgotPassword(email: String!): User!
+    resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
+    confirmUser(id: String!): User!
   }
 `;

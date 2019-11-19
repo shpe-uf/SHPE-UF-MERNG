@@ -101,9 +101,12 @@ function Login(props) {
                             </label>
                           </div>
                         </Form.Field>
-                        <Button fluid type="submit">
-                          Login
-                        </Button>
+                        <span>
+                          <Button type="submit">Login</Button>
+                          <p style={{display : 'inline-block', float : 'right', marginTop: 12}}>
+                            Forgot Password? <a href="/forgot">Click Here</a>
+                          </p>
+                        </span>
                       </Form>
                     </Segment>
                   </Segment.Group>
@@ -170,9 +173,12 @@ function Login(props) {
                             </label>
                           </div>
                         </Form.Field>
-                        <Button fluid type="submit">
-                          Login
-                        </Button>
+                        <span>
+                          <Button type="submit">Login</Button>
+                          <p style={{display : 'inline-block', float : 'right', marginTop: 12}}>
+                            Forgot Password? <a href="/forgot">Click Here</a>
+                          </p>
+                        </span>
                       </Form>
                     </Segment>
                   </Segment.Group>
@@ -239,9 +245,12 @@ function Login(props) {
                             </label>
                           </div>
                         </Form.Field>
-                        <Button fluid type="submit">
-                          Login
-                        </Button>
+                        <span>
+                          <Button type="submit">Login</Button>
+                          <p style={{display : 'inline-block', float : 'right', marginTop: 12}}>
+                            Forgot Password? <a href="/forgot">Click Here</a>
+                          </p>
+                        </span>
                       </Form>
                     </Segment>
                   </Segment.Group>

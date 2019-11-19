@@ -38,7 +38,7 @@ const userSchema = new Schema({
   username: {
     type: String,
     required: true,
-    lowecase: true,
+    lowercase: true,
     unique: true
   },
   email: {
@@ -73,15 +73,26 @@ const userSchema = new Schema({
   },
   permission: String,
   listServ: Boolean,
-  events: [{
-    name: String,
-    category: String,
-    createdAt: String,
-    points: Number
-  }],
-  classes: [{
-    code: String
-  }]
+  events: [
+    {
+      name: String,
+      category: String,
+      createdAt: String,
+      points: Number
+    }
+  ],
+  classes: [
+    {
+      code: String
+    }
+  ],
+  token: {
+    type: String
+  },
+  confirmed: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = model("User", userSchema);
