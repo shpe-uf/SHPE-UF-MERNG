@@ -35,6 +35,10 @@ module.exports = {
             )
           });
           await User.find();
+
+          console.log(matches);
+          
+
           return matches;
         }
     },
