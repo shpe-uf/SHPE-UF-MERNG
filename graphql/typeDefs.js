@@ -65,6 +65,8 @@ module.exports = gql`
     lastName: String!
     username: String!
     email: String!
+    major: String!
+    year: String!
     score: Int!
   }
   type StatData{
