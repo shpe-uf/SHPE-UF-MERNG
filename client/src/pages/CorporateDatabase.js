@@ -1,8 +1,7 @@
-import React, { useState, useCallback } from "react";
-import { Grid, Container, Button, Form, Segment, Modal } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { Grid, Container, Button, Form, Segment, Modal, Image } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import imageDataURI from 'image-data-uri';
 
 import { useForm } from "../util/hooks";
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
@@ -12,13 +11,19 @@ import industryOptions from "../assets/options/industry.json";
 
 import Title from "../components/Title";
 import CorporationTable from "../components/CorporationTable";
-import ImageUploader from 'react-images-upload'
+
+import placeholder from "../assets/images/placeholder.png";
 
 function CorporateDatabase() {
   const [errors, setErrors] = useState({});
   const [addCorporationModal, setAddCorporationModal] = useState(false);
+  var [logoFile, setLogoFile] = useState({});
+  var [originalLogo, setOriginalLogo] = useState({});
 
-  var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
+  var corporations
+  useEffect(() =>{
+    corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
+  })
 
   const { onChange, onSubmit, values } = useForm(createCorporation, {
     name: "",
@@ -53,6 +58,7 @@ function CorporateDatabase() {
       setErrors(false)
     },
     onError(err) {
+      console.log(err);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     variables: values
@@ -92,27 +98,18 @@ function CorporateDatabase() {
     setAddCorporationModal(false);
   }
 
-  function addLogo(file) {
-    console.log(file)
-
-    var imageData = file;
-    //var frontValidation = imageData[0].name.slice(-4);
-
-    var dataBuffer = new Buffer(imageData);
-    
-    // if (frontValidation === '.png') { 
-    //   var mediaType = 'PNG';
-    //   values.logo = imageDataURI.encode(dataBuffer, mediaType).toString();
-    //   console.log(values);
-    // } else if (frontValidation === '.jpg') {
-    //   var mediaType = 'JPG';
-    //   values.logo = imageDataURI.encode(dataBuffer, mediaType).toString();
-    //   console.log(values);
-    // } else {
-    //   setErrors({
-    //     logo: 'Invalid file type'
-    //   })
-    //}
+  function logoSelectedHandler(event) {
+    if (event.target.files.length > 0) {
+      var a = new FileReader();
+      a.readAsDataURL(event.target.files[0]);
+      a.onload = function(e) {
+        values.logo = e.target.result;
+        setLogoFile(e.target.result);
+      };
+    } else {
+      setLogoFile(originalLogo);
+      values.logo = originalLogo;
+    }
   }
 
   return (
@@ -165,25 +162,29 @@ function CorporateDatabase() {
                 noValidate
                 className={loading ? "loading" : ""}
               >
-                <Form.Group>
-                  <ImageUploader
-                    withIcon={true}
-                    buttonText="Pick a logo"
-                    onChange={addLogo}
-                    imgExtension={['.jpg','.png']}
-                    maxFileSize={5242880}
-                    withPreview={true}
-                    label="Max file size: 5MB, jpg or png"
-                    singleImage={true}
+                {logoFile === "" ? (
+                  <Image
+                    fluid
+                    rounded
+                    src={placeholder}
+                    className="image-profile"
+                    style={{ marginBottom: 16 }}
                   />
-                  {/* <Form.Input
-                    type="file"
-                    label="Logo"
-                    name="logo"
-                    errors={errors.logo ? true : false}
-                    onChange={addLogo}
-                  /> */}
-                </Form.Group>
+                ) : (
+                  <Image
+                    fluid
+                    rounded
+                    src={logoFile}
+                    className="image-profile"
+                    style={{ marginBottom: 16 }}
+                  />
+                )}
+                <Form.Input
+                  type="file"
+                  label="Logo"
+                  error={errors.logo ? true : false}
+                  onChange={(() => onChange, logoSelectedHandler)}
+                />
                 <Form.Group widths="equal">
                   <Form.Input
                     type="text"
@@ -412,6 +413,7 @@ function CorporateDatabase() {
 const CREATE_CORPORATION = gql`
   mutation createCorporation(
     $name: String!
+    $logo: String!
     $slogan: String!
     $majors: [String!]!
     $industries: [String!]!
@@ -434,6 +436,7 @@ const CREATE_CORPORATION = gql`
     createCorporation(
       createCorporationInput: {
         name: $name
+        logo: $logo
         slogan: $slogan
         majors: $majors
         industries: $industries

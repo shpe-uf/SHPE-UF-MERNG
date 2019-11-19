@@ -47,7 +47,6 @@ module.exports = {
         }
       }
     ) {
-      console.log('RUNNING')
 
       const { valid, errors } = validateCreateCorporationInput(
         name,
@@ -62,7 +61,7 @@ module.exports = {
         newsLink,
         applyLink
       );
-      console.log(valid)
+      
       if (!valid) {
         throw new UserInputError("Errors", { errors });
       }

@@ -115,6 +115,7 @@ module.exports = gql`
 
   input CreateCorporationInput {
     name: String!,
+    logo: String!,
     slogan: String!,
     majors: [String!]!,
     industries: [String!]!,
