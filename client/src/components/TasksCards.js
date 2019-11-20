@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimmer, Loader, Segment, Header, Grid, Card } from "semantic-ui-react";
+import { Dimmer, Loader, Segment, Header, Grid, Card, Button } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { FETCH_TASKS_QUERY } from "../util/graphql";
@@ -20,36 +20,27 @@ function TasksCards({ user }) {
           </Header>
         </Segment>
       ) : (
-        <Card.Group>
-          {tasks &&
-            tasks.map((task, index) => (
-              <Card color="blue">
-                <Card.Content>
-                  <Grid>
-                    <Grid.Row itemsPerRow={2}>
-                      <Grid.Column width={14}>
-                        <Card.Header>{task.name}</Card.Header>
-                      </Grid.Column>
-                      <Grid.Column width={2}>
-                        <Card.Header textAlign="right">
-                          {task.points}
-                        </Card.Header>
-                      </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Card.Meta>
-                          {task.startDate} - {task.endDate}
-                        </Card.Meta>
-                        <Card.Description>{task.description}</Card.Description>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                </Card.Content>
-              </Card>
-            ))}
-        </Card.Group>
-      )}
+          <Card.Group>
+            {tasks &&
+              tasks.map((task, index) => (
+                <Card color="blue">
+                  <Card.Content><h5>{task.name}</h5></Card.Content>
+                  <Card.Content>
+                    {task.points}
+                  </Card.Content>
+                  <Card.Content>
+                    {task.startDate} - {task.endDate}
+                  </Card.Content>
+                  <Card.Content>{task.description}</Card.Content>
+                  <Card.Content>
+                    <Button fluid basic color='green'>
+                          Request?
+                        </Button>
+                  </Card.Content>
+                </Card>
+              ))}
+          </Card.Group>
+        )}
     </>
   );
 }

@@ -116,6 +116,11 @@ module.exports = gql`
     username: String!
   }
 
+  input RedeemTasksPointsInput{
+    name: String!
+    username: String!
+  }
+
   input ApproveRejectRequestInput {
     username: String!
     name: String!
@@ -150,6 +155,7 @@ module.exports = gql`
     createEvent(createEventInput: CreateEventInput): [Event]
     createTask(createTaskInput: CreateTaskInput): [Task]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
+    redeemTasksPoints(redeemTasksPointsInput: RedeemTasksPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
