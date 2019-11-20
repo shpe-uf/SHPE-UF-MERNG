@@ -42,12 +42,10 @@ const alumniSchema = new Schema({
     }
   },
   employer: {
-    type: String,
-    required: true
+    type: String
   },
   position: {
-    type: String,
-    required: true
+    type: String
   },
   location: {
     city: {

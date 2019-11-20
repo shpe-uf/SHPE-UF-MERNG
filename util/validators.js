@@ -235,23 +235,6 @@ module.exports.validateRegisterAlumniInput = (
   location,
   linkedin
 ) => {
-  console.log("##### VALIDATOR #####");
-  console.log(firstName);
-  console.log(lastName);
-  console.log(email);
-  console.log(undergrad.university);
-  console.log(undergrad.year);
-  console.log(undergrad.major);
-  console.log(grad.university);
-  console.log(grad.year);
-  console.log(grad.major);
-  console.log(employer);
-  console.log(position);
-  console.log(location.country);
-  console.log(location.city);
-  console.log(location.state);
-  console.log(linkedin);
-
   const errors = {};
 
   const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;

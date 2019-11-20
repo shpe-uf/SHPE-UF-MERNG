@@ -39,9 +39,7 @@ function RegisterAlumni(props) {
     locationCountry: "",
     linkedin: ""
   });
-
-  console.log(values);
-
+  
   const [addAlumni, { loading }] = useMutation(REGISTER_ALUMNI, {
     update(
       _,
@@ -54,6 +52,7 @@ function RegisterAlumni(props) {
       setShowRegistration(false);
     },
     onError(err) {
+      console.log(err);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
 
