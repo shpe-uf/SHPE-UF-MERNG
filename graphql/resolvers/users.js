@@ -508,7 +508,7 @@ module.exports = {
 
       if (event.request) {
         const request = await Request.findOne({
-          eventName: event.name,
+          name: event.name,
           username: user.username
         });
 
@@ -520,8 +520,8 @@ module.exports = {
         }
 
         const newRequest = new Request({
-          eventName: event.name,
-          category: event.category,
+          name: event.name,
+          type: event.category,
           points: event.points,
           firstName: user.firstName,
           lastName: user.lastName,
@@ -674,7 +674,7 @@ module.exports = {
       });
 
       if (request) {
-        errors.general = "Task sent for approval.";
+        errors.general = "Task already sent for approval.";
         throw new UserInputError("Task already sent for approval.", {
           errors
         });
