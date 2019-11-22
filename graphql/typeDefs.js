@@ -133,9 +133,6 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
-    confirmUser(id: String!): User!
-    forgotPassword(email: String!): User!
-    resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
     createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
