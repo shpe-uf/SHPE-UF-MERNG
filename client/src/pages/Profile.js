@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import gql from "graphql-tag";
-import { Grid, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
 import { AuthContext } from "../context/auth";
 
@@ -12,21 +12,17 @@ function Profile() {
     user: { id }
   } = useContext(AuthContext);
 
-  var {
-    data: { getUser }
-  } = useQuery(FETCH_USER_QUERY, {
+  var user = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
     }
-  });
+  }).data.getUser;
 
   return (
     <div className="body">
       <Title title="My Profile" />
       <Container>
-        <Grid stackable>
-          <UserProfile user={getUser} />
-        </Grid>
+        <UserProfile user={user} />
       </Container>
     </div>
   );

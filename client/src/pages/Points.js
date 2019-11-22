@@ -1,5 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Grid, Container, Button, Modal, Form } from "semantic-ui-react";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -12,21 +16,15 @@ import PointsTable from "../components/PointsTable";
 
 function Points() {
   const [errors, setErrors] = useState({});
-  var getUser = "";
-
   var {
     user: { id, username }
   } = useContext(AuthContext);
 
-  var { data } = useQuery(FETCH_USER_QUERY, {
+  var user = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
     }
-  });
-
-  if (data.getUser) {
-    getUser = data.getUser;
-  }
+  }).data.getUser;
 
   const [redeemPointsModal, setRedeemPointsModal] = useState(false);
 
@@ -74,28 +72,27 @@ function Points() {
   }
 
   function updateGetUser(userData) {
-    getUser.fallPoints = userData.fallPoints;
-    getUser.springPoints = userData.springPoints;
-    getUser.summerPoints = userData.summerPoints;
-    getUser.events = userData.events;
-    getUser.message = userData.message;
+    user.fallPoints = userData.fallPoints;
+    user.springPoints = userData.springPoints;
+    user.summerPoints = userData.summerPoints;
+    user.events = userData.events;
+    user.message = userData.message;
+
+    if (user.message !== "") {
+      toast.warn(user.message, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    }
   }
 
   return (
     <div className="body">
       <Title title="Points Program" />
-
       <Container>
-        <Grid stackable>
-          {getUser && getUser.message && getUser.message !== undefined && (
-            <Grid.Row>
-              <Grid.Column>
-                <div className="ui warning message">
-                  <p>{getUser.message}</p>
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-          )}
+        <Grid>
+          <div>
+            <ToastContainer />
+          </div>
           <Grid.Row>
             <Grid.Column>
               <Button
@@ -107,13 +104,14 @@ function Points() {
               />
             </Grid.Column>
           </Grid.Row>
-          {getUser && (
-            <>
-              <PointsBar user={getUser} />
-              <PointsTable user={getUser} />
-            </>
-          )}
         </Grid>
+
+        {user && (
+          <>
+            <PointsBar user={user} />
+            <PointsTable user={user} />
+          </>
+        )}
       </Container>
 
       <Modal open={redeemPointsModal} size="tiny">
@@ -121,7 +119,9 @@ function Points() {
           <h2>Redeem Points</h2>
         </Modal.Header>
         <Modal.Content>
-          <Modal.Description>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
             {Object.keys(errors).length > 0 && (
               <div className="ui error message">
                 <ul className="list">
@@ -155,7 +155,9 @@ function Points() {
                 Submit
               </Button>
             </Form>
-          </Modal.Description>
+            </Grid.Column>
+            </Grid.Row>
+            </Grid>
         </Modal.Content>
       </Modal>
     </div>
@@ -171,6 +173,9 @@ const FETCH_USER_QUERY = gql`
       fallPoints
       springPoints
       summerPoints
+      fallPercentile
+      springPercentile
+      summerPercentile
       events {
         name
         category

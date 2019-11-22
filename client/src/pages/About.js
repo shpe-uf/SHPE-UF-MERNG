@@ -1,5 +1,9 @@
 import React from "react";
-import { Container, Grid } from "semantic-ui-react";
+import { Container, Grid, Image } from "semantic-ui-react";
+
+import aboutPhoto1 from "../assets/images/about-1.jpg";
+import aboutPhoto2 from "../assets/images/about-2.jpg";
+import aboutPhoto3 from "../assets/images/about-3.jpg";
 
 function About() {
   return (
@@ -111,6 +115,20 @@ function About() {
           </Grid.Row>
         </Grid>
       </Container>
+
+      <Grid stackable>
+        <Grid.Row centered columns={3}>
+          <Grid.Column>
+            <Image bordered src={aboutPhoto1} />
+          </Grid.Column>
+          <Grid.Column>
+            <Image bordered src={aboutPhoto2} />
+          </Grid.Column>
+          <Grid.Column>
+            <Image bordered src={aboutPhoto3} />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </div>
   );
 }

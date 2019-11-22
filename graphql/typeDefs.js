@@ -24,6 +24,14 @@ module.exports = gql`
     events: [Event]!
     token: String!
     message: String!
+    confirmed: Boolean!
+    fallPercentile: Int!
+    springPercentile: Int!
+    summerPercentile: Int!
+  }
+
+  type Token {
+    token: String!
   }
 
   type Event {
@@ -62,6 +70,11 @@ module.exports = gql`
     lastName: String!
     username: String!
     createdAt: String!
+  }
+
+  type StatData{
+    _id: String!
+    value: Int!
   }
 
   input RegisterInput {
@@ -123,16 +136,24 @@ module.exports = gql`
     getEvents: [Event]
     getTasks: [Task]
     getRequests: [Request]
+    getMajorStat: [StatData]
+    getCountryStat: [StatData]
+    getYearStat: [StatData]
+    getSexStat: [StatData]
+    getEthnicityStat: [StatData]
   }
 
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
-    createEvent(createEventInput: CreateEventInput): Event!
+    createEvent(createEventInput: CreateEventInput): [Event]
     createTask(createTaskInput: CreateTaskInput): Task!
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
-    manualInput(manualInputInput: ManualInputInput): User!
+    manualInput(manualInputInput: ManualInputInput): [Event]
+    forgotPassword(email: String!): User!
+    resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
+    confirmUser(id: String!): User!
   }
 `;

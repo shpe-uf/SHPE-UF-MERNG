@@ -90,12 +90,11 @@ module.exports = {
         createdAt: new Date().toISOString()
       });
 
-      const res = await newEvent.save();
+      await newEvent.save();
 
-      return {
-        ...res._doc,
-        id: res._id
-      };
+      const updatedEvents = await Event.find();
+
+      return updatedEvents;
     },
 
     async manualInput(
@@ -237,7 +236,9 @@ module.exports = {
         }
       );
 
-      return updatedUser;
+      const updatedEvents = await Event.find();
+
+      return updatedEvents;
     }
   }
 };

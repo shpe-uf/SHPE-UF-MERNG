@@ -5,7 +5,7 @@ import {
   Dropdown,
   Responsive,
   Button,
-  Sticky
+  Icon
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
@@ -17,29 +17,22 @@ function MenuBar() {
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <Sticky>
+    <>
       <Responsive minWidth={992}>
         <Menu inverted>
           <Container>
-            <Menu.Item className="brand-name-logo" as={Link} to="/">
+            <Menu.Item className="brand-logo" as={Link} to="/">
               <img src={logo} alt="" />
             </Menu.Item>
-            <Menu.Item className="brand-name" as={Link} to="/">
-              SHPE UF
-            </Menu.Item>
-
             <Menu.Item as={Link} to="/about">
               About Us
             </Menu.Item>
-
             <Menu.Item as={Link} to="/eboard">
               E-Board
             </Menu.Item>
-
             <Menu.Item as={Link} to="/devteam">
               Dev Team
             </Menu.Item>
-
             <Menu.Item as={Link} to="/sponsors">
               Sponsors
             </Menu.Item>
@@ -50,13 +43,13 @@ function MenuBar() {
                   <Dropdown pointing item className="email" text={user.email}>
                     <Dropdown.Menu>
                       <Dropdown.Item as={Link} to="/admin">
-                        Admin Tools
+                        Admin Panel
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/profile">
                         My Profile
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
-                        Points System
+                        Points Program
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
@@ -95,17 +88,17 @@ function MenuBar() {
                     pointing
                     item
                     className="email"
-                    text={user.username}
+                    text={user.email}
                   >
                     <Dropdown.Menu>
                       <Dropdown.Item as={Link} to="/admin">
-                        Admin Tools
+                        Admin Panel
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/profile">
                         My Profile
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
-                        Points System
+                        Points Program
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
@@ -116,20 +109,16 @@ function MenuBar() {
                 </>
               ) : (
                 <Menu.Item>
-                  <Button
-                    content="Members"
-                    icon="user"
-                    labelPosition="left"
-                    as={Link}
-                    to="/login"
-                  />
+                  <Button icon as={Link} to="/login">
+                    <Icon name="sign-in" />
+                  </Button>
                 </Menu.Item>
               )}
             </Menu.Menu>
           </Container>
         </Menu>
       </Responsive>
-    </Sticky>
+    </>
   );
 }
 

@@ -2,28 +2,19 @@ import React, { useState } from "react";
 import {
   Table,
   Icon,
-  Button,
   Dimmer,
   Loader,
   Segment,
-  Header
+  Header,
+  Button,
 } from "semantic-ui-react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import moment from "moment";
 import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+import moment from "moment";
 
-import { FETCH_REQUESTS_QUERY } from "../util/graphql";
-
-function RequestsTable() {
+function RequestsTable({ requests }) {
   const [errors, setErrors] = useState({});
   const [disableButton, setDisableButton] = useState(false);
-  var getRequests = "";
-
-  var { data } = useQuery(FETCH_REQUESTS_QUERY);
-
-  if (data.getRequests) {
-    getRequests = data.getRequests;
-  }
 
   const [rejectRequest] = useMutation(REJECT_REQUEST_MUTATION, {
     update(
@@ -32,14 +23,14 @@ function RequestsTable() {
         data: { rejectRequest: requestData }
       }
     ) {
-      getRequests.map((request, index) => {
+      requests.forEach((request, index) => {
         var result = requestData.filter(
           updatedRequests =>
             updatedRequests.eventName === request.eventName &&
             updatedRequests.username === request.username
         );
         if (result.length === 0) {
-          getRequests.splice(index, 1);
+          requests.splice(index, 1);
         }
       });
       setDisableButton(false);
@@ -57,14 +48,14 @@ function RequestsTable() {
         data: { approveRequest: requestData }
       }
     ) {
-      getRequests.map((request, index) => {
+      requests.forEach((request, index) => {
         var result = requestData.filter(
           updatedRequests =>
             updatedRequests.eventName === request.eventName &&
             updatedRequests.username === request.username
         );
         if (result.length === 0) {
-          getRequests.splice(index, 1);
+          requests.splice(index, 1);
         }
       });
       setDisableButton(false);
@@ -81,10 +72,10 @@ function RequestsTable() {
 
   return (
     <>
-      <Dimmer active={getRequests ? false : true} inverted>
+      <Dimmer active={requests ? false : true} inverted>
         <Loader />
       </Dimmer>
-      {getRequests === undefined || getRequests.length === 0 ? (
+      {requests === undefined || requests.length === 0 ? (
         <Segment placeholder>
           <Header icon>
             <i className="fas fa-inbox"></i>
@@ -107,8 +98,8 @@ function RequestsTable() {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {getRequests &&
-                getRequests.map((request, index) => (
+              {requests &&
+                requests.map((request, index) => (
                   <Table.Row key={index}>
                     <Table.Cell>
                       {request.lastName}, {request.firstName}
