@@ -21,7 +21,11 @@ function UserProfile({ user }) {
     <Grid columns={2} doubling>
       <Grid.Row>
         <Grid.Column>
-          <Image fluid rounded src={placeholder} className="image-profile" />
+          {user && user.photo !== "" ? (
+            <Image fluid rounded src={user.photo} className="image-profile" />
+          ) : (
+            <Image fluid rounded src={placeholder} className="image-profile" />
+          )}
         </Grid.Column>
         <Grid.Column>
           <div className="table-responsive">

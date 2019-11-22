@@ -10,6 +10,11 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  photo: {
+    type: String,
+    default: "",
+    required: true
+  },
   major: {
     type: String,
     required: true
