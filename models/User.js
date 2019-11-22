@@ -12,8 +12,7 @@ const userSchema = new Schema({
   },
   photo: {
     type: String,
-    default: "",
-    required: true
+    default: ""
   },
   major: {
     type: String,
