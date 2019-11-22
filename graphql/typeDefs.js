@@ -29,6 +29,7 @@ module.exports = gql`
     fallPercentile: Int!
     springPercentile: Int!
     summerPercentile: Int!
+    bookmarks: [String]!
   }
 
   type Token {
@@ -175,5 +176,6 @@ module.exports = gql`
     forgotPassword(email: String!): User!
     resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
     confirmUser(id: String!): User!
+    bookmark(company: String!): User!
   }
 `;

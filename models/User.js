@@ -84,7 +84,10 @@ const userSchema = new Schema({
   confirmed: {
     type: Boolean,
     default: false
-  }
+  },
+  bookmarks: [{
+    name: String
+  }]
 });
 
 module.exports = model("User", userSchema);

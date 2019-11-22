@@ -1,7 +1,9 @@
 import React from "react";
-import { Container, Grid, Card, Icon, Tab, Segment } from "semantic-ui-react";
+import { Button, Container, Grid, Card, Icon, Tab, Segment } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import imageDataURI from 'image-data-uri';
+import gql from "graphql-tag";
+import { useForm } from "../util/hooks";
 
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 
@@ -10,6 +12,24 @@ import placeholder from "../assets/images/placeholder.png"
 function Corporations(props) {
 
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
+
+  const { values, onClick } = useForm(bookmarkCallback, {
+    company: ""
+  });
+
+  const [bookmark, { loading }] = useMutation(BOOKMARK_MUTATION, {
+    update(
+      _
+    ) {
+      values.company = "";
+    },
+
+    variables: values
+  });
+
+  function bookmarkCallback() {
+    bookmark();
+  }
 
   var corporationPane = {
     menuItem: {content:'Corporations', icon:'building outline'},
@@ -27,10 +47,15 @@ function Corporations(props) {
                   raised
                   image={corporation.logo}
                   header={corporation.name}
-                  extra={<a>
-                          <Icon name='plus square' />
-                          View Profile
-                        </a>}
+                  extra={
+                          <>
+                            <a>
+                              <Icon name='plus square' />
+                              View Profile
+                            </a>
+                            <Button floated='right' icon='book'/>
+                          </>
+                        }
                 />
               </Grid.Column>
             ))}
@@ -63,5 +88,18 @@ function Corporations(props) {
     </div>
   );
 }
+
+const BOOKMARK_MUTATION = gql`
+  mutation bookmark(
+    $company: String!
+  ) {
+    bookmark(
+      company: $company
+    ) {
+      username
+      company
+    }
+  }
+`;
 
 export default Corporations;
