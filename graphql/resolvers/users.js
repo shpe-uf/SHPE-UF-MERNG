@@ -1,14 +1,11 @@
-const {
-  UserInputError
-} = require("apollo-server");
+const { UserInputError } = require("apollo-server");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 const User = require("../../models/User.js");
 const Event = require("../../models/Event.js");
 const Request = require("../../models/Request.js");
-
 
 require("dotenv").config();
 
@@ -17,246 +14,249 @@ const {
   validateLoginInput,
   validateRedeemPointsInput,
   validateEmailInput,
-  validatePasswordInput
+  validatePasswordInput,
+  validateEditUserProfile
 } = require("../../util/validators");
 
 function generateToken(user, time) {
-  return jwt.sign({
+  return jwt.sign(
+    {
       id: user.id,
       email: user.email,
       username: user.username
     },
-    process.env.SECRET, {
+    process.env.SECRET,
+    {
       expiresIn: time
     }
   );
 }
 
 module.exports = {
-    Query: {
-      async getUsers() {
-        try {
-          const users = await User.find().sort({
-            lastName: 1,
-            firstName: 1
-          });
-          return users;
-        } catch (err) {
-          throw new Error(err);
-        }
-      },
-
-      async getUser(_, { userId }) {
-        try {
-          var user = await User.findById(userId);
-
-          const users = await User.find();
-          const fallBelowUsers = await User.find()
-            .where("fallPoints")
-            .lt(user.fallPoints);
-          const springBelowUsers = await User.find()
-            .where("springPoints")
-            .lt(user.springPoints);
-          const summerBelowUsers = await User.find()
-            .where("summerPoints")
-            .lt(user.summerPoints);
-
-          const fallPercentile = Math.trunc(
-            (fallBelowUsers.length / users.length) * 100
-          );
-          const springPercentile = Math.trunc(
-            (springBelowUsers.length / users.length) * 100
-          );
-          const summerPercentile = Math.trunc(
-            (summerBelowUsers.length / users.length) * 100
-          );
-
-          var newUser = {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            username: user.username,
-            email: user.email,
-            major: user.major,
-            year: user.year,
-            graduating: user.graduating,
-            country: user.country,
-            ethnicity: user.ethnicity,
-            sex: user.sex,
-            ethnicity: user.ethnicity,
-            points: user.points,
-            fallPoints: user.fallPoints,
-            springPoints: user.springPoints,
-            summerPoints: user.summerPoints,
-            fallPercentile: fallPercentile,
-            springPercentile: springPercentile,
-            summerPercentile: summerPercentile,
-            createdAt: user.createdAt,
-            permission: user.permission,
-            listServ: user.listServ,
-            events: user.events
-          };
-
-          if (newUser) {
-            return newUser;
-          } else {
-            throw new Error("User not found.");
-          }
-        } catch (err) {
-          throw new Error(err);
-        }
-    },
-
-    async getMajorStat() {
-        try {
-          const data = await User.aggregate([{
-              $group: {
-                _id: '$major',
-                value: {
-                  $sum: 1
-                }
-              }
-            },
-            {
-              $sort: {
-                value: -1
-              }
-            }
-          ]);
-
-          if(data){
-            return data;
-          } else{
-            throw new Error("Data not found.");
-          }
-        } catch (err) {
-          throw new Error(err);
-        }
-      },
-
-      async getYearStat() {
-        try {
-          const data = await User.aggregate([{
-              $group: {
-                _id: '$year',
-                value: {
-                  $sum: 1
-                }
-              }
-            },
-            {
-              $sort: {
-                _id: 1
-              }
-            }
-          ]);
-
-          if(data){
-            return data;
-          } else{
-            throw new Error("Data not found.");
-          }
-        } catch (err) {
-          throw new Error(err);
-        }
-      },
-
-      async getCountryStat() {
-        try {
-          const data = await User.aggregate([{
-              $group: {
-                _id: '$country',
-                value: {
-                  $sum: 1
-                }
-              }
-            },
-            {
-              $sort: {
-                value: -1
-              }
-            }
-          ]);
-
-          if(data){
-            return data;
-          } else{
-            throw new Error("Data not found.");
-          }
-        } catch (err) {
-          throw new Error(err);
-        }
-      },
-
-      async getSexStat() {
-        try {
-          const data = await User.aggregate([{
-              $group: {
-                _id: '$sex',
-                value: {
-                  $sum: 1
-                }
-              }
-            },
-            {
-              $sort: {
-                value: -1
-              }
-            }
-          ]);
-
-          if(data){
-            return data;
-          } else{
-            throw new Error("Data not found.");
-          }
-        } catch (err) {
-          throw new Error(err);
-        }
-      },
-
-      async getEthnicityStat() {
-        try {
-          const data = await User.aggregate([{
-              $group: {
-                _id: '$ethnicity',
-                value: {
-                  $sum: 1
-                }
-              }
-            },
-            {
-              $sort: {
-                value: -1
-              }
-            }
-          ]);
-
-          if(data){
-            return data;
-          } else{
-            throw new Error("Data not found.");
-          }
-        } catch (err) {
-          throw new Error(err);
-        }
+  Query: {
+    async getUsers() {
+      try {
+        const users = await User.find().sort({
+          lastName: 1,
+          firstName: 1
+        });
+        return users;
+      } catch (err) {
+        throw new Error(err);
       }
     },
 
+    async getUser(_, { userId }) {
+      try {
+        var user = await User.findById(userId);
+
+        const users = await User.find();
+
+        const fallBelowUsers = await User.find()
+          .where("fallPoints")
+          .lt(user.fallPoints);
+        const springBelowUsers = await User.find()
+          .where("springPoints")
+          .lt(user.springPoints);
+        const summerBelowUsers = await User.find()
+          .where("summerPoints")
+          .lt(user.summerPoints);
+
+        const fallPercentile = Math.trunc(
+          (fallBelowUsers.length / users.length) * 100
+        );
+        const springPercentile = Math.trunc(
+          (springBelowUsers.length / users.length) * 100
+        );
+        const summerPercentile = Math.trunc(
+          (summerBelowUsers.length / users.length) * 100
+        );
+
+        var newUser = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          photo: user.photo,
+          email: user.email,
+          major: user.major,
+          year: user.year,
+          graduating: user.graduating,
+          country: user.country,
+          ethnicity: user.ethnicity,
+          sex: user.sex,
+          ethnicity: user.ethnicity,
+          points: user.points,
+          fallPoints: user.fallPoints,
+          springPoints: user.springPoints,
+          summerPoints: user.summerPoints,
+          fallPercentile: fallPercentile,
+          springPercentile: springPercentile,
+          summerPercentile: summerPercentile,
+          createdAt: user.createdAt,
+          permission: user.permission,
+          listServ: user.listServ,
+          events: user.events
+        };
+
+        if (newUser) {
+          return newUser;
+        } else {
+          throw new Error("User not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getMajorStat() {
+      try {
+        const data = await User.aggregate([
+          {
+            $group: {
+              _id: "$major",
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              value: -1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getYearStat() {
+      try {
+        const data = await User.aggregate([
+          {
+            $group: {
+              _id: "$year",
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              _id: 1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getCountryStat() {
+      try {
+        const data = await User.aggregate([
+          {
+            $group: {
+              _id: "$country",
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              value: -1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getSexStat() {
+      try {
+        const data = await User.aggregate([
+          {
+            $group: {
+              _id: "$sex",
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              value: -1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getEthnicityStat() {
+      try {
+        const data = await User.aggregate([
+          {
+            $group: {
+              _id: "$ethnicity",
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              value: -1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    }
+  },
+
   Mutation: {
-    async login(_, {
-      username,
-      password,
-      remember
-    }) {
+    async login(_, { username, password, remember }) {
       username = username.toLowerCase();
 
-      const {
-        errors,
-        valid
-      } = validateLoginInput(username, password);
+      const { errors, valid } = validateLoginInput(username, password);
 
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -301,7 +301,8 @@ module.exports = {
     },
 
     async register(
-      _, {
+      _,
+      {
         registerInput: {
           firstName,
           lastName,
@@ -324,10 +325,7 @@ module.exports = {
       email = email.toLowerCase();
       username = username.toLowerCase();
 
-      const {
-        valid,
-        errors
-      } = validateRegisterInput(
+      const { valid, errors } = validateRegisterInput(
         firstName,
         lastName,
         major,
@@ -354,7 +352,8 @@ module.exports = {
 
       if (isUsernameDuplicate) {
         throw new UserInputError(
-          "An account with that username already exists.", {
+          "An account with that username already exists.",
+          {
             errors: {
               username: "An account with that username already exists."
             }
@@ -368,7 +367,8 @@ module.exports = {
 
       if (isEmailDuplicate) {
         throw new UserInputError(
-          "An account with that e-mail already exists.", {
+          "An account with that e-mail already exists.",
+          {
             errors: {
               email: "An account with that email already exists."
             }
@@ -411,27 +411,27 @@ module.exports = {
         service: process.env.EMAIL_SERVICE,
         auth: {
           user: process.env.EMAIL,
-          pass: process.env.EMAIL_PASSWORD,
-        },
+          pass: process.env.EMAIL_PASSWORD
+        }
       });
 
       const mailOptions = {
         from: process.env.EMAIL,
         to: `${user.email}`,
-        subject: 'Confirm Email',
-        text: 'Thank you for registering, please click in the link below to complete your registration\n\n' +
+        subject: "Confirm Email",
+        text:
+          "Thank you for registering, please click in the link below to complete your registration\n\n" +
           `${process.env.CLIENT_ORIGIN}/confirm/${user._id}\n\n`
       };
 
       transporter.sendMail(mailOptions, (err, response) => {
         if (err) {
-          console.error('there was an error: ', err);
+          console.error("there was an error: ", err);
         } else {
-          console.log('here is the res: ', response);
-          res.status(200).json('recovery email sent');
+          res.status(200).json("recovery email sent");
         }
       });
-      console.log("TESTTTTTT");
+
       return {
         ...res._doc,
         id: res._id
@@ -439,11 +439,9 @@ module.exports = {
     },
 
     async redeemPoints(
-      _, {
-        redeemPointsInput: {
-          code,
-          username
-        }
+      _,
+      {
+        redeemPointsInput: { code, username }
       }
     ) {
       code = code
@@ -451,10 +449,7 @@ module.exports = {
         .trim()
         .replace(/ /g, "");
 
-      const {
-        valid,
-        errors
-      } = validateRedeemPointsInput(code);
+      const { valid, errors } = validateRedeemPointsInput(code);
 
       if (!valid) {
         throw new UserInputError("Errors", {
@@ -574,67 +569,78 @@ module.exports = {
           });
         }
 
-        var updatedUser = await User.findOneAndUpdate({
-          username
-        }, {
-          $push: {
-            events: {
-              $each: [{
-                name: event.name,
-                category: event.category,
-                createdAt: event.createdAt,
-                points: event.points
-              }],
-              $sort: {
-                createdAt: 1
-              }
-            }
+        var updatedUser = await User.findOneAndUpdate(
+          {
+            username
           },
-          $inc: pointsIncrease
-        }, {
-          new: true
-        });
+          {
+            $push: {
+              events: {
+                $each: [
+                  {
+                    name: event.name,
+                    category: event.category,
+                    createdAt: event.createdAt,
+                    points: event.points
+                  }
+                ],
+                $sort: {
+                  createdAt: 1
+                }
+              }
+            },
+            $inc: pointsIncrease
+          },
+          {
+            new: true
+          }
+        );
 
         updatedUser.message = "";
 
-        await Event.findOneAndUpdate({
-          code
-        }, {
-          $push: {
-            users: {
-              $each: [{
-                firstName: user.firstName,
-                lastName: user.lastName,
-                username: user.username,
-                email: user.email
-              }],
-              $sort: {
-                lastName: 1,
-                firstName: 1
+        await Event.findOneAndUpdate(
+          {
+            code
+          },
+          {
+            $push: {
+              users: {
+                $each: [
+                  {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    username: user.username,
+                    email: user.email
+                  }
+                ],
+                $sort: {
+                  lastName: 1,
+                  firstName: 1
+                }
               }
+            },
+            $inc: {
+              attendance: 1
             }
           },
-          $inc: {
-            attendance: 1
+          {
+            new: true
           }
-        }, {
-          new: true
-        });
+        );
 
         return updatedUser;
       }
     },
 
-    async confirmUser(
-      _, {
-        id
-      }
-    ) {
-      const user = await User.findOneAndUpdate({
-        _id: id
-      }, {
-        confirmed: true
-      });
+    async confirmUser(_, { id }) {
+      const user = await User.findOneAndUpdate(
+        {
+          _id: id
+        },
+        {
+          confirmed: true
+        }
+      );
 
       if (!user) {
         errors.general = "User not found.";
@@ -644,21 +650,12 @@ module.exports = {
       }
 
       return user;
-
     },
 
-    async forgotPassword(
-      _, {
-        email
-      }
-    ) {
-
-      const {
-        errors,
-        valid
-      } = validateEmailInput(email);
+    async forgotPassword(_, { email }) {
+      const { errors, valid } = validateEmailInput(email);
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -688,36 +685,39 @@ module.exports = {
         }
       }
 
-      const newUser = await User.findOneAndUpdate({
-        email
-      }, {
-        token
-      });
+      const newUser = await User.findOneAndUpdate(
+        {
+          email
+        },
+        {
+          token
+        }
+      );
 
       const transporter = nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE,
         auth: {
           user: process.env.EMAIL,
-          pass: process.env.EMAIL_PASSWORD,
-        },
+          pass: process.env.EMAIL_PASSWORD
+        }
       });
 
       const mailOptions = {
         from: process.env.EMAIL,
         to: `${user.email}`,
-        subject: 'Reset Password',
-        text: 'You have requested the reset of the password for your account for shpe.com\n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n' +
+        subject: "Reset Password",
+        text:
+          "You have requested the reset of the password for your account for shpe.com\n\n" +
+          "Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n" +
           `${process.env.CLIENT_ORIGIN}/reset/${token}\n\n` +
-          'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+          "If you did not request this, please ignore this email and your password will remain unchanged.\n"
       };
 
       transporter.sendMail(mailOptions, (err, response) => {
         if (err) {
-          console.error('there was an error: ', err);
+          console.error("there was an error: ", err);
         } else {
-          console.log('here is the res: ', response);
-          res.status(200).json('recovery email sent');
+          res.status(200).json("recovery email sent");
         }
       });
 
@@ -728,20 +728,14 @@ module.exports = {
       };
     },
 
-    async resetPassword(
-      _, {
+    async resetPassword(_, { password, confirmPassword, token }) {
+      const { errors, valid } = validatePasswordInput(
         password,
-        confirmPassword,
-        token
-      }
-    ) {
-      const {
-        errors,
-        valid
-      } = validatePasswordInput(password, confirmPassword);
+        confirmPassword
+      );
 
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -758,17 +752,82 @@ module.exports = {
 
       password = await bcrypt.hash(password, 12);
 
-      const newUser = await User.findOneAndUpdate({
-        email: user.email
-      }, {
-        password,
-        token: ""
-      });
+      const newUser = await User.findOneAndUpdate(
+        {
+          email: user.email
+        },
+        {
+          password,
+          token: ""
+        }
+      );
 
       var Token = {
         token: token
-      }
+      };
       return Token;
+    },
+
+    async editUserProfile(
+      _,
+      {
+        editUserProfileInput: {
+          email,
+          firstName,
+          lastName,
+          photo,
+          major,
+          year,
+          graduating,
+          country,
+          ethnicity,
+          sex
+        }
+      }
+    ) {
+      const { errors, valid } = validateEditUserProfile(
+        firstName,
+        lastName,
+        photo,
+        major,
+        year,
+        graduating,
+        country,
+        ethnicity,
+        sex
+      );
+
+      if (!valid) {
+        throw new UserInputError("Errors", {
+          errors
+        });
+      }
+
+      const user = await User.findOne({ email });
+
+      if (user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { email },
+          {
+            firstName,
+            lastName,
+            photo,
+            major,
+            year,
+            graduating,
+            country,
+            ethnicity,
+            sex
+          },
+          {
+            new: true
+          }
+        );
+
+        return updatedUser;
+      } else {
+        throw new Error("User not found.");
+      }
     }
   }
 };

@@ -5,6 +5,7 @@ export const FETCH_USERS_QUERY = gql `
     getUsers {
       firstName
       lastName
+      photo
       major
       year
       graduating

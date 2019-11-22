@@ -5,6 +5,7 @@ module.exports = gql`
     id: ID!
     firstName: String!
     lastName: String!
+    photo: String!
     major: String!
     year: String!
     graduating: String!
@@ -104,6 +105,19 @@ module.exports = gql`
     eventName: String!
   }
 
+  input EditUserProfileInput {
+    email: String!
+    firstName: String!
+    lastName: String!
+    photo: String!
+    major: String!
+    year: String!
+    graduating: String!
+    country: String!
+    ethnicity: String!
+    sex: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
@@ -119,13 +133,14 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
+    confirmUser(id: String!): User!
+    forgotPassword(email: String!): User!
+    resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
     createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
-    forgotPassword(email: String!): User!
-    resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
-    confirmUser(id: String!): User!
+    editUserProfile(editUserProfileInput: EditUserProfileInput): User!
   }
 `;
