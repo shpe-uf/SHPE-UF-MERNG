@@ -77,6 +77,12 @@ module.exports.validateRegisterInput = (
   } else {
     if (!email.match(emailRegex)) {
       errors.email = "Invalid email address.";
+    } else if(email.length > 7){
+        var indexUF = email.length - 8;
+        var indexSF = email.length - 14;
+        if(email.substring(indexUF) != "@ufl.edu" && email.substring(indexSF) != "@sfcollege.edu"){
+          errors.email = "UF or SF email required";
+        }
     }
   }
 

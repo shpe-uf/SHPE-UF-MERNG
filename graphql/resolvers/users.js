@@ -396,7 +396,7 @@ module.exports = {
         fallPoints: 0,
         springPoints: 0,
         summerPoints: 0,
-        permission: "User",
+        permission: "member",
         listServ,
         events: []
       });
@@ -428,10 +428,9 @@ module.exports = {
         if (err) {
           console.error("there was an error: ", err);
         } else {
-          res.status(200).json("recovery email sent");
+          res.status(200).json('recovery email sent');
         }
       });
-
       return {
         ...res._doc,
         id: res._id
@@ -717,7 +716,7 @@ module.exports = {
         if (err) {
           console.error("there was an error: ", err);
         } else {
-          res.status(200).json("recovery email sent");
+          res.status(200).json('recovery email sent');
         }
       });
 
@@ -828,6 +827,66 @@ module.exports = {
       } else {
         throw new Error("User not found.");
       }
+    },
+
+    async changePermission(
+      _,
+      {
+        email,
+        currentEmail,
+        permission
+      }
+    ) {
+
+      var {
+        errors,
+        valid
+      } = validateEmailInput(email);
+      if (!valid) {
+        throw new UserInputError("Errors.", {
+          errors
+        });
+      }
+
+      if(email === currentEmail){
+        valid = false;
+        errors.general = "Can't change your own permissions";
+        throw new UserInputError("Can't change your own permissions", {
+          errors
+        });
+      }
+
+      const adminUser = await User.findOne({
+        email: currentEmail
+      });
+      if (!adminUser) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", {
+          errors
+        });
+      }
+      if(adminUser.permission != 'admin'){
+        valid = false;
+        errors.general = "Must be an admin to change permission";
+        throw new UserInputError("Must be an admin to change permission", {
+          errors
+        });
+      }
+
+      const user = await User.findOneAndUpdate({
+        email
+      }, {
+        permission
+      });
+      if (!user) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", {
+          errors
+        });
+      }
+
+      return valid;
+
     }
   }
 };
