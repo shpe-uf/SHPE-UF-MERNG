@@ -90,7 +90,7 @@ function RequestsTable({ requests }) {
                 <Table.HeaderCell>Name</Table.HeaderCell>
                 <Table.HeaderCell>Username</Table.HeaderCell>
                 <Table.HeaderCell>Event</Table.HeaderCell>
-                <Table.HeaderCell>Category</Table.HeaderCell>
+                <Table.HeaderCell>Type</Table.HeaderCell>
                 <Table.HeaderCell>Date</Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Approve</Table.HeaderCell>

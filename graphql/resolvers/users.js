@@ -48,7 +48,9 @@ module.exports = {
 
       async getUser(_, { userId }) {
         try {
-          var user = await User.findById(userId);
+            var user = await User.findById(userId);
+
+            if(user) {
 
           const users = await User.find();
           const fallBelowUsers = await User.find()
@@ -96,8 +98,7 @@ module.exports = {
             events: user.events
           };
 
-          if (newUser) {
-            return newUser;
+          return newUser;
           } else {
             throw new Error("User not found.");
           }

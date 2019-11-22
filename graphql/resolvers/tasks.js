@@ -57,12 +57,11 @@ module.exports = {
         createdAt: new Date().toISOString()
       });
 
-      const res = await newTask.save();
+      await newTask.save();
 
-      return {
-        ...res._doc,
-        id: res._id
-      };
+      const res = Task.find();
+
+      return res;
     }
   }
 };

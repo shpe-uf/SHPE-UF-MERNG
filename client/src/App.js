@@ -22,6 +22,7 @@ import Admin from "./pages/Admin";
 import Points from "./pages/Points";
 import Profile from "./pages/Profile";
 import Events from "./pages/Events";
+import Tasks from "./pages/Tasks";
 import Members from "./pages/Members";
 import Requests from "./pages/Requests";
 import Statistics from "./pages/Statistics";
@@ -47,6 +48,7 @@ function App() {
           <Route exact path="/confirm/:id" component={Confirm} />
           <UserRoute exact path="/admin" component={Admin} />
           <UserRoute exact path="/admin/events" component={Events} />
+          <UserRoute exact path="/admin/tasks" component={Tasks} />
           <UserRoute exact path="/admin/members" component={Members} />
           <UserRoute exact path="/admin/requests" component={Requests} />
           <UserRoute exact path="/admin/statistics" component={Statistics} />

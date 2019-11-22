@@ -1,7 +1,7 @@
 const { model, Schema } = require("mongoose");
 const User = require("./User").schema;
 
-const taskSchema = new Schema ({
+const taskSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -9,7 +9,7 @@ const taskSchema = new Schema ({
   },
   startDate: {
     type: String,
-    required: true,
+    required: true
   },
   endDate: {
     type: String,
@@ -35,12 +35,14 @@ const taskSchema = new Schema ({
     type: String,
     required: true
   },
-  users: [{
-    firstName: String,
-    lastName: String,
-    email: String,
-    username: String
-  }]
+  users: [
+    {
+      firstName: String,
+      lastName: String,
+      email: String,
+      username: String
+    }
+  ]
 });
 
 module.exports = model("Task", taskSchema);

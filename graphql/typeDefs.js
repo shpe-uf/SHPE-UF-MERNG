@@ -63,13 +63,26 @@ module.exports = gql`
 
   type Request {
     id: ID!
-    eventName: String!
-    category: String!
+    name: String!
+    type: String!
     points: String!
     firstName: String!
     lastName: String!
     username: String!
     createdAt: String!
+  }
+
+  type Task {
+    id: ID!
+    name: String!
+    startDate: String!
+    endDate: String!
+    description: String!
+    points: Int!
+    attendance: Int!
+    semester: String!
+    createdAt: String!
+    users: [User]!
   }
 
   type StatData{
@@ -125,9 +138,9 @@ module.exports = gql`
     eventName: String!
   }
 
-   input ManualTaskInputInput {
-     username: String!
-     taskName: String!
+  input ManualTaskInputInput {
+    username: String!
+    taskName: String!
   }
 
   type Query {
@@ -136,6 +149,7 @@ module.exports = gql`
     getEvents: [Event]
     getTasks: [Task]
     getRequests: [Request]
+    getTasks: [Task]
     getMajorStat: [StatData]
     getCountryStat: [StatData]
     getYearStat: [StatData]
@@ -147,7 +161,7 @@ module.exports = gql`
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
     createEvent(createEventInput: CreateEventInput): [Event]
-    createTask(createTaskInput: CreateTaskInput): Task!
+    createTask(createTaskInput: CreateTaskInput): [Task]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
