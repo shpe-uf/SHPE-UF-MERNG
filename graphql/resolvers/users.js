@@ -428,16 +428,9 @@ module.exports = {
         if (err) {
           console.error("there was an error: ", err);
         } else {
-<<<<<<< HEAD
           res.status(200).json('recovery email sent');
         }
       });
-=======
-          res.status(200).json("recovery email sent");
-        }
-      });
-
->>>>>>> 66bdc43a736779f683aa8bdbbfd2c2686b07daa3
       return {
         ...res._doc,
         id: res._id
@@ -723,11 +716,7 @@ module.exports = {
         if (err) {
           console.error("there was an error: ", err);
         } else {
-<<<<<<< HEAD
           res.status(200).json('recovery email sent');
-=======
-          res.status(200).json("recovery email sent");
->>>>>>> 66bdc43a736779f683aa8bdbbfd2c2686b07daa3
         }
       });
 
@@ -777,23 +766,6 @@ module.exports = {
       };
       return Token;
     },
-<<<<<<< HEAD
-    async changePermission(
-      _,
-      {
-        email,
-        currentEmail,
-        permission
-      }
-    ) {
-
-      var {
-        errors,
-        valid
-      } = validateEmailInput(email);
-      if (!valid) {
-        throw new UserInputError("Errors.", {
-=======
 
     async editUserProfile(
       _,
@@ -826,12 +798,56 @@ module.exports = {
 
       if (!valid) {
         throw new UserInputError("Errors", {
->>>>>>> 66bdc43a736779f683aa8bdbbfd2c2686b07daa3
           errors
         });
       }
 
-<<<<<<< HEAD
+      const user = await User.findOne({ email });
+
+      if (user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { email },
+          {
+            firstName,
+            lastName,
+            photo,
+            major,
+            year,
+            graduating,
+            country,
+            ethnicity,
+            sex
+          },
+          {
+            new: true
+          }
+        );
+
+        return updatedUser;
+      } else {
+        throw new Error("User not found.");
+      }
+    },
+
+    async changePermission(
+      _,
+      {
+        email,
+        currentEmail,
+        permission
+      }
+    ) {
+
+      var {
+        errors,
+        valid
+      } = validateEmailInput(email);
+      if (!valid) {
+        throw new UserInputError("Errors.", {
+          errors
+        });
+      }
+
       if(email === currentEmail){
         valid = false;
         errors.general = "Can't change your own permissions";
@@ -871,33 +887,6 @@ module.exports = {
 
       return valid;
 
-=======
-      const user = await User.findOne({ email });
-
-      if (user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { email },
-          {
-            firstName,
-            lastName,
-            photo,
-            major,
-            year,
-            graduating,
-            country,
-            ethnicity,
-            sex
-          },
-          {
-            new: true
-          }
-        );
-
-        return updatedUser;
-      } else {
-        throw new Error("User not found.");
-      }
->>>>>>> 66bdc43a736779f683aa8bdbbfd2c2686b07daa3
     }
   }
 };
