@@ -396,7 +396,7 @@ module.exports = {
         fallPoints: 0,
         springPoints: 0,
         summerPoints: 0,
-        permission: "User",
+        permission: "member",
         listServ,
         events: []
       });
