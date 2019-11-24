@@ -72,19 +72,6 @@ module.exports = gql`
     createdAt: String!
   }
 
-  type Task {
-    id: ID!
-    name: String!
-    startDate: String!
-    endDate: String!
-    description: String!
-    points: Int!
-    attendance: Int!
-    semester: String!
-    createdAt: String!
-    users: [User]!
-  }
-
   type StatData{
     _id: String!
     value: Int!
@@ -149,7 +136,6 @@ module.exports = gql`
     getEvents: [Event]
     getTasks: [Task]
     getRequests: [Request]
-    getTasks: [Task]
     getMajorStat: [StatData]
     getCountryStat: [StatData]
     getYearStat: [StatData]

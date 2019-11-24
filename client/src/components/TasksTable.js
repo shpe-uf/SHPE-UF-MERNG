@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Grid,
   Table,
   Icon,
   Dimmer,
@@ -19,7 +20,24 @@ import { CSVLink } from "react-csv";
 import { FETCH_USERS_QUERY } from "../util/graphql";
 
 function TasksTable({ tasks }) {
+  const [taskInfoModal, setTaskInfoModal] = useState(false);
+  const [taskInfo, setTaskInfo] = useState({});
 
+  const openModal = name => {
+    if (name === "taskInfo") {
+      setTaskInfoModal(true);
+    }
+  };
+
+  const closeModal = name => {
+    if (name === "taskInfo") {
+      setTaskInfoModal(false);
+    }
+  };
+
+  function getTaskInfo(taskInfo) {
+    setTaskInfo(taskInfo);
+  }
   return (
     <>
       <Dimmer active={tasks ? false : true} inverted>
@@ -45,6 +63,7 @@ function TasksTable({ tasks }) {
                   Attendance
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">Info</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -55,14 +74,54 @@ function TasksTable({ tasks }) {
                     <Table.Cell>{task.startDate}</Table.Cell>
                     <Table.Cell>{task.endDate}</Table.Cell>
                     <Table.Cell>{task.semester}</Table.Cell>
-                    <Table.Cell textAlign="center">{task.attendance}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {task.attendance}
+                    </Table.Cell>
                     <Table.Cell textAlign="center">{task.points}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <Button
+                        icon
+                        onClick={() => {
+                          getTaskInfo(task);
+                          openModal("taskInfo");
+                        }}
+                      >
+                        <Icon name="info" />
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
                 ))}
             </Table.Body>
           </Table>
         </div>
       )}
+      <Modal
+        open={taskInfoModal}
+        size="small"
+        closeOnEscape={true}
+        closeOnDimmerClick={false}
+      >
+        <Modal.Header>
+          <h2>Congrats bitch, this shit works</h2>
+        </Modal.Header>
+        <Modal.Content>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <h3>some name</h3>
+                <Button
+                  type="reset"
+                  color="grey"
+                  onClick={() => closeModal("taskInfo")}
+                >
+                  Cancel
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Modal.Content>
+      </Modal>
+      ;
     </>
   );
 }
