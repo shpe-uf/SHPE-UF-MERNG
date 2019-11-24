@@ -1,46 +1,38 @@
 const { UserInputError } = require("apollo-server");
 const User = require("../../models/User.js");
+const lodash = require('lodash');
 const Class = require("../../models/Class.js");
 
 const { validateCreateClassInput } = require("../../util/validators");
 
-const findMatch = (matches, username) => {
-  for (var i = 0; i < matches.length; i++) {
-    if (matches[i].username === username) {
-      return i;
-    }
-  }
-  return -1;
-};
-
 module.exports = {
   Query: {
     async getMatches(_, { username }) {
-      const matches = [];
+      var matches = [];
       const user = await User.findOne({ username });
+
       await user.classes.map(async classTemp => {
-        const newClassTemp = await Class.findOne({ code: classTemp.code });
-        newClassTemp.users.map(userTemp => {
-          if (findMatch(matches, userTemp.username) === -1) {
-            if (user.username !== userTemp.username) {
-              const newTemp = {
-                firstName: userTemp.firstName,
-                lastName: userTemp.lastName,
-                email: userTemp.email,
-                username: userTemp.username,
-                major: userTemp.major,
-                year: userTemp.year,
-                score: 5
-              };
-              matches.push(newTemp);
-            }
-          } else {
-            matches[findMatch(matches, userTemp.username)].score += 5;
-          }
+        const newClassTemp = await Class.findOne({ code: classTemp.code }).select("-users._id");
+        lodash.remove(newClassTemp.users, function (user){
+          return user.username === username;
         });
+        matches.push(newClassTemp.users);
       });
+      
+      // figure out to not depend on line 23.
       await User.find();
-      return matches;
+      matches = await lodash.flatten(matches);
+      matches = await lodash.uniqBy(matches, "username");
+      matches = await lodash.map(matches, lodash.partialRight(lodash.pick, 'username'));
+      matches = await matches.map(function(match){
+        return match["username"]
+      })
+
+      const users = await User.find({
+        username : {$in: matches}
+      });
+
+      return users;
     }
   },
 

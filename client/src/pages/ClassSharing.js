@@ -94,6 +94,8 @@ function ClassSharing() {
 
   if (dataM.getMatches) {
     getMatches = dataM.getMatches;
+  }
+   /*
     function compare(a,b){
       const countA = a.count;
       const countB = b.count;
@@ -109,7 +111,9 @@ function ClassSharing() {
     }
     getMatches.sort(compare);
   }
+  
   console.log(getMatches)
+*/
 
   var classUsers = [];
   const [getClass, { data: getClassData, loading: loadingClass }] = useMutation(
@@ -184,7 +188,7 @@ function ClassSharing() {
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell width={8} textAlign="left">
-                        Class Code
+                        Course Code
                       </Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>

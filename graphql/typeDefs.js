@@ -65,15 +65,6 @@ module.exports = gql`
     createdAt: String!
   }
 
-  type Match {
-    firstName: String!
-    lastName: String!
-    username: String!
-    email: String!
-    major: String!
-    year: String!
-    score: Int!
-  }
   type StatData{
     _id: String!
     value: Int!
@@ -134,7 +125,7 @@ module.exports = gql`
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
-    getMatches(username: String!): [Match]
+    getMatches(username: String!): [User]
     getMajorStat: [StatData]
     getCountryStat: [StatData]
     getYearStat: [StatData]
