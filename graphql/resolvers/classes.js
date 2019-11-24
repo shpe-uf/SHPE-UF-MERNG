@@ -16,7 +16,6 @@ const findMatch = (matches, username) => {
 module.exports = {
   Query: {
     async getMatches(_, { username }) {
-      console.log("HELLO WORLD - GET MATCHES");
       const matches = [];
       const user = await User.findOne({ username });
       await user.classes.map(async classTemp => {
@@ -41,9 +40,6 @@ module.exports = {
         });
       });
       await User.find();
-
-      console.log(matches);
-
       return matches;
     }
   },
