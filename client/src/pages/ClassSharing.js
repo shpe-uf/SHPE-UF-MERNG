@@ -94,7 +94,22 @@ function ClassSharing() {
 
   if (dataM.getMatches) {
     getMatches = dataM.getMatches;
+    function compare(a,b){
+      const countA = a.count;
+      const countB = b.count;
+
+      let comparison = 0;
+      if(countA > countB){
+        comparison = 1;
+      }
+      else if(countA < countB){
+        comparison = -1;
+      }
+      return comparison;
+    }
+    getMatches.sort(compare);
   }
+  console.log(getMatches)
 
   var classUsers = [];
   const [getClass, { data: getClassData, loading: loadingClass }] = useMutation(
@@ -209,6 +224,7 @@ function ClassSharing() {
                 <Card.Group stackable itemsPerRow={3}>
                   {/* {getMatches.sort((a,b) => (a.score > b.score) ? 1 : ((b.score > a.score) ? -1 : 0))} */}
                   {getMatches.map(matchTemp => (
+                    
                     <Card
                       fluid
                       key={matchTemp.username}
