@@ -20,10 +20,7 @@ function CorporateDatabase() {
   var [logoFile, setLogoFile] = useState({});
   var [originalLogo, setOriginalLogo] = useState({});
 
-  var corporations
-  useEffect(() =>{
-    corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
-  })
+  var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
 
   const { onChange, onSubmit, values } = useForm(createCorporation, {
     name: "",
