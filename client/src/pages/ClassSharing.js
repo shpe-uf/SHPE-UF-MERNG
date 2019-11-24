@@ -398,13 +398,17 @@ function ClassSharing() {
                         Major:
                       </Table.HeaderCell>
                       <Table.Cell>
-                      {" "}
-                        {
-                          <h1>
-                             {" "}
-                            {dispUserProfile.major}
-                          </h1>                          
-                        }{" "}
+                        {" "}
+                        {<a> {dispUserProfile.major}</a>}{" "}
+                      </Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.HeaderCell textAlign="center">
+                        Year:
+                      </Table.HeaderCell>
+                      <Table.Cell>
+                        {" "}
+                        {<a> {dispUserProfile.year}</a>}{" "}
                       </Table.Cell>
                     </Table.Row>
                   </Table>
@@ -465,6 +469,8 @@ const GET_MATCHES_QUERY = gql`
       firstName
       lastName
       email
+      major
+      year
     }
   }
 `;
