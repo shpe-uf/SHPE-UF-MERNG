@@ -113,7 +113,7 @@ function TasksTable({ tasks }) {
                 {taskAttendance.attendance === 0 ? (
                   <Segment placeholder>
                     <Header icon>
-                      <i className="fas fa-exclamation circle"></i>
+                      <i className="fas fa-exclamation-circle"></i>
                       <p>This task has no attendance records.</p>
                     </Header>
                   </Segment>
