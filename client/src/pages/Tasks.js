@@ -43,8 +43,6 @@ function Tasks() {
     points: ""
   });
 
-  console.log(values);
-
   const [createTask, { loading }] = useMutation(CREATE_TASK_MUTATION, {
     update(
       _,
