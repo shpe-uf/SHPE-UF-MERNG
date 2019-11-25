@@ -25,7 +25,7 @@ import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
 
 import Title from "../components/Title";
-import cesar from "../assets/images/team/2019-2020/cesar.png"
+import cesar from "../assets/images/team/2019-2020/cesar.png";
 import { findValuesAddedToEnums } from "graphql/utilities/findBreakingChanges";
 
 function ClassSharing() {
@@ -76,8 +76,7 @@ function ClassSharing() {
 
   var getClasses = [];
 
-  var { data } = 0;
-  
+  var { data } = 0
   data = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
@@ -99,6 +98,7 @@ function ClassSharing() {
   if (data.getMatches) {
     getMatches = data.getMatches;
   }
+  
   var classUsers = [];
   const [getClass, { data: getClassData, loading: loadingClass }] = useMutation(
     GET_CLASS_QUERY,
@@ -115,7 +115,6 @@ function ClassSharing() {
   const [createClass, { loading }] = useMutation(ADD_CLASS_MUTATION, {
     update(_, { data: { createClass: classData } }) {
       values.code = "";
-      console.log(classData);
       getClasses.splice(0, getClasses.length);
       for (var i = 0; i < classData.length; i++) {
         getClasses.push(classData[i]);
@@ -193,7 +192,6 @@ function ClassSharing() {
                         <Table.Cell textAlign="left">
                           {classTemp.code}
                         </Table.Cell>
-                        {/* <Table.Cell textAlign="center" >{(getClass({variables: {code: classTemp.code}}) && !console.log(classUsers)) ? classUsers.length : 7}</Table.Cell> */}{" "}
                       </Table.Row>
                     ))}{" "}
                 </Table>
@@ -215,7 +213,7 @@ function ClassSharing() {
                         <Card.Header>
                           {matchTemp.firstName + " " + matchTemp.lastName}
                         </Card.Header>
-                        <Image src = {cesar} wrapped ui ={true}></Image>
+                        <Image src= {matchTemp.photo} wrapped ui={true} bordered style={{margin: "0.5vw"}}></Image>
                         {matchTemp.classes.map(codeName => (
                           <Label color="blue">
                             <h6>{codeName.code}</h6>
@@ -224,7 +222,7 @@ function ClassSharing() {
                         <Card.Meta>{matchTemp.major}</Card.Meta>
                         <Card.Meta>{matchTemp.year}</Card.Meta>
                       </Card.Content>
-                      <Card.Content extra >
+                      <Card.Content extra>
                         <a> {matchTemp.email}</a>
                         <p></p>
                         <a> {"@" + matchTemp.username} </a>
@@ -463,6 +461,7 @@ const GET_MATCHES_QUERY = gql`
       email
       major
       year
+      photo
       classes {
         code
       }
