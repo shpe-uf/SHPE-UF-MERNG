@@ -25,7 +25,6 @@ function ForgotPassword(props){
       setSent(false);
     },
 
-
     variables: values
   });
 

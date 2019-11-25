@@ -47,15 +47,6 @@ function Register(props) {
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(
-      _,
-      {
-        data: { register: userData }
-      }
-    ) {
-      //context.login(userData);
-      //props.history.push("/login");
-    },
     onCompleted(){
       setOpenModal(true);
     },
@@ -214,7 +205,7 @@ function Register(props) {
                   />
                   <Form.Input
                     type="text"
-                    label="Email"
+                    label="UF Email"
                     name="email"
                     value={values.email}
                     error={errors.email ? true : false}

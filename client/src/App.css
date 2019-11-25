@@ -654,3 +654,12 @@ div::-webkit-scrollbar-thumb {
 .confirmMsg {
   text-align: center;
 }
+
+.permission_change {
+  display: inline-block;
+  margin-top: 12px !important;
+}
+
+.float_right {
+  float: right;
+}
