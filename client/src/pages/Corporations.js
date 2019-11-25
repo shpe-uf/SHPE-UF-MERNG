@@ -67,7 +67,25 @@ function Corporations(props) {
 
   var bookmarksPane = {
     menuItem: {content:'Bookmarks', icon:'sticky note outline'},
-    render: () => <Tab.Pane loading></Tab.Pane>
+    render: () => <Tab.Pane loading={!user.bookmarks}>
+      <Container>
+        <Grid stackable columns={4}>
+          <Grid.Row className="sponsor-padding">
+            {
+            user.bookmarks &&
+            user.bookmarks.map((corporation, index) => (
+              <Grid.Column className="card-team" key={index}>
+                <Card
+                  fluid
+                  raised
+                  header={corporation}
+                />
+              </Grid.Column>
+            ))}
+          </Grid.Row>
+        </Grid>
+      </Container>
+    </Tab.Pane>
   }
 
   return (
