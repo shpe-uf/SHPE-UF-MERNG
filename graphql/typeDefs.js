@@ -119,6 +119,7 @@ module.exports = gql`
   input DeleteClassInput {
     code: String!
     username: String!
+  }
 
   input EditUserProfileInput {
     email: String!

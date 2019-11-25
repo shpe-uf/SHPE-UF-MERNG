@@ -76,7 +76,9 @@ function ClassSharing() {
 
   var getClasses = [];
 
-  var { data } = useQuery(FETCH_USER_QUERY, {
+  var { data } = 0;
+  
+  data = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
     }
@@ -93,7 +95,6 @@ function ClassSharing() {
       username
     }
   });
-  console.log(data);
 
   if (data.getMatches) {
     getMatches = data.getMatches;
