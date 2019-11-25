@@ -1,11 +1,45 @@
-import React from "react";
-import { Dimmer, Loader, Segment, Header, Grid, Card } from "semantic-ui-react";
+import React, { useContext, useState } from "react";
+import { Dimmer, Loader, Segment, Header, Grid, Card, Button } from "semantic-ui-react";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+
+
+import { AuthContext } from "../context/auth";
 
 import { FETCH_TASKS_QUERY } from "../util/graphql";
 
 function TasksCards({ user }) {
+  const [errors, setErrors] = useState({});
   var tasks = useQuery(FETCH_TASKS_QUERY).data.getTasks;
+
+  var {
+    user: { username }
+  } = useContext(AuthContext);
+
+  const [redeemTasksPoints] = useMutation(REDEEM_TASK_POINTS_MUTATION, {
+    update(
+      _,
+      {
+        data: { redeemTasksPoints: userData }
+      }
+    ) {
+      console.log(userData);
+
+    },
+
+    onError(err) {
+      toast.error(err.graphQLErrors[0].extensions.exception.errors.general, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      console.log(err);
+    }
+
+  });
 
   return (
     <>
@@ -20,38 +54,49 @@ function TasksCards({ user }) {
           </Header>
         </Segment>
       ) : (
-        <Card.Group>
-          {tasks &&
-            tasks.map((task, index) => (
-              <Card color="blue">
-                <Card.Content>
-                  <Grid>
-                    <Grid.Row itemsPerRow={2}>
-                      <Grid.Column width={14}>
-                        <Card.Header>{task.name}</Card.Header>
-                      </Grid.Column>
-                      <Grid.Column width={2}>
-                        <Card.Header textAlign="right">
-                          {task.points}
-                        </Card.Header>
-                      </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Card.Meta>
-                          {task.startDate} - {task.endDate}
-                        </Card.Meta>
-                        <Card.Description>{task.description}</Card.Description>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                </Card.Content>
-              </Card>
-            ))}
-        </Card.Group>
-      )}
+          <Card.Group itemsPerRow={4}>
+            {tasks &&
+              tasks.map((task, index) => (
+                <Card color="blue" key={index}>
+                  <Card.Content><h5>{task.name}</h5></Card.Content>
+                  <Card.Content>
+                    {task.points}
+                  </Card.Content>
+                  <Card.Content>
+                    {task.startDate} - {task.endDate}
+                  </Card.Content>
+                  <Card.Content>{task.description}</Card.Content>
+                  <Card.Content>
+                    <Button fluid basic color="green"
+                      onClick={() => {
+                        redeemTasksPoints({
+                          variables: {
+                            name: task.name,
+                            username: username
+                          }
+                        });
+                      }}
+                    >
+                      Request
+                    </Button>
+                  </Card.Content>
+                </Card>
+              ))}
+          </Card.Group>
+        )}
     </>
   );
 }
+
+const REDEEM_TASK_POINTS_MUTATION = gql`
+  mutation redeemTasksPoints($name:String!, $username: String!){
+    redeemTasksPoints(
+      redeemTasksPointsInput: {name: $name, username: $username}
+    ) {
+      firstName
+      lastName
+    }
+  }
+`;
 
 export default TasksCards;

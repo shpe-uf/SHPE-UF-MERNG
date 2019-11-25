@@ -1,5 +1,6 @@
 const { UserInputError } = require("apollo-server");
 const Task = require("../../models/Task");
+const Request = require("../../models/Request.js")
 
 const { validateCreateTaskInput } = require("../../util/validators");
 
@@ -49,6 +50,7 @@ module.exports = {
         name,
         startDate,
         endDate,
+        type: "Task",
         description,
         points,
         attendance: 0,

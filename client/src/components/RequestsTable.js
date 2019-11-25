@@ -26,7 +26,7 @@ function RequestsTable({ requests }) {
       requests.forEach((request, index) => {
         var result = requestData.filter(
           updatedRequests =>
-            updatedRequests.eventName === request.eventName &&
+            updatedRequests.name === request.name &&
             updatedRequests.username === request.username
         );
         if (result.length === 0) {
@@ -37,6 +37,7 @@ function RequestsTable({ requests }) {
     },
 
     onError(err) {
+      console.log(err);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     }
   });
@@ -51,7 +52,7 @@ function RequestsTable({ requests }) {
       requests.forEach((request, index) => {
         var result = requestData.filter(
           updatedRequests =>
-            updatedRequests.eventName === request.eventName &&
+            updatedRequests.name === request.name &&
             updatedRequests.username === request.username
         );
         if (result.length === 0) {
@@ -105,8 +106,8 @@ function RequestsTable({ requests }) {
                       {request.lastName}, {request.firstName}
                     </Table.Cell>
                     <Table.Cell>{request.username}</Table.Cell>
-                    <Table.Cell>{request.eventName}</Table.Cell>
-                    <Table.Cell>{request.category}</Table.Cell>
+                    <Table.Cell>{request.name}</Table.Cell>
+                    <Table.Cell>{request.type}</Table.Cell>
                     <Table.Cell>
                       {moment(request.createdAt)
                         .local()
@@ -123,7 +124,7 @@ function RequestsTable({ requests }) {
                           approveRequest({
                             variables: {
                               username: request.username,
-                              eventName: request.eventName
+                              name: request.name
                             }
                           });
                         }}
@@ -141,7 +142,7 @@ function RequestsTable({ requests }) {
                           rejectRequest({
                             variables: {
                               username: request.username,
-                              eventName: request.eventName
+                              name: request.name
                             }
                           });
                         }}
@@ -160,12 +161,12 @@ function RequestsTable({ requests }) {
 }
 
 const REJECT_REQUEST_MUTATION = gql`
-  mutation rejectRequest($username: String!, $eventName: String!) {
+  mutation rejectRequest($username: String!, $name: String!) {
     rejectRequest(
-      approveRejectRequestInput: { username: $username, eventName: $eventName }
+      approveRejectRequestInput: { username: $username, name: $name }
     ) {
-      eventName
-      category
+      name
+      type
       points
       firstName
       lastName
@@ -176,12 +177,12 @@ const REJECT_REQUEST_MUTATION = gql`
 `;
 
 const APPROVE_REQUEST_MUTATION = gql`
-  mutation approveRequest($username: String!, $eventName: String!) {
+  mutation approveRequest($username: String!, $name: String!) {
     approveRequest(
-      approveRejectRequestInput: { username: $username, eventName: $eventName }
+      approveRejectRequestInput: { username: $username, name: $name }
     ) {
-      eventName
-      category
+      name
+      type
       points
       firstName
       lastName

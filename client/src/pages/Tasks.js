@@ -37,11 +37,10 @@ function Tasks() {
 
   const { values, onChange, onSubmit } = useForm(createTaskCallback, {
     name: "",
-    code: "",
-    category: "",
-    expiration: "",
-    points: "",
-    request: "false"
+    description: "",
+    startDate: "",
+    endDate: "",
+    points: ""
   });
 
   const [createTask, { loading }] = useMutation(CREATE_TASK_MUTATION, {

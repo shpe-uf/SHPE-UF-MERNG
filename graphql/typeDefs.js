@@ -22,6 +22,7 @@ module.exports = gql`
     permission: String!
     listServ: Boolean!
     events: [Event]!
+    tasks: [Task]!
     token: String!
     message: String!
     confirmed: Boolean!
@@ -115,14 +116,19 @@ module.exports = gql`
     username: String!
   }
 
+  input RedeemTasksPointsInput{
+    name: String!
+    username: String!
+  }
+
   input ApproveRejectRequestInput {
     username: String!
-    eventName: String!
+    name: String!
   }
 
   input ManualInputInput {
     username: String!
-    eventName: String!
+    name: String!
   }
 
   input ManualTaskInputInput {
@@ -149,6 +155,7 @@ module.exports = gql`
     createEvent(createEventInput: CreateEventInput): [Event]
     createTask(createTaskInput: CreateTaskInput): [Task]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
+    redeemTasksPoints(redeemTasksPointsInput: RedeemTasksPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
