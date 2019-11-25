@@ -772,28 +772,26 @@ module.exports = {
         token: token
       }
       return Token;
-    }
-  },
+    },
 
-  async bookmark(
-    _, {
-      company
-    }
-  ) {
-    var updatedUser = await User.findOneAndUpdate({
-      username
-    }, {
-      $push: {
-        bookmarks: {
-          $each: [{
-            name: company
-          }]
-        }
+    async bookmark(
+      _, {
+        company,
+        username
       }
-    }, {
-      new: true
-    });
+    ) {
 
-    return updatedUser;
+      var updatedUser = await User.findOneAndUpdate({
+        username
+      }, {
+        $push: {
+          bookmarks: company
+        }
+      }, {
+        new: true
+      });
+
+      return updatedUser;
+    }
   }
 };

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Container, Grid, Card, Icon, Tab, Segment } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import imageDataURI from 'image-data-uri';
 import gql from "graphql-tag";
 import { useForm } from "../util/hooks";
+import { AuthContext } from "../context/auth";
 
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 
@@ -11,25 +12,19 @@ import placeholder from "../assets/images/placeholder.png"
 
 function Corporations(props) {
 
+  var { user: { id, username } } = useContext(AuthContext);
+
+  var user = useQuery(FETCH_USER_QUERY, {
+    variables: {
+      userId: id
+    }
+  }).data.getUser;
+
+  console.log(user);
+
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
 
-  const { values, onClick } = useForm(bookmarkCallback, {
-    company: ""
-  });
-
-  const [bookmark, { loading }] = useMutation(BOOKMARK_MUTATION, {
-    update(
-      _
-    ) {
-      values.company = "";
-    },
-
-    variables: values
-  });
-
-  function bookmarkCallback() {
-    bookmark();
-  }
+  const [bookmark] = useMutation(BOOKMARK_MUTATION);
 
   var corporationPane = {
     menuItem: {content:'Corporations', icon:'building outline'},
@@ -53,7 +48,12 @@ function Corporations(props) {
                               <Icon name='plus square' />
                               View Profile
                             </a>
-                            <Button floated='right' icon='book'/>
+                            <Button onClick={() => {bookmark({variables: {
+                              company: corporation.name,
+                              username: username
+                            }});
+                            user.bookmarks.push(corporation.name);
+                            }} floated='right' icon='book'/>
                           </>
                         }
                 />
@@ -89,15 +89,25 @@ function Corporations(props) {
   );
 }
 
+const FETCH_USER_QUERY = gql`
+  query getUser($userId: ID!) {
+    getUser(userId: $userId) {
+      username
+      bookmarks
+    }
+  }
+`;
+
 const BOOKMARK_MUTATION = gql`
   mutation bookmark(
-    $company: String!
+    $company: String!,
+    $username: String!
   ) {
     bookmark(
       company: $company
+      username: $username
     ) {
-      username
-      company
+      bookmarks
     }
   }
 `;
