@@ -21,7 +21,7 @@ import { FETCH_USERS_QUERY } from "../util/graphql";
 
 function TasksTable({ tasks }) {
   const [taskInfoModal, setTaskInfoModal] = useState(false);
-  const [taskInfo, setTaskInfo] = useState({});
+  const [taskAttendance, setTaskAttendance] = useState({});
 
   const openModal = name => {
     if (name === "taskInfo") {
@@ -35,8 +35,8 @@ function TasksTable({ tasks }) {
     }
   };
 
-  function getTaskInfo(taskInfo) {
-    setTaskInfo(taskInfo);
+  function getTaskAttendance(taskInfo) {
+    setTaskAttendance(taskInfo);
   }
   return (
     <>
@@ -82,7 +82,7 @@ function TasksTable({ tasks }) {
                       <Button
                         icon
                         onClick={() => {
-                          getTaskInfo(task);
+                          getTaskAttendance(task);
                           openModal("taskInfo");
                         }}
                       >
@@ -102,13 +102,49 @@ function TasksTable({ tasks }) {
         closeOnDimmerClick={false}
       >
         <Modal.Header>
-          <h2>Congrats bitch, this shit works</h2>
+          <h2>Task Information</h2>
         </Modal.Header>
         <Modal.Content>
           <Grid>
             <Grid.Row>
               <Grid.Column>
-                <h3>some name</h3>
+                <h3>{taskAttendance.name}</h3>
+                <p>Attendance: {taskAttendance.attendance}</p>
+                {taskAttendance.attendance === 0 ? (
+                  <Segment placeholder>
+                    <Header icon>
+                      <i className="fas fa-exclamation circle"></i>
+                      <p>This task has no attendance records.</p>
+                    </Header>
+                  </Segment>
+                ) : (
+                  <div
+                    className="table-responsive"
+                    style={{ marginBottom: 16 }}
+                  >
+                    <Table striped selectable unstackable>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Name</Table.HeaderCell>
+                          <Table.HeaderCell>Username</Table.HeaderCell>
+                          <Table.HeaderCell>Email</Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {taskAttendance.users &&
+                          taskAttendance.users.map(member => (
+                            <Table.Row key={member.username}>
+                              <Table.Cell>
+                                {member.lastName + "," + member.firstName}
+                              </Table.Cell>
+                              <Table.Cell>{member.username}</Table.Cell>
+                              <Table.Cell>{member.email}</Table.Cell>
+                            </Table.Row>
+                          ))}
+                      </Table.Body>
+                    </Table>
+                  </div>
+                )}
                 <Button
                   type="reset"
                   color="grey"
@@ -116,12 +152,19 @@ function TasksTable({ tasks }) {
                 >
                   Cancel
                 </Button>
+                <CSVLink
+                  data={taskAttendance.users}
+                  filename={taskAttendance.name + "csv."}
+                >
+                  <Button color="green" floated="right">
+                    Download as CSV
+                  </Button>
+                </CSVLink>
               </Grid.Column>
             </Grid.Row>
           </Grid>
         </Modal.Content>
       </Modal>
-      ;
     </>
   );
 }
