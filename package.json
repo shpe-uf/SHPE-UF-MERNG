@@ -7,13 +7,13 @@
     "start": "node index"
   },
   "engines": {
-   "node": "10.15.3"
- }, 
+    "node": "10.15.3"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.9.0",
+    "apollo-server": "^2.9.7",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.1.0",
     "google-palette": "^1.1.0",
@@ -22,7 +22,7 @@
     "mongo": "^0.1.0",
     "mongoose": "^5.6.10",
     "nodemon": "^1.19.2",
-    "nodemailer": "^6.3.1", 
+    "nodemailer": "^6.3.1",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

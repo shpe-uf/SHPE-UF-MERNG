@@ -5,6 +5,7 @@ module.exports = gql`
     id: ID!
     firstName: String!
     lastName: String!
+    photo: String!
     major: String!
     year: String!
     graduating: String!
@@ -125,6 +126,18 @@ module.exports = gql`
   input DeleteClassInput {
     code: String!
     username: String!
+
+  input EditUserProfileInput {
+    email: String!
+    firstName: String!
+    lastName: String!
+    photo: String!
+    major: String!
+    year: String!
+    graduating: String!
+    country: String!
+    ethnicity: String!
+    sex: String!
   }
 
   type Query {
@@ -154,5 +167,7 @@ module.exports = gql`
     forgotPassword(email: String!): User!
     resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
     confirmUser(id: String!): User!
+    changePermission(email: String!, currentEmail: String!, permission: String!): Boolean!
+    editUserProfile(editUserProfileInput: EditUserProfileInput): User!
   }
 `;

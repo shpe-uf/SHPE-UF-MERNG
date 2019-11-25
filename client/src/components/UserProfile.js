@@ -1,15 +1,31 @@
-import React from "react";
-import { Grid, Image, Table } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Grid, Image, Table, Button, Dropdown, Form } from "semantic-ui-react";
 import moment from "moment";
+
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 
 import placeholder from "../assets/images/placeholder.png";
 
 function UserProfile({ user }) {
+  // console.log(user);
+  // const [value, setValue] = useState(user.permission);
+  //
+  // var permissionChange = (e, { value }) => {
+  //   console.log(value);
+  //   console.log("change");
+  // }
+
   return (
+
     <Grid columns={2} doubling>
       <Grid.Row>
         <Grid.Column>
-          <Image fluid rounded src={placeholder} className="image-profile" />
+          {user && user.photo !== "" ? (
+            <Image fluid rounded src={user.photo} className="image-profile" />
+          ) : (
+            <Image fluid rounded src={placeholder} className="image-profile" />
+          )}
         </Grid.Column>
         <Grid.Column>
           <div className="table-responsive">
@@ -109,14 +125,30 @@ function UserProfile({ user }) {
                     )}
                   </Table.Cell>
                 </Table.Row>
-                <Table.Row>
+                {/*<Table.Row>
                   <Table.Cell>
                     <p>Permission:</p>
                   </Table.Cell>
                   <Table.Cell>
-                    {user ? <p>{user.permission}</p> : <p>Loading</p>}
+                    <span>
+                      { user ? <p className="permission_change" >{user.permission}</p> : <p>Loading</p>}
+                      <Dropdown
+                        button
+                        text='Change'
+                        className="float_right"
+                        onChange={permissionChange}
+                        value={value}
+                        selection
+                        >
+                        <Dropdown.Menu>
+                          <Dropdown.Item text='Admin' value='admin'/>
+                          <Dropdown.Item text='Member' value='member'/>
+                          <Dropdown.Item text='Director' value='director'/>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </span>
                   </Table.Cell>
-                </Table.Row>
+                </Table.Row> */}
               </Table.Body>
             </Table>
           </div>
