@@ -30,7 +30,7 @@ module.exports = {
 
       const users = await User.find({
         username : {$in: matches}
-      });
+      }).sort({lastName: 1, firstName: 1});
 
       return users;
     }

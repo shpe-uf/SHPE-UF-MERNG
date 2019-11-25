@@ -13,6 +13,7 @@ import {
   Form,
   Icon,
   List,
+  Label,
   Tab,
   Placeholder
 } from "semantic-ui-react";
@@ -24,6 +25,7 @@ import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
 
 import Title from "../components/Title";
+import cesar from "../assets/images/team/2019-2020/cesar.png"
 import { findValuesAddedToEnums } from "graphql/utilities/findBreakingChanges";
 
 function ClassSharing() {
@@ -86,35 +88,16 @@ function ClassSharing() {
 
   var getMatches = [];
 
-  var { data: dataM } = useQuery(GET_MATCHES_QUERY, {
+  var { data } = useQuery(GET_MATCHES_QUERY, {
     variables: {
       username
     }
   });
+  console.log(data);
 
-  if (dataM.getMatches) {
-    getMatches = dataM.getMatches;
+  if (data.getMatches) {
+    getMatches = data.getMatches;
   }
-   /*
-    function compare(a,b){
-      const countA = a.count;
-      const countB = b.count;
-
-      let comparison = 0;
-      if(countA > countB){
-        comparison = 1;
-      }
-      else if(countA < countB){
-        comparison = -1;
-      }
-      return comparison;
-    }
-    getMatches.sort(compare);
-  }
-  
-  console.log(getMatches)
-*/
-
   var classUsers = [];
   const [getClass, { data: getClassData, loading: loadingClass }] = useMutation(
     GET_CLASS_QUERY,
@@ -182,7 +165,6 @@ function ClassSharing() {
                 labelPosition="left"
                 onClick={() => openModal("addClass")}
               />{" "}
-              {/* {console.log(getClasses)} */}
               {getClasses.length > 0 ? (
                 <Table celled selectable striped unstackable>
                   <Table.Header>
@@ -226,34 +208,24 @@ function ClassSharing() {
               <Container>
                 <h2>My Matches</h2>
                 <Card.Group stackable itemsPerRow={3}>
-                  {/* {getMatches.sort((a,b) => (a.score > b.score) ? 1 : ((b.score > a.score) ? -1 : 0))} */}
                   {getMatches.map(matchTemp => (
-                    
-                    <Card
-                      fluid
-                      key={matchTemp.username}
-                      onClick={() => {
-                        setDispUserProfile(matchTemp);
-                        openModal("userProfile");
-                      }}
-                    >
+                    <Card>
                       <Card.Content>
                         <Card.Header>
                           {matchTemp.firstName + " " + matchTemp.lastName}
                         </Card.Header>
-                        <Card.Meta>
-                          <span className="date">
-                            {matchTemp.score / 5 +
-                              (matchTemp.score > 5
-                                ? " shared classes"
-                                : " shared class")}
-                          </span>
-                        </Card.Meta>
-                        {/* <Card.Description>
-                          {"Email: " + matchTemp.email}
-                        </Card.Description> */}{" "}
+                        <Image src = {cesar} wrapped ui ={true}></Image>
+                        {matchTemp.classes.map(codeName => (
+                          <Label color="blue">
+                            <h6>{codeName.code}</h6>
+                          </Label>
+                        ))}{" "}
+                        <Card.Meta>{matchTemp.major}</Card.Meta>
+                        <Card.Meta>{matchTemp.year}</Card.Meta>
                       </Card.Content>
-                      <Card.Content extra>
+                      <Card.Content extra >
+                        <a> {matchTemp.email}</a>
+                        <p></p>
                         <a> {"@" + matchTemp.username} </a>
                       </Card.Content>
                     </Card>
@@ -485,12 +457,14 @@ const GET_MATCHES_QUERY = gql`
   query getMatches($username: String!) {
     getMatches(username: $username) {
       username
-      score
       firstName
       lastName
       email
       major
       year
+      classes {
+        code
+      }
     }
   }
 `;
