@@ -25,12 +25,12 @@
 
 @font-face {
   font-family: "heading-font";
-  src: url(assets/fonts/HeadingPro.ttf);
+  src: url(assets/fonts/Montserrat-Black.ttf);
 }
 
 @font-face {
   font-family: "body-font";
-  src: url(assets/fonts/SanFrancisco.otf);
+  src: url(assets/fonts/OpenSans-Regular.ttf);
 }
 
 @font-face {

@@ -58,9 +58,9 @@ function CorporationTable({ corporations }) {
       setCorporationInfo(corporationInfo);
     }
 
-    function editCorporationUpdate(state) {
-      setEditCorporationModal(state);
-    }
+    // function editCorporationUpdate(state) {
+    //   setEditCorporationModal(state);
+    // }
 
   return (
     <>
@@ -153,7 +153,7 @@ function CorporationTable({ corporations }) {
           </Table>
 
           <Modal
-            open={editCorporationModal}
+            open={viewCorporationModal}
             size="large"
             closeOnEscape={true}
             closeOnDimmerClick={false}
@@ -172,7 +172,7 @@ function CorporationTable({ corporations }) {
                     content="Close"
                     onClick={()=> closeModal("viewCorporation")}
                   />
-                  <Button 
+                  {/* <Button 
                     color="teal"
                     floated="right"
                     content="Edit"
@@ -181,14 +181,14 @@ function CorporationTable({ corporations }) {
                       getCorporationInfo(corporation);
                       openModal("editCorporation");
                     }}
-                  />
+                  /> */}
                 </Grid.Column>
               </Grid.Row>
             </Grid>
           </Modal.Content>
           </Modal>
 
-          <Modal
+          {/* <Modal
             open={viewCorporationModal}
             size="large"
             closeOnEscape={true}
@@ -198,7 +198,7 @@ function CorporationTable({ corporations }) {
               <h2>Company Profile</h2>
             </Modal.Header>
             <Modal.Content>
-              <Gird>
+              <Grid>
                 <Grid.Row>
                   <Grid.Column>
                     <CorporationProfileForm 
@@ -207,9 +207,9 @@ function CorporationTable({ corporations }) {
                     />
                   </Grid.Column>
                 </Grid.Row>
-              </Gird>
+              </Grid>
             </Modal.Content>
-          </Modal>
+          </Modal> */}
         </div>
       )}
     </>
