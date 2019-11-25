@@ -109,6 +109,7 @@ function TasksTable({ tasks }) {
             <Grid.Row>
               <Grid.Column>
                 <h3>{taskAttendance.name}</h3>
+                <p>{taskAttendance.description}</p>
                 <p>Attendance: {taskAttendance.attendance}</p>
                 {taskAttendance.attendance === 0 ? (
                   <Segment placeholder>
@@ -154,7 +155,7 @@ function TasksTable({ tasks }) {
                 </Button>
                 <CSVLink
                   data={taskAttendance.users}
-                  filename={taskAttendance.name + "csv."}
+                  filename={taskAttendance.name + ".csv"}
                 >
                   <Button color="green" floated="right">
                     Download as CSV
