@@ -49,6 +49,7 @@ module.exports = {
       async getUser(_, { userId }) {
         try {
           var user = await User.findById(userId);
+          console.log(user)
 
           const users = await User.find();
           const fallBelowUsers = await User.find()
@@ -93,10 +94,12 @@ module.exports = {
             createdAt: user.createdAt,
             permission: user.permission,
             listServ: user.listServ,
-            events: user.events
+            events: user.events,
+            bookmarks: user.bookmarks
           };
 
           if (newUser) {
+            console.log(newUser)
             return newUser;
           } else {
             throw new Error("User not found.");

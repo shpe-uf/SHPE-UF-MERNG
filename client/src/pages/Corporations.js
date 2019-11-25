@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Grid, Card, Button, Tab, Segment, Image, Icon } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import imageDataURI from 'image-data-uri';
 
+import { AuthContext } from "../context/auth";
+
+import gql from "graphql-tag";
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 
-import placeholder from "../assets/images/placeholder.png"
-
 function Corporations(props) {
+
+  var {
+    user: { id, username }
+  } = useContext(AuthContext);
+
+  // var user = useQuery(FETCH_USER_QUERY, {
+  //   variables: {
+  //     userId: id
+  //   }
+  // }).data.getUser;
+
+  const bookmarks = ['Computers', 'Big LLC']
 
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
 
@@ -30,6 +42,7 @@ function Corporations(props) {
                 >
                   <Image
                     src={corporation.logo}
+                    size="medium"
                     fluid
                     rounded
                   />
@@ -50,7 +63,45 @@ function Corporations(props) {
 
   var bookmarksPane = {
     menuItem: {content:'Bookmarks', icon:'sticky note outline'},
-    render: () => <Tab.Pane loading></Tab.Pane>
+    render: () => 
+    <Tab.Pane loading={!corporations}>
+      <Container>
+        <Grid stackable columns={4}>
+          <Grid.Row className="sponsor-padding">
+            {
+            corporations &&
+            corporations.filter(function (corporation) {
+              return bookmarks.includes(corporation.name);
+            }).map((corporation, index) => (
+              <Grid.Column className="card-team" key={index}>
+                <Card
+                  fluid
+                  raised
+                >
+                  <Card.Content>
+                    <Image
+                      src={corporation.logo}
+                      rounded
+                      size="small"
+                    />
+                    <Card.Header>
+                      {corporation.name}
+                    </Card.Header>
+                    <Button
+                      color="linkedin"
+                      fluid
+                    >
+                      <Icon name="plus square"/> View Profile
+                    </Button>
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            ))
+            }
+          </Grid.Row>
+        </Grid>
+      </Container>
+    </Tab.Pane>
   }
 
   return (
@@ -71,5 +122,27 @@ function Corporations(props) {
     </div>
   );
 }
+
+const FETCH_USER_QUERY = gql`
+  query getUser($userId: ID!) {
+    getUser(userId: $userId) {
+      firstName
+      lastName
+      points
+      fallPoints
+      springPoints
+      summerPoints
+      fallPercentile
+      springPercentile
+      summerPercentile
+      events {
+        name
+        category
+        createdAt
+        points
+      }
+    }
+  }
+`;
 
 export default Corporations;

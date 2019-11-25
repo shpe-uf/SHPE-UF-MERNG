@@ -23,6 +23,7 @@ module.exports = gql`
     permission: String!
     listServ: Boolean!
     events: [Event]!
+    bookmarks: [String]!
     token: String!
     message: String!
     confirmed: Boolean!

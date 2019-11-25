@@ -78,6 +78,9 @@ const userSchema = new Schema({
     createdAt: String,
     points: Number,
   }],
+  bookmarks:[{
+    bookmark: String
+  }],
   token: {
     type: String
   },
