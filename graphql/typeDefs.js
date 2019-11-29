@@ -177,5 +177,6 @@ module.exports = gql`
     resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
     confirmUser(id: String!): User!
     bookmark(company: String!, username: String!): User!
+    deleteBookmark(company: String!, username: String!): User!
   }
 `;

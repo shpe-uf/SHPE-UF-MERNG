@@ -5,6 +5,7 @@ import imageDataURI from 'image-data-uri';
 import gql from "graphql-tag";
 import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
+import Title from "../components/Title";
 
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 
@@ -25,6 +26,7 @@ function Corporations(props) {
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
 
   const [bookmark] = useMutation(BOOKMARK_MUTATION);
+  const [deleteBookmark] = useMutation(DELETE_BOOKMARK_MUTATION);
 
   var corporationPane = {
     menuItem: {content:'Corporations', icon:'building outline'},
@@ -48,12 +50,26 @@ function Corporations(props) {
                               <Icon name='plus square' />
                               View Profile
                             </a>
-                            <Button onClick={() => {bookmark({variables: {
+                            {user && user.bookmarks.find(function(bookmarked){
+                              return bookmarked === corporation.name;
+                            }) ? (
+                             <Button onClick={() => {deleteBookmark({variables: {
                               company: corporation.name,
                               username: username
-                            }});
-                            user.bookmarks.push(corporation.name);
-                            }} floated='right' icon='book'/>
+                              }});
+                              user.bookmarks.splice(user.bookmarks.indexOf(corporation.name), 1); 
+                              }}
+                              floated='right' icon='book' color='red' />
+                            ) : (
+                              <Button onClick={() => {bookmark({variables: {
+                                company: corporation.name,
+                                username: username
+                              }});
+                              user.bookmarks.push(corporation.name);
+                              }} 
+                              floated='right' icon='book' />
+                            )
+                          }
                           </>
                         }
                 />
@@ -90,13 +106,7 @@ function Corporations(props) {
 
   return (
     <div className="body">
-      <div className="masthead masthead-sponsors">
-        <div className="overlay-blue">
-          <Container>
-            <h1 className="masthead-title text-white">Corporate Database</h1>
-          </Container>
-        </div>
-      </div>
+      <Title title="Corporate Database" />
       <Segment basic>
         <Tab 
           panes={[corporationPane, bookmarksPane]}
@@ -122,6 +132,20 @@ const BOOKMARK_MUTATION = gql`
     $username: String!
   ) {
     bookmark(
+      company: $company
+      username: $username
+    ) {
+      bookmarks
+    }
+  }
+`;
+
+const DELETE_BOOKMARK_MUTATION = gql`
+  mutation deleteBookmark(
+    $company: String!,
+    $username: String!
+  ) {
+    deleteBookmark(
       company: $company
       username: $username
     ) {

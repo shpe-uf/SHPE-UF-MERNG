@@ -792,6 +792,26 @@ module.exports = {
       });
 
       return updatedUser;
+    },
+
+    async deleteBookmark(
+      _, {
+        company,
+        username
+      }
+    ) {
+
+      var updatedUser = await User.findOneAndUpdate({
+        username
+      }, {
+        $pull: {
+          bookmarks: company
+        }
+      }, {
+        new: true
+      });
+
+      return updatedUser;
     }
   }
 };
