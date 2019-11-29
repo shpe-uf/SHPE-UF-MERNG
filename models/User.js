@@ -10,6 +10,10 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  photo: {
+    type: String,
+    default: ""
+  },
   major: {
     type: String,
     required: true
@@ -70,7 +74,10 @@ const userSchema = new Schema({
     type: Number,
     default: 0
   },
-  permission: String,
+  permission: {
+    type: String,
+    default: "member"
+  },
   listServ: Boolean,
   events: [{
     name: String,

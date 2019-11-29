@@ -58,7 +58,8 @@ function AlumniMap({ alumnis }) {
                 ]}
               >
                 <b className="no-margin" className="accent-1-text">
-                  {alumni.lastName.toUpperCase()}, {alumni.firstName.toUpperCase()}
+                  {alumni.lastName.toUpperCase()},{" "}
+                  {alumni.firstName.toUpperCase()}
                 </b>
                 <Divider style={{ marginTop: 4, marginBottom: 4 }} />
                 {alumni.employer !== "" && (
@@ -72,14 +73,22 @@ function AlumniMap({ alumnis }) {
                   </p>
                 )}
                 <p className="no-margin">
+                  <b>Undergrad. University:</b> {alumni.undergrad.university}
+                </p>
+                <p className="no-margin">
                   <b>Undergrad. Major:</b> {alumni.undergrad.major} (Class of{" "}
                   {alumni.undergrad.year})
                 </p>
                 {alumni.grad.university !== "" && (
-                  <p className="no-margin">
-                    <b>Grad. Major:</b> {alumni.grad.major} (Class of{" "}
-                    {alumni.grad.year})
-                  </p>
+                  <>
+                    <p className="no-margin">
+                      <b>Grad. University:</b> {alumni.grad.university}
+                    </p>
+                    <p className="no-margin">
+                      <b>Grad. Major:</b> {alumni.grad.major} (Class of{" "}
+                      {alumni.grad.year})
+                    </p>
+                  </>
                 )}
               </Popup>
             )}

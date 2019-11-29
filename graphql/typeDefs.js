@@ -7,6 +7,7 @@ module.exports = gql`
     id: ID!
     firstName: String!
     lastName: String!
+    photo: String!
     major: String!
     year: String!
     graduating: String!
@@ -158,6 +159,19 @@ module.exports = gql`
     linkedin: String!
   }
 
+  input EditUserProfileInput {
+    email: String!
+    firstName: String!
+    lastName: String!
+    photo: String!
+    major: String!
+    year: String!
+    graduating: String!
+    country: String!
+    ethnicity: String!
+    sex: String!
+  }
+
   ### AUXILIARY INPUTS ###
   input UndergradInput {
     university: String!
@@ -214,5 +228,7 @@ module.exports = gql`
     ): Token!
     confirmUser(id: String!): User!
     registerAlumni(registerAlumniInput: RegisterAlumniInput): Alumni!
+    changePermission(email: String!, currentEmail: String!, permission: String!): Boolean!
+    editUserProfile(editUserProfileInput: EditUserProfileInput): User!
   }
 `;

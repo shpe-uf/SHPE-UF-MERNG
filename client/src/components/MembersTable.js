@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Table,
   Dimmer,
@@ -9,12 +9,20 @@ import {
   Grid
 } from "semantic-ui-react";
 
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+
+import { AuthContext } from "../context/auth";
 import UserProfile from "./UserProfile";
 import PointsTable from "./PointsTable";
 
 function MembersTable({ users }) {
   const [userInfoModal, setUserInfoModal] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const [permission, setPermission] = useState(userInfo.permission);
+  const [errors, setErrors] = useState({});
+
+  const { user } = useContext(AuthContext);
 
   const openModal = name => {
     if (name === "userInfo") {
@@ -31,7 +39,30 @@ function MembersTable({ users }) {
 
   function getUserInfo(userInfo) {
     setUserInfo(userInfo);
+    setPermission(userInfo.permission);
+    setErrors({});
   }
+
+  const [changePermissionMutation] = useMutation(CHANGE_PERMISSION, {
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+    },
+    onCompleted() {
+      setPermission(user.permission);
+      userInfo.permission = user.permission;
+    }
+  });
+
+  function changePermission(value) {
+    var values = {
+      email: userInfo.email,
+      currentEmail: user.email,
+      permission: value
+    }
+    changePermissionMutation({ variables: values });
+    user.permission = value;
+  }
+
 
   return (
     <>
@@ -107,6 +138,35 @@ function MembersTable({ users }) {
           {userInfo && (
             <>
               <UserProfile user={userInfo} />
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column>
+                    {Object.keys(errors).length > 0 && (
+                      <div className="ui error message">
+                        <ul className="list">
+                          {Object.values(errors).map(value => (
+                            <li key={value}>{value}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    <Button.Group fluid>
+                      {permission === 'admin' ? (
+                        <Button color='yellow'>Admin</Button>)
+                        : ( <Button color='grey' onClick={() => changePermission("admin")}>Admin</Button>
+                      )}
+                      {permission === 'director' ? (
+                        <Button color='green'>Director</Button>
+                      ) : (<Button color='grey' onClick={() => changePermission("director")}>Director</Button>
+                      )}
+                      {permission === 'member' ? (
+                        <Button color='blue'>Member</Button>
+                      ) : (<Button color='grey' onClick={() => changePermission("member")}>Member</Button>
+                      )}
+                    </Button.Group>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
               <PointsTable user={userInfo} />
             </>
           )}
@@ -128,5 +188,11 @@ function MembersTable({ users }) {
     </>
   );
 }
+
+const CHANGE_PERMISSION = gql`
+  mutation changePermission($email: String!, $currentEmail: String!, $permission: String!) {
+    changePermission(email: $email, currentEmail: $currentEmail, permission: $permission)
+  }
+`;
 
 export default MembersTable;

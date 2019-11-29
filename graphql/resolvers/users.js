@@ -14,7 +14,8 @@ const {
   validateLoginInput,
   validateRedeemPointsInput,
   validateEmailInput,
-  validatePasswordInput
+  validatePasswordInput,
+  validateEditUserProfile
 } = require("../../util/validators");
 
 function generateToken(user, time) {
@@ -50,6 +51,7 @@ module.exports = {
         var user = await User.findById(userId);
 
         const users = await User.find();
+
         const fallBelowUsers = await User.find()
           .where("fallPoints")
           .lt(user.fallPoints);
@@ -74,6 +76,7 @@ module.exports = {
           firstName: user.firstName,
           lastName: user.lastName,
           username: user.username,
+          photo: user.photo,
           email: user.email,
           major: user.major,
           year: user.year,
@@ -253,7 +256,7 @@ module.exports = {
       const { errors, valid } = validateLoginInput(username, password);
 
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -393,7 +396,7 @@ module.exports = {
         fallPoints: 0,
         springPoints: 0,
         summerPoints: 0,
-        permission: "User",
+        permission: "member",
         listServ,
         events: []
       });
@@ -425,11 +428,9 @@ module.exports = {
         if (err) {
           console.error("there was an error: ", err);
         } else {
-          console.log("here is the res: ", response);
-          res.status(200).json("recovery email sent");
+          res.status(200).json('recovery email sent');
         }
       });
-      console.log("TESTTTTTT");
       return {
         ...res._doc,
         id: res._id
@@ -653,7 +654,7 @@ module.exports = {
     async forgotPassword(_, { email }) {
       const { errors, valid } = validateEmailInput(email);
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -715,8 +716,7 @@ module.exports = {
         if (err) {
           console.error("there was an error: ", err);
         } else {
-          console.log("here is the res: ", response);
-          res.status(200).json("recovery email sent");
+          res.status(200).json('recovery email sent');
         }
       });
 
@@ -734,7 +734,7 @@ module.exports = {
       );
 
       if (!valid) {
-        throw new UserInputError("Errors.", {
+        throw new UserInputError("Errors", {
           errors
         });
       }
@@ -765,6 +765,128 @@ module.exports = {
         token: token
       };
       return Token;
+    },
+
+    async editUserProfile(
+      _,
+      {
+        editUserProfileInput: {
+          email,
+          firstName,
+          lastName,
+          photo,
+          major,
+          year,
+          graduating,
+          country,
+          ethnicity,
+          sex
+        }
+      }
+    ) {
+      const { errors, valid } = validateEditUserProfile(
+        firstName,
+        lastName,
+        photo,
+        major,
+        year,
+        graduating,
+        country,
+        ethnicity,
+        sex
+      );
+
+      if (!valid) {
+        throw new UserInputError("Errors", {
+          errors
+        });
+      }
+
+      const user = await User.findOne({ email });
+
+      if (user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { email },
+          {
+            firstName,
+            lastName,
+            photo,
+            major,
+            year,
+            graduating,
+            country,
+            ethnicity,
+            sex
+          },
+          {
+            new: true
+          }
+        );
+
+        return updatedUser;
+      } else {
+        throw new Error("User not found.");
+      }
+    },
+
+    async changePermission(
+      _,
+      {
+        email,
+        currentEmail,
+        permission
+      }
+    ) {
+
+      var {
+        errors,
+        valid
+      } = validateEmailInput(email);
+      if (!valid) {
+        throw new UserInputError("Errors.", {
+          errors
+        });
+      }
+
+      if(email === currentEmail){
+        valid = false;
+        errors.general = "Can't change your own permissions";
+        throw new UserInputError("Can't change your own permissions", {
+          errors
+        });
+      }
+
+      const adminUser = await User.findOne({
+        email: currentEmail
+      });
+      if (!adminUser) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", {
+          errors
+        });
+      }
+      if(adminUser.permission != 'admin'){
+        valid = false;
+        errors.general = "Must be an admin to change permission";
+        throw new UserInputError("Must be an admin to change permission", {
+          errors
+        });
+      }
+
+      const user = await User.findOneAndUpdate({
+        email
+      }, {
+        permission
+      });
+      if (!user) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", {
+          errors
+        });
+      }
+
+      return valid;
+
     }
   }
 };

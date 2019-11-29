@@ -1,3 +1,5 @@
+const parseDataURL = require("data-urls");
+
 module.exports.validateRegisterInput = (
   firstName,
   lastName,
@@ -16,7 +18,7 @@ module.exports.validateRegisterInput = (
 
   const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
   const usernameValidator = /^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i;
-  const emailValidator = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
+  const emailRegex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
   const passwordValidator = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,}$/;
 
   if (firstName.trim() === "") {
@@ -50,7 +52,7 @@ module.exports.validateRegisterInput = (
   }
 
   if (country.trim() === "") {
-    errors.country = "Country of Origin  is required.";
+    errors.country = "Country of Origin is required.";
   }
 
   if (ethnicity.trim() === "") {
@@ -73,8 +75,14 @@ module.exports.validateRegisterInput = (
   if (email.trim() === "") {
     errors.email = "Email is required.";
   } else {
-    if (!email.match(emailValidator)) {
+    if (!email.match(emailRegex)) {
       errors.email = "Invalid email address.";
+    } else if(email.length > 7){
+        var indexUF = email.length - 8;
+        var indexSF = email.length - 14;
+        if(email.substring(indexUF) != "@ufl.edu" && email.substring(indexSF) != "@sfcollege.edu"){
+          errors.email = "University of Florida or Santa Fe College email required.";
+        }
     }
   }
 
@@ -130,13 +138,13 @@ module.exports.validatePasswordInput = (password, confirmPassword) => {
 };
 
 module.exports.validateEmailInput = email => {
-  const emailValidator = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
+  const emailRegex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
   const errors = {};
 
   if (email.trim() === "") {
     errors.email = "Email is required.";
   } else {
-    if (!email.match(emailValidator)) {
+    if (!email.match(emailRegex)) {
       errors.email = "Invalid email address.";
     }
   }
@@ -216,6 +224,78 @@ module.exports.validateManualInputInput = username => {
 
   if (username.trim() === "") {
     errors.username = "No username was provided.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
+module.exports.validateEditUserProfile = (
+  firstName,
+  lastName,
+  photo,
+  major,
+  year,
+  graduating,
+  country,
+  ethnicity,
+  sex
+) => {
+  const errors = {};
+
+  const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+
+  if (firstName.trim() === "") {
+    errors.firstName = "First name is required.";
+  } else {
+    if (!firstName.match(nameValidator)) {
+      errors.firstName =
+        "First Name must be at least 3 character, max 20. No special characters or numbers.";
+    }
+  }
+
+  if (lastName.trim() === "") {
+    errors.lastName = "Last Name is required.";
+  } else {
+    if (!lastName.match(nameValidator)) {
+      errors.lastName =
+        "Last name must be at least 3 character, max 20. No special characters or numbers.";
+    }
+  }
+
+  const dataUrlData = parseDataURL(photo);
+
+  if (dataUrlData.mimeType.toString().slice(0, 6) !== "image/") {
+    errors.photo = "Please use a valid image file for photo.";
+  } else if (Buffer.byteLength(dataUrlData.body) > 102400) {
+    errors.photo =
+      "Please use an image file that doesn't exceed the maximum file size (100 KB)";
+  }
+
+  if (major.trim() === "") {
+    errors.major = "Major is required.";
+  }
+
+  if (year.trim() === "") {
+    errors.year = "Year is required.";
+  }
+
+  if (graduating.trim() === "") {
+    errors.graduating = "Graduating is required.";
+  }
+
+  if (country.trim() === "") {
+    errors.country = "Country of Origin is required.";
+  }
+
+  if (ethnicity.trim() === "") {
+    errors.ethnicity = "Ethnicity is required.";
+  }
+
+  if (sex.trim() === "") {
+    errors.sex = "Sex is required.";
   }
 
   return {
