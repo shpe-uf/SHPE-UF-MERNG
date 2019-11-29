@@ -25,12 +25,12 @@
 
 @font-face {
   font-family: "heading-font";
-  src: url(assets/fonts/HeadingPro.ttf);
+  src: url(assets/fonts/OpenSans-ExtraBoldItalic.ttf);
 }
 
 @font-face {
   font-family: "body-font";
-  src: url(assets/fonts/SanFrancisco.otf);
+  src: url(assets/fonts/AvenirLTStd-Book.otf);
 }
 
 @font-face {
@@ -40,7 +40,7 @@
 
 * {
   font-family: "body-font";
-  font-size: 1rem !important;
+  font-size: 1.025rem !important;
 }
 
 .ui.accordion .title:not(.ui) {
@@ -114,6 +114,10 @@ h4 {
 
 h5 {
   font-size: 1.5rem !important;
+}
+
+.ui.form input, select{
+  font-family: "body-font" !important;
 }
 
 .ui.modal > .header {

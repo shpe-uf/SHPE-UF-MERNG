@@ -205,7 +205,7 @@ function Register(props) {
                   />
                   <Form.Input
                     type="text"
-                    label="UF Email"
+                    label="UF/SF Email"
                     name="email"
                     value={values.email}
                     error={errors.email ? true : false}

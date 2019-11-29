@@ -81,7 +81,7 @@ module.exports.validateRegisterInput = (
         var indexUF = email.length - 8;
         var indexSF = email.length - 14;
         if(email.substring(indexUF) != "@ufl.edu" && email.substring(indexSF) != "@sfcollege.edu"){
-          errors.email = "UF or SF email required";
+          errors.email = "University of Florida or Santa Fe College email required.";
         }
     }
   }
