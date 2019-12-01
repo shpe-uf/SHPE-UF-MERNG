@@ -7,17 +7,20 @@ import { AuthContext } from "../context/auth";
 import gql from "graphql-tag";
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 
+import Title from "../components/Title";
+
 function Corporations(props) {
 
   var {
     user: { id, username }
   } = useContext(AuthContext);
 
-  // var user = useQuery(FETCH_USER_QUERY, {
-  //   variables: {
-  //     userId: id
-  //   }
-  // }).data.getUser;
+  var user = useQuery(FETCH_USER_QUERY, {
+    variables: {
+      userId: id
+    }
+  }).data.getUser;
+  console.log(user)
 
   const bookmarks = ['Computers', 'Big LLC']
 
@@ -42,7 +45,6 @@ function Corporations(props) {
                 >
                   <Image
                     src={corporation.logo}
-                    size="medium"
                     fluid
                     rounded
                   />
@@ -82,7 +84,7 @@ function Corporations(props) {
                     <Image
                       src={corporation.logo}
                       rounded
-                      size="small"
+                      inline
                     />
                     <Card.Header>
                       {corporation.name}
@@ -106,13 +108,7 @@ function Corporations(props) {
 
   return (
     <div className="body">
-      <div className="masthead masthead-sponsors">
-        <div className="overlay-blue">
-          <Container>
-            <h1 className="masthead-title text-white">Corporate Database</h1>
-          </Container>
-        </div>
-      </div>
+      <Title title="Corporate Database" />
       <Segment basic>
         <Tab 
           panes={[corporationPane, bookmarksPane]}
