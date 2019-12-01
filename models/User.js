@@ -78,16 +78,16 @@ const userSchema = new Schema({
     createdAt: String,
     points: Number,
   }],
-  bookmarks:[{
-    bookmark: String
-  }],
   token: {
     type: String
   },
   confirmed: {
     type: Boolean,
     default: false
-  }
+  },
+  bookmarks: [{
+    name: String
+  }]
 });
 
 module.exports = model("User", userSchema);

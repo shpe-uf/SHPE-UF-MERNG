@@ -401,7 +401,8 @@ module.exports = {
         summerPoints: 0,
         permission: "User",
         listServ,
-        events: []
+        events: [],
+        bookmarks: []
       });
 
       const res = await newUser.save();
@@ -548,6 +549,7 @@ module.exports = {
           permission: user.permission,
           listServ: user.listServ,
           events: user.events,
+          bookmarks: user.bookmarks,
           message: "Event code has been sent for approval."
         };
 
@@ -773,5 +775,27 @@ module.exports = {
       }
       return Token;
     }
+  },
+
+  async bookmark(
+    _, {
+      company
+    }
+  ) {
+    var updatedUser = await User.findOneAndUpdate({
+      username
+    }, {
+      $push: {
+        bookmarks: {
+          $each: [{
+            name: company
+          }]
+        }
+      }
+    }, {
+      new: true
+    });
+
+    return updatedUser;
   }
 };

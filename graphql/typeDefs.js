@@ -23,13 +23,13 @@ module.exports = gql`
     permission: String!
     listServ: Boolean!
     events: [Event]!
-    bookmarks: [String]!
     token: String!
     message: String!
     confirmed: Boolean!
     fallPercentile: Int!
     springPercentile: Int!
     summerPercentile: Int!
+    bookmarks: [String]!
   }
 
   type Token {
@@ -177,5 +177,6 @@ module.exports = gql`
     forgotPassword(email: String!): User!
     resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
     confirmUser(id: String!): User!
+    bookmark(company: String!): User!
   }
 `;
