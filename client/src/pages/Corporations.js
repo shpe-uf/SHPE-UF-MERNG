@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Container, Grid, Card, Button, Tab, Segment, Image, Icon } from "semantic-ui-react";
 import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
-import { useForm } from "../util/hooks";
 import Title from "../components/Title";
 
 import { AuthContext } from "../context/auth";
@@ -44,10 +43,11 @@ function Corporations(props) {
                   header={corporation.name}
                   extra={
                           <>
-                            <a>
-                              <Icon name='plus square' />
-                              View Profile
-                            </a>
+                            <Button
+                              color="linkedin"
+                            >
+                              <Icon name="plus square"/> View Profile
+                            </Button>
                             {user && user.bookmarks.find(function(bookmarked){
                               return bookmarked === corporation.name;
                             }) ? (
@@ -137,21 +137,6 @@ function Corporations(props) {
 const FETCH_USER_QUERY = gql`
   query getUser($userId: ID!) {
     getUser(userId: $userId) {
-      firstName
-      lastName
-      points
-      fallPoints
-      springPoints
-      summerPoints
-      fallPercentile
-      springPercentile
-      summerPercentile
-      events {
-        name
-        category
-        createdAt
-        points
-      }
       username
       bookmarks
     }
