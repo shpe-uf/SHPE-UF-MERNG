@@ -18,8 +18,6 @@ function Corporations(props) {
     }
   }).data.getUser;
 
-  console.log(user);
-
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
 
   const [bookmark] = useMutation(BOOKMARK_MUTATION);
