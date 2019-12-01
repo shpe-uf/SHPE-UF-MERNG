@@ -1,43 +1,16 @@
-<<<<<<< HEAD
 import React, { useContext } from "react";
 import { Container, Grid, Card, Button, Tab, Segment, Image, Icon } from "semantic-ui-react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-=======
-import React, { useContext, useState } from "react";
-import { Button, Container, Grid, Card, Icon, Tab, Segment } from "semantic-ui-react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import imageDataURI from 'image-data-uri';
-import gql from "graphql-tag";
+import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
 import { useForm } from "../util/hooks";
-import { AuthContext } from "../context/auth";
 import Title from "../components/Title";
->>>>>>> bookmark
 
 import { AuthContext } from "../context/auth";
 
 import gql from "graphql-tag";
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 
-import Title from "../components/Title";
-
 function Corporations(props) {
 
-<<<<<<< HEAD
-  var {
-    user: { id, username }
-  } = useContext(AuthContext);
-
-  var user = useQuery(FETCH_USER_QUERY, {
-    variables: {
-      userId: id
-    }
-  }).data.getUser;
-  console.log(user)
-
-  const bookmarks = ['Computers', 'Big LLC']
-
-  var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
-=======
   var { user: { id, username } } = useContext(AuthContext);
 
   var user = useQuery(FETCH_USER_QUERY, {
@@ -52,7 +25,6 @@ function Corporations(props) {
 
   const [bookmark] = useMutation(BOOKMARK_MUTATION);
   const [deleteBookmark] = useMutation(DELETE_BOOKMARK_MUTATION);
->>>>>>> bookmark
 
   var corporationPane = {
     menuItem: {content:'Corporations', icon:'building outline'},
@@ -70,21 +42,6 @@ function Corporations(props) {
                   raised
                   image={corporation.logo}
                   header={corporation.name}
-<<<<<<< HEAD
-                >
-                  <Image
-                    src={corporation.logo}
-                    fluid
-                    rounded
-                  />
-                  <Button
-                    color="linkedin"
-                    fluid
-                  >
-                    <Icon name="plus square"/> View Profile
-                  </Button>
-                </Card>
-=======
                   extra={
                           <>
                             <a>
@@ -114,7 +71,6 @@ function Corporations(props) {
                           </>
                         }
                 />
->>>>>>> bookmark
               </Grid.Column>
             ))}
           </Grid.Row>
@@ -125,30 +81,19 @@ function Corporations(props) {
 
   var bookmarksPane = {
     menuItem: {content:'Bookmarks', icon:'sticky note outline'},
-<<<<<<< HEAD
-    render: () => 
-    <Tab.Pane loading={!corporations}>
-=======
     render: () => <Tab.Pane loading={!user.bookmarks}>
->>>>>>> bookmark
       <Container>
         <Grid stackable columns={4}>
           <Grid.Row className="sponsor-padding">
             {
-<<<<<<< HEAD
-            corporations &&
-            corporations.filter(function (corporation) {
-              return bookmarks.includes(corporation.name);
-            }).map((corporation, index) => (
-=======
             user.bookmarks &&
-            user.bookmarks.map((corporation, index) => (
->>>>>>> bookmark
+            corporations.filter(function (corporation) {
+              return user.bookmarks.includes(corporation.name);
+            }).map((corporation, index) => (
               <Grid.Column className="card-team" key={index}>
                 <Card
                   fluid
                   raised
-<<<<<<< HEAD
                 >
                   <Card.Content>
                     <Image
@@ -170,12 +115,6 @@ function Corporations(props) {
               </Grid.Column>
             ))
             }
-=======
-                  header={corporation}
-                />
-              </Grid.Column>
-            ))}
->>>>>>> bookmark
           </Grid.Row>
         </Grid>
       </Container>
@@ -198,7 +137,6 @@ function Corporations(props) {
 const FETCH_USER_QUERY = gql`
   query getUser($userId: ID!) {
     getUser(userId: $userId) {
-<<<<<<< HEAD
       firstName
       lastName
       points
@@ -214,7 +152,6 @@ const FETCH_USER_QUERY = gql`
         createdAt
         points
       }
-=======
       username
       bookmarks
     }
@@ -245,7 +182,6 @@ const DELETE_BOOKMARK_MUTATION = gql`
       username: $username
     ) {
       bookmarks
->>>>>>> bookmark
     }
   }
 `;
