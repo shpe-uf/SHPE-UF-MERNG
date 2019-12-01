@@ -33,7 +33,7 @@ function UserProfile({ user }) {
               <Table.Body>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Name:</p>
+                    <b>Name:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? (
@@ -47,7 +47,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Username:</p>
+                    <b>Username:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? <p>{user.username}</p> : <p>Loading</p>}
@@ -55,7 +55,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Email:</p>
+                    <b>Email:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? <p>{user.email}</p> : <p>Loading</p>}
@@ -63,7 +63,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Major:</p>
+                    <b>Major:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? <p>{user.major}</p> : <p>Loading</p>}
@@ -71,7 +71,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Year:</p>
+                    <b>Year:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? <p>{user.year}</p> : <p>Loading</p>}
@@ -79,7 +79,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Graduating:</p>
+                    <b>Graduating:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? <p>{user.graduating}</p> : <p>Loading</p>}
@@ -87,7 +87,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Country:</p>
+                    <b>Country:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? <p>{user.country}</p> : <p>Loading</p>}
@@ -95,7 +95,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Ethnicity:</p>
+                    <b>Ethnicity:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? <p>{user.ethnicity}</p> : <p>Loading</p>}
@@ -103,7 +103,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Sex:</p>
+                    <b>Sex:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? <p>{user.sex}</p> : <p>Loading</p>}
@@ -111,7 +111,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
-                    <p>Member Since:</p>
+                    <b>Member Since:</b>
                   </Table.Cell>
                   <Table.Cell>
                     {user ? (
@@ -127,7 +127,7 @@ function UserProfile({ user }) {
                 </Table.Row>
                 {/*<Table.Row>
                   <Table.Cell>
-                    <p>Permission:</p>
+                    <b>Permission:</b>
                   </Table.Cell>
                   <Table.Cell>
                     <span>

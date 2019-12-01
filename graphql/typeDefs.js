@@ -1,6 +1,8 @@
 const gql = require("graphql-tag");
 
 module.exports = gql`
+  ### MAIN MODEL TYPES ###
+
   type User {
     id: ID!
     firstName: String!
@@ -31,10 +33,6 @@ module.exports = gql`
     summerPercentile: Int!
   }
 
-  type Token {
-    token: String!
-  }
-
   type Event {
     id: ID!
     name: String!
@@ -60,10 +58,54 @@ module.exports = gql`
     createdAt: String!
   }
 
-  type StatData{
+  type Alumni {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    undergrad: Undergrad!
+    grad: Grad!
+    employer: String!
+    position: String!
+    location: Location
+    coordinates: Coordinates!
+    linkedin: String!
+  }
+
+  ### AUXILIARY TYPES ###
+  type StatData {
     _id: String!
     value: Int!
   }
+
+  type Token {
+    token: String!
+  }
+
+  type Undergrad {
+    university: String!
+    year: Int!
+    major: String!
+  }
+
+  type Grad {
+    university: String!
+    year: Int!
+    major: String!
+  }
+
+  type Location {
+    city: String!
+    state: String!
+    country: String!
+  }
+
+  type Coordinates {
+    latitude: Float!
+    longitude: Float!
+  }
+
+  ### QUERY AND MUTATION INPUTS ###
 
   input RegisterInput {
     firstName: String!
@@ -105,6 +147,18 @@ module.exports = gql`
     eventName: String!
   }
 
+  input RegisterAlumniInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    undergrad: UndergradInput!
+    grad: GradInput!
+    employer: String!
+    position: String!
+    location: LocationInput!
+    linkedin: String!
+  }
+
   input EditUserProfileInput {
     email: String!
     firstName: String!
@@ -118,6 +172,27 @@ module.exports = gql`
     sex: String!
   }
 
+  ### AUXILIARY INPUTS ###
+  input UndergradInput {
+    university: String!
+    year: String!
+    major: String!
+  }
+
+  input GradInput {
+    university: String!
+    year: String!
+    major: String!
+  }
+
+  input LocationInput {
+    city: String!
+    state: String!
+    country: String!
+  }
+
+  ### QUERIES LIST ###
+
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
@@ -128,19 +203,31 @@ module.exports = gql`
     getYearStat: [StatData]
     getSexStat: [StatData]
     getEthnicityStat: [StatData]
+    getAlumnis: [Alumni]
   }
+
+  ### MUTATIONS LIST ###
 
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
     createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
-    approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
-    rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
+    approveRequest(
+      approveRejectRequestInput: ApproveRejectRequestInput
+    ): [Request]
+    rejectRequest(
+      approveRejectRequestInput: ApproveRejectRequestInput
+    ): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
     forgotPassword(email: String!): User!
-    resetPassword(password: String!, confirmPassword: String!, token: String!): Token!
+    resetPassword(
+      password: String!
+      confirmPassword: String!
+      token: String!
+    ): Token!
     confirmUser(id: String!): User!
+    registerAlumni(registerAlumniInput: RegisterAlumniInput): Alumni!
     changePermission(email: String!, currentEmail: String!, permission: String!): Boolean!
     editUserProfile(editUserProfileInput: EditUserProfileInput): User!
   }

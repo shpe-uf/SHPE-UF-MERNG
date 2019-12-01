@@ -346,7 +346,7 @@ module.exports = {
         });
       }
 
-      isUsernameDuplicate = await User.findOne({
+      const isUsernameDuplicate = await User.findOne({
         username
       });
 
@@ -361,7 +361,7 @@ module.exports = {
         );
       }
 
-      isEmailDuplicate = await User.findOne({
+      const isEmailDuplicate = await User.findOne({
         email
       });
 

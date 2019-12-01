@@ -254,6 +254,15 @@ h5 {
   background-size: cover !important;
 }
 
+.masthead-alumni {
+  background: url(assets/images/alumni.jpg) !important;
+  border-radius: 0px;
+  background-position: 50% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
 .masthead-sponsors {
   background: url(assets/images/sponsors.jpg) !important;
   border-radius: 0px;
@@ -351,6 +360,15 @@ h5 {
 
 .register {
   background: url(assets/images/register.jpg) !important;
+  border-radius: 0px;
+  background-position: 50% 50% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.register-alumni {
+  background: url(assets/images/register-alumni.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -594,6 +612,37 @@ div::-webkit-scrollbar-thumb {
   webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
+.ui.message .header {
+  font-family: "body-font";
+}
+
+.resetLink {
+  display: inline-block;
+  margin-top: 12px;
+  margin-left: 10px;
+}
+
+.loading {
+  padding: 12%;
+}
+
+.confirmMsg {
+  text-align: center;
+}
+
+.permission_change {
+  display: inline-block;
+  margin-top: 12px !important;
+}
+
+.float_right {
+  float: right;
+}
+
+.Toastify__toast {
+  padding: 16px;
+}
+
 @media (max-width: 991px) {
   main {
     min-height: calc(100vh - 64px - 118px) !important;
@@ -632,27 +681,4 @@ div::-webkit-scrollbar-thumb {
   .overlay-confirm {
     min-height: calc(100vh - 64px - 64px) !important;
   }
-}
-
-.resetLink {
-  display: inline-block;
-  margin-top: 12px;
-  margin-left: 10px;
-}
-
-.loading {
-  padding: 12%
-}
-
-.confirmMsg {
-  text-align: center;
-}
-
-.permission_change {
-  display: inline-block;
-  margin-top: 12px !important;
-}
-
-.float_right {
-  float: right;
 }
