@@ -70,7 +70,7 @@ function Corporations(props) {
                           content="View Profile"
                           icon="eye"
                           labelPosition="left"
-                          color="red"
+                          color="blue"
                           onClick={()=>{
                               getCorporationInfo(corporation);
                               openModal("viewCorporation");
