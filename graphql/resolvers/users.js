@@ -49,6 +49,7 @@ module.exports = {
       async getUser(_, { userId }) {
         try {
           var user = await User.findById(userId);
+          console.log(user)
 
           const users = await User.find();
           const fallBelowUsers = await User.find()
@@ -93,10 +94,12 @@ module.exports = {
             createdAt: user.createdAt,
             permission: user.permission,
             listServ: user.listServ,
-            events: user.events
+            events: user.events,
+            bookmarks: user.bookmarks
           };
 
           if (newUser) {
+            console.log(newUser)
             return newUser;
           } else {
             throw new Error("User not found.");
@@ -398,7 +401,8 @@ module.exports = {
         summerPoints: 0,
         permission: "User",
         listServ,
-        events: []
+        events: [],
+        bookmarks: []
       });
 
       const res = await newUser.save();
@@ -545,6 +549,7 @@ module.exports = {
           permission: user.permission,
           listServ: user.listServ,
           events: user.events,
+          bookmarks: user.bookmarks,
           message: "Event code has been sent for approval."
         };
 
@@ -769,6 +774,46 @@ module.exports = {
         token: token
       }
       return Token;
+    },
+
+    async bookmark(
+      _, {
+        company,
+        username
+      }
+    ) {
+
+      var updatedUser = await User.findOneAndUpdate({
+        username
+      }, {
+        $push: {
+          bookmarks: company
+        }
+      }, {
+        new: true
+      });
+
+      return updatedUser;
+    },
+
+    async deleteBookmark(
+      _, {
+        company,
+        username
+      }
+    ) {
+
+      var updatedUser = await User.findOneAndUpdate({
+        username
+      }, {
+        $pull: {
+          bookmarks: company
+        }
+      }, {
+        new: true
+      });
+
+      return updatedUser;
     }
   }
 };

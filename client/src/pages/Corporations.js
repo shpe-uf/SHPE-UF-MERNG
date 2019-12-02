@@ -1,12 +1,14 @@
-import React, {useState} from "react";
-import { Container, Grid, Card, Button,Modal, Tab, Segment } from "semantic-ui-react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import React, {useState, useContext} from "react";
+import { Container, Grid, Card, Button, Modal, Tab, Segment, Image, Icon } from "semantic-ui-react";
+import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
 import imageDataURI from 'image-data-uri';
-
-import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 import CorporationProfile from "../components/CorporationProfile";
+import Title from "../components/Title";
 
-import placeholder from "../assets/images/placeholder.png"
+import { AuthContext } from "../context/auth";
+
+import gql from "graphql-tag";
+import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
 
 function Corporations(props) {
   const [viewCorporationModal, setViewCorporationModal] = useState(false);
@@ -33,7 +35,18 @@ function Corporations(props) {
     setCorporationInfo(corporationInfo);
   }
 
+  var { user: { id, username } } = useContext(AuthContext);
+
+  var user = useQuery(FETCH_USER_QUERY, {
+    variables: {
+      userId: id
+    }
+  }).data.getUser;
+
   var corporations = useQuery(FETCH_CORPORATIONS_QUERY).data.getCorporations;
+
+  const [bookmark] = useMutation(BOOKMARK_MUTATION);
+  const [deleteBookmark] = useMutation(DELETE_BOOKMARK_MUTATION);
 
   var corporationPane = {
     menuItem: {content:'Corporations', icon:'building outline'},
@@ -52,7 +65,8 @@ function Corporations(props) {
                   image={corporation.logo}
                   header={corporation.name}
                   extra={
-                        <Button
+                          <>
+                          <Button
                           content="View Profile"
                           icon="eye"
                           labelPosition="left"
@@ -61,9 +75,30 @@ function Corporations(props) {
                               getCorporationInfo(corporation);
                               openModal("viewCorporation");
                             }}
-                        />
+                          />
+                            {user && user.bookmarks.find(function(bookmarked){
+                              return bookmarked === corporation.name;
+                            }) ? (
+                             <Button onClick={() => {deleteBookmark({variables: {
+                              company: corporation.name,
+                              username: username
+                              }});
+                              user.bookmarks.splice(user.bookmarks.indexOf(corporation.name), 1); 
+                              }}
+                              floated='right' icon='book' color='red' />
+                            ) : (
+                              <Button onClick={() => {bookmark({variables: {
+                                company: corporation.name,
+                                username: username
+                              }});
+                              user.bookmarks.push(corporation.name);
+                              }} 
+                              floated='right' icon='book' />
+                            )
+                          }
+                          </>
                         }
-                  />
+                />
               </Grid.Column>
             ))}
           </Grid.Row>
@@ -74,18 +109,49 @@ function Corporations(props) {
 
   var bookmarksPane = {
     menuItem: {content:'Bookmarks', icon:'sticky note outline'},
-    render: () => <Tab.Pane loading></Tab.Pane>
+    render: () => <Tab.Pane loading={!user.bookmarks}>
+      <Container>
+        <Grid stackable columns={4}>
+          <Grid.Row className="sponsor-padding">
+            {
+            user.bookmarks &&
+            corporations.filter(function (corporation) {
+              return user.bookmarks.includes(corporation.name);
+            }).map((corporation, index) => (
+              <Grid.Column className="card-team" key={index}>
+                <Card
+                  fluid
+                  raised
+                >
+                  <Card.Content>
+                    <Image
+                      src={corporation.logo}
+                      rounded
+                      inline
+                    />
+                    <Card.Header>
+                      {corporation.name}
+                    </Card.Header>
+                    <Button
+                      color="linkedin"
+                      fluid
+                    >
+                      <Icon name="plus square"/> View Profile
+                    </Button>
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            ))
+            }
+          </Grid.Row>
+        </Grid>
+      </Container>
+    </Tab.Pane>
   }
 
   return (
     <div className="body">
-      <div className="masthead masthead-sponsors">
-        <div className="overlay-blue">
-          <Container>
-            <h1 className="masthead-title text-white">Corporate Database</h1>
-          </Container>
-        </div>
-      </div>
+      <Title title="Corporate Database" />
       <Segment basic>
         <Tab 
           panes={[corporationPane, bookmarksPane]}
@@ -125,5 +191,42 @@ function Corporations(props) {
     </div>
   );
 }
+
+const FETCH_USER_QUERY = gql`
+  query getUser($userId: ID!) {
+    getUser(userId: $userId) {
+      username
+      bookmarks
+    }
+  }
+`;
+
+const BOOKMARK_MUTATION = gql`
+  mutation bookmark(
+    $company: String!,
+    $username: String!
+  ) {
+    bookmark(
+      company: $company
+      username: $username
+    ) {
+      bookmarks
+    }
+  }
+`;
+
+const DELETE_BOOKMARK_MUTATION = gql`
+  mutation deleteBookmark(
+    $company: String!,
+    $username: String!
+  ) {
+    deleteBookmark(
+      company: $company
+      username: $username
+    ) {
+      bookmarks
+    }
+  }
+`;
 
 export default Corporations;

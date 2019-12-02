@@ -80,7 +80,7 @@ function CorporationTable({ corporations }) {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">SHPE Sponsor</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">SHPE UF Sponsor</Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Industry Partner</Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Fall BBQ</Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Spring BBQ</Table.HeaderCell>

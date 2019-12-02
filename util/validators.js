@@ -239,19 +239,12 @@ module.exports.validateCreateEditCorporationInput = (
 ) => {
   const errors = {};
 
-  console.log('VALIDATING')
-
   if (name.trim() === "") {
     errors.name = "No name was provided.";
   }
 
-  const fileType = logo.name.substr(logo.name.length - 3).toUpperCase()
-  console.log(fileType)
-  if (!logo.size) {
-    errors.logo = "No logo was provided.";
-  }
-  else if (fileType != 'PNG' || fileType != 'JPG') {
-    errors.logo = "Logo must be png or jpg"
+  if (logo.trim() === "") {
+    errors.slogan = "No logo was provided.";
   }
 
   if (slogan.trim() === "") {
