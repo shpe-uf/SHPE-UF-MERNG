@@ -76,8 +76,8 @@ function ClassSharing() {
 
   var getClasses = [];
 
-  var { data } = 0
-  data = useQuery(FETCH_USER_QUERY, {
+  //var { data } = 0
+  var { data } = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: id
     }
@@ -89,15 +89,17 @@ function ClassSharing() {
 
   var getMatches = [];
 
-  var { data } = useQuery(GET_MATCHES_QUERY, {
+  var { data: dataM } = useQuery(GET_MATCHES_QUERY, {
     variables: {
       username
     }
   });
 
-  if (data.getMatches) {
-    getMatches = data.getMatches;
+  if (dataM.getMatches) {
+    getMatches = dataM.getMatches;
   }
+
+  console.log(getMatches)
   
   var classUsers = [];
   const [getClass, { data: getClassData, loading: loadingClass }] = useMutation(
@@ -241,6 +243,7 @@ function ClassSharing() {
           <h2>Add Class</h2>
         </Modal.Header>
         <Modal.Content>
+          <Container>
           <Modal.Description>
             {" "}
             {Object.keys(errors).length > 0 && (
@@ -276,6 +279,7 @@ function ClassSharing() {
               </Button>
             </Form>
           </Modal.Description>
+          </Container>
         </Modal.Content>
       </Modal>
 

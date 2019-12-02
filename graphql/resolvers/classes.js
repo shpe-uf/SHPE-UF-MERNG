@@ -32,6 +32,8 @@ module.exports = {
         username : {$in: matches}
       }).sort({lastName: 1, firstName: 1});
 
+      console.log(users)
+
       return users;
     }
   },
