@@ -11,7 +11,9 @@ const classSchema = new Schema({
       firstName: String,
       lastName: String,
       email: String,
-      username: String
+      username: String, 
+      major: String,
+      year: String
     }]
 })
 

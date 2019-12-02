@@ -96,6 +96,14 @@ h5 {
   margin-bottom: 8px;
 }
 
+h6{
+    line-height: 1.1 !important;
+    font-family: "heading-font" !important;
+    text-transform: uppercase !important;
+    color: var(--white);
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
 h1 {
   font-size: 3rem !important;
 }
@@ -113,6 +121,9 @@ h4 {
 }
 
 h5 {
+  font-size: 1.5rem !important;
+}
+h6{
   font-size: 1.5rem !important;
 }
 
