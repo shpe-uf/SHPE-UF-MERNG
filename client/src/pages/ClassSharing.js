@@ -15,7 +15,8 @@ import {
   List,
   Label,
   Tab,
-  Placeholder
+  Placeholder,
+  ListItem
 } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks";
@@ -35,9 +36,7 @@ function ClassSharing() {
 
   const [errors, setErrors] = useState({});
   const [addClassModal, setAddClassModal] = useState(false);
-  const [userProfileModal, setUserProfileModal] = useState(false);
   const [displayClassModal, setDisplayClassModal] = useState(false);
-  const [dispUserProfile, setDispUserProfile] = useState({});
   const [displayClass, setDisplayClass] = useState({});
   const [displayUsers, setDisplayUsers] = useState([]);
   // const [classUsers, setClassUsers] = useState({});
@@ -49,9 +48,6 @@ function ClassSharing() {
     if (name === "displayClass") {
       setDisplayClassModal(true);
     }
-    if (name === "userProfile") {
-      setUserProfileModal(true);
-    }
   };
 
   const closeModal = name => {
@@ -62,10 +58,6 @@ function ClassSharing() {
       setDisplayUsers([]);
       setDisplayClass({});
       setDisplayClassModal(false);
-    }
-    if (name === "userProfile") {
-      setDispUserProfile({});
-      setUserProfileModal(false);
     }
   };
 
@@ -168,7 +160,7 @@ function ClassSharing() {
                 onClick={() => openModal("addClass")}
               />{" "}
               {getClasses.length > 0 ? (
-                <Table celled selectable striped unstackable>
+                <Table selectable celled striped unstackable>
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell width={8} textAlign="left">
@@ -176,6 +168,7 @@ function ClassSharing() {
                       </Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
+                  <Table.Body>
                   {getClasses &&
                     getClasses.map(classTemp => (
                       <Table.Row
@@ -195,7 +188,7 @@ function ClassSharing() {
                           {classTemp.code}
                         </Table.Cell>
                       </Table.Row>
-                    ))}{" "}
+                    ))}</Table.Body>{" "}
                 </Table>
               ) : (
                 <Message info>
@@ -210,27 +203,33 @@ function ClassSharing() {
                 <h2>My Matches</h2>
                 <Card.Group stackable itemsPerRow={3}>
                   {getMatches.map(matchTemp => (
+                    // matchTemp.classes.length > 4 ? sizeM = "mini" : matchTemp.classes.length > 2 ? sizeM = "large" : sizeM = "big",
                     <Card>
                       <Card.Content>
-                        <Card.Header>
+                        <Card.Header style={{height:'62px'}}>
                           {matchTemp.firstName + " " + matchTemp.lastName}
                         </Card.Header>
-                        <Image src= {matchTemp.photo} wrapped ui={true} bordered style={{margin: "0.5vw"}}></Image>
-                        {matchTemp.classes.map(codeName => (
-                          <Label color="blue">
+                        {matchTemp.photo == "" ? <Image src={placeholder} wrapped ui={true} bordered style={{margin:'0.5vw'}}></Image> : 
+                        <Image src= {matchTemp.photo} wrapped ui={true} bordered style={{margin:'0.5vw'}}></Image>}
+                          <Label.Group color="blue">
+                          {matchTemp.classes.map(codeName => (
+                          <Label>
                             <h6>{codeName.code}</h6>
                           </Label>
-                        ))}{" "}
-                        <Card.Meta>{matchTemp.major}</Card.Meta>
-                        <Card.Meta>{matchTemp.year}</Card.Meta>
+                        ))}</Label.Group>
                       </Card.Content>
                       <Card.Content extra>
-                        <a> {matchTemp.email}</a>
-                        <p></p>
-                        <a> {"@" + matchTemp.username} </a>
+                          <p>{matchTemp.major}</p>
+                          <p>{matchTemp.year}</p>
+                          <a
+                            href={"mailto:" + matchTemp.email}
+                            className="link-email"
+                          >
+                            {matchTemp.email}
+                          </a>
                       </Card.Content>
                     </Card>
-                  ))}{" "}
+                  ))}
                 </Card.Group>
               </Container>
             </Grid.Column>
@@ -300,7 +299,7 @@ function ClassSharing() {
         </Modal.Header>
         <Modal.Content>
           <Modal.Description>
-            <Table selectable striped unstackable>
+            <Table striped unstackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>User</Table.HeaderCell>
@@ -312,16 +311,19 @@ function ClassSharing() {
                 {displayUsers.map(userTemp => (
                   <Table.Row
                     key={userTemp.email}
-                    onClick={() => {
-                      setDispUserProfile(userTemp);
-                      openModal("userProfile");
-                    }}
                   >
                     <Table.Cell>
                       {" "}
                       {userTemp.firstName + " " + userTemp.lastName}{" "}
                     </Table.Cell>
-                    <Table.Cell> {userTemp.email} </Table.Cell>
+                    <Table.Cell> 
+                      <a
+                        href={"mailto:" + userTemp.email}
+                        className="link-email"
+                      >
+                        {userTemp.email}
+                      </a>
+                    </Table.Cell>
                   </Table.Row>
                 ))}{" "}
               </Table.Body>
@@ -341,76 +343,6 @@ function ClassSharing() {
               Remove Class
             </Button>
           </Modal.Description>
-        </Modal.Content>
-      </Modal>
-
-      <Modal open={userProfileModal} size="tiny">
-        <Modal.Header>
-          <h2>
-            {" "}
-            {dispUserProfile.firstName + " " + dispUserProfile.lastName}
-            <Button
-              color="blue"
-              floated="right"
-              onClick={() => closeModal("userProfile")}
-            >
-              {/* {onclick} */}
-              <Icon name="times" />
-              Close
-            </Button>
-          </h2>
-        </Modal.Header>
-        <Modal.Content>
-          <Container>
-            <Grid>
-              <Grid.Row centered columns={2}>
-                <Grid.Column textAlign="center">
-                  <Image src={placeholder} size="large" />
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Column>
-                  <Table striped unstackable width={6} celled>
-                    <Table.Row>
-                      <Table.HeaderCell textAlign="center">
-                        Email:
-                      </Table.HeaderCell>
-                      <Table.Cell>
-                        {" "}
-                        {
-                          <a
-                            href={"mailto:" + dispUserProfile.email}
-                            className="link-email"
-                          >
-                            {" "}
-                            {dispUserProfile.email}
-                          </a>
-                        }{" "}
-                      </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.HeaderCell textAlign="center">
-                        Major:
-                      </Table.HeaderCell>
-                      <Table.Cell>
-                        {" "}
-                        {<a> {dispUserProfile.major}</a>}{" "}
-                      </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.HeaderCell textAlign="center">
-                        Year:
-                      </Table.HeaderCell>
-                      <Table.Cell>
-                        {" "}
-                        {<a> {dispUserProfile.year}</a>}{" "}
-                      </Table.Cell>
-                    </Table.Row>
-                  </Table>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Container>
         </Modal.Content>
       </Modal>
     </div>
