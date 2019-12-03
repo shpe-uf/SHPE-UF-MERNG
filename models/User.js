@@ -73,7 +73,7 @@ const userSchema = new Schema({
   },
   permission: String,
   listServ: Boolean,
-  
+
   events: [{
     name: String,
     category: String,
@@ -83,11 +83,10 @@ const userSchema = new Schema({
 
   tasks: [{
     name: String,
-    type: String,
     createdAt: String,
     points: Number,
   }],
-  
+
   token: {
     type: String
   },
