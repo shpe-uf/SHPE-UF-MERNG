@@ -131,10 +131,9 @@ h6{
   padding: 16px !important;
 }
 
-/* why tf is padding 0px */
 
 .ui.modal > .content {
-  padding: 16px !important;
+  padding: 0px !important;
 }
 
 .logout {
@@ -155,12 +154,12 @@ h6{
 }
 
 .text-white {
-  color: var(--white);
+  color: var(--white) !important;
   margin-bottom: 0px !important;
 }
 
 .text-white:hover {
-  color: var(--white);
+  color: var(--white) !important;
   margin-bottom: 0px !important;
 }
 
@@ -664,4 +663,14 @@ div::-webkit-scrollbar-thumb {
 
 .float_right {
   float: right;
+}
+
+.label-Color-Blue{
+  background-color: var(--primary) !important;
+  margin: 4px !important;
+}
+
+.label-Color-Orange{
+  background-color: var(--accent-1) !important;
+  margin: 4px !important;
 }

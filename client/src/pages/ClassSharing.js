@@ -16,7 +16,8 @@ import {
   Label,
   Tab,
   Placeholder,
-  ListItem
+  ListItem,
+  GridColumn
 } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks";
@@ -145,6 +146,17 @@ function ClassSharing() {
     setDisplayUsers(users);
   }
 
+  var filteredRes = [];
+
+  function findClass(userClasses, matchClass) {
+    userClasses.map(classTemp => {
+     if(classTemp.code == matchClass){
+        return true;
+      } 
+    }) 
+    return false;
+  }
+
   return (
     <div className="body">
       <Title title="Class Sharing" />
@@ -203,19 +215,24 @@ function ClassSharing() {
                 <h2>My Matches</h2>
                 <Card.Group stackable itemsPerRow={3}>
                   {getMatches.map(matchTemp => (
-                    // matchTemp.classes.length > 4 ? sizeM = "mini" : matchTemp.classes.length > 2 ? sizeM = "large" : sizeM = "big",
                     <Card>
                       <Card.Content>
                         <Card.Header style={{height:'62px'}}>
                           {matchTemp.firstName + " " + matchTemp.lastName}
                         </Card.Header>
-                        {matchTemp.photo == "" ? <Image src={placeholder} wrapped ui={true} bordered style={{margin:'0.5vw'}}></Image> : 
-                        <Image src= {matchTemp.photo} wrapped ui={true} bordered style={{margin:'0.5vw'}}></Image>}
-                          <Label.Group color="blue">
+                        {matchTemp.photo == "" ? <Image src={placeholder} wrapped ui={true} bordered></Image> : 
+                        <Image src= {matchTemp.photo} wrapped ui={true} bordered></Image>}
+                        <p></p>
+                          <Label.Group>
                           {matchTemp.classes.map(codeName => (
-                          <Label>
-                            <h6>{codeName.code}</h6>
-                          </Label>
+                            filteredRes = getClasses.filter(classTemp => classTemp.code == codeName.code),
+                            filteredRes.length > 0 ?
+                            <Label color="text-white label-Color-Orange">
+                              {codeName.code}
+                            </Label> : 
+                            <Label className="text-white label-Color-Blue">
+                              {codeName.code}
+                            </Label>
                         ))}</Label.Group>
                       </Card.Content>
                       <Card.Content extra>
@@ -241,6 +258,9 @@ function ClassSharing() {
         <Modal.Header>
           <h2>Add Class</h2>
         </Modal.Header>
+        <Grid>
+          <Grid.Column>
+            <Grid.Row>
         <Modal.Content>
           <Container>
           <Modal.Description>
@@ -279,7 +299,10 @@ function ClassSharing() {
             </Form>
           </Modal.Description>
           </Container>
-        </Modal.Content>
+          </Modal.Content>
+          </Grid.Row>
+          </Grid.Column>        
+        </Grid>
       </Modal>
 
       <Modal open={displayClassModal} closeOnEscape={true} size="tiny">
@@ -287,17 +310,12 @@ function ClassSharing() {
           <h2>
             {" "}
             {displayClass}
-            <Button
-              color="blue"
-              floated="right"
-              onClick={() => closeModal("displayClass")}
-            >
-              <Icon name="times" />
-              Close
-            </Button>
           </h2>
         </Modal.Header>
-        <Modal.Content>
+        <Grid>
+          <Grid.Column>
+            <Grid.Row>
+            <Modal.Content>
           <Modal.Description>
             <Table striped unstackable>
               <Table.Header>
@@ -329,6 +347,14 @@ function ClassSharing() {
               </Table.Body>
             </Table>
             <Button
+                type="reset"
+                color="grey"
+                onClick={() => closeModal("displayClass")}
+              >
+                Cancel
+            </Button>
+            <Button
+              floated="right"
               color="red"
               onClick={() =>
                 deleteClass({
@@ -339,11 +365,13 @@ function ClassSharing() {
                 })
               }
             >
-              <Icon name="trash alternate outline" />
               Remove Class
             </Button>
           </Modal.Description>
         </Modal.Content>
+            </Grid.Row>
+          </Grid.Column>
+        </Grid>
       </Modal>
     </div>
   );
