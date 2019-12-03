@@ -9,6 +9,7 @@ import { AuthContext } from "../context/auth";
 
 import gql from "graphql-tag";
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
+import compose from "koa-compose";
 
 function Corporations(props) {
   const [viewCorporationModal, setViewCorporationModal] = useState(false);
@@ -51,13 +52,71 @@ function Corporations(props) {
   var corporationPane = {
     menuItem: {content:'Corporations', icon:'building outline'},
     render: () => 
-    <Tab.Pane loading={!corporations}>
-      <Container>
+      <Tab.Pane loading={!corporations}>
         <Grid stackable columns={4}>
           <Grid.Row className="sponsor-padding">
             {
             corporations &&
             corporations.map((corporation, index) => (
+              <Grid.Column className="card-team" key={index}>
+                <Card
+                  fluid
+                  raised
+                  image={<img className='corp-logo' src={corporation.logo}/>}
+                  header={corporation.name}
+                  extra={
+                          <>
+                          <Button
+                          fluid
+                          className="corp-button"
+                          content="View Profile"
+                          icon="eye"
+                          labelPosition="left"
+                          onClick={()=>{
+                              getCorporationInfo(corporation);
+                              openModal("viewCorporation");
+                            }}
+                          />
+                            {user && user.bookmarks.find(function(bookmarked){
+                              return bookmarked === corporation.name;
+                            }) ? (
+                            <Button className="corp-button" fluid onClick={() => {deleteBookmark({variables: {
+                              company: corporation.name,
+                              username: username
+                              }});
+                              user.bookmarks.splice(user.bookmarks.indexOf(corporation.name), 1); 
+                              }}
+                              floated='right' icon='book' color='red' content="Remove Bookmark"/>
+                            ) : (
+                              <Button className="corp-button" fluid onClick={() => {bookmark({variables: {
+                                company: corporation.name,
+                                username: username
+                              }});
+                              user.bookmarks.push(corporation.name);
+                              }} 
+                              floated='right' icon='book' content="Add Bookmark"/>
+                            )
+                          }
+                          </>
+                        }
+                />
+              </Grid.Column>
+            ))}
+          </Grid.Row>
+        </Grid>
+      </Tab.Pane>
+  }
+
+  var bookmarksPane = {
+    menuItem: {content:'Bookmarks', icon:'sticky note outline'},
+    render: () => <Tab.Pane loading={!user.bookmarks}>
+        <Grid stackable columns={4}>
+          <Grid.Row className="sponsor-padding">
+            {
+            user.bookmarks &&
+            corporations.filter(function (corporation) {
+              return user.bookmarks.includes(corporation.name);
+            }).map((corporation, index) => (
               <Grid.Column className="card-team" key={index}>
                 <Card
                   fluid
@@ -79,13 +138,13 @@ function Corporations(props) {
                             {user && user.bookmarks.find(function(bookmarked){
                               return bookmarked === corporation.name;
                             }) ? (
-                             <Button onClick={() => {deleteBookmark({variables: {
+                            <Button onClick={() => {deleteBookmark({variables: {
                               company: corporation.name,
                               username: username
                               }});
                               user.bookmarks.splice(user.bookmarks.indexOf(corporation.name), 1); 
                               }}
-                              floated='right' icon='book' color='red' />
+                              floated='right' icon='book' color='red' content="Remove Bookmark"/>
                             ) : (
                               <Button onClick={() => {bookmark({variables: {
                                 company: corporation.name,
@@ -93,59 +152,17 @@ function Corporations(props) {
                               }});
                               user.bookmarks.push(corporation.name);
                               }} 
-                              floated='right' icon='book' />
+                              floated='right' icon='book' content="Add Bookmark"/>
                             )
                           }
                           </>
                         }
                 />
               </Grid.Column>
-            ))}
-          </Grid.Row>
-        </Grid>
-      </Container>
-    </Tab.Pane>
-  }
-
-  var bookmarksPane = {
-    menuItem: {content:'Bookmarks', icon:'sticky note outline'},
-    render: () => <Tab.Pane loading={!user.bookmarks}>
-      <Container>
-        <Grid stackable columns={4}>
-          <Grid.Row className="sponsor-padding">
-            {
-            user.bookmarks &&
-            corporations.filter(function (corporation) {
-              return user.bookmarks.includes(corporation.name);
-            }).map((corporation, index) => (
-              <Grid.Column className="card-team" key={index}>
-                <Card
-                  fluid
-                  raised
-                >
-                  <Card.Content>
-                    <Image
-                      src={corporation.logo}
-                      rounded
-                      inline
-                    />
-                    <Card.Header>
-                      {corporation.name}
-                    </Card.Header>
-                    <Button
-                      color="linkedin"
-                      fluid
-                    >
-                      <Icon name="plus square"/> View Profile
-                    </Button>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
             ))
             }
           </Grid.Row>
         </Grid>
-      </Container>
     </Tab.Pane>
   }
 
@@ -153,9 +170,11 @@ function Corporations(props) {
     <div className="body">
       <Title title="Corporate Database" />
       <Segment basic>
+        <Container>
         <Tab 
           panes={[corporationPane, bookmarksPane]}
         />
+        </Container>
       </Segment>
 
       <Modal
