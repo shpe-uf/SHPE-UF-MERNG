@@ -96,14 +96,6 @@ h5 {
   margin-bottom: 8px;
 }
 
-h6{
-    line-height: 1.1 !important;
-    font-family: "heading-font" !important;
-    text-transform: uppercase !important;
-    color: var(--white);
-    margin-top: 4px;
-    margin-bottom: 4px;
-}
 h1 {
   font-size: 3rem !important;
 }
@@ -121,9 +113,6 @@ h4 {
 }
 
 h5 {
-  font-size: 1.5rem !important;
-}
-h6{
   font-size: 1.5rem !important;
 }
 
@@ -586,6 +575,16 @@ th {
 
 .ui.inline.dropdown > .text {
   font-weight: normal;
+}
+
+.ui.label {
+  font-size: 0.95rem !important;
+  border-radius: 16px;
+  margin: 4px !important;
+}
+
+.img-class-profile {
+  padding: 0px -16px !important;
 }
 
 div::-webkit-scrollbar {

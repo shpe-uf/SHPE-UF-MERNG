@@ -148,15 +148,6 @@ function ClassSharing() {
 
   var filteredRes = [];
 
-  function findClass(userClasses, matchClass) {
-    userClasses.map(classTemp => {
-     if(classTemp.code == matchClass){
-        return true;
-      } 
-    }) 
-    return false;
-  }
-
   return (
     <div className="body">
       <Title title="Class Sharing" />
@@ -172,18 +163,33 @@ function ClassSharing() {
                 onClick={() => openModal("addClass")}
               />{" "}
               {getClasses.length > 0 ? (
-                <Table selectable celled striped unstackable>
+                <Table selectable striped unstackable>
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell width={8} textAlign="left">
                         Course Code
                       </Table.HeaderCell>
+                      <Table.HeaderCell/>
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
                   {getClasses &&
                     getClasses.map(classTemp => (
                       <Table.Row
+                        // onClick={() => {
+                        //   getDisplayClass(classTemp.code);
+                        //   getClass({
+                        //     variables: {
+                        //       code: classTemp.code
+                        //     }
+                        //   });
+                        //   getDisplayUsers(classUsers);
+                        //   openModal("displayClass");
+                        // }}
+                        // key={classTemp.code}
+                      >
+                        <Table.Cell textAlign="left"
+                        width={5}
                         onClick={() => {
                           getDisplayClass(classTemp.code);
                           getClass({
@@ -195,9 +201,26 @@ function ClassSharing() {
                           openModal("displayClass");
                         }}
                         key={classTemp.code}
-                      >
-                        <Table.Cell textAlign="left">
+                        >
                           {classTemp.code}
+                        </Table.Cell>
+                        <Table.Cell
+                        width={3}
+                        >
+                        <Button
+                          size='mini'
+                          floated="right"
+                          color="red"
+                          onClick={() =>
+                            deleteClass({
+                              variables: {
+                                code: classTemp.code,
+                                username
+                              }
+                            })
+                          }
+                          icon='times'
+                        />
                         </Table.Cell>
                       </Table.Row>
                     ))}</Table.Body>{" "}
@@ -211,13 +234,14 @@ function ClassSharing() {
               )}{" "}
             </Grid.Column>
             <Grid.Column width={11}>
-              <Container>
                 <h2>My Matches</h2>
+                <p></p>
+                {getMatches.length > 0 ?
                 <Card.Group stackable itemsPerRow={3}>
                   {getMatches.map(matchTemp => (
                     <Card>
                       <Card.Content>
-                        <Card.Header style={{height:'62px'}}>
+                        <Card.Header textAlign='center' style={{height:'62px'}}>
                           {matchTemp.firstName + " " + matchTemp.lastName}
                         </Card.Header>
                         {matchTemp.photo == "" ? <Image src={placeholder} wrapped ui={true} bordered></Image> : 
@@ -247,8 +271,13 @@ function ClassSharing() {
                       </Card.Content>
                     </Card>
                   ))}
-                </Card.Group>
-              </Container>
+                </Card.Group> :
+                <Message info>
+                  <Message.Header>
+                    You have no matches!
+                  </Message.Header>
+                </Message>
+                }
             </Grid.Column>
           </Grid.Row>
         </Grid>
