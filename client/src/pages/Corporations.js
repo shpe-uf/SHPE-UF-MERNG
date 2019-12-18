@@ -81,20 +81,20 @@ function Corporations(props) {
                               return bookmarked === corporation.name;
                             }) ? (
                             <Button className="corp-button" fluid onClick={() => {deleteBookmark({variables: {
-                              company: corporation.name,
-                              username: username
+                                company: corporation.name,
+                                username: username
                               }});
                               user.bookmarks.splice(user.bookmarks.indexOf(corporation.name), 1); 
                               }}
-                              floated='right' icon='book' color='red' content="Remove Bookmark"/>
+                              floated='right' icon='book' color='red' content="Remove Bookmark" labelPosition="left"/>
                             ) : (
-                              <Button className="corp-button" fluid onClick={() => {bookmark({variables: {
+                            <Button className="corp-button" fluid onClick={() => {bookmark({variables: {
                                 company: corporation.name,
                                 username: username
                               }});
                               user.bookmarks.push(corporation.name);
                               }} 
-                              floated='right' icon='book' content="Add Bookmark"/>
+                              floated='right' icon='book' content="Add Bookmark" labelPosition="left"/>
                             )
                           }
                           </>
