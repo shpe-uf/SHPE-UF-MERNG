@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Image, Button, Icon, List } from "semantic-ui-react";
+import { Grid, Image, Button, Icon, List, Divider } from "semantic-ui-react";
 import { GraphQLSkipDirective } from "graphql";
 
 function CorporationProfile({corporation}) {
@@ -13,6 +13,7 @@ function CorporationProfile({corporation}) {
               <h3>{corporation.name}</h3>
               <p>"{corporation.slogan}"</p>
               <Image src={corporation.logo}></Image>
+              <Divider/>
               <Button
                 href={corporation.applyLink}
                 color="blue"

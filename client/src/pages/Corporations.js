@@ -121,15 +121,16 @@ function Corporations(props) {
                 <Card
                   fluid
                   raised
-                  image={corporation.logo}
+                  image={<img className='corp-logo' src={corporation.logo}/>}
                   header={corporation.name}
                   extra={
                           <>
                           <Button
+                          fluid
+                          className="corp-button"
                           content="View Profile"
                           icon="eye"
                           labelPosition="left"
-                          color="blue"
                           onClick={()=>{
                               getCorporationInfo(corporation);
                               openModal("viewCorporation");
@@ -138,29 +139,28 @@ function Corporations(props) {
                             {user && user.bookmarks.find(function(bookmarked){
                               return bookmarked === corporation.name;
                             }) ? (
-                            <Button onClick={() => {deleteBookmark({variables: {
-                              company: corporation.name,
-                              username: username
+                            <Button className="corp-button" fluid onClick={() => {deleteBookmark({variables: {
+                                company: corporation.name,
+                                username: username
                               }});
                               user.bookmarks.splice(user.bookmarks.indexOf(corporation.name), 1); 
                               }}
-                              floated='right' icon='book' color='red' content="Remove Bookmark"/>
+                              floated='right' icon='book' color='red' content="Remove Bookmark" labelPosition="left"/>
                             ) : (
-                              <Button onClick={() => {bookmark({variables: {
+                            <Button className="corp-button" fluid onClick={() => {bookmark({variables: {
                                 company: corporation.name,
                                 username: username
                               }});
                               user.bookmarks.push(corporation.name);
                               }} 
-                              floated='right' icon='book' content="Add Bookmark"/>
+                              floated='right' icon='book' content="Add Bookmark" labelPosition="left"/>
                             )
                           }
                           </>
                         }
                 />
               </Grid.Column>
-            ))
-            }
+            ))}
           </Grid.Row>
         </Grid>
     </Tab.Pane>
@@ -192,16 +192,31 @@ function Corporations(props) {
             <Grid.Column>
             <CorporationProfile corporation={corporationInfo}/>
               <Button 
-                color="teal"
+                color="red"
                 floated="left"
                 content="Close"
                 onClick={()=> closeModal("viewCorporation")}
               />
-              <Button
-                color="red"
-                floated="right"
-                content="Add Bookmark"
-              />
+              {user && user.bookmarks.find(function(bookmarked){
+                return bookmarked === corporationInfo.name;
+              }) ? (
+              <Button onClick={() => {deleteBookmark({variables: {
+                  company: corporationInfo.name,
+                  username: username
+                }});
+                user.bookmarks.splice(user.bookmarks.indexOf(corporationInfo.name), 1); 
+                }}
+                floated='right' color='red' content="Remove Bookmark"/>
+              ) : (
+              <Button onClick={() => {bookmark({variables: {
+                  company: corporationInfo.name,
+                  username: username
+                }});
+                user.bookmarks.push(corporationInfo.name);
+                }} 
+                floated='right' content="Add Bookmark"/>
+              )
+            }
             </Grid.Column>
           </Grid.Row>
         </Grid>

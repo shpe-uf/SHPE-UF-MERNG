@@ -142,7 +142,6 @@ function CorporationTable({ corporations }) {
                     </Table.Cell>
                     <Table.Cell textAlign="center">
                       <Button
-                        icon
                       >
                         <Icon name="x" />
                       </Button>
