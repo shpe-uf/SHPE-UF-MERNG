@@ -159,6 +159,10 @@ module.exports = gql`
     nationalConvention: String!
   }
 
+  input DeleteCorporationInput {
+    name: String!
+  }
+
   input RedeemPointsInput {
     code: String!
     username: String!
@@ -192,6 +196,7 @@ module.exports = gql`
     login(username: String!, password: String!, remember: String!): User!
     createCorporation(createCorporationInput: CreateCorporationInput): [Corporation]
     updateCorporation(editCorporationProfileInput: EditCorporationProfileInput): [Corporation]
+    deleteCorporation(deleteCorporationInput: DeleteCorporationInput): Boolean!
     createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]

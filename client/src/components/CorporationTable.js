@@ -23,11 +23,31 @@ import CorporationProfileForm from "../components/CorporationProfileForm";
 
 
 function CorporationTable({ corporations }) {
+  const [errors, setErrors] = useState({});
   const [viewCorporationModal, setViewCorporationModal] = useState(false);
   const [editCorporationModal, setEditCorporationModal] = useState(false);
 
   //State to keep track of the current corporation selected
   const [corporationInfo, setCorporationInfo] = useState({});
+  const [values, setValues] = useState({});
+
+  console.log(values);
+
+  const [removeCorporation, { loading }] = useMutation(DELETE_CORPORATION, {
+    update(
+      _,
+      {
+        data: { deleteCorporation: corporationInfo }
+      }
+    ) {
+      setErrors(false)
+    },
+    onError(err) {
+      console.log(err);
+      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+    }, 
+    variables: values
+  })
 
     //Corporation information modals
     const openModal = name => {
@@ -56,6 +76,16 @@ function CorporationTable({ corporations }) {
     //Setter function to update the state with the selected corporation
     function getCorporationInfo(corporationInfo) {
       setCorporationInfo(corporationInfo);
+    }
+
+    
+
+    function deleteCorporation(corporationInfo) {
+      setCorporationInfo(corporationInfo);
+      setValues({
+        name: corporationInfo.name
+      });
+      removeCorporation();
     }
 
     // function editCorporationUpdate(state) {
@@ -142,6 +172,9 @@ function CorporationTable({ corporations }) {
                     </Table.Cell>
                     <Table.Cell textAlign="center">
                       <Button
+                        onClick={()=>{
+                          deleteCorporation(corporation);
+                        }}
                       >
                         <Icon name="x" />
                       </Button>
@@ -214,5 +247,18 @@ function CorporationTable({ corporations }) {
     </>
   )
 }
+
+const DELETE_CORPORATION = gql`
+ mutation deleteCorporation(
+   $name: String!
+ ) {
+   deleteCorporation(
+     
+     deleteCorporationInput: {
+       name: $name
+     }
+   )
+ }
+`;
 
 export default CorporationTable;

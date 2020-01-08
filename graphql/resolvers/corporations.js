@@ -211,6 +211,26 @@ module.exports = {
       } else {
         throw new Error("Company not found.");
       }
+    },
+
+    async deleteCorporation(
+      _,
+      {
+        deleteCorporationInput: {
+          name
+        }
+      }
+    ){
+
+      Corporation.deleteOne({ 'name': name }, (err) => {
+        if (err){
+          console.log(err);
+          throw err;
+        }
+        else 
+          return true;
+      });
+      return false;
     }
   }
 };
