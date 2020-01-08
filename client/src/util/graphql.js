@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const FETCH_USERS_QUERY = gql `
+export const FETCH_USERS_QUERY = gql`
   {
     getUsers {
       firstName
@@ -31,7 +31,7 @@ export const FETCH_USERS_QUERY = gql `
   }
 `;
 
-export const FETCH_EVENTS_QUERY = gql `
+export const FETCH_EVENTS_QUERY = gql`
   {
     getEvents {
       id
@@ -68,45 +68,77 @@ export const FETCH_REQUESTS_QUERY = gql`
   }
 `;
 
-export const MAJOR_STAT = gql `
+export const FETCH_ALUMNIS_QUERY = gql`
   {
-    getMajorStat{
+    getAlumnis {
+      firstName
+      lastName
+      email
+      employer
+      position
+      undergrad {
+        university
+        year
+        major
+      }
+      grad {
+        university
+        year
+        major
+      }
+      location {
+        city
+        state
+        country
+      }
+      coordinates {
+        latitude
+        longitude
+      }
+      linkedin
+    }
+  }
+`;
+
+export const MAJOR_STAT = gql`
+  {
+    getMajorStat {
       _id
       value
     }
   }
 `;
 
-export const COUNTRY_STAT = gql `
+export const COUNTRY_STAT = gql`
   {
-    getCountryStat{
+    getCountryStat {
       _id
       value
     }
   }
 `;
 
-export const YEAR_STAT = gql `
+export const YEAR_STAT = gql`
   {
-    getYearStat{
+    getYearStat {
       _id
       value
     }
   }
 `;
 
-export const SEX_STAT = gql `
+export const SEX_STAT = gql`
   {
-    getSexStat{
+    getSexStat {
       _id
       value
     }
   }
 `;
 
-export const ETHNICITY_STAT = gql `
+export const ETHNICITY_STAT = gql`
   {
-    getEthnicityStat{
+    getEthnicityStat {
       _id
       value
     }

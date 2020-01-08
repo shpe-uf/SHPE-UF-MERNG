@@ -27,6 +27,9 @@ function MenuBar() {
             <Menu.Item as={Link} to="/about">
               About Us
             </Menu.Item>
+            <Menu.Item as={Link} to="/alumni">
+              Alumni
+            </Menu.Item>
             <Menu.Item as={Link} to="/eboard">
               E-Board
             </Menu.Item>
@@ -50,6 +53,9 @@ function MenuBar() {
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
                         Points Program
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/alumnidirectory">
+                        Alumni Directory
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
@@ -99,6 +105,9 @@ function MenuBar() {
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
                         Points Program
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/alumnidirectory">
+                        Alumni Directory
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>

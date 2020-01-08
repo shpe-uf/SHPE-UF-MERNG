@@ -11,13 +11,18 @@ import UserRoute from "./util/UserRoute";
 import MenuBar from "./components/MenuBar";
 import Footer from "./components/Footer";
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import DevTeam from "./pages/DevTeam";
-import About from "./pages/About";
-import EBoard from "./pages/EBoard";
-import Sponsors from "./pages/Sponsors";
+import Home from "./pages/public/Home";
+import Login from "./pages/public/Login";
+import Register from "./pages/public/Register";
+import RegisterAlumni from "./pages/public/RegisterAlumni";
+import About from "./pages/public/About";
+import Alumni from "./pages/public/Alumni";
+import EBoard from "./pages/public/EBoard";
+import DevTeam from "./pages/public/DevTeam";
+import Sponsors from "./pages/public/Sponsors";
+import ResetPassword from "./pages/public/ResetPassword";
+import ForgotPassword from "./pages/public/ForgotPassword";
+import Confirm from "./pages/public/Confirm";
 import Admin from "./pages/Admin";
 import Points from "./pages/Points";
 import Profile from "./pages/Profile";
@@ -25,9 +30,7 @@ import Events from "./pages/Events";
 import Members from "./pages/Members";
 import Requests from "./pages/Requests";
 import Statistics from "./pages/Statistics";
-import ResetPassword from "./pages/ResetPassword";
-import ForgotPassword from "./pages/ForgotPassword";
-import Confirm from "./pages/Confirm";
+import AlumniDirectory from "./pages/AlumniDirectory";
 
 function App() {
   return (
@@ -38,7 +41,9 @@ function App() {
           <Route exact path="/" component={Home} />
           <AuthRoute exact path="/login" component={Login} />
           <AuthRoute exact path="/register" component={Register} />
+          <Route exact path="/register/alumni" component={RegisterAlumni} />
           <Route exact path="/about" component={About} />
+          <Route exact path="/alumni" component={Alumni} />
           <Route exact path="/eboard" component={EBoard} />
           <Route exact path="/devteam" component={DevTeam} />
           <Route exact path="/sponsors" component={Sponsors} />
@@ -52,7 +57,8 @@ function App() {
           <UserRoute exact path="/admin/statistics" component={Statistics} />
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
-          </main>
+          <UserRoute exact path="/alumnidirectory" component={AlumniDirectory} />
+        </main>
         <Footer />
       </Router>
     </AuthProvider>
