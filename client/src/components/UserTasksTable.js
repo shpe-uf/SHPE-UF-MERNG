@@ -3,12 +3,12 @@ import { Grid, Table, Segment, Header } from "semantic-ui-react";
 
 import moment from "moment";
 
-function UserEventsTable({ user }) {
+
+function UserTasksTable({ user }) {
   return (
     <Grid.Row>
       <h1>Tasks</h1>
       {user === undefined ||
-      user.tasks === undefined ||
       user.tasks.length === 0 ? (
         <div style={{ paddingBottom: 16 }}>
           <Segment placeholder>
@@ -47,4 +47,4 @@ function UserEventsTable({ user }) {
   );
 }
 
-export default UserEventsTable;
+export default UserTasksTable;

@@ -641,7 +641,7 @@ module.exports = {
       }
     ) {
       var errors = {};
-    
+
       const user = await User.findOne({
         username
       });
