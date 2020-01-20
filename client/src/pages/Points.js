@@ -240,7 +240,6 @@ const FETCH_USER_QUERY = gql`
       }
       tasks {
         name
-        createdAt
         points
       }
     }
