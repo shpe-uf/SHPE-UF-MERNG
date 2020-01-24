@@ -54,16 +54,14 @@ function TasksCards({ user }) {
           </Header>
         </Segment>
       ) : (
-          <Card.Group itemsPerRow={4}>
+          <Card.Group>
             {tasks &&
               tasks.map((task, index) => (
                 <Card color="blue" key={index}>
-                  <Card.Content><h5>{task.name}</h5></Card.Content>
                   <Card.Content>
+                    <h5>{task.name}</h5>
                     {task.points}
-                  </Card.Content>
-                  <Card.Content>
-                    {task.startDate} - {task.endDate}
+                    <Card.Meta>{task.startDate} - {task.endDate}</Card.Meta>
                   </Card.Content>
                   <Card.Content>{task.description}</Card.Content>
                   <Card.Content>
@@ -76,6 +74,7 @@ function TasksCards({ user }) {
                           }
                         });
                       }}
+
                     >
                       Request
                     </Button>
