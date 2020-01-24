@@ -215,7 +215,8 @@ function Points() {
                   </Grid.Column>
                 </Grid.Row>
               )}
-              <p></p>
+              <Grid.Row>
+              <Grid.Column>
               <Responsive {...Responsive.onlyComputer}>
                 <Card.Group itemsPerRow={3}>
                   <TasksCards user={user} />
@@ -231,6 +232,8 @@ function Points() {
                   <TasksCards user={user} />
                 </Card.Group>
               </Responsive>
+              </Grid.Column>
+              </Grid.Row>
             </Grid>
           </Segment>
         )}
