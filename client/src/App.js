@@ -33,6 +33,7 @@ import Statistics from "./pages/Statistics";
 import AlumniDirectory from "./pages/AlumniDirectory";
 
 function App() {
+  console.log(localStorage);
   return (
     <AuthProvider>
       <Router>
@@ -50,11 +51,15 @@ function App() {
           <Route exact path="/reset/:token" component={ResetPassword} />
           <Route exact path="/forgot" component={ForgotPassword} />
           <Route exact path="/confirm/:id" component={Confirm} />
+          {localStorage.getItem('permission') === 'admin' &&
+          <>
           <UserRoute exact path="/admin" component={Admin} />
           <UserRoute exact path="/admin/events" component={Events} />
           <UserRoute exact path="/admin/members" component={Members} />
           <UserRoute exact path="/admin/requests" component={Requests} />
           <UserRoute exact path="/admin/statistics" component={Statistics} />
+          </>
+          }
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
           <UserRoute exact path="/alumnidirectory" component={AlumniDirectory} />

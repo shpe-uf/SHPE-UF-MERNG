@@ -23,7 +23,8 @@ function generateToken(user, time) {
     {
       id: user.id,
       email: user.email,
-      username: user.username
+      username: user.username,
+      permission: user.permission
     },
     process.env.SECRET,
     {
@@ -291,6 +292,7 @@ module.exports = {
       }
 
       time = remember === "true" || remember === true ? "30d" : "24h";
+      console.log(user);
       const token = generateToken(user, time);
 
       return {
