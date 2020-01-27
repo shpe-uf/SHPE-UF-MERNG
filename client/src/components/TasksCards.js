@@ -54,7 +54,7 @@ function TasksCards({ user }) {
           </Header>
         </Segment>
       ) : (
-          <Card.Group itemsPerRow={4}>
+          <Card.Group itemsPerRow={4} stackable>
             {tasks &&
               tasks.map((task, index) => (
                 <Card color="blue" key={index}>
