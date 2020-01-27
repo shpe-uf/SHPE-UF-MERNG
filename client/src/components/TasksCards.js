@@ -54,13 +54,13 @@ function TasksCards({ user }) {
           </Header>
         </Segment>
       ) : (
-          <Card.Group style={{paddingTop:"20px", paddingLeft:"15px"}}>
+          <Card.Group style={{paddingTop:"20px", paddingLeft:"15px", display:"flex"}}>
             {tasks &&
               tasks.map((task, index) => (
                 <Card color="blue" key={index}>
                   <Card.Content>
                     <h5 style={{float:"left"}}>{task.name}</h5>
-                    <b><p style={{float:"right"}}>{task.points}</p></b>
+                    <b><p style={{float:"right"}}>Point(s): {task.points}</p></b>
                     <Card.Meta style={{clear:"left"}}>{task.startDate} - {task.endDate}</Card.Meta>
                   </Card.Content>
                   <Card.Content>{task.description}</Card.Content>

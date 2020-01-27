@@ -218,7 +218,7 @@ function Points() {
               <Grid.Row>
               <Grid.Column>
               <Responsive {...Responsive.onlyComputer}>
-                <Card.Group itemsPerRow={3}>
+                <Card.Group itemsPerRow={4}>
                   <TasksCards user={user} />
                 </Card.Group>
               </Responsive>
