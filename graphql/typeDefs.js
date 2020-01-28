@@ -49,17 +49,6 @@ module.exports = gql`
     users: [User]!
   }
 
-  type Request {
-    id: ID!
-    name: String!
-    type: String!
-    points: String!
-    firstName: String!
-    lastName: String!
-    username: String!
-    createdAt: String!
-  }
-
   type Task {
     id: ID!
     name: String!
@@ -71,6 +60,17 @@ module.exports = gql`
     semester: String!
     createdAt: String!
     users: [User]!
+  }
+
+  type Request {
+    id: ID!
+    name: String!
+    type: String!
+    points: String!
+    firstName: String!
+    lastName: String!
+    username: String!
+    createdAt: String!
   }
 
   type StatData{
@@ -141,8 +141,8 @@ module.exports = gql`
     getUsers: [User]
     getUser(userId: ID!): User
     getEvents: [Event]
-    getRequests: [Request]
     getTasks: [Task]
+    getRequests: [Request]
     getMajorStat: [StatData]
     getCountryStat: [StatData]
     getYearStat: [StatData]

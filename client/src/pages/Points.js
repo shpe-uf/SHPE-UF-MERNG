@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Grid, Container, Button, Modal, Form, Menu, Segment } from "semantic-ui-react";
+import { Grid, Container, Button, Modal, Form, Menu, Segment, Responsive, Card } from "semantic-ui-react";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -142,7 +142,11 @@ function Points() {
               </Grid.Row>
               {user && (
                 <>
-                  <PointsBar user={user} />
+                  <Grid.Row>
+                    <Grid.Column>
+                      <PointsBar user={user} />
+                    </Grid.Column>
+                  </Grid.Row>
                   <Grid.Row itemsPerRow={2}>
                     <Grid.Column width={8}>
                       <UserEventsTable user={user} />
@@ -211,7 +215,25 @@ function Points() {
                   </Grid.Column>
                 </Grid.Row>
               )}
-              <TasksCards user={user} />
+              <Grid.Row>
+              <Grid.Column>
+              <Responsive {...Responsive.onlyComputer}>
+                <Card.Group itemsPerRow={4}>
+                  <TasksCards user={user} />
+                </Card.Group>
+              </Responsive>
+              <Responsive {...Responsive.onlyTablet}>
+                <Card.Group itemsPerRow={2}>
+                  <TasksCards user={user} />
+                </Card.Group>
+              </Responsive>
+              <Responsive {...Responsive.onlyMobile}>
+                <Card.Group itemsPerRow={1}>
+                  <TasksCards user={user} />
+                </Card.Group>
+              </Responsive>
+              </Grid.Column>
+              </Grid.Row>
             </Grid>
           </Segment>
         )}
