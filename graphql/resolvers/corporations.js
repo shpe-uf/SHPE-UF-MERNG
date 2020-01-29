@@ -215,11 +215,7 @@ module.exports = {
 
     async deleteCorporation(
       _,
-      {
-        deleteCorporationInput: {
-          name
-        }
-      }
+      { name }
     ){
 
       Corporation.deleteOne({ 'name': name }, (err) => {

@@ -17,7 +17,6 @@ import { useForm } from "../util/hooks";
 import moment from "moment";
 import { CSVLink } from "react-csv";
 
-import { FETCH_USERS_QUERY } from "../util/graphql";
 import CorporationProfile from "../components/CorporationProfile";
 import CorporationProfileForm from "../components/CorporationProfileForm";
 
@@ -29,25 +28,11 @@ function CorporationTable({ corporations }) {
 
   //State to keep track of the current corporation selected
   const [corporationInfo, setCorporationInfo] = useState({});
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({
+    name: ""
+  });
 
-  console.log(values);
-
-  const [removeCorporation, { loading }] = useMutation(DELETE_CORPORATION, {
-    update(
-      _,
-      {
-        data: { deleteCorporation: corporationInfo }
-      }
-    ) {
-      setErrors(false)
-    },
-    onError(err) {
-      console.log(err);
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
-    }, 
-    variables: values
-  })
+  const [removeCorporation] = useMutation(DELETE_CORPORATION);
 
     //Corporation information modals
     const openModal = name => {
@@ -81,11 +66,14 @@ function CorporationTable({ corporations }) {
     
 
     function deleteCorporation(corporationInfo) {
-      setCorporationInfo(corporationInfo);
-      setValues({
-        name: corporationInfo.name
+
+      console.log(corporationInfo);
+  
+      removeCorporation({
+        variables: {name: corporationInfo.name}
       });
-      removeCorporation();
+
+      window.location.reload();
     }
 
     // function editCorporationUpdate(state) {
@@ -106,7 +94,7 @@ function CorporationTable({ corporations }) {
         </Segment>
       ) : (
         <div className="table-responsive">
-          <Table stripped selectable unstackable>
+          <Table selectable unstackable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Name</Table.HeaderCell>
@@ -253,10 +241,7 @@ const DELETE_CORPORATION = gql`
    $name: String!
  ) {
    deleteCorporation(
-     
-     deleteCorporationInput: {
-       name: $name
-     }
+    name: $name
    )
  }
 `;

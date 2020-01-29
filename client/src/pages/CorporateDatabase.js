@@ -64,6 +64,7 @@ function CorporateDatabase() {
   function createCorporation() {
     addCorporation();
     closeModal();
+    window.location.reload();
   }
 
   const openModal = () => {
