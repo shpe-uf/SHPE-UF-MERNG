@@ -175,6 +175,7 @@ function Points() {
                     </div>
                   )}
                   <Form
+                    style={{padding:"20px"}}
                     onSubmit={onSubmit}
                     noValidate
                     className={loading ? "loading" : ""}
