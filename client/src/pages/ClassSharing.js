@@ -94,8 +94,8 @@ function ClassSharing() {
     getMatches = dataM.getMatches;
   }
 
-  console.log(getMatches)
-  
+  console.log(getMatches);
+
   var classUsers = [];
   const [getClass, { data: getClassData, loading: loadingClass }] = useMutation(
     GET_CLASS_QUERY,
@@ -171,90 +171,97 @@ function ClassSharing() {
                       <Table.HeaderCell width={8} textAlign="left">
                         Course Code
                       </Table.HeaderCell>
-                      <Table.HeaderCell/>
+                      <Table.HeaderCell />
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
-                  {getClasses &&
-                    getClasses.map(classTemp => (
-                      <Table.Row>
-                        <Table.Cell textAlign="left"
-                        width={5}
-                        onClick={() => {
-                          getDisplayClass(classTemp.code);
-                          getClass({
-                            variables: {
-                              code: classTemp.code
-                            }
-                          });
-                          getDisplayUsers(classUsers);
-                          openModal("displayClass");
-                        }}
-                        key={classTemp.code}
-                        >
-                          {classTemp.code}
-                        </Table.Cell>
-                        <Table.Cell
-                        width={3}
-                        >
-                        <Button
-                          size='mini'
-                          floated="right"
-                          color="red"
-                          onClick={() =>
-                            deleteClass({
-                              variables: {
-                                code: classTemp.code,
-                                username
-                              }
-                            })
-                          }
-                          icon='times'
-                        />
-                        </Table.Cell>
-                      </Table.Row>
-                    ))}</Table.Body>{" "}
+                    {getClasses &&
+                      getClasses.map(classTemp => (
+                        <Table.Row>
+                          <Table.Cell
+                            textAlign="left"
+                            width={5}
+                            onClick={() => {
+                              getDisplayClass(classTemp.code);
+                              getClass({
+                                variables: {
+                                  code: classTemp.code
+                                }
+                              });
+                              getDisplayUsers(classUsers);
+                              openModal("displayClass");
+                            }}
+                            key={classTemp.code}
+                          >
+                            {classTemp.code}
+                          </Table.Cell>
+                          <Table.Cell width={3}>
+                            <Button
+                              size="mini"
+                              floated="right"
+                              color="red"
+                              onClick={() => {
+                                deleteClass({
+                                  variables: {
+                                    code: classTemp.code,
+                                    username
+                                  }
+                                });
+                                window.location.reload();
+                              }}
+                              icon="times"
+                            />
+                          </Table.Cell>
+                        </Table.Row>
+                      ))}
+                  </Table.Body>{" "}
                 </Table>
               ) : (
-                <Message color='grey'>
-                  <p>Add classes to match with classmates!</p>
-                </Message>
-                // <Segment placeholder>
-                //   <Header icon>
-                //       <i className="fas fa-plus"></i>
-                //       <p>It seems like there are no classes at this moment.</p>
-                //   </Header>
-                // </Segment>
+                <Segment placeholder compact>
+                  <Header icon textAlign="center">
+                    <p>It seems like there are no classes at this moment.</p>
+                  </Header>
+                </Segment>
               )}{" "}
             </Grid.Column>
             <Grid.Column width={11}>
-                <h2>My Matches</h2>
-                <p></p>
-                {getMatches.length > 0 ?
-                  <div>
+              <h2>My Matches</h2>
+              <p></p>
+              {getMatches.length > 0 ? (
+                <div>
                   <Responsive {...Responsive.onlyComputer}>
                     <Card.Group itemsPerRow={3}>
-                    <MatchCards getClasses={getClasses} getMatches={getMatches}/>
+                      <MatchCards
+                        getClasses={getClasses}
+                        getMatches={getMatches}
+                      />
                     </Card.Group>
                   </Responsive>
                   <Responsive {...Responsive.onlyTablet}>
                     <Card.Group itemsPerRow={2}>
-                    <MatchCards getClasses={getClasses} getMatches={getMatches}/>
+                      <MatchCards
+                        getClasses={getClasses}
+                        getMatches={getMatches}
+                      />
                     </Card.Group>
                   </Responsive>
                   <Responsive {...Responsive.onlyMobile}>
                     <Card.Group itemsPerRow={1}>
-                      <MatchCards getClasses={getClasses} getMatches={getMatches}/>
+                      <MatchCards
+                        getClasses={getClasses}
+                        getMatches={getMatches}
+                      />
                     </Card.Group>
                   </Responsive>
-                  </div> :
+                </div>
+              ) : (
                 <Segment placeholder>
                   <Header icon>
                     <i className="far fa-frown"></i>
                     <p>It seems like there are no matches at this moment.</p>
                   </Header>
                 </Segment>
-                }
+              )}
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -267,114 +274,113 @@ function ClassSharing() {
         <Grid>
           <Grid.Column>
             <Grid.Row>
-        <Modal.Content>
-          <Container>
-          <Modal.Description>
-            {" "}
-            {Object.keys(errors).length > 0 && (
-              <div className="ui error message">
-                <ul className="list">
-                  {Object.values(errors).map(value => (
-                    <li key={value}>{value}</li>
-                  ))}{" "}
-                </ul>
-              </div>
-            )}
-            <Form
-              onSubmit={onSubmit}
-              noValidate
-              className={loading ? "loading" : ""}
-            >
-              <Form.Input
-                type="text"
-                label="Course Code"
-                name="code"
-                value={values.code}
-                onChange={onChange}
-              />
-              <Button
-                type="reset"
-                color="grey"
-                onClick={() => closeModal("addClass")}
-              >
-                Cancel
-              </Button>
-              <Button floated="right" type="submit">
-                Add
-              </Button>
-            </Form>
-          </Modal.Description>
-          </Container>
-          </Modal.Content>
-          </Grid.Row>
-          </Grid.Column>        
+              <Modal.Content>
+                <Container>
+                  <Modal.Description>
+                    {" "}
+                    {Object.keys(errors).length > 0 && (
+                      <div className="ui error message">
+                        <ul className="list">
+                          {Object.values(errors).map(value => (
+                            <li key={value}>{value}</li>
+                          ))}{" "}
+                        </ul>
+                      </div>
+                    )}
+                    <Form
+                      onSubmit={onSubmit}
+                      noValidate
+                      className={loading ? "loading" : ""}
+                    >
+                      <Form.Input
+                        type="text"
+                        label="Course Code"
+                        name="code"
+                        value={values.code}
+                        onChange={onChange}
+                      />
+                      <Button
+                        type="reset"
+                        color="grey"
+                        onClick={() => closeModal("addClass")}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        floated="right"
+                        type="submit"
+                        onClick={() => window.location.reload()}
+                      >
+                        Add
+                      </Button>
+                    </Form>
+                  </Modal.Description>
+                </Container>
+              </Modal.Content>
+            </Grid.Row>
+          </Grid.Column>
         </Grid>
       </Modal>
 
       <Modal open={displayClassModal} closeOnEscape={true} size="tiny">
         <Modal.Header>
-          <h2>
-            {" "}
-            {displayClass}
-          </h2>
+          <h2> {displayClass}</h2>
         </Modal.Header>
         <Grid>
           <Grid.Column>
             <Grid.Row>
-            <Modal.Content>
-          <Modal.Description>
-            <Table striped unstackable>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>User</Table.HeaderCell>
-                  <Table.HeaderCell width={5}>Email</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {" "}
-                {displayUsers.map(userTemp => (
-                  <Table.Row
-                    key={userTemp.email}
-                  >
-                    <Table.Cell>
+              <Modal.Content>
+                <Modal.Description>
+                  <Table striped unstackable>
+                    <Table.Header>
+                      <Table.Row>
+                        <Table.HeaderCell>User</Table.HeaderCell>
+                        <Table.HeaderCell width={5}>Email</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                       {" "}
-                      {userTemp.firstName + " " + userTemp.lastName}{" "}
-                    </Table.Cell>
-                    <Table.Cell> 
-                      <a
-                        href={"mailto:" + userTemp.email}
-                        className="link-email"
-                      >
-                        {userTemp.email}
-                      </a>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}{" "}
-              </Table.Body>
-            </Table>
-            <Button
-                type="reset"
-                color="grey"
-                onClick={() => closeModal("displayClass")}
-              >
-                Cancel
-            </Button>
-            <Button
-              floated="right"
-              color="red"
-              onClick={() =>
-                deleteClass({
-                  variables: {
-                    code: displayClass,
-                    username
-                  }
-                })
-              }
-            >
-              Remove Class
-            </Button>
-          </Modal.Description>
-        </Modal.Content>
+                      {displayUsers.map(userTemp => (
+                        <Table.Row key={userTemp.email}>
+                          <Table.Cell>
+                            {" "}
+                            {userTemp.firstName + " " + userTemp.lastName}{" "}
+                          </Table.Cell>
+                          <Table.Cell>
+                            <a
+                              href={"mailto:" + userTemp.email}
+                              className="link-email"
+                            >
+                              {userTemp.email}
+                            </a>
+                          </Table.Cell>
+                        </Table.Row>
+                      ))}{" "}
+                    </Table.Body>
+                  </Table>
+                  <Button
+                    type="reset"
+                    color="grey"
+                    onClick={() => closeModal("displayClass")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    floated="right"
+                    color="red"
+                    onClick={() =>
+                      deleteClass({
+                        variables: {
+                          code: displayClass,
+                          username
+                        }
+                      })
+                    }
+                  >
+                    Remove Class
+                  </Button>
+                </Modal.Description>
+              </Modal.Content>
             </Grid.Row>
           </Grid.Column>
         </Grid>

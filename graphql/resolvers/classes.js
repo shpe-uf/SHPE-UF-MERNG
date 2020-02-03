@@ -9,17 +9,17 @@ module.exports = {
   Query: {
     async getMatches(_, { username }) {
       var matches = [];
+      console.time('calls');
       const user = await User.findOne({ username });
 
-      await user.classes.map(async classTemp => {
+      user.classes.map(async classTemp => {
         const newClassTemp = await Class.findOne({ code: classTemp.code }).select("-users._id");
         lodash.remove(newClassTemp.users, function (user){
           return user.username === username;
         });
-        matches.push(newClassTemp.users);
+        await matches.push(newClassTemp.users);
       });
       
-      // figure out to not depend on line 23.
       await User.find();
       matches = await lodash.flatten(matches);
       matches = await lodash.uniqBy(matches, "username");
@@ -31,7 +31,7 @@ module.exports = {
       const users = await User.find({
         username : {$in: matches}
       }).sort({lastName: 1, firstName: 1});
-
+      
       console.log(users)
 
       return users;
