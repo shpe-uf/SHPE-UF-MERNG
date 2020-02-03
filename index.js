@@ -13,9 +13,9 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req, pubSub })
 });
 
-const port = (process.env.PORT || 5000)
+//const port = (process.env.PORT || 5000)
 
-server.listen({ port: port }).then(({ url }) => {
+server.listen({ port: process.env.PORT || 5000 }).then(({ url: "membershpeufl.herokuapp.com" }) => {
   console.log(`Server ready at ${url}`);
 });
 
