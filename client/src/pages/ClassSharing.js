@@ -17,7 +17,8 @@ import {
   Tab,
   Placeholder,
   ListItem,
-  GridColumn
+  GridColumn,
+  Responsive
 } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks";
@@ -29,6 +30,7 @@ import { AuthContext } from "../context/auth";
 import Title from "../components/Title";
 import cesar from "../assets/images/team/2019-2020/cesar.png";
 import { findValuesAddedToEnums } from "graphql/utilities/findBreakingChanges";
+import MatchCards from "../components/MatchCards";
 
 function ClassSharing() {
   var {
@@ -175,19 +177,7 @@ function ClassSharing() {
                   <Table.Body>
                   {getClasses &&
                     getClasses.map(classTemp => (
-                      <Table.Row
-                        // onClick={() => {
-                        //   getDisplayClass(classTemp.code);
-                        //   getClass({
-                        //     variables: {
-                        //       code: classTemp.code
-                        //     }
-                        //   });
-                        //   getDisplayUsers(classUsers);
-                        //   openModal("displayClass");
-                        // }}
-                        // key={classTemp.code}
-                      >
+                      <Table.Row>
                         <Table.Cell textAlign="left"
                         width={5}
                         onClick={() => {
@@ -226,57 +216,44 @@ function ClassSharing() {
                     ))}</Table.Body>{" "}
                 </Table>
               ) : (
-                <Message info>
-                  <Message.Header>
-                    Add classes to match with classmates!
-                  </Message.Header>
+                <Message color='grey'>
+                  <p>Add classes to match with classmates!</p>
                 </Message>
+                // <Segment placeholder>
+                //   <Header icon>
+                //       <i className="fas fa-plus"></i>
+                //       <p>It seems like there are no classes at this moment.</p>
+                //   </Header>
+                // </Segment>
               )}{" "}
             </Grid.Column>
             <Grid.Column width={11}>
                 <h2>My Matches</h2>
                 <p></p>
                 {getMatches.length > 0 ?
-                <Card.Group stackable itemsPerRow={3}>
-                  {getMatches.map(matchTemp => (
-                    <Card>
-                      <Card.Content>
-                        <Card.Header textAlign='center' style={{height:'62px'}}>
-                          {matchTemp.firstName + " " + matchTemp.lastName}
-                        </Card.Header>
-                        {matchTemp.photo == "" ? <Image src={placeholder} wrapped ui={true} bordered></Image> : 
-                        <Image src= {matchTemp.photo} wrapped ui={true} bordered></Image>}
-                        <p></p>
-                          <Label.Group>
-                          {matchTemp.classes.map(codeName => (
-                            filteredRes = getClasses.filter(classTemp => classTemp.code == codeName.code),
-                            filteredRes.length > 0 ?
-                            <Label color="text-white label-Color-Orange">
-                              {codeName.code}
-                            </Label> : 
-                            <Label className="text-white label-Color-Blue">
-                              {codeName.code}
-                            </Label>
-                        ))}</Label.Group>
-                      </Card.Content>
-                      <Card.Content extra>
-                          <p>{matchTemp.major}</p>
-                          <p>{matchTemp.year}</p>
-                          <a
-                            href={"mailto:" + matchTemp.email}
-                            className="link-email"
-                          >
-                            {matchTemp.email}
-                          </a>
-                      </Card.Content>
-                    </Card>
-                  ))}
-                </Card.Group> :
-                <Message info>
-                  <Message.Header>
-                    You have no matches!
-                  </Message.Header>
-                </Message>
+                  <div>
+                  <Responsive {...Responsive.onlyComputer}>
+                    <Card.Group itemsPerRow={3}>
+                    <MatchCards getClasses={getClasses} getMatches={getMatches}/>
+                    </Card.Group>
+                  </Responsive>
+                  <Responsive {...Responsive.onlyTablet}>
+                    <Card.Group itemsPerRow={2}>
+                    <MatchCards getClasses={getClasses} getMatches={getMatches}/>
+                    </Card.Group>
+                  </Responsive>
+                  <Responsive {...Responsive.onlyMobile}>
+                    <Card.Group itemsPerRow={1}>
+                      <MatchCards getClasses={getClasses} getMatches={getMatches}/>
+                    </Card.Group>
+                  </Responsive>
+                  </div> :
+                <Segment placeholder>
+                  <Header icon>
+                    <i className="far fa-frown"></i>
+                    <p>It seems like there are no matches at this moment.</p>
+                  </Header>
+                </Segment>
                 }
             </Grid.Column>
           </Grid.Row>

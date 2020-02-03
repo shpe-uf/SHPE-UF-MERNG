@@ -185,7 +185,7 @@ h5 {
 .overlay-home {
   background-color: var(--primary-overlay);
   width: 100%;
-  padding: 10rem 0rem;
+  /* padding: 10rem 0rem; */
 }
 
 .overlay-blue {
