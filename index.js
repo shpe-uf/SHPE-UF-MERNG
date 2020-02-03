@@ -15,6 +15,10 @@ const server = new ApolloServer({
 
 const port = (process.env.PORT || 5000)
 
+server.listen({ port: port }).then(({ url }) => {
+  console.log(`Server ready at ${url}`);
+});
+
 mongoose
   .connect(process.env.URI, { useNewUrlParser: true })
   .then(() => {
