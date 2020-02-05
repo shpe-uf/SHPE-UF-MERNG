@@ -288,6 +288,10 @@ h5 {
   margin: 0px;
   font-size: 3.5rem !important;
 }
+.masthead-title-mobile {
+  margin: 0px;
+  font-size: 2.5rem !important;
+}
 
 .background-grey {
   background-color: var(--grey);

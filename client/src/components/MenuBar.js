@@ -83,7 +83,6 @@ function MenuBar() {
       <Responsive maxWidth={991}>
         <Menu inverted>
           <Container>
-              <div/>
                 <Dropdown
                   pointing
                   item
