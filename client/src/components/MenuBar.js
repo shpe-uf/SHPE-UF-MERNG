@@ -83,9 +83,34 @@ function MenuBar() {
       <Responsive maxWidth={991}>
         <Menu inverted>
           <Container>
-            <Menu.Item className="brand-logo" as={Link} to="/">
-              <img src={logo} alt="" />
-            </Menu.Item>
+              <div/>
+                <Dropdown
+                  pointing
+                  item
+                  text="Menu"
+                  className="brand-logo"
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item className="brand-logo" as={Link} to="/">
+                      Home
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/about">
+                      About Us
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/alumni">
+                      Alumni
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/eboard">
+                      E-Board
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/devteam">
+                      Dev Team
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/sponsors">
+                      Sponsors
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
 
             <Menu.Menu position="right">
               {user ? (
