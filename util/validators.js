@@ -258,6 +258,19 @@ module.exports.validateManualInputInput = username => {
   };
 };
 
+module.exports.validateManualTaskInputInput = username => {
+  const errors = {};
+
+  if (username.trim() === "") {
+    errors.username = "No username was provided.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateCreateTaskInput = (
   name,
   startDate,

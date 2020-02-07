@@ -1,10 +1,11 @@
 const { UserInputError } = require("apollo-server");
 const Task = require("../../models/Task");
+const User = require("../../models/User.js");
 const Request = require("../../models/Request.js");
 
 const {
   validateCreateTaskInput,
-  validateManualInputInput
+  validateManualTaskInputInput
 } = require("../../util/validators");
 
 const monthOptions = require("../../client/src/assets/options/month.json");
@@ -74,7 +75,7 @@ module.exports = {
 
       return res;
     },
-    async manualInput(
+    async manualTaskInput(
       _,
       {
         manualTaskInputInput: { username, taskName }
@@ -114,6 +115,8 @@ module.exports = {
           errors
         });
       }
+
+      console.log("test");
 
       if (request) {
         errors.general =
@@ -158,7 +161,8 @@ module.exports = {
           errors
         });
       }
-
+      console.log("testTwo");
+      
       var updatedUser = await User.findOneAndUpdate(
         {
           username
@@ -169,7 +173,6 @@ module.exports = {
               $each: [
                 {
                   name: task.name,
-                  category: task.category,
                   createdAt: task.createdAt,
                   points: task.points
                 }
@@ -183,7 +186,7 @@ module.exports = {
           new: true
         }
       );
-
+      console.log("testtest");
       updatedUser.message = "";
 
       await Task.findOneAndUpdate(
@@ -212,7 +215,7 @@ module.exports = {
           new: true
         }
       );
-
+      console.log("thirdTest");
       const updatedTasks = await Task.find();
 
       return updatedTasks;
