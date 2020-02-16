@@ -32,6 +32,7 @@ function Login(props) {
     ) {
       context.login(userData);
       props.history.push("/points");
+      window.location.reload();
     },
 
     onError(err) {
