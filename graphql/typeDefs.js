@@ -28,11 +28,17 @@ module.exports = gql`
     events: [Event]!
     token: String!
     message: String!
+    classes: [Class]!
     confirmed: Boolean!
     fallPercentile: Int!
     springPercentile: Int!
     summerPercentile: Int!
     bookmarks: [String]!
+  }
+
+  type Class {
+    code: String!
+    users: [User]!
   }
 
   type Event {
@@ -157,6 +163,15 @@ module.exports = gql`
     request: String!
   }
 
+  input CreateClassInput {
+    code: String!
+    username: String!
+  }
+  input DeleteClassInput {
+    code: String!
+    username: String!
+  }
+
   input CreateCorporationInput {
     name: String!,
     logo: String!,
@@ -272,6 +287,7 @@ module.exports = gql`
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
+    getMatches(username: String!): [User]
     getCorporations: [Corporation]
     getMajorStat: [StatData]
     getCountryStat: [StatData]
@@ -298,6 +314,9 @@ module.exports = gql`
       approveRejectRequestInput: ApproveRejectRequestInput
     ): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
+    createClass(createClassInput: CreateClassInput): [Class]
+    deleteClass(deleteClassInput: DeleteClassInput): [Class]
+    getClass(code: String!): Class!
     forgotPassword(email: String!): User!
     resetPassword(
       password: String!

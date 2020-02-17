@@ -487,3 +487,23 @@ module.exports.validateRegisterAlumniInput = (
     valid: Object.keys(errors).length < 1
   };
 };
+
+module.exports.validateCreateClassInput = (code) => {
+  const errors = {};
+
+  const codeValidator = /^[a-zA-Z0-9]*$/i;
+
+  if (code.trim() === "") {
+    errors.code = "No code was provided."
+  } else {
+    if (!code.match(codeValidator)) {
+      errors.code =
+        "Course code must be made up of letters (A-Z) and numbers (0-9). No special characters allowed.";
+    }
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  }
+};

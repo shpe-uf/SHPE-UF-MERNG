@@ -59,6 +59,9 @@ function MenuBar() {
                       <Dropdown.Item as={Link} to="/corporations">
                         Corporate Database
                       </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/classSharing">
+                        Corporate Database
+                      </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/alumnidirectory">
                         Alumni Directory
                       </Dropdown.Item>
@@ -136,6 +139,9 @@ function MenuBar() {
                         Points Program
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/corporateDatabase">
+                        Corporate Database
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/classSharing">
                         Corporate Database
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/alumnidirectory">

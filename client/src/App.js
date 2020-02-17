@@ -34,6 +34,7 @@ import Requests from "./pages/Requests";
 import Statistics from "./pages/Statistics";
 import Corporations from "./pages/Corporations";
 import AlumniDirectory from "./pages/AlumniDirectory";
+import ClassSharing from "./pages/ClassSharing";
 
 function App() {
   console.log(localStorage);
@@ -58,6 +59,7 @@ function App() {
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
           <UserRoute exact path="/alumnidirectory" component={AlumniDirectory} />
+          <UserRoute exact path="/classSharing" component={ClassSharing} />
           <AdminRoute exact path="/admin" component={Admin} />
           <AdminRoute exact path="/admin/events" component={Events} />
           <AdminRoute exact path="/admin/members" component={Members} />
