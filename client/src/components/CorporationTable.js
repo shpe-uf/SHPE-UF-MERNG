@@ -8,29 +8,20 @@ import {
   Header,
   Button,
   Modal,
-  Form,
   Grid
 } from "semantic-ui-react";
 import gql from "graphql-tag";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { useForm } from "../util/hooks";
-import moment from "moment";
-import { CSVLink } from "react-csv";
+import { useMutation } from "@apollo/react-hooks";
 
 import CorporationProfile from "../components/CorporationProfile";
-import CorporationProfileForm from "../components/CorporationProfileForm";
 
 
 function CorporationTable({ corporations }) {
-  const [errors, setErrors] = useState({});
   const [viewCorporationModal, setViewCorporationModal] = useState(false);
   const [editCorporationModal, setEditCorporationModal] = useState(false);
 
   //State to keep track of the current corporation selected
   const [corporationInfo, setCorporationInfo] = useState({});
-  const [values, setValues] = useState({
-    name: ""
-  });
 
   const [removeCorporation] = useMutation(DELETE_CORPORATION);
 

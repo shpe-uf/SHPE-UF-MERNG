@@ -1,7 +1,6 @@
 import React, {useState, useContext} from "react";
-import { Container, Grid, Card, Button, Modal, Tab, Segment, Image, Icon } from "semantic-ui-react";
-import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
-import imageDataURI from 'image-data-uri';
+import { Container, Grid, Card, Button, Modal, Tab, Segment } from "semantic-ui-react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import CorporationProfile from "../components/CorporationProfile";
 import Title from "../components/Title";
 
@@ -9,7 +8,6 @@ import { AuthContext } from "../context/auth";
 
 import gql from "graphql-tag";
 import {FETCH_CORPORATIONS_QUERY} from "../util/graphql";
-import compose from "koa-compose";
 
 function Corporations(props) {
   const [viewCorporationModal, setViewCorporationModal] = useState(false);
@@ -62,7 +60,7 @@ function Corporations(props) {
                 <Card
                   fluid
                   raised
-                  image={<img className='corp-logo' src={corporation.logo}/>}
+                  image={<img className='corp-logo' src={corporation.logo} alt={'Logo for ' + corporation.name}/>}
                   header={corporation.name}
                   extra={
                           <>

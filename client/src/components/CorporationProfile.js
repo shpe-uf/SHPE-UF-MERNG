@@ -1,6 +1,5 @@
 import React from "react";
-import { Grid, Image, Button, Icon, List, Divider } from "semantic-ui-react";
-import { GraphQLSkipDirective } from "graphql";
+import { Grid, Image, Button, List, Divider } from "semantic-ui-react";
 
 function CorporationProfile({corporation}) {
   console.log(corporation);
@@ -95,7 +94,6 @@ function CorporationProfile({corporation}) {
                 <Grid.Row>
                   <h4>News Link</h4>
                     <a href={corporation.newsLink}>Click here</a>
-                  <h4></h4>
                 </Grid.Row>
             </Grid.Column>
           </Grid.Row>
