@@ -266,13 +266,19 @@ module.exports.validateManualInputInput = username => {
   };
 };
 
-<<<<<<< HEAD
 module.exports.validateManualTaskInputInput = username => {
   const errors = {};
 
   if (username.trim() === "") {
     errors.username = "No username was provided.";
-=======
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateCreateEditCorporationInput = (
   name,
   logo,
@@ -330,7 +336,6 @@ module.exports.validateCreateEditCorporationInput = (
 
   if (applyLink.trim() === "") {
     errors.applyLink = "No apply link was provided.";
->>>>>>> master
   }
 
   return {
@@ -339,7 +344,6 @@ module.exports.validateCreateEditCorporationInput = (
   };
 };
 
-<<<<<<< HEAD
 module.exports.validateCreateTaskInput = (
   name,
   startDate,
@@ -375,7 +379,14 @@ module.exports.validateCreateTaskInput = (
 
   if (!points.match(pointsValidator)) {
     errors.points = "Points must be a whole number greater than 0.";
-=======
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateEditUserProfile = (
   firstName,
   lastName,
@@ -440,7 +451,6 @@ module.exports.validateEditUserProfile = (
 
   if (sex.trim() === "") {
     errors.sex = "Sex is required.";
->>>>>>> master
   }
 
   return {
@@ -448,8 +458,6 @@ module.exports.validateEditUserProfile = (
     valid: Object.keys(errors).length < 1
   };
 };
-<<<<<<< HEAD
-=======
 
 module.exports.validateRegisterAlumniInput = (
   firstName,
@@ -589,4 +597,3 @@ module.exports.validateCreateClassInput = (code) => {
     valid: Object.keys(errors).length < 1
   }
 };
->>>>>>> master

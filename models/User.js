@@ -1,10 +1,7 @@
 const { model, Schema } = require("mongoose");
 const Event = require("./Event").schema;
-<<<<<<< HEAD
 const Task = require("./Task").schema;
-=======
 const Class = require("./Class").schema;
->>>>>>> master
 
 const userSchema = new Schema({
   firstName: {
@@ -91,7 +88,6 @@ const userSchema = new Schema({
     createdAt: String,
     points: Number,
   }],
-<<<<<<< HEAD
 
   tasks: [{
     name: String,
@@ -99,13 +95,11 @@ const userSchema = new Schema({
     points: Number,
   }],
 
-=======
   classes: [
     {
       code: String
     }
   ],
->>>>>>> master
   token: {
     type: String
   },

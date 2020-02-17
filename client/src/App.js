@@ -57,21 +57,13 @@ function App() {
           <Route exact path="/reset/:token" component={ResetPassword} />
           <Route exact path="/forgot" component={ForgotPassword} />
           <Route exact path="/confirm/:id" component={Confirm} />
-<<<<<<< HEAD
-          <UserRoute exact path="/admin" component={Admin} />
-          <UserRoute exact path="/admin/events" component={Events} />
-          <UserRoute exact path="/admin/tasks" component={Tasks} />
-          <UserRoute exact path="/admin/members" component={Members} />
-          <UserRoute exact path="/admin/requests" component={Requests} />
-          <UserRoute exact path="/admin/statistics" component={Statistics} />
-=======
->>>>>>> master
           <UserRoute exact path="/profile" component={Profile} />
           <UserRoute exact path="/points" component={Points} />
           <UserRoute exact path="/alumnidirectory" component={AlumniDirectory} />
           <UserRoute exact path="/classSharing" component={ClassSharing} />
           <AdminRoute exact path="/admin" component={Admin} />
           <AdminRoute exact path="/admin/events" component={Events} />
+          <UserRoute exact path="/admin/tasks" component={Tasks} />
           <AdminRoute exact path="/admin/members" component={Members} />
           <AdminRoute exact path="/admin/requests" component={Requests} />
           <AdminRoute exact path="/admin/statistics" component={Statistics} />
