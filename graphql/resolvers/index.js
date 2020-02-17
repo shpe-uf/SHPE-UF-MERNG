@@ -1,20 +1,23 @@
 const usersResolvers = require("./users.js");
 const eventsResolvers = require("./events.js");
 const requestsResolvers = require("./requests.js");
-const classResolvers = require("./classes.js");
+const corporationResolvers = require("./corporations.js");
+const alumnisResolvers = require("./alumnis.js");
 
 module.exports = {
   Query: {
     ...usersResolvers.Query,
     ...eventsResolvers.Query,
     ...requestsResolvers.Query,
-    ...classResolvers.Query
+    ...corporationResolvers.Query,
+    ...alumnisResolvers.Query
   },
 
   Mutation: {
     ...usersResolvers.Mutation,
     ...eventsResolvers.Mutation,
     ...requestsResolvers.Mutation,
-    ...classResolvers.Mutation
+    ...corporationResolvers.Mutation,
+    ...alumnisResolvers.Mutation
   }
-}
+};

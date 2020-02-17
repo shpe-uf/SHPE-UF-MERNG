@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Grid, Image } from "semantic-ui-react";
 
-import aboutPhoto1 from "../assets/images/about-1.jpg";
-import aboutPhoto2 from "../assets/images/about-2.jpg";
-import aboutPhoto3 from "../assets/images/about-3.jpg";
+import aboutPhoto1 from "../../assets/images/about-1.jpg";
+import aboutPhoto2 from "../../assets/images/about-2.jpg";
+import aboutPhoto3 from "../../assets/images/about-3.jpg";
 
 function About() {
   return (
