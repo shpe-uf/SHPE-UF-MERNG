@@ -8,16 +8,30 @@ import homePhoto3 from "../../assets/images/home-3.jpg";
 function Home() {
   return (
     <div>
-      <div className="masthead masthead-home">
-        <div className="overlay-home">
-          <Container>
-            <h1 className="masthead-title text-white">
-              Society of Hispanic Professional Engineers
-            </h1>
-            <h1 className="masthead-title">University of Florida</h1>
-          </Container>
+      <Responsive minWidth={768} >
+        <div className="masthead masthead-home">
+          <div className="overlay-home">
+            <Container>
+              <h2 className="masthead-title text-white">
+                Society of Hispanic Professional Engineers
+              </h2>
+              <h2 className="masthead-title">University of Florida</h2>
+            </Container>
+          </div>
         </div>
-      </div>
+      </Responsive>
+      <Responsive maxWidth={768}>
+        <div className="masthead masthead-home">
+          <div className="overlay-home">
+            <Container>
+              <h2 className="masthead-title-mobile text-white">
+                Society of Hispanic Professional Engineers
+              </h2>
+              <h2 className="masthead-title-mobile">University of Florida</h2>
+            </Container>
+          </div>
+        </div>
+      </Responsive>
 
       <div className="masthead masthead-quote">
         <Container>
