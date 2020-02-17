@@ -95,7 +95,8 @@ module.exports = {
             permission: user.permission,
             listServ: user.listServ,
             events: user.events,
-            bookmarks: user.bookmarks
+            bookmarks: user.bookmarks,
+            classes: user.classes
           };
 
           if (newUser) {
