@@ -118,6 +118,7 @@ function Points() {
           <Segment attached="bottom">
             <Grid stackable>
 
+<<<<<<< HEAD
               {user && user.message && user.message !== undefined && (
                 <Grid.Row>
                   <Grid.Column>
@@ -214,6 +215,54 @@ function Points() {
           </Segment>
         )}
       </Container>
+=======
+      <Modal open={redeemPointsModal} size="tiny">
+        <Modal.Header>
+          <h2>Redeem Points</h2>
+        </Modal.Header>
+        <Modal.Content>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                {Object.keys(errors).length > 0 && (
+                  <div className="ui error message">
+                    <ul className="list">
+                      {Object.values(errors).map(value => (
+                        <li key={value}>{value}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <Form
+                  onSubmit={onSubmit}
+                  noValidate
+                  className={loading ? "loading" : ""}
+                >
+                  <Form.Input
+                    type="text"
+                    label="Event Code"
+                    name="code"
+                    value={values.code}
+                    error={errors.code ? true : false}
+                    onChange={onChange}
+                  />
+                  <Button
+                    type="reset"
+                    color="grey"
+                    onClick={() => closeModal("redeemPoints")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" floated="right">
+                    Submit
+                  </Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Modal.Content>
+      </Modal>
+>>>>>>> master
     </div>
   );
 }
