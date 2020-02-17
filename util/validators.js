@@ -232,7 +232,6 @@ module.exports.validateManualInputInput = username => {
   };
 };
 
-<<<<<<< HEAD
 module.exports.validateCreateEditCorporationInput = (
   name,
   logo,
@@ -290,7 +289,14 @@ module.exports.validateCreateEditCorporationInput = (
 
   if (applyLink.trim() === "") {
     errors.applyLink = "No apply link was provided.";
-=======
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateEditUserProfile = (
   firstName,
   lastName,
@@ -474,15 +480,10 @@ module.exports.validateRegisterAlumniInput = (
 
   if (linkedin.trim() === "") {
     errors.linkedin = "LinkedIn Profile link is required.";
->>>>>>> master
   }
 
   return {
     errors,
     valid: Object.keys(errors).length < 1
   };
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> master
