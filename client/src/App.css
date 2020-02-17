@@ -25,12 +25,12 @@
 
 @font-face {
   font-family: "heading-font";
-  src: url(assets/fonts/OpenSans-ExtraBoldItalic.ttf);
+  src: url(assets/fonts/HeadingPro.ttf);
 }
 
 @font-face {
   font-family: "body-font";
-  src: url(assets/fonts/AvenirLTStd-Book.otf);
+  src: url(assets/fonts/SanFrancisco.otf);
 }
 
 @font-face {
@@ -40,7 +40,7 @@
 
 * {
   font-family: "body-font";
-  font-size: 1.025rem !important;
+  font-size: 1rem !important;
 }
 
 .ui.accordion .title:not(.ui) {
@@ -116,13 +116,10 @@ h5 {
   font-size: 1.5rem !important;
 }
 
-.ui.form input, select{
-  font-family: "body-font" !important;
-}
-
 .ui.modal > .header {
   padding: 16px !important;
 }
+
 
 .ui.modal > .content {
   padding: 0px !important;
@@ -146,12 +143,12 @@ h5 {
 }
 
 .text-white {
-  color: var(--white);
+  color: var(--white) !important;
   margin-bottom: 0px !important;
 }
 
 .text-white:hover {
-  color: var(--white);
+  color: var(--white) !important;
   margin-bottom: 0px !important;
 }
 
@@ -188,7 +185,7 @@ h5 {
 .overlay-home {
   background-color: var(--primary-overlay);
   width: 100%;
-  padding: 10rem 0rem;
+  /* padding: 10rem 0rem; */
 }
 
 .overlay-blue {
@@ -254,15 +251,6 @@ h5 {
   background-size: cover !important;
 }
 
-.masthead-alumni {
-  background: url(assets/images/alumni.jpg) !important;
-  border-radius: 0px;
-  background-position: 50% 50% !important;
-  background-attachment: fixed !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-}
-
 .masthead-sponsors {
   background: url(assets/images/sponsors.jpg) !important;
   border-radius: 0px;
@@ -287,10 +275,6 @@ h5 {
 .masthead-title {
   margin: 0px;
   font-size: 3.5rem !important;
-}
-.masthead-title-mobile {
-  margin: 0px;
-  font-size: 2.5rem !important;
 }
 
 .background-grey {
@@ -364,15 +348,6 @@ h5 {
 
 .register {
   background: url(assets/images/register.jpg) !important;
-  border-radius: 0px;
-  background-position: 50% 50% !important;
-  background-attachment: fixed !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-}
-
-.register-alumni {
-  background: url(assets/images/register-alumni.jpg) !important;
   border-radius: 0px;
   background-position: 50% 50% !important;
   background-attachment: fixed !important;
@@ -602,6 +577,16 @@ th {
   font-weight: normal;
 }
 
+.ui.label {
+  font-size: 0.95rem !important;
+  border-radius: 16px;
+  margin: 4px !important;
+}
+
+.img-class-profile {
+  padding: 0px -16px !important;
+}
+
 div::-webkit-scrollbar {
   height: 5px;
 }
@@ -614,37 +599,6 @@ div::-webkit-scrollbar-track {
 div::-webkit-scrollbar-thumb {
   background-color: var(--accent-1);
   webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-}
-
-.ui.message .header {
-  font-family: "body-font";
-}
-
-.resetLink {
-  display: inline-block;
-  margin-top: 12px;
-  margin-left: 10px;
-}
-
-.loading {
-  padding: 12%;
-}
-
-.confirmMsg {
-  text-align: center;
-}
-
-.permission_change {
-  display: inline-block;
-  margin-top: 12px !important;
-}
-
-.float_right {
-  float: right;
-}
-
-.Toastify__toast {
-  padding: 16px;
 }
 
 @media (max-width: 991px) {
@@ -701,13 +655,21 @@ div::-webkit-scrollbar-thumb {
   text-align: center;
 }
 
-.corp-button {
-  margin-top: 4px !important;
-  margin-bottom: 4px !important;
+.permission_change {
+  display: inline-block;
+  margin-top: 12px !important;
 }
 
-.corp-logo {
-  width: 100%;
-  height: 20rem;
-  object-fit: contain;
+.float_right {
+  float: right;
+}
+
+.label-Color-Blue{
+  background-color: var(--primary) !important;
+  margin: 4px !important;
+}
+
+.label-Color-Orange{
+  background-color: var(--accent-1) !important;
+  margin: 4px !important;
 }

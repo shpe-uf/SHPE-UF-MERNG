@@ -81,7 +81,7 @@ module.exports.validateRegisterInput = (
         var indexUF = email.length - 8;
         var indexSF = email.length - 14;
         if(email.substring(indexUF) != "@ufl.edu" && email.substring(indexSF) != "@sfcollege.edu"){
-          errors.email = "University of Florida or Santa Fe College email required.";
+          errors.email = "UF or SF email required";
         }
     }
   }
@@ -232,71 +232,25 @@ module.exports.validateManualInputInput = username => {
   };
 };
 
-module.exports.validateCreateEditCorporationInput = (
-  name,
-  logo,
-  slogan,
-  majors,
-  industries,
-  overview,
-  mission,
-  goals,
-  businessModel,
-  newsLink,
-  applyLink
-) => {
+module.exports.validateCreateClassInput = (code) => {
   const errors = {};
 
-  if (name.trim() === "") {
-    errors.name = "No name was provided.";
-  }
+  const codeValidator = /^[a-zA-Z0-9]*$/i;
 
-  if (logo.trim() === "") {
-    errors.slogan = "No logo was provided.";
-  }
-
-  if (slogan.trim() === "") {
-    errors.slogan = "No slogan was provided.";
-  }
-
-  if (majors.length === 0) {
-    errors.majors = "No majors were provided.";
-  }
-
-  if (industries.length === 0) {
-    errors.industries = "No industries were provided.";
-  }
-
-  if (overview.trim() === "") {
-    errors.overview = "No overview was provided.";
-  }
-
-  if (mission.trim() === "") {
-    errors.mission = "No mission was provided.";
-  }
-
-  if (goals.trim() === "") {
-    errors.goals = "No goals were provided.";
-  }
-
-  if (businessModel.trim() === "") {
-    errors.businessModel = "No business model was provided.";
-  }
-
-  if (newsLink.trim() === "") {
-    errors.newsLink = "No news link was provided.";
-  }
-
-  if (applyLink.trim() === "") {
-    errors.applyLink = "No apply link was provided.";
+  if (code.trim() === "") {
+    errors.code = "No code was provided."
+  } else {
+    if (!code.match(codeValidator)) {
+      errors.code =
+        "Course code must be made up of letters (A-Z) and numbers (0-9). No special characters allowed.";
+    }
   }
 
   return {
     errors,
     valid: Object.keys(errors).length < 1
-  };
+  }
 };
-
 module.exports.validateEditUserProfile = (
   firstName,
   lastName,
@@ -361,125 +315,6 @@ module.exports.validateEditUserProfile = (
 
   if (sex.trim() === "") {
     errors.sex = "Sex is required.";
-  }
-
-  return {
-    errors,
-    valid: Object.keys(errors).length < 1
-  };
-};
-
-module.exports.validateRegisterAlumniInput = (
-  firstName,
-  lastName,
-  email,
-  undergrad,
-  grad,
-  employer,
-  position,
-  location,
-  linkedin
-) => {
-  const errors = {};
-
-  const nameValidator = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
-  const emailValidator = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,12})$/;
-  const yearValidator = /^\d{4}$/;
-
-  if (firstName.trim() === "") {
-    errors.firstName = "First name is required.";
-  } else {
-    if (!firstName.match(nameValidator)) {
-      errors.firstName =
-        "First Name must be at least 3 character, max 20. No special characters or numbers.";
-    }
-  }
-
-  if (lastName.trim() === "") {
-    errors.lastName = "Last Name is required.";
-  } else {
-    if (!lastName.match(nameValidator)) {
-      errors.lastName =
-        "Last name must be at least 3 character, max 20. No special characters or numbers.";
-    }
-  }
-
-  if (email.trim() === "") {
-    errors.email = "Email is required.";
-  } else {
-    if (!email.match(emailValidator)) {
-      errors.email = "Invalid email address.";
-    }
-  }
-
-  if (undergrad.university.trim() === "") {
-    errors.undergradUniversity = "Undergraduate university is required.";
-  }
-
-  if (undergrad.year.trim() === "") {
-    errors.undergradYear = "Undergraduate year is required.";
-  } else {
-    if (!undergrad.year.match(yearValidator)) {
-      errors.undergradYear = "Invalid undergraduate year.";
-    }
-  }
-
-  if (undergrad.major.trim() === "") {
-    errors.undergradMajor = "Undergraduate major is required.";
-  }
-
-  if (
-    grad.university.trim() !== "" ||
-    grad.year.trim() !== "" ||
-    grad.major.trim() !== ""
-  ) {
-    if (grad.university.trim() === "") {
-      errors.gradUniversity = "Graduate university is required.";
-    }
-
-    if (grad.year.trim() === "") {
-      errors.gradYear = "Graduate year is required.";
-    } else {
-      if (!grad.year.match(yearValidator)) {
-        errors.gradYear = "Invalid graduate year.";
-      }
-    }
-
-    if (grad.major.trim() === "") {
-      errors.gradMajor = "Graduate major is required.";
-    }
-  }
-
-  if (
-    grad.university.trim() === "" &&
-    grad.year.trim() === "" &&
-    grad.major.trim() === ""
-  ) {
-    if (employer.trim() === "") {
-      errors.employer = "Employer is required.";
-    }
-
-    if (position.trim() === "") {
-      errors.position = "Position is required.";
-    }
-  }
-
-  if (location.city.trim() === "") {
-    errors.locationCity = "City is required.";
-  }
-
-  if (location.country === "United States") {
-    if (location.state.trim() === "") {
-      errors.locationState = "State is required.";
-    }
-  }
-
-  if (location.country.trim() === "") {
-    errors.locationCountry = "Country is required.";
-  }
-
-  if (linkedin.trim() === "") {
-    errors.linkedin = "LinkedIn Profile link is required.";
   }
 
   return {
