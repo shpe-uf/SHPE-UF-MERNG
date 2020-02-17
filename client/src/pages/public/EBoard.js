@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Card, Responsive } from "semantic-ui-react";
 
-import EBoardCards from "../components/EBoardCards";
+import EBoardCards from "../../components/EBoardCards";
 
 function EBoard() {
   return (
