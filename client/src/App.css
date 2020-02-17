@@ -686,3 +686,28 @@ div::-webkit-scrollbar-thumb {
     min-height: calc(100vh - 64px - 64px) !important;
   }
 }
+
+.resetLink {
+  display: inline-block;
+  margin-top: 12px;
+  margin-left: 10px;
+}
+
+.loading {
+  padding: 12%
+}
+
+.confirmMsg {
+  text-align: center;
+}
+
+.corp-button {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+.corp-logo {
+  width: 100%;
+  height: 20rem;
+  object-fit: contain;
+}

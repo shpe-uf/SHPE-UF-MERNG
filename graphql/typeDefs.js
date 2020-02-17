@@ -1,5 +1,6 @@
 const gql = require("graphql-tag");
 
+
 module.exports = gql`
   ### MAIN MODEL TYPES ###
 
@@ -31,6 +32,7 @@ module.exports = gql`
     fallPercentile: Int!
     springPercentile: Int!
     summerPercentile: Int!
+    bookmarks: [String]!
   }
 
   type Event {
@@ -45,6 +47,29 @@ module.exports = gql`
     semester: String!
     createdAt: String!
     users: [User]!
+  }
+
+  type Corporation {
+    name: String!,
+    logo: String!,
+    slogan: String!,
+    majors: [String!]!,
+    industries: [String!]!,
+    overview: String!,
+    mission: String!,
+    goals: String!,
+    businessModel: String!,
+    newsLink: String!,
+    applyLink: String!,
+    academia: Boolean!,
+    govContractor: Boolean!,
+    nonProfit: Boolean!,
+    visaSponsor: Boolean!,
+    shpeSponsor: Boolean!,
+    industryPartnership: Boolean!,
+    fallBBQ: Boolean!,
+    springBBQ: Boolean!,
+    nationalConvention: Boolean!
   }
 
   type Request {
@@ -132,6 +157,55 @@ module.exports = gql`
     request: String!
   }
 
+  input CreateCorporationInput {
+    name: String!,
+    logo: String!,
+    slogan: String!,
+    majors: [String!]!,
+    industries: [String!]!,
+    overview: String!,
+    mission: String!,
+    goals: String!,
+    businessModel: String!,
+    newsLink: String!,
+    applyLink: String!,
+    academia: String!,
+    govContractor: String!,
+    nonProfit: String!,
+    visaSponsor: String!,
+    shpeSponsor: String!,
+    industryPartnership: String!,
+    fallBBQ: String!,
+    springBBQ: String!,
+    nationalConvention: String!
+  }
+
+  input EditCorporationProfileInput {
+    name: String!,
+    slogan: String!,
+    majors: [String!]!,
+    industries: [String!]!,
+    overview: String!,
+    mission: String!,
+    goals: String!,
+    businessModel: String!,
+    newsLink: String!,
+    applyLink: String!,
+    academia: String!,
+    govContractor: String!,
+    nonProfit: String!,
+    visaSponsor: String!,
+    shpeSponsor: String!,
+    industryPartnership: String!,
+    fallBBQ: String!,
+    springBBQ: String!,
+    nationalConvention: String!
+  }
+
+  input DeleteCorporationInput {
+    name: String!
+  }
+
   input RedeemPointsInput {
     code: String!
     username: String!
@@ -198,6 +272,7 @@ module.exports = gql`
     getUser(userId: ID!): User
     getEvents: [Event]
     getRequests: [Request]
+    getCorporations: [Corporation]
     getMajorStat: [StatData]
     getCountryStat: [StatData]
     getYearStat: [StatData]
@@ -211,6 +286,9 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!, remember: String!): User!
+    createCorporation(createCorporationInput: CreateCorporationInput): [Corporation]
+    updateCorporation(editCorporationProfileInput: EditCorporationProfileInput): [Corporation]
+    deleteCorporation(name: String!): Boolean!
     createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
     approveRequest(
@@ -227,6 +305,8 @@ module.exports = gql`
       token: String!
     ): Token!
     confirmUser(id: String!): User!
+    bookmark(company: String!, username: String!): User!
+    deleteBookmark(company: String!, username: String!): User!
     registerAlumni(registerAlumniInput: RegisterAlumniInput): Alumni!
     changePermission(email: String!, currentEmail: String!, permission: String!): Boolean!
     editUserProfile(editUserProfileInput: EditUserProfileInput): User!

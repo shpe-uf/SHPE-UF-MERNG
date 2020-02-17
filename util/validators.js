@@ -232,6 +232,71 @@ module.exports.validateManualInputInput = username => {
   };
 };
 
+module.exports.validateCreateEditCorporationInput = (
+  name,
+  logo,
+  slogan,
+  majors,
+  industries,
+  overview,
+  mission,
+  goals,
+  businessModel,
+  newsLink,
+  applyLink
+) => {
+  const errors = {};
+
+  if (name.trim() === "") {
+    errors.name = "No name was provided.";
+  }
+
+  if (logo.trim() === "") {
+    errors.slogan = "No logo was provided.";
+  }
+
+  if (slogan.trim() === "") {
+    errors.slogan = "No slogan was provided.";
+  }
+
+  if (majors.length === 0) {
+    errors.majors = "No majors were provided.";
+  }
+
+  if (industries.length === 0) {
+    errors.industries = "No industries were provided.";
+  }
+
+  if (overview.trim() === "") {
+    errors.overview = "No overview was provided.";
+  }
+
+  if (mission.trim() === "") {
+    errors.mission = "No mission was provided.";
+  }
+
+  if (goals.trim() === "") {
+    errors.goals = "No goals were provided.";
+  }
+
+  if (businessModel.trim() === "") {
+    errors.businessModel = "No business model was provided.";
+  }
+
+  if (newsLink.trim() === "") {
+    errors.newsLink = "No news link was provided.";
+  }
+
+  if (applyLink.trim() === "") {
+    errors.applyLink = "No apply link was provided.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateEditUserProfile = (
   firstName,
   lastName,
