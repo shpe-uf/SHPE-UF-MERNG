@@ -24,7 +24,7 @@ function DevTeamCards() {
       <Card
         fluid
         image={cesar}
-        header="César González Peláez"
+        header="César González"
         meta="Scrum Master"
         />
       <Card

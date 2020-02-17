@@ -1,34 +1,38 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Segment, Grid, Responsive } from "semantic-ui-react";
+import React, { useState, useContext } from "react";
+import { Form, Button, Container, Segment, Grid, Responsive, Message } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 
-import { useForm } from "../../util/hooks";
+import { useForm } from "../util/hooks";
 
-function ResetPassword(props){
+function ForgotPassword(props){
 
   const [errors, setErrors] = useState({});
+  const [sent, setSent] = useState(false);
 
-  const { onChange, onSubmit, values } = useForm(callback, {
-    password: "",
-    confirmPassword: "",
-    token: props.match.params.token
+  const { onChange, onSubmit, values } = useForm(resetCallback, {
+    email: ""
   });
 
 
-  const [reset, { loading }] = useMutation(RESET_PASSWORD, {
+  const [resetUser, { loading }] = useMutation(FORGOT_PASSWORD, {
+    onCompleted(){
+      setErrors({});
+      setSent(true);
+    },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      setSent(false);
     },
-    onCompleted(){
-      props.history.push("/login");
-    },
+
     variables: values
   });
 
-  function callback() {
-    reset();
+  function resetCallback() {
+    resetUser();
   }
+
+
 
   return (
     <div className="reset">
@@ -52,26 +56,24 @@ function ResetPassword(props){
                           </ul>
                         </div>
                       )}
+                      { sent && (
+                        <Message info>
+                          Please check your email
+                        </Message>
+                      )}
                       <Form
                         onSubmit={onSubmit}
                         noValidate
                       >
                         <Form.Input
-                          type="password"
-                          label="Password"
-                          name="password"
-                          value={values.password}
-                          onChange={onChange}
-                        />
-                        <Form.Input
-                          type="password"
-                          label="Confirm Password"
-                          name="confirmPassword"
-                          value={values.confirmPassword}
+                          type="text"
+                          label="Email"
+                          name="email"
+                          value={values.email}
                           onChange={onChange}
                         />
                         <span>
-                          <Button type="submit">Submit</Button>
+                          <Button type="submit">Reset Password</Button>
                           <p className="resetLink">
                             or <a href="/login">Log In</a>
                           </p>
@@ -103,26 +105,24 @@ function ResetPassword(props){
                           </ul>
                         </div>
                       )}
+                      { sent && (
+                        <Message info>
+                          Please check your email to complete the registration
+                        </Message>
+                      )}
                       <Form
                         onSubmit={onSubmit}
                         noValidate
                       >
                         <Form.Input
-                          type="password"
-                          label="Password"
-                          name="password"
-                          value={values.password}
-                          onChange={onChange}
-                        />
-                        <Form.Input
-                          type="password"
-                          label="Confirm Password"
-                          name="confirmPassword"
-                          value={values.confirmPassword}
+                          type="text"
+                          label="Email"
+                          name="email"
+                          value={values.email}
                           onChange={onChange}
                         />
                         <span>
-                          <Button type="submit">Submit</Button>
+                          <Button type="submit">Reset Password</Button>
                           <p className="resetLink">
                             or <a href="/login">Log In</a>
                           </p>
@@ -154,26 +154,24 @@ function ResetPassword(props){
                           </ul>
                         </div>
                       )}
+                      { sent && (
+                        <Message info>
+                          Please check your email to complete the registration
+                        </Message>
+                      )}
                       <Form
                         onSubmit={onSubmit}
                         noValidate
                       >
                         <Form.Input
-                          type="password"
-                          label="Password"
-                          name="password"
-                          value={values.password}
-                          onChange={onChange}
-                        />
-                        <Form.Input
-                          type="password"
-                          label="Confirm Password"
-                          name="confirmPassword"
-                          value={values.confirmPassword}
+                          type="text"
+                          label="Email"
+                          name="email"
+                          value={values.email}
                           onChange={onChange}
                         />
                         <span>
-                          <Button type="submit">Submit</Button>
+                          <Button type="submit">Reset Password</Button>
                           <p className="resetLink">
                             or <a href="/login">Log In</a>
                           </p>
@@ -191,15 +189,16 @@ function ResetPassword(props){
   );
 }
 
-const RESET_PASSWORD = gql`
-  mutation resetPassword($password: String!, $confirmPassword: String!, $token: String!) {
-    resetPassword(password: $password,
-      confirmPassword: $confirmPassword,
-      token: $token
-    ) {
+const FORGOT_PASSWORD = gql`
+  mutation forgotPassword($email: String!) {
+    forgotPassword(email: $email) {
+      id
+      email
+      username
+      createdAt
       token
     }
   }
 `;
 
-export default ResetPassword;
+export default ForgotPassword;

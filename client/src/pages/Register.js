@@ -9,16 +9,16 @@ import {
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
-import { AuthContext } from "../../context/auth";
-import { useForm } from "../../util/hooks";
-import ModalBasic from "../../components/ModalBasic"
+import { AuthContext } from "../context/auth";
+import { useForm } from "../util/hooks";
+import ModalBasic from "../components/ModalBasic"
 
-import majorOptions from "../../assets/options/major.json";
-import yearOptions from "../../assets/options/year.json";
-import graduatingOptions from "../../assets/options/graduating.json";
-import countryOptions from "../../assets/options/country.json";
-import ethnicityOptions from "../../assets/options/ethnicity.json";
-import sexOptions from "../../assets/options/sex.json";
+import majorOptions from "../assets/options/major.json";
+import yearOptions from "../assets/options/year.json";
+import graduatingOptions from "../assets/options/graduating.json";
+import countryOptions from "../assets/options/country.json";
+import ethnicityOptions from "../assets/options/ethnicity.json";
+import sexOptions from "../assets/options/sex.json";
 
 function Register(props) {
   const context = useContext(AuthContext);
@@ -71,7 +71,7 @@ function Register(props) {
           <ModalBasic open={openModal} handleClose={handleClose} message={msg}/>
           <Segment.Group className="segment-spacing">
             <Segment className="title-bg-accent-1">
-              <h1 className="text-white">Registration</h1>
+              <h1 className="text-white">Register</h1>
             </Segment>
             <Segment>
               {Object.keys(errors).length > 0 && (
@@ -205,7 +205,7 @@ function Register(props) {
                   />
                   <Form.Input
                     type="text"
-                    label="UF/SF Email"
+                    label="UF Email"
                     name="email"
                     value={values.email}
                     error={errors.email ? true : false}

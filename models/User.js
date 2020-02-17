@@ -1,5 +1,6 @@
 const { model, Schema } = require("mongoose");
 const Event = require("./Event").schema;
+const Class = require("./Class.js").schema;
 
 const userSchema = new Schema({
   firstName: {
@@ -79,20 +80,26 @@ const userSchema = new Schema({
     default: "member"
   },
   listServ: Boolean,
-  events: [{
-    name: String,
-    category: String,
-    createdAt: String,
-    points: Number,
-  }],
+  events: [
+    {
+      name: String,
+      category: String,
+      createdAt: String,
+      points: Number
+    }
+  ],
+  classes: [
+    {
+      code: String
+    }
+  ],
   token: {
     type: String
   },
   confirmed: {
     type: Boolean,
     default: false
-  },
-  bookmarks: [String]
+  }
 });
 
 module.exports = model("User", userSchema);

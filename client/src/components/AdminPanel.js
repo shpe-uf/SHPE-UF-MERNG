@@ -46,7 +46,7 @@ function Title() {
           </NavLink>
         </Grid.Column>
         <Grid.Column>
-          <NavLink to="/admin/corporatedatabase">
+          <NavLink to="/admin/">
             <Segment inverted color="teal" textAlign="center">
               <i className="fas fa-admin fa-building"></i>
               <p className="text-admin">Corporate Database</p>

@@ -27,9 +27,6 @@ function MenuBar() {
             <Menu.Item as={Link} to="/about">
               About Us
             </Menu.Item>
-            <Menu.Item as={Link} to="/alumni">
-              Alumni
-            </Menu.Item>
             <Menu.Item as={Link} to="/eboard">
               E-Board
             </Menu.Item>
@@ -45,22 +42,17 @@ function MenuBar() {
                 <>
                   <Dropdown pointing item className="email" text={user.email}>
                     <Dropdown.Menu>
-                      {localStorage.getItem('permission') === 'admin' &&
                       <Dropdown.Item as={Link} to="/admin">
                         Admin Panel
                       </Dropdown.Item>
-                      }
                       <Dropdown.Item as={Link} to="/profile">
                         My Profile
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/points">
                         Points Program
                       </Dropdown.Item>
-                      <Dropdown.Item as={Link} to="/corporations">
-                        Corporate Database
-                      </Dropdown.Item>
-                      <Dropdown.Item as={Link} to="/alumnidirectory">
-                        Alumni Directory
+                      <Dropdown.Item as={Link} to="/classsharing">
+                        Class Sharing
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>
@@ -88,33 +80,9 @@ function MenuBar() {
       <Responsive maxWidth={991}>
         <Menu inverted>
           <Container>
-                <Dropdown
-                  pointing
-                  item
-                  text="Menu"
-                  className="brand-logo"
-                >
-                  <Dropdown.Menu>
-                    <Dropdown.Item className="brand-logo" as={Link} to="/">
-                      Home
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/about">
-                      About Us
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/alumni">
-                      Alumni
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/eboard">
-                      E-Board
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/devteam">
-                      Dev Team
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/sponsors">
-                      Sponsors
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+            <Menu.Item className="brand-logo" as={Link} to="/">
+              <img src={logo} alt="" />
+            </Menu.Item>
 
             <Menu.Menu position="right">
               {user ? (
@@ -135,11 +103,8 @@ function MenuBar() {
                       <Dropdown.Item as={Link} to="/points">
                         Points Program
                       </Dropdown.Item>
-                      <Dropdown.Item as={Link} to="/corporateDatabase">
-                        Corporate Database
-                      </Dropdown.Item>
-                      <Dropdown.Item as={Link} to="/alumnidirectory">
-                        Alumni Directory
+                      <Dropdown.Item as={Link} to="/classsharing">
+                        Class Sharing
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={logout}>

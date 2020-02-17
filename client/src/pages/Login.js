@@ -10,8 +10,8 @@ import {
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
-import { AuthContext } from "../../context/auth";
-import { useForm } from "../../util/hooks";
+import { AuthContext } from "../context/auth";
+import { useForm } from "../util/hooks";
 
 function Login(props) {
   const context = useContext(AuthContext);
@@ -32,7 +32,6 @@ function Login(props) {
     ) {
       context.login(userData);
       props.history.push("/points");
-      window.location.reload();
     },
 
     onError(err) {
