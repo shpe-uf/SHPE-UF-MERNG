@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Container, Image, Divider } from "semantic-ui-react";
+import { Grid, Container, Image, Divider, Responsive } from "semantic-ui-react";
 
 import homePhoto1 from "../../assets/images/home-1.jpg";
 import homePhoto2 from "../../assets/images/home-2.jpg";
