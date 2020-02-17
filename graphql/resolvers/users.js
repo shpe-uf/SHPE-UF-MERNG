@@ -23,7 +23,8 @@ function generateToken(user, time) {
     {
       id: user.id,
       email: user.email,
-      username: user.username
+      username: user.username,
+      permission: user.permission
     },
     process.env.SECRET,
     {
@@ -46,66 +47,64 @@ module.exports = {
         }
       },
 
-    async getUser(_, { userId }) {
-      try {
-        var user = await User.findById(userId);
+      async getUser(_, { userId }) {
+        try {
+          var user = await User.findById(userId);
 
-        const users = await User.find();
+          const users = await User.find();
+          const fallBelowUsers = await User.find()
+            .where("fallPoints")
+            .lt(user.fallPoints);
+          const springBelowUsers = await User.find()
+            .where("springPoints")
+            .lt(user.springPoints);
+          const summerBelowUsers = await User.find()
+            .where("summerPoints")
+            .lt(user.summerPoints);
 
-        const fallBelowUsers = await User.find()
-          .where("fallPoints")
-          .lt(user.fallPoints);
-        const springBelowUsers = await User.find()
-          .where("springPoints")
-          .lt(user.springPoints);
-        const summerBelowUsers = await User.find()
-          .where("summerPoints")
-          .lt(user.summerPoints);
+          const fallPercentile = Math.trunc(
+            (fallBelowUsers.length / users.length) * 100
+          );
+          const springPercentile = Math.trunc(
+            (springBelowUsers.length / users.length) * 100
+          );
+          const summerPercentile = Math.trunc(
+            (summerBelowUsers.length / users.length) * 100
+          );
 
-        const fallPercentile = Math.trunc(
-          (fallBelowUsers.length / users.length) * 100
-        );
-        const springPercentile = Math.trunc(
-          (springBelowUsers.length / users.length) * 100
-        );
-        const summerPercentile = Math.trunc(
-          (summerBelowUsers.length / users.length) * 100
-        );
+          var newUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            photo: user.photo,
+            email: user.email,
+            major: user.major,
+            year: user.year,
+            graduating: user.graduating,
+            country: user.country,
+            ethnicity: user.ethnicity,
+            sex: user.sex,
+            points: user.points,
+            fallPoints: user.fallPoints,
+            springPoints: user.springPoints,
+            summerPoints: user.summerPoints,
+            fallPercentile: fallPercentile,
+            springPercentile: springPercentile,
+            summerPercentile: summerPercentile,
+            createdAt: user.createdAt,
+            permission: user.permission,
+            listServ: user.listServ,
+            events: user.events,
+            bookmarks: user.bookmarks
+          };
 
-        var newUser = {
-          firstName: user.firstName,
-          lastName: user.lastName,
-          username: user.username,
-          photo: user.photo,
-          email: user.email,
-          major: user.major,
-          year: user.year,
-          graduating: user.graduating,
-          country: user.country,
-          ethnicity: user.ethnicity,
-          sex: user.sex,
-          ethnicity: user.ethnicity,
-          points: user.points,
-          fallPoints: user.fallPoints,
-          springPoints: user.springPoints,
-          summerPoints: user.summerPoints,
-          fallPercentile: fallPercentile,
-          springPercentile: springPercentile,
-          summerPercentile: summerPercentile,
-          createdAt: user.createdAt,
-          permission: user.permission,
-          listServ: user.listServ,
-          events: user.events,
-          classes: user.classes
-        };
-
-        if (newUser) {
-          return newUser;
-        } else {
-          throw new Error("User not found.");
-        }
-      } catch (err) {
-        throw new Error(err);
+          if (newUser) {
+            return newUser;
+          } else {
+            throw new Error("User not found.");
+          }
+        } catch (err) {
+          throw new Error(err);
       }
     },
 
@@ -347,7 +346,7 @@ module.exports = {
         });
       }
 
-      isUsernameDuplicate = await User.findOne({
+      const isUsernameDuplicate = await User.findOne({
         username
       });
 
@@ -362,7 +361,7 @@ module.exports = {
         );
       }
 
-      isEmailDuplicate = await User.findOne({
+      const isEmailDuplicate = await User.findOne({
         email
       });
 
@@ -400,7 +399,7 @@ module.exports = {
         permission: "member",
         listServ,
         events: [],
-        classes: []
+        bookmarks: []
       });
 
       const res = await newUser.save();
@@ -541,7 +540,7 @@ module.exports = {
           permission: user.permission,
           listServ: user.listServ,
           events: user.events,
-          classes: user.classes, 
+          bookmarks: user.bookmarks,
           message: "Event code has been sent for approval."
         };
 
@@ -770,6 +769,46 @@ module.exports = {
       return Token;
     },
 
+    async bookmark(
+      _, {
+        company,
+        username
+      }
+    ) {
+
+      var updatedUser = await User.findOneAndUpdate({
+        username
+      }, {
+        $push: {
+          bookmarks: company
+        }
+      }, {
+        new: true
+      });
+
+      return updatedUser;
+    },
+
+    async deleteBookmark(
+      _, {
+        company,
+        username
+      }
+    ) {
+
+      var updatedUser = await User.findOneAndUpdate({
+        username
+      }, {
+        $pull: {
+          bookmarks: company
+        }
+      }, {
+        new: true
+      });
+
+      return updatedUser;
+    },
+    
     async editUserProfile(
       _,
       {
