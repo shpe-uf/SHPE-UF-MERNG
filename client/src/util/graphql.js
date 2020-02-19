@@ -54,47 +54,6 @@ export const FETCH_EVENTS_QUERY = gql`
   }
 `;
 
-export const FETCH_CORPORATIONS_QUERY = gql `
-  {
-    getCorporations {
-      name
-      logo
-    	slogan
-      majors
-      industries
-      overview
-      mission
-      goals
-      businessModel
-      newsLink
-      applyLink
-      academia
-      govContractor
-      nonProfit
-      visaSponsor
-      shpeSponsor
-      industryPartnership
-      fallBBQ
-      springBBQ
-      nationalConvention
-    }
-  }
-`;
-
-export const FETCH_REQUESTS_QUERY = gql`
-  {
-    getRequests {
-      eventName
-      category
-      points
-      firstName
-      lastName
-      username
-      createdAt
-    }
-  }
-`;
-
 export const FETCH_ALUMNIS_QUERY = gql`
   {
     getAlumnis {
@@ -127,6 +86,47 @@ export const FETCH_ALUMNIS_QUERY = gql`
   }
 `;
 
+export const FETCH_CORPORATIONS_QUERY = gql `
+  {
+    getCorporations {
+      name
+      logo
+    	slogan
+      majors
+      industries
+      overview
+      mission
+      goals
+      businessModel
+      newsLink
+      applyLink
+      academia
+      govContractor
+      nonProfit
+      visaSponsor
+      shpeSponsor
+      industryPartnership
+      fallBBQ
+      springBBQ
+      nationalConvention
+    }
+  }
+`;
+
+export const FETCH_REQUESTS_QUERY = gql`
+  {
+    getRequests {
+      name
+      type
+      points
+      firstName
+      lastName
+      username
+      createdAt
+    }
+  }
+`;
+
 export const MAJOR_STAT = gql`
   {
     getMajorStat {
@@ -145,7 +145,29 @@ export const COUNTRY_STAT = gql`
   }
 `;
 
-export const YEAR_STAT = gql`
+export const FETCH_TASKS_QUERY = gql`
+  {
+    getTasks {
+      id
+      name
+      startDate
+      endDate
+      description
+      points
+      attendance
+      semester
+      createdAt
+      users {
+        firstName
+        lastName
+        username
+        email
+      }
+    }
+  }
+`;
+
+export const YEAR_STAT = gql `
   {
     getYearStat {
       _id

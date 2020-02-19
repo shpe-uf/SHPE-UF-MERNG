@@ -29,6 +29,7 @@ import Points from "./pages/Points";
 import Profile from "./pages/Profile";
 import CorporateDatabase from "./pages/CorporateDatabase";
 import Events from "./pages/Events";
+import Tasks from "./pages/Tasks";
 import Members from "./pages/Members";
 import Requests from "./pages/Requests";
 import Statistics from "./pages/Statistics";
@@ -62,6 +63,7 @@ function App() {
           <UserRoute exact path="/classSharing" component={ClassSharing} />
           <AdminRoute exact path="/admin" component={Admin} />
           <AdminRoute exact path="/admin/events" component={Events} />
+          <UserRoute exact path="/admin/tasks" component={Tasks} />
           <AdminRoute exact path="/admin/members" component={Members} />
           <AdminRoute exact path="/admin/requests" component={Requests} />
           <AdminRoute exact path="/admin/statistics" component={Statistics} />

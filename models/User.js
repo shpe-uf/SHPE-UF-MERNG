@@ -1,5 +1,6 @@
 const { model, Schema } = require("mongoose");
 const Event = require("./Event").schema;
+const Task = require("./Task").schema;
 const Class = require("./Class").schema;
 
 const userSchema = new Schema({
@@ -80,12 +81,20 @@ const userSchema = new Schema({
     default: "member"
   },
   listServ: Boolean,
+
   events: [{
     name: String,
     category: String,
     createdAt: String,
     points: Number,
   }],
+
+  tasks: [{
+    name: String,
+    createdAt: String,
+    points: Number,
+  }],
+
   classes: [
     {
       code: String

@@ -22,7 +22,7 @@ function Title() {
           </NavLink>
         </Grid.Column>
         <Grid.Column>
-          <NavLink to="/admin/">
+          <NavLink to="/admin/tasks">
             <Segment inverted color="yellow" textAlign="center">
               <i className="fas fa-admin fa-tasks"></i>
               <p className="text-admin">Tasks</p>

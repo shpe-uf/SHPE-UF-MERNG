@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const User = require("../../models/User.js");
 const Event = require("../../models/Event.js");
 const Request = require("../../models/Request.js");
+const Task = require("../../models/Task.js")
 
 require("dotenv").config();
 
@@ -34,22 +35,24 @@ function generateToken(user, time) {
 }
 
 module.exports = {
-    Query: {
-      async getUsers() {
-        try {
-          const users = await User.find().sort({
-            lastName: 1,
-            firstName: 1
-          });
-          return users;
-        } catch (err) {
-          throw new Error(err);
-        }
-      },
+  Query: {
+    async getUsers() {
+      try {
+        const users = await User.find().sort({
+          lastName: 1,
+          firstName: 1
+        });
+        return users;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
 
-      async getUser(_, { userId }) {
-        try {
-          var user = await User.findById(userId);
+    async getUser(_, { userId }) {
+      try {
+        var user = await User.findById(userId);
+
+        if (user) {
 
           const users = await User.find();
           const fallBelowUsers = await User.find()
@@ -95,17 +98,17 @@ module.exports = {
             permission: user.permission,
             listServ: user.listServ,
             events: user.events,
+            tasks: user.tasks,
             bookmarks: user.bookmarks,
             classes: user.classes
           };
 
-          if (newUser) {
-            return newUser;
-          } else {
-            throw new Error("User not found.");
-          }
-        } catch (err) {
-          throw new Error(err);
+          return newUser;
+        } else {
+          throw new Error("User not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
       }
     },
 
@@ -165,6 +168,60 @@ module.exports = {
       }
     },
 
+    async getYearStat() {
+      try {
+        const data = await User.aggregate([
+          {
+            $group: {
+              _id: "$year",
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              _id: 1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getYearStat() {
+      try {
+        const data = await User.aggregate([{
+          $group: {
+            _id: '$year',
+            value: {
+              $sum: 1
+            }
+          }
+        },
+        {
+          $sort: {
+            _id: 1
+          }
+        }
+      ]);
+
+      if (data) {
+        return data;
+      } else {
+        throw new Error("Data not found.");
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
     async getCountryStat() {
       try {
         const data = await User.aggregate([
@@ -221,6 +278,59 @@ module.exports = {
       }
     },
 
+    async getCountryStat() {
+      try {
+        const data = await User.aggregate([{
+          $group: {
+            _id: '$country',
+            value: {
+              $sum: 1
+            }
+          }
+        },
+        {
+          $sort: {
+            value: -1
+          }
+        }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getSexStat() {
+      try {
+        const data = await User.aggregate([{
+          $group: {
+            _id: '$sex',
+            value: {
+              $sum: 1
+            }
+          }
+        },
+        {
+          $sort: {
+            value: -1
+          }
+        }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
     async getEthnicityStat() {
       try {
         const data = await User.aggregate([
@@ -237,6 +347,32 @@ module.exports = {
               value: -1
             }
           }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getEthnicityStat() {
+      try {
+        const data = await User.aggregate([{
+          $group: {
+            _id: '$ethnicity',
+            value: {
+              $sum: 1
+            }
+          }
+        },
+        {
+          $sort: {
+            value: -1
+          }
+        }
         ]);
 
         if (data) {
@@ -400,6 +536,7 @@ module.exports = {
         permission: "member",
         listServ,
         events: [],
+        tasks: [],
         bookmarks: []
       });
 
@@ -452,6 +589,8 @@ module.exports = {
 
       const { valid, errors } = validateRedeemPointsInput(code);
 
+      console.log(errors);
+
       if (!valid) {
         throw new UserInputError("Errors", {
           errors
@@ -498,7 +637,7 @@ module.exports = {
 
       if (event.request) {
         const request = await Request.findOne({
-          eventName: event.name,
+          name: event.name,
           username: user.username
         });
 
@@ -510,8 +649,8 @@ module.exports = {
         }
 
         const newRequest = new Request({
-          eventName: event.name,
-          category: event.category,
+          name: event.name,
+          type: event.category,
           points: event.points,
           firstName: user.firstName,
           lastName: user.lastName,
@@ -541,6 +680,7 @@ module.exports = {
           permission: user.permission,
           listServ: user.listServ,
           events: user.events,
+          tasks: user.tasks,
           bookmarks: user.bookmarks,
           message: "Event code has been sent for approval."
         };
@@ -571,50 +711,40 @@ module.exports = {
           });
         }
 
-        var updatedUser = await User.findOneAndUpdate(
-          {
-            username
-          },
-          {
+        var updatedUser = await User.findOneAndUpdate({
+          username
+        }, {
             $push: {
               events: {
-                $each: [
-                  {
-                    name: event.name,
-                    category: event.category,
-                    createdAt: event.createdAt,
-                    points: event.points
-                  }
-                ],
+                $each: [{
+                  name: event.name,
+                  category: event.category,
+                  createdAt: event.createdAt,
+                  points: event.points
+                }],
                 $sort: {
                   createdAt: 1
                 }
               }
             },
             $inc: pointsIncrease
-          },
-          {
+          }, {
             new: true
-          }
-        );
+          });
 
         updatedUser.message = "";
 
-        await Event.findOneAndUpdate(
-          {
-            code
-          },
-          {
+        await Event.findOneAndUpdate({
+          code
+        }, {
             $push: {
               users: {
-                $each: [
-                  {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    username: user.username,
-                    email: user.email
-                  }
-                ],
+                $each: [{
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  username: user.username,
+                  email: user.email
+                }],
                 $sort: {
                   lastName: 1,
                   firstName: 1
@@ -624,25 +754,115 @@ module.exports = {
             $inc: {
               attendance: 1
             }
-          },
-          {
+          }, {
             new: true
-          }
-        );
+          });
 
         return updatedUser;
       }
     },
 
-    async confirmUser(_, { id }) {
-      const user = await User.findOneAndUpdate(
-        {
-          _id: id
-        },
-        {
-          confirmed: true
+    async redeemTasksPoints(
+      _, {
+        redeemTasksPointsInput: {
+          name,
+          username
         }
-      );
+      }
+    ) {
+      var errors = {};
+    
+      const user = await User.findOne({
+        username
+      });
+
+      const task = await Task.findOne({
+        name
+      });
+
+      if (Date.parse(task.endDate) < Date.now()) {
+        errors.general = "Task Expired";
+        throw new UserInputError("Task Expired", {
+          errors
+        });
+      }
+
+      user.tasks.map(userTask => {
+        if (String(userTask.name) == String(task.name)) {
+          errors.general = "Task already redeeemed by the user."
+          throw new UserInputError("Task already redeemed by the user.", {
+            errors
+          });
+        }
+      });
+
+      console.log(task);
+
+      const request = await Request.findOne({
+        name: task.name,
+        username: user.username
+      });
+
+      if (request) {
+        errors.general = "Task already sent for approval.";
+        throw new UserInputError("Task already sent for approval.", {
+          errors
+        });
+      }
+
+      const newTaskRequest = new Request({
+        name: task.name,
+        type: "Task",
+        points: task.points,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        createdAt: new Date().toISOString()
+      });
+
+      console.log(newTaskRequest);
+
+
+      const res = await newTaskRequest.save();
+
+      var newUser = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+        major: user.major,
+        year: user.year,
+        graduating: user.graduating,
+        country: user.country,
+        ethnicity: user.ethnicity,
+        sex: user.sex,
+        ethnicity: user.ethnicity,
+        points: user.points,
+        fallPoints: user.fallPoints,
+        springPoints: user.springPoints,
+        summerPoints: user.summerPoints,
+        createdAt: user.createdAt,
+        permission: user.permission,
+        listServ: user.listServ,
+        events: user.events,
+        tasks: user.tasks,
+        message: "Task has been sent for approval."
+
+      };
+      return newUser;
+
+    },
+
+    async confirmUser(
+      _, {
+        id
+      }
+    ) {
+      const user = await User.findOneAndUpdate({
+        _id: id
+      }, {
+          confirmed: true
+        });
 
       if (!user) {
         errors.general = "User not found.";
@@ -687,14 +907,11 @@ module.exports = {
         }
       }
 
-      const newUser = await User.findOneAndUpdate(
-        {
-          email
-        },
-        {
+      const newUser = await User.findOneAndUpdate({
+        email
+      }, {
           token
-        }
-      );
+        });
 
       const transporter = nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE,
@@ -754,15 +971,12 @@ module.exports = {
 
       password = await bcrypt.hash(password, 12);
 
-      const newUser = await User.findOneAndUpdate(
-        {
-          email: user.email
-        },
-        {
+      const newUser = await User.findOneAndUpdate({
+        email: user.email
+      }, {
           password,
           token: ""
-        }
-      );
+        });
 
       var Token = {
         token: token

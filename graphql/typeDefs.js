@@ -53,28 +53,41 @@ module.exports = gql`
     semester: String!
     createdAt: String!
     users: [User]!
+  },
+
+  type Task {
+  name: String!
+  startDate: String!
+  endDate: String!
+  description: String!
+  points: Int!
+  attendance: Int!
+  semester: String!
+  createdAt: String!
+  users: [User]
   }
 
+
   type Corporation {
-    name: String!,
-    logo: String!,
-    slogan: String!,
-    majors: [String!]!,
-    industries: [String!]!,
-    overview: String!,
-    mission: String!,
-    goals: String!,
-    businessModel: String!,
-    newsLink: String!,
-    applyLink: String!,
-    academia: Boolean!,
-    govContractor: Boolean!,
-    nonProfit: Boolean!,
-    visaSponsor: Boolean!,
-    shpeSponsor: Boolean!,
-    industryPartnership: Boolean!,
-    fallBBQ: Boolean!,
-    springBBQ: Boolean!,
+    name: String!
+    logo: String!
+    slogan: String!
+    majors: [String!]!
+    industries: [String!]!
+    overview: String!
+    mission: String!
+    goals: String!
+    businessModel: String!
+    newsLink: String!
+    applyLink: String!
+    academia: Boolean!
+    govContractor: Boolean!
+    nonProfit: Boolean!
+    visaSponsor: Boolean!
+    shpeSponsor: Boolean!
+    industryPartnership: Boolean!
+    fallBBQ: Boolean!
+    springBBQ: Boolean!
     nationalConvention: Boolean!
   }
 
@@ -163,57 +176,66 @@ module.exports = gql`
     request: String!
   }
 
+  input CreateTaskInput {
+    name: String!
+    startDate: String!
+    endDate: String!
+    description: String!
+    points: Int!
+  }
+
   input CreateClassInput {
     code: String!
     username: String!
   }
+
   input DeleteClassInput {
     code: String!
     username: String!
   }
 
   input CreateCorporationInput {
-    name: String!,
-    logo: String!,
-    slogan: String!,
-    majors: [String!]!,
-    industries: [String!]!,
-    overview: String!,
-    mission: String!,
-    goals: String!,
-    businessModel: String!,
-    newsLink: String!,
-    applyLink: String!,
-    academia: String!,
-    govContractor: String!,
-    nonProfit: String!,
-    visaSponsor: String!,
-    shpeSponsor: String!,
-    industryPartnership: String!,
-    fallBBQ: String!,
-    springBBQ: String!,
+    name: String!
+    logo: String!
+    slogan: String!
+    majors: [String!]!
+    industries: [String!]!
+    overview: String!
+    mission: String!
+    goals: String!
+    businessModel: String!
+    newsLink: String!
+    applyLink: String!
+    academia: String!
+    govContractor: String!
+    nonProfit: String!
+    visaSponsor: String!
+    shpeSponsor: String!
+    industryPartnership: String!
+    fallBBQ: String!
+    springBBQ: String!
     nationalConvention: String!
   }
 
   input EditCorporationProfileInput {
-    name: String!,
-    slogan: String!,
-    majors: [String!]!,
-    industries: [String!]!,
-    overview: String!,
-    mission: String!,
-    goals: String!,
-    businessModel: String!,
-    newsLink: String!,
-    applyLink: String!,
-    academia: String!,
+    name: String!
+    slogan: String!
+    majors: [String!]!
+    industries: [String!]!
+    overview: String!
+    mission: String!
+    goals: String!
+    businessModel: String!
+    newsLink: String!
+    applyLink: String!
+    academia: String!
     govContractor: String!,
-    nonProfit: String!,
-    visaSponsor: String!,
-    shpeSponsor: String!,
-    industryPartnership: String!,
-    fallBBQ: String!,
-    springBBQ: String!,
+    nonProfit: String!
+    visaSponsor: String!
+    shpeSponsor: String!
+    industryPartnership: String!
+    fallBBQ: String!
+    springBBQ: String!
     nationalConvention: String!
   }
 
@@ -226,6 +248,11 @@ module.exports = gql`
     username: String!
   }
 
+  input RedeemTasksPointsInput {
+    name: String!
+    username: String!
+  }
+
   input ApproveRejectRequestInput {
     username: String!
     eventName: String!
@@ -234,6 +261,11 @@ module.exports = gql`
   input ManualInputInput {
     username: String!
     eventName: String!
+  }
+
+  input ManualTaskInputInput {
+    username: String!
+    taskName: String!
   }
 
   input RegisterAlumniInput {
@@ -286,6 +318,7 @@ module.exports = gql`
     getUsers: [User]
     getUser(userId: ID!): User
     getEvents: [Event]
+    getTasks: [Task]
     getRequests: [Request]
     getMatches(username: String!): [User]
     getCorporations: [Corporation]
@@ -307,6 +340,8 @@ module.exports = gql`
     deleteCorporation(name: String!): Boolean!
     createEvent(createEventInput: CreateEventInput): [Event]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
+    createTask(createTaskInput: CreateTaskInput): Task!
+    redeemTasksPoints(redeemTasksPointsInput: RedeemTasksPointsInput): User!
     approveRequest(
       approveRejectRequestInput: ApproveRejectRequestInput
     ): [Request]
@@ -314,6 +349,7 @@ module.exports = gql`
       approveRejectRequestInput: ApproveRejectRequestInput
     ): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
+    manualTaskInput(manualTaskInputInput: ManualTaskInputInput): Task
     createClass(createClassInput: CreateClassInput): [Class]
     deleteClass(deleteClassInput: DeleteClassInput): [Class]
     getClass(code: String!): Class!
