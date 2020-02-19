@@ -54,7 +54,6 @@ function TasksCards({ user }) {
           </Header>
         </Segment>
       ) : (
-<<<<<<< HEAD
           <Card.Group itemsPerRow={4}>
             {tasks &&
               tasks.map((task, index) => (
@@ -84,37 +83,6 @@ function TasksCards({ user }) {
                 </Card>
               ))}
           </Card.Group>
-=======
-            <Grid.Row centered>
-              <Card.Group itemsPerRow={3}>
-              {tasks &&
-                tasks.map((task, index) => (
-                  <Card color="blue" key={index}>
-                    <Card.Content>
-                      <h5 style={{float:"left"}}>{task.name}</h5>
-                      <b><p style={{float:"right"}}>Point(s): {task.points}</p></b>
-                      <Card.Meta style={{clear:"left"}}>{task.startDate} - {task.endDate}</Card.Meta>
-                    </Card.Content>
-                    <Card.Content>{task.description}</Card.Content>
-                    <Card.Content>
-                      <Button fluid basic color="green"
-                        onClick={() => {
-                          redeemTasksPoints({
-                            variables: {
-                              name: task.name,
-                              username: username
-                            }
-                          });
-                        }}
-                      >
-                        Request
-                      </Button>
-                    </Card.Content>
-                  </Card>
-                ))}
-              </Card.Group>
-            </Grid.Row>
->>>>>>> master
         )}
     </>
   );

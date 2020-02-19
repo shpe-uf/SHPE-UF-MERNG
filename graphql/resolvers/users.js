@@ -20,14 +20,6 @@ const {
 } = require("../../util/validators");
 
 function generateToken(user, time) {
-<<<<<<< HEAD
-  return jwt.sign({
-    id: user.id,
-    email: user.email,
-    username: user.username
-  },
-    process.env.SECRET, {
-=======
   return jwt.sign(
     {
       id: user.id,
@@ -37,7 +29,6 @@ function generateToken(user, time) {
     },
     process.env.SECRET,
     {
->>>>>>> master
       expiresIn: time
     }
   );
@@ -107,8 +98,9 @@ module.exports = {
             permission: user.permission,
             listServ: user.listServ,
             events: user.events,
-<<<<<<< HEAD
-            tasks: user.tasks
+            tasks: user.tasks,
+            bookmarks: user.bookmarks,
+            classes: user.classes
           };
 
           return newUser;
@@ -117,39 +109,11 @@ module.exports = {
         }
       } catch (err) {
         throw new Error(err);
-=======
-            bookmarks: user.bookmarks,
-            classes: user.classes
-          };
-
-          if (newUser) {
-            return newUser;
-          } else {
-            throw new Error("User not found.");
-          }
-        } catch (err) {
-          throw new Error(err);
->>>>>>> master
       }
     },
 
     async getMajorStat() {
       try {
-<<<<<<< HEAD
-        const data = await User.aggregate([{
-          $group: {
-            _id: '$major',
-            value: {
-              $sum: 1
-            }
-          }
-        },
-        {
-          $sort: {
-            value: -1
-          }
-        }
-=======
         const data = await User.aggregate([
           {
             $group: {
@@ -192,7 +156,6 @@ module.exports = {
               _id: 1
             }
           }
->>>>>>> master
         ]);
 
         if (data) {
@@ -205,7 +168,34 @@ module.exports = {
       }
     },
 
-<<<<<<< HEAD
+    async getYearStat() {
+      try {
+        const data = await User.aggregate([
+          {
+            $group: {
+              _id: "$year",
+              value: {
+                $sum: 1
+              }
+            }
+          },
+          {
+            $sort: {
+              _id: 1
+            }
+          }
+        ]);
+
+        if (data) {
+          return data;
+        } else {
+          throw new Error("Data not found.");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
     async getYearStat() {
       try {
         const data = await User.aggregate([{
@@ -221,7 +211,17 @@ module.exports = {
             _id: 1
           }
         }
-=======
+      ]);
+
+      if (data) {
+        return data;
+      } else {
+        throw new Error("Data not found.");
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
     async getCountryStat() {
       try {
         const data = await User.aggregate([
@@ -266,7 +266,6 @@ module.exports = {
               value: -1
             }
           }
->>>>>>> master
         ]);
 
         if (data) {
@@ -279,7 +278,6 @@ module.exports = {
       }
     },
 
-<<<<<<< HEAD
     async getCountryStat() {
       try {
         const data = await User.aggregate([{
@@ -329,7 +327,10 @@ module.exports = {
         } else {
           throw new Error("Data not found.");
         }
-=======
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
     async getEthnicityStat() {
       try {
         const data = await User.aggregate([
@@ -353,13 +354,10 @@ module.exports = {
         } else {
           throw new Error("Data not found.");
         }
->>>>>>> master
       } catch (err) {
         throw new Error(err);
       }
-    }
-  },
-
+    },
     async getEthnicityStat() {
       try {
         const data = await User.aggregate([{
@@ -538,11 +536,8 @@ module.exports = {
         permission: "member",
         listServ,
         events: [],
-<<<<<<< HEAD
-        tasks: []
-=======
+        tasks: [],
         bookmarks: []
->>>>>>> master
       });
 
       const res = await newUser.save();
@@ -685,11 +680,8 @@ module.exports = {
           permission: user.permission,
           listServ: user.listServ,
           events: user.events,
-<<<<<<< HEAD
           tasks: user.tasks,
-=======
           bookmarks: user.bookmarks,
->>>>>>> master
           message: "Event code has been sent for approval."
         };
 
@@ -719,7 +711,6 @@ module.exports = {
           });
         }
 
-<<<<<<< HEAD
         var updatedUser = await User.findOneAndUpdate({
           username
         }, {
@@ -731,30 +722,12 @@ module.exports = {
                   createdAt: event.createdAt,
                   points: event.points
                 }],
-=======
-        var updatedUser = await User.findOneAndUpdate(
-          {
-            username
-          },
-          {
-            $push: {
-              events: {
-                $each: [
-                  {
-                    name: event.name,
-                    category: event.category,
-                    createdAt: event.createdAt,
-                    points: event.points
-                  }
-                ],
->>>>>>> master
                 $sort: {
                   createdAt: 1
                 }
               }
             },
             $inc: pointsIncrease
-<<<<<<< HEAD
           }, {
             new: true
           });
@@ -772,31 +745,6 @@ module.exports = {
                   username: user.username,
                   email: user.email
                 }],
-=======
-          },
-          {
-            new: true
-          }
-        );
-
-        updatedUser.message = "";
-
-        await Event.findOneAndUpdate(
-          {
-            code
-          },
-          {
-            $push: {
-              users: {
-                $each: [
-                  {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    username: user.username,
-                    email: user.email
-                  }
-                ],
->>>>>>> master
                 $sort: {
                   lastName: 1,
                   firstName: 1
@@ -806,23 +754,14 @@ module.exports = {
             $inc: {
               attendance: 1
             }
-<<<<<<< HEAD
           }, {
             new: true
           });
-=======
-          },
-          {
-            new: true
-          }
-        );
->>>>>>> master
 
         return updatedUser;
       }
     },
 
-<<<<<<< HEAD
     async redeemTasksPoints(
       _, {
         redeemTasksPointsInput: {
@@ -924,17 +863,6 @@ module.exports = {
       }, {
           confirmed: true
         });
-=======
-    async confirmUser(_, { id }) {
-      const user = await User.findOneAndUpdate(
-        {
-          _id: id
-        },
-        {
-          confirmed: true
-        }
-      );
->>>>>>> master
 
       if (!user) {
         errors.general = "User not found.";
@@ -979,22 +907,11 @@ module.exports = {
         }
       }
 
-<<<<<<< HEAD
       const newUser = await User.findOneAndUpdate({
         email
       }, {
           token
         });
-=======
-      const newUser = await User.findOneAndUpdate(
-        {
-          email
-        },
-        {
-          token
-        }
-      );
->>>>>>> master
 
       const transporter = nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE,
@@ -1054,24 +971,12 @@ module.exports = {
 
       password = await bcrypt.hash(password, 12);
 
-<<<<<<< HEAD
       const newUser = await User.findOneAndUpdate({
         email: user.email
       }, {
           password,
           token: ""
         });
-=======
-      const newUser = await User.findOneAndUpdate(
-        {
-          email: user.email
-        },
-        {
-          password,
-          token: ""
-        }
-      );
->>>>>>> master
 
       var Token = {
         token: token

@@ -26,7 +26,6 @@ module.exports = gql`
     permission: String!
     listServ: Boolean!
     events: [Event]!
-    tasks: [Task]!
     token: String!
     message: String!
     classes: [Class]!
@@ -54,49 +53,48 @@ module.exports = gql`
     semester: String!
     createdAt: String!
     users: [User]!
+  },
+
+  type Task {
+  name: String!
+  startDate: String!
+  endDate: String!
+  description: String!
+  points: Int!
+  attendance: Int!
+  semester: String!
+  createdAt: String!
+  users: [User]
   }
 
-<<<<<<< HEAD
-  type Task {
-    id: ID!
-    name: String!
-    startDate: String!
-    endDate: String!
-    description: String!
-    points: Int!
-    attendance: Int!
-    semester: String!
-    createdAt: String!
-    users: [User]!
-=======
+
   type Corporation {
-    name: String!,
-    logo: String!,
-    slogan: String!,
-    majors: [String!]!,
-    industries: [String!]!,
-    overview: String!,
-    mission: String!,
-    goals: String!,
-    businessModel: String!,
-    newsLink: String!,
-    applyLink: String!,
-    academia: Boolean!,
-    govContractor: Boolean!,
-    nonProfit: Boolean!,
-    visaSponsor: Boolean!,
-    shpeSponsor: Boolean!,
-    industryPartnership: Boolean!,
-    fallBBQ: Boolean!,
-    springBBQ: Boolean!,
+    name: String!
+    logo: String!
+    slogan: String!
+    majors: [String!]!
+    industries: [String!]!
+    overview: String!
+    mission: String!
+    goals: String!
+    businessModel: String!
+    newsLink: String!
+    applyLink: String!
+    academia: Boolean!
+    govContractor: Boolean!
+    nonProfit: Boolean!
+    visaSponsor: Boolean!
+    shpeSponsor: Boolean!
+    industryPartnership: Boolean!
+    fallBBQ: Boolean!
+    springBBQ: Boolean!
     nationalConvention: Boolean!
->>>>>>> master
   }
 
   type Request {
     id: ID!
-    name: String!
-    type: String!
+    eventName: String!
+    category: String!
     points: String!
     firstName: String!
     lastName: String!
@@ -178,71 +176,71 @@ module.exports = gql`
     request: String!
   }
 
-<<<<<<< HEAD
   input CreateTaskInput {
     name: String!
     startDate: String!
     endDate: String!
     description: String!
-    points: String!
-=======
+    points: Int!
+  }
+
   input CreateClassInput {
     code: String!
     username: String!
   }
+
   input DeleteClassInput {
     code: String!
     username: String!
   }
 
   input CreateCorporationInput {
-    name: String!,
-    logo: String!,
-    slogan: String!,
-    majors: [String!]!,
-    industries: [String!]!,
-    overview: String!,
-    mission: String!,
-    goals: String!,
-    businessModel: String!,
-    newsLink: String!,
-    applyLink: String!,
-    academia: String!,
-    govContractor: String!,
-    nonProfit: String!,
-    visaSponsor: String!,
-    shpeSponsor: String!,
-    industryPartnership: String!,
-    fallBBQ: String!,
-    springBBQ: String!,
+    name: String!
+    logo: String!
+    slogan: String!
+    majors: [String!]!
+    industries: [String!]!
+    overview: String!
+    mission: String!
+    goals: String!
+    businessModel: String!
+    newsLink: String!
+    applyLink: String!
+    academia: String!
+    govContractor: String!
+    nonProfit: String!
+    visaSponsor: String!
+    shpeSponsor: String!
+    industryPartnership: String!
+    fallBBQ: String!
+    springBBQ: String!
     nationalConvention: String!
   }
 
   input EditCorporationProfileInput {
-    name: String!,
-    slogan: String!,
-    majors: [String!]!,
-    industries: [String!]!,
-    overview: String!,
-    mission: String!,
-    goals: String!,
-    businessModel: String!,
-    newsLink: String!,
-    applyLink: String!,
-    academia: String!,
+    name: String!
+    slogan: String!
+    majors: [String!]!
+    industries: [String!]!
+    overview: String!
+    mission: String!
+    goals: String!
+    businessModel: String!
+    newsLink: String!
+    applyLink: String!
+    academia: String!
     govContractor: String!,
-    nonProfit: String!,
-    visaSponsor: String!,
-    shpeSponsor: String!,
-    industryPartnership: String!,
-    fallBBQ: String!,
-    springBBQ: String!,
+    nonProfit: String!
+    visaSponsor: String!
+    shpeSponsor: String!
+    industryPartnership: String!
+    fallBBQ: String!
+    springBBQ: String!
     nationalConvention: String!
   }
 
   input DeleteCorporationInput {
     name: String!
->>>>>>> master
   }
 
   input RedeemPointsInput {
@@ -250,19 +248,19 @@ module.exports = gql`
     username: String!
   }
 
-  input RedeemTasksPointsInput{
+  input RedeemTasksPointsInput {
     name: String!
     username: String!
   }
 
   input ApproveRejectRequestInput {
     username: String!
-    name: String!
+    eventName: String!
   }
 
   input ManualInputInput {
     username: String!
-    name: String!
+    eventName: String!
   }
 
   input ManualTaskInputInput {
@@ -341,15 +339,9 @@ module.exports = gql`
     updateCorporation(editCorporationProfileInput: EditCorporationProfileInput): [Corporation]
     deleteCorporation(name: String!): Boolean!
     createEvent(createEventInput: CreateEventInput): [Event]
-    createTask(createTaskInput: CreateTaskInput): [Task]
     redeemPoints(redeemPointsInput: RedeemPointsInput): User!
-<<<<<<< HEAD
+    createTask(createTaskInput: CreateTaskInput): Task!
     redeemTasksPoints(redeemTasksPointsInput: RedeemTasksPointsInput): User!
-    approveRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
-    rejectRequest(approveRejectRequestInput: ApproveRejectRequestInput): [Request]
-    manualInput(manualInputInput: ManualInputInput): [Event]
-    manualTaskInput(manualTaskInputInput: ManualTaskInputInput): [Task]
-=======
     approveRequest(
       approveRejectRequestInput: ApproveRejectRequestInput
     ): [Request]
@@ -357,10 +349,10 @@ module.exports = gql`
       approveRejectRequestInput: ApproveRejectRequestInput
     ): [Request]
     manualInput(manualInputInput: ManualInputInput): [Event]
+    manualTaskInput(manualTaskInputInput: ManualTaskInputInput): Task
     createClass(createClassInput: CreateClassInput): [Class]
     deleteClass(deleteClassInput: DeleteClassInput): [Class]
     getClass(code: String!): Class!
->>>>>>> master
     forgotPassword(email: String!): User!
     resetPassword(
       password: String!

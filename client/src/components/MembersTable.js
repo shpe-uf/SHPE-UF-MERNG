@@ -14,6 +14,7 @@ import gql from "graphql-tag";
 
 import { AuthContext } from "../context/auth";
 import UserProfile from "./UserProfile";
+import PointsTable from "./PointsTable";
 import UserEventsTable from "./UserEventsTable";
 
 function MembersTable({ users }) {
@@ -138,9 +139,6 @@ function MembersTable({ users }) {
           {userInfo && (
             <>
               <UserProfile user={userInfo} />
-<<<<<<< HEAD
-              <UserEventsTable user={userInfo} />
-=======
               <Grid>
                 <Grid.Row>
                   <Grid.Column>
@@ -171,7 +169,6 @@ function MembersTable({ users }) {
                 </Grid.Row>
               </Grid>
               <PointsTable user={userInfo} />
->>>>>>> master
             </>
           )}
           <Grid>

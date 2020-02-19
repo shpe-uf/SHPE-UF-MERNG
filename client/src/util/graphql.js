@@ -54,6 +54,38 @@ export const FETCH_EVENTS_QUERY = gql`
   }
 `;
 
+export const FETCH_ALUMNIS_QUERY = gql`
+  {
+    getAlumnis {
+      firstName
+      lastName
+      email
+      employer
+      position
+      undergrad {
+        university
+        year
+        major
+      }
+      grad {
+        university
+        year
+        major
+      }
+      location {
+        city
+        state
+        country
+      }
+      coordinates {
+        latitude
+        longitude
+      }
+      linkedin
+    }
+  }
+`;
+
 export const FETCH_CORPORATIONS_QUERY = gql `
   {
     getCorporations {
@@ -95,38 +127,6 @@ export const FETCH_REQUESTS_QUERY = gql`
   }
 `;
 
-export const FETCH_ALUMNIS_QUERY = gql`
-  {
-    getAlumnis {
-      firstName
-      lastName
-      email
-      employer
-      position
-      undergrad {
-        university
-        year
-        major
-      }
-      grad {
-        university
-        year
-        major
-      }
-      location {
-        city
-        state
-        country
-      }
-      coordinates {
-        latitude
-        longitude
-      }
-      linkedin
-    }
-  }
-`;
-
 export const MAJOR_STAT = gql`
   {
     getMajorStat {
@@ -145,7 +145,6 @@ export const COUNTRY_STAT = gql`
   }
 `;
 
-<<<<<<< HEAD
 export const FETCH_TASKS_QUERY = gql`
   {
     getTasks {
@@ -169,9 +168,6 @@ export const FETCH_TASKS_QUERY = gql`
 `;
 
 export const YEAR_STAT = gql `
-=======
-export const YEAR_STAT = gql`
->>>>>>> master
   {
     getYearStat {
       _id

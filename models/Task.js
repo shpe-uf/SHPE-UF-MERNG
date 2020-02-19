@@ -25,7 +25,7 @@ const taskSchema = new Schema({
   },
   attendance: {
     type: Number,
-    rqeuired: true
+    required: true
   },
   semester: {
     type: String,
