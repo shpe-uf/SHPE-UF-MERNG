@@ -255,12 +255,7 @@ module.exports = gql`
 
   input ApproveRejectRequestInput {
     username: String!
-<<<<<<< HEAD
-    name: String!
-    type: String!
-=======
     eventName: String!
->>>>>>> master
   }
 
   input ManualInputInput {

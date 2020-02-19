@@ -94,15 +94,11 @@ const userSchema = new Schema({
     createdAt: String,
     points: Number,
   }],
-
-<<<<<<< HEAD
-=======
   classes: [
     {
       code: String
     }
   ],
->>>>>>> master
   token: {
     type: String
   },
