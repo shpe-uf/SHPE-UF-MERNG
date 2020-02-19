@@ -26,6 +26,7 @@ module.exports = gql`
     permission: String!
     listServ: Boolean!
     events: [Event]!
+    tasks: [Task]!
     token: String!
     message: String!
     classes: [Class]!
