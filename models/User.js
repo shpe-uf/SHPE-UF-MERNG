@@ -94,7 +94,6 @@ const userSchema = new Schema({
     createdAt: String,
     points: Number,
   }],
-
   classes: [
     {
       code: String

@@ -27,7 +27,8 @@ function RequestsTable({ requests }) {
         var result = requestData.filter(
           updatedRequests =>
             updatedRequests.name === request.name &&
-            updatedRequests.username === request.username
+            updatedRequests.username === request.username &&
+            updatedRequests.type === request.type
         );
         if (result.length === 0) {
           requests.splice(index, 1);
@@ -54,7 +55,8 @@ function RequestsTable({ requests }) {
         var result = requestData.filter(
           updatedRequests =>
             updatedRequests.name === request.name &&
-            updatedRequests.username === request.username
+            updatedRequests.username === request.username &&
+            updatedRequests.type === request.type
         );
         if (result.length === 0) {
           requests.splice(index, 1);
@@ -64,6 +66,8 @@ function RequestsTable({ requests }) {
     },
 
     onError(err) {
+      console.log(err);
+      console.log("loggin errors");
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     }
   });
@@ -125,7 +129,8 @@ function RequestsTable({ requests }) {
                           approveRequest({
                             variables: {
                               username: request.username,
-                              name: request.name
+                              name: request.name,
+                              type: request.type
                             }
                           });
                         }}
@@ -143,7 +148,8 @@ function RequestsTable({ requests }) {
                           rejectRequest({
                             variables: {
                               username: request.username,
-                              name: request.name
+                              name: request.name,
+                              type: request.type
                             }
                           });
                         }}
@@ -162,9 +168,9 @@ function RequestsTable({ requests }) {
 }
 
 const REJECT_REQUEST_MUTATION = gql`
-  mutation rejectRequest($username: String!, $name: String!) {
+  mutation rejectRequest($username: String!, $name: String!, $type: String!) {
     rejectRequest(
-      approveRejectRequestInput: { username: $username, name: $name }
+      approveRejectRequestInput: { username: $username, name: $name , type: $type }
     ) {
       name
       type
@@ -178,9 +184,9 @@ const REJECT_REQUEST_MUTATION = gql`
 `;
 
 const APPROVE_REQUEST_MUTATION = gql`
-  mutation approveRequest($username: String!, $name: String!) {
+  mutation approveRequest($username: String!, $name: String!, $type: String!) {
     approveRequest(
-      approveRejectRequestInput: { username: $username, name: $name }
+      approveRejectRequestInput: { username: $username, name: $name, type: $type }
     ) {
       name
       type

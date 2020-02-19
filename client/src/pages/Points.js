@@ -26,6 +26,8 @@ function Points() {
     }
   }).data.getUser;
 
+  console.log(user);
+
   const [redeemPointsModal, setRedeemPointsModal] = useState(false);
 
   const openModal = name => {
@@ -180,6 +182,10 @@ const FETCH_USER_QUERY = gql`
         name
         category
         createdAt
+        points
+      }
+      tasks {
+        name
         points
       }
     }
