@@ -7,7 +7,6 @@ const taskSchema = new Schema({
     required: true,
     unique: true
   },
-
   startDate: {
     type: String,
     required: true
@@ -26,7 +25,7 @@ const taskSchema = new Schema({
   },
   attendance: {
     type: Number,
-    rqeuired: true
+    required: true
   },
   semester: {
     type: String,

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import {
-  Grid,
-  Table,
-  Icon,
-  Dimmer,
-  Loader,
-  Segment,
-  Header,
   Button,
+  Dimmer,
+  Form,
+  Grid,
+  Header,
+  Icon,
+  Loader,
   Modal,
-  Form
+  Segment,
+  Table
 } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
@@ -20,20 +20,87 @@ import { CSVLink } from "react-csv";
 import { FETCH_USERS_QUERY } from "../util/graphql";
 
 function TasksTable({ tasks }) {
+  const [errors, setErrors] = useState({});
+  const [manualTaskInputModal, setManualTaskInputModal] = useState(false);
   const [taskInfoModal, setTaskInfoModal] = useState(false);
   const [taskAttendance, setTaskAttendance] = useState({});
 
+  var users = [
+    {
+      username: "",
+      firstName: "",
+      lastName: ""
+    }
+  ];
+
+  var userData = useQuery(FETCH_USERS_QUERY).data.getUsers;
+
+  if (userData) {
+    for (var i = 0; i < userData.length; i++) {
+      users.push(userData[i]);
+    }
+  }
+
   const openModal = name => {
+    if (name === "manualTaskInput") {
+      setManualTaskInputModal(true);
+    }
+
     if (name === "taskInfo") {
       setTaskInfoModal(true);
     }
   };
 
   const closeModal = name => {
+    if (name === "manualTaskInput") {
+      values.username = "";
+      values.taskName = "";
+      setErrors(false);
+      setManualTaskInputModal(false);
+    }
+
     if (name === "taskInfo") {
       setTaskInfoModal(false);
     }
   };
+
+  const { values, onChange, onSubmit } = useForm(manualTaskInputCallback, {
+    username: "",
+    taskName: ""
+  });
+
+  const [manualTaskInput, { loading }] = useMutation(MANUAL_INPUT_MUTATION, {
+    update(
+      _,
+      {
+        data: { manualTaskInput: tasksData }
+      }
+    ) {
+      values.username = "";
+      values.taskName = "";
+      tasks.splice(0, tasks.length);
+      for (var i = 0; i < tasksData.length; i++) {
+        tasks.push(tasksData[i]);
+      }
+      setErrors(false);
+      setManualTaskInputModal(false);
+    },
+
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      console.log(err);
+    },
+
+    variables: values
+  });
+
+  function manualTaskInputCallback() {
+    manualTaskInput();
+  }
+
+  function setTaskNameValue(taskName) {
+    values.taskName = taskName;
+  }
 
   function getTaskAttendance(taskInfo) {
     setTaskAttendance(taskInfo);
@@ -63,6 +130,7 @@ function TasksTable({ tasks }) {
                   Attendance
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Points</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">Manual Input</Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Info</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -82,6 +150,17 @@ function TasksTable({ tasks }) {
                       <Button
                         icon
                         onClick={() => {
+                          setTaskNameValue(task.name);
+                          openModal("manualTaskInput");
+                        }}
+                      >
+                        <Icon name="i cursor" />
+                      </Button>
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <Button
+                        icon
+                        onClick={() => {
                           getTaskAttendance(task);
                           openModal("taskInfo");
                         }}
@@ -95,6 +174,77 @@ function TasksTable({ tasks }) {
           </Table>
         </div>
       )}
+
+      <Modal
+        open={manualTaskInputModal}
+        size="tiny"
+        closeOnEscape={true}
+        closeOnDimmerClick={false}
+      >
+        <Modal.Header>
+          <h2>Manual Input</h2>
+        </Modal.Header>
+        <Modal.Content>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                {Object.keys(errors).length > 0 && (
+                  <div className="ui error message">
+                    <ul className="list">
+                      {Object.values(errors).map(value => (
+                        <li key={value}>{value}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <Form
+                  onSubmit={onSubmit}
+                  noValidate
+                  className={loading ? "loading" : ""}
+                >
+                  <Form.Field
+                    control="select"
+                    label="Member"
+                    name="username"
+                    value={values.username}
+                    error={errors.username ? true : false}
+                    onChange={onChange}
+                  >
+                    {users &&
+                      users.map(user =>
+                        user.username === "" ? (
+                          <option value={user.username} key={user.username}>
+                            {user.lastName + user.firstName}
+                          </option>
+                        ) : (
+                          <option value={user.username} key={user.username}>
+                            {user.lastName +
+                              ", " +
+                              user.firstName +
+                              " (" +
+                              user.username +
+                              ")"}
+                          </option>
+                        )
+                      )}
+                  </Form.Field>
+                  <Button
+                    type="reset"
+                    color="grey"
+                    onClick={() => closeModal("manualTaskInput")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" floated="right">
+                    Submit
+                  </Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Modal.Content>
+      </Modal>
+
       <Modal
         open={taskInfoModal}
         size="small"
@@ -169,5 +319,27 @@ function TasksTable({ tasks }) {
     </>
   );
 }
+
+const MANUAL_INPUT_MUTATION = gql`
+  mutation manualTaskInput($username: String!, $taskName: String!) {
+    manualTaskInput(
+      manualTaskInputInput: { username: $username, taskName: $taskName }
+    ) {
+      name
+      startDate
+      endDate
+      semester
+      request
+      attendance
+      points
+      users {
+        firstName
+        lastName
+        username
+        email
+      }
+    }
+  }
+`;
 
 export default TasksTable;

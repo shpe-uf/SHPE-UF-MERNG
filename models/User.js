@@ -1,6 +1,7 @@
 const { model, Schema } = require("mongoose");
 const Event = require("./Event").schema;
 const Task = require("./Task").schema;
+const Class = require("./Class").schema;
 
 const userSchema = new Schema({
   firstName: {
@@ -10,6 +11,10 @@ const userSchema = new Schema({
   lastName: {
     type: String,
     required: true
+  },
+  photo: {
+    type: String,
+    default: ""
   },
   major: {
     type: String,
@@ -71,7 +76,10 @@ const userSchema = new Schema({
     type: Number,
     default: 0
   },
-  permission: String,
+  permission: {
+    type: String,
+    default: "member"
+  },
   listServ: Boolean,
 
   events: [{
@@ -87,13 +95,22 @@ const userSchema = new Schema({
     points: Number,
   }],
 
+<<<<<<< HEAD
+=======
+  classes: [
+    {
+      code: String
+    }
+  ],
+>>>>>>> master
   token: {
     type: String
   },
   confirmed: {
     type: Boolean,
     default: false
-  }
+  },
+  bookmarks: [String]
 });
 
 module.exports = model("User", userSchema);

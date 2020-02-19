@@ -1,5 +1,9 @@
 import React, { useContext, useState } from "react";
+<<<<<<< HEAD
 import { Grid, Container, Button, Modal, Form, Menu, Segment, Responsive, Card } from "semantic-ui-react";
+=======
+import { Grid, Container, Button, Modal, Form } from "semantic-ui-react";
+>>>>>>> master
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,17 +16,9 @@ import { AuthContext } from "../context/auth";
 
 import Title from "../components/Title";
 import PointsBar from "../components/PointsBar";
-import UserEventsTable from "../components/UserEventsTable";
-import UserTasksTable from "../components/UserTasksTable";
-import TasksCards from "../components/TasksCards";
+import PointsTable from "../components/PointsTable";
 
 function Points() {
-  const [activeItem, setActiveItem] = useState("Your Points");
-
-  const handleItemClick = (e, { name }) => {
-    setActiveItem(name);
-  };
-
   const [errors, setErrors] = useState({});
   var {
     user: { id, username }
@@ -86,7 +82,6 @@ function Points() {
     user.springPoints = userData.springPoints;
     user.summerPoints = userData.summerPoints;
     user.events = userData.events;
-    user.tasks = userData.tasks;
     user.message = userData.message;
 
     if (user.message !== "") {
@@ -100,44 +95,62 @@ function Points() {
     <div className="body">
       <Title title="Points Program" />
       <Container>
-      <div>
-        <ToastContainer />
-      </div>
-        <Menu attached="top" tabular>
-          <Menu.Item
-            name="Your Points"
-            active={activeItem === "Your Points"}
-            onClick={handleItemClick}
-          />
-          <Menu.Item
-            name="Tasks"
-            active={activeItem === "Tasks"}
-            onClick={handleItemClick}
-          />
-        </Menu>
+        <Grid>
+          <div>
+            <ToastContainer />
+          </div>
+          <Grid.Row>
+            <Grid.Column>
+              <Button
+                content="Redeem Code"
+                icon="font"
+                labelPosition="left"
+                floated="right"
+                onClick={() => openModal("redeemPoints")}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
-        {activeItem === "Your Points" && (
-          <Segment attached="bottom">
-            <Grid stackable>
+        {user && (
+          <>
+            <PointsBar user={user} />
+            <PointsTable user={user} />
+          </>
+        )}
+      </Container>
 
-              {user && user.message && user.message !== undefined && (
-                <Grid.Row>
-                  <Grid.Column>
-                    <div className="ui warning message">
-                      <p>{user.message}</p>
-                    </div>
-                  </Grid.Column>
-                </Grid.Row>
-              )}
-              <Grid.Row>
-                <Grid.Column>
-                  <Button
-                    content="Redeem Code"
-                    icon="font"
-                    labelPosition="left"
-                    floated="right"
-                    onClick={() => openModal("redeemPoints")}
+      <Modal open={redeemPointsModal} size="tiny">
+        <Modal.Header>
+          <h2>Redeem Points</h2>
+        </Modal.Header>
+        <Modal.Content>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                {Object.keys(errors).length > 0 && (
+                  <div className="ui error message">
+                    <ul className="list">
+                      {Object.values(errors).map(value => (
+                        <li key={value}>{value}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <Form
+                  onSubmit={onSubmit}
+                  noValidate
+                  className={loading ? "loading" : ""}
+                >
+                  <Form.Input
+                    type="text"
+                    label="Event Code"
+                    name="code"
+                    value={values.code}
+                    error={errors.code ? true : false}
+                    onChange={onChange}
                   />
+<<<<<<< HEAD
                 </Grid.Column>
               </Grid.Row>
               {user && (
@@ -239,6 +252,24 @@ function Points() {
           </Segment>
         )}
       </Container>
+=======
+                  <Button
+                    type="reset"
+                    color="grey"
+                    onClick={() => closeModal("redeemPoints")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" floated="right">
+                    Submit
+                  </Button>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Modal.Content>
+      </Modal>
+>>>>>>> master
     </div>
   );
 }
