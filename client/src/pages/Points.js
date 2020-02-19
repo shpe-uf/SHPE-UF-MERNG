@@ -1,9 +1,5 @@
 import React, { useContext, useState } from "react";
-<<<<<<< HEAD
-import { Grid, Container, Button, Modal, Form, Menu, Segment, Responsive, Card } from "semantic-ui-react";
-=======
 import { Grid, Container, Button, Modal, Form } from "semantic-ui-react";
->>>>>>> master
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -150,109 +146,6 @@ function Points() {
                     error={errors.code ? true : false}
                     onChange={onChange}
                   />
-<<<<<<< HEAD
-                </Grid.Column>
-              </Grid.Row>
-              {user && (
-                <>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <PointsBar user={user} />
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row itemsPerRow={2}>
-                    <Grid.Column width={8}>
-                      <UserEventsTable user={user} />
-                    </Grid.Column>
-                    <Grid.Column width={8}>
-                      <UserTasksTable user={user} />
-                    </Grid.Column>
-                  </Grid.Row>
-                </>
-              )}
-            </Grid>
-
-            <Modal open={redeemPointsModal} size="tiny">
-              <Modal.Header>
-                <h2>Redeem Points</h2>
-              </Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  {Object.keys(errors).length > 0 && (
-                    <div className="ui error message">
-                      <ul className="list">
-                        {Object.values(errors).map(value => (
-                          <li key={value}>{value}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  <Form
-                    style={{padding:"20px"}}
-                    onSubmit={onSubmit}
-                    noValidate
-                    className={loading ? "loading" : ""}
-                  >
-                    <Form.Input
-                      type="text"
-                      label="Event Code"
-                      name="code"
-                      value={values.code}
-                      error={errors.code ? true : false}
-                      onChange={onChange}
-                    />
-                    <Button
-                      type="reset"
-                      color="grey"
-                      onClick={() => closeModal("redeemPoints")}
-                    >
-                      Cancel
-                    </Button>
-                    <Button type="submit" floated="right">
-                      Submit
-                    </Button>
-                  </Form>
-                </Modal.Description>
-              </Modal.Content>
-            </Modal>
-          </Segment>
-        )}
-        {activeItem === "Tasks" && (
-          <Segment attached="bottom">
-            <Grid stackable>
-              {user && user.message && user.message !== undefined && (
-                <Grid.Row>
-                  <Grid.Column>
-                    <div className="ui warning message">
-                      <p>{user.message}</p>
-                    </div>
-                  </Grid.Column>
-                </Grid.Row>
-              )}
-              <Grid.Row>
-              <Grid.Column>
-              <Responsive {...Responsive.onlyComputer}>
-                <Card.Group itemsPerRow={4}>
-                  <TasksCards user={user} />
-                </Card.Group>
-              </Responsive>
-              <Responsive {...Responsive.onlyTablet}>
-                <Card.Group itemsPerRow={2}>
-                  <TasksCards user={user} />
-                </Card.Group>
-              </Responsive>
-              <Responsive {...Responsive.onlyMobile}>
-                <Card.Group itemsPerRow={1}>
-                  <TasksCards user={user} />
-                </Card.Group>
-              </Responsive>
-              </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Segment>
-        )}
-      </Container>
-=======
                   <Button
                     type="reset"
                     color="grey"
@@ -269,7 +162,6 @@ function Points() {
           </Grid>
         </Modal.Content>
       </Modal>
->>>>>>> master
     </div>
   );
 }
